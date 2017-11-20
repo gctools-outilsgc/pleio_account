@@ -15,16 +15,14 @@
     </head>
     <body>
         <div class="account-overlay ___is-visible">
+            
+            <div class="account-theme">
+                <a href="/" class="button ___white ___outline account__close">{% trans "Sitename" %}</a>
+            </div>
+            
             <div class="account">
                 <div class="account__top-bar">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <a class="navigation__logo" title="{% trans "Back to the homepage" %}" href="https://www.pleio.nl/">{% include '_logo.html' %}</a>
-                        </div>
-                        <div class="col-xs-6 end-xs">
-                            <a href="/"><div class="account__close"></div></a>
-                        </div>
-                    </div>
+                    <a class="navigation__logo" title="{% trans "Back to the homepage" %}" href="https://www.pleio.nl/">{% include '_logo.html' %}</a>
                 </div>
 
                 <div class="account__slider">

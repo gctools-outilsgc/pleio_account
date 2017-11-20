@@ -1,10 +1,12 @@
 .account-overlay {
+    display: flex;
+    align-items: stretch;
     position: fixed;
     top: 0;
     bottom: 0;
     right: 0;
     left: 0;
-    background-color: @color-grey__10;
+    background-color: @color-grey__20;
     z-index: 4;
     overflow-y: scroll;
     visibility: hidden;
@@ -15,27 +17,60 @@
         visibility: visible;
         opacity: 1;
     }
-}
-
-.account {
-    display: flex;
-    flex-direction: column;
-    min-height: 100%;
-    max-width: 112rem;
-    margin: 0 auto;
-    padding: 4rem 0;
-    overflow: hidden;
-
-    @media @screen-sm-max {
-        padding: 2rem 0;
+    
+    @media @screen-md-max {
+        flex-direction: column;
     }
 }
 
-.account__top-bar {
-    padding: 0 4rem;
-
+.account, .account-theme {
+    padding: 6rem 8rem 4rem;
+    
+    @media @screen-lg-max {
+        padding: 4rem 4rem 2rem;
+    }
+    
+    @media @screen-md-max {
+        padding: 4rem 8rem 4rem;
+    }
+    
     @media @screen-sm-max {
-        padding: 0 2rem;
+        padding: 4rem 4rem 2rem;
+    }
+    
+    @media @screen-xs-max {
+        padding: 3.2rem 2.4rem;
+    }
+}
+
+.account {
+    flex: 0 1 50%;
+    max-width: 60rem;
+    display: flex;
+    order: 1;
+    flex-direction: column;
+    min-height: 100%;
+    overflow: hidden;
+    background-color: @color-white;
+    
+    @media @screen-md-max {
+        flex: 1 0 auto;
+        max-width: none;
+        min-height: 0;
+        order: 2;
+    }
+}
+
+.account-theme {
+    flex: 1 1 auto;
+    order: 2;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    
+    @media @screen-md-max {
+        flex: 0 0 50vw;
+        order: 1;
     }
 }
 
@@ -69,12 +104,12 @@
 }
 
 .account__close {
-    padding: 1rem;
-    .icon(close);
-    cursor: pointer;
+    .icon(chevron-left);
+    float: right;
 
     &:before {
-        font-size: 2rem;
+        font-size: 1.2rem;
+        margin-right: 0.8rem;
         color: @color-grey__50;
         transition: color @trans-fast;
     }
@@ -103,25 +138,6 @@
 
 .account__content-container {
     width: 50%;
-    padding: 0 4rem;
-
-    @media @screen-sm-max {
-        padding: 0 2rem;
-    }
-}
-
-.account__content {
-    width: 100%;
-    max-width: 40rem;
-    margin: 0 auto;
-    padding: 4rem;
-    background-color: #fff;
-    color: #000;
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12), 0 3px 1px -2px rgba(0,0,0,.2);
-
-    @media @screen-sm-max {
-        padding: 4rem 0 2rem 0;
-    }
 }
 
 .account__content_width {
@@ -130,7 +146,6 @@
     margin: 0 auto;
     padding: 4rem;
     background-color: #fff;
-    color: #000;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12), 0 3px 1px -2px rgba(0,0,0,.2);
 
     @media @screen-sm-max {
@@ -174,18 +189,10 @@
 
 .login__buttons {
     margin: 2rem 0 4rem 0;
-
-    .button {
-        margin: 0;
-    }
 }
 
 .register__button {
     margin: 4rem 0 0 0;
-
-    .button {
-        margin: 0;
-    }
 }
 
 .login__check,

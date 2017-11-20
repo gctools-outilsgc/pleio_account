@@ -18,7 +18,7 @@
 
         <fieldset>
             <div class="input-field">
-                <label for="id_auth-username">{% trans "Email" %}</label>
+                <label for="id_auth-username">{% trans "E-mailadres" %}</label>
                 {{ form.errors.username }}
                 {{ form.username }}
             </div>
@@ -26,23 +26,23 @@
                 <label for="id_auth-password">{% trans "Password" %}</label>
                 {{ form.errors.password }}
                 {{ form.password }}
-            </div>
-
-            <div class="login__check">
-                {{ form.errors.is_persistent }}
-                {{ form.is_persistent }}
-                <label for="id_auth-is_persistent">{% trans "Remember me" %}</label>
-            </div>
-
-            <div class="login__buttons">
-                <button name="login" class="button ___stretch ___active login__login" type="submit">{% trans "Login" %}</button>
-
                 <div class="forgot-password">
                     <ul>
                         <li><a href="{% url 'password_reset' %}">{% trans "Forgot password" %}</a></li>
-                        <li><a href="{% url 'register' %}">{% trans "Register" %}</a></li>
                     </ul>
                 </div>
+            </div>
+
+            <!-- <div class="login__check">
+                {{ form.errors.is_persistent }}
+                {{ form.is_persistent }}
+                <label for="id_auth-is_persistent">{% trans "Remember me" %}</label>
+            </div> -->
+
+            <div class="login__buttons">
+                <button name="login" class="button ___stretch ___active login__login" type="submit">{% trans "Login" %}</button>
+                <a href="{% url 'register' %}" class="button ___stretch ___white ___outline">{% trans "Register" %}</a>
+
             </div>
         </fieldset>
         <input type="hidden" name="next" value="{{next}}" />
