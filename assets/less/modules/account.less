@@ -49,6 +49,7 @@
     display: flex;
     order: 1;
     flex-direction: column;
+    color: @color-black__60;
     min-height: 100%;
     overflow: hidden;
     background-color: @color-white;
@@ -71,6 +72,14 @@
     @media @screen-md-max {
         flex: 0 0 50vw;
         order: 1;
+    }
+}
+
+.account__top-bar {
+    margin-bottom: 4rem; 
+    
+    @media @screen-md-max {
+        display: none;
     }
 }
 
@@ -108,14 +117,19 @@
     float: right;
 
     &:before {
-        font-size: 1.2rem;
-        margin-right: 0.8rem;
+        font-size: 0.6em;
+        vertical-align: baseline;
+        margin-right: 0.6em;
         color: @color-grey__50;
         transition: color @trans-fast;
     }
 
     &:hover:before {
         color: @color-grey;
+    }
+    
+    @media @screen-sm-max {
+        font-size: 1.6rem;
     }
 }
 
@@ -138,6 +152,13 @@
 
 .account__content-container {
     width: 50%;
+}
+
+.account__content {
+    
+    fieldset {
+        margin-top: 5rem; 
+    }
 }
 
 .account__content_width {
@@ -178,6 +199,42 @@
     }
 }
 
+.login__step-title {
+    margin-bottom: 2.4rem;
+    display: flex;
+    
+    div {
+        flex: 1 1 auto; 
+    }
+    
+    .login__step-icon {
+        width: 3.5rem;
+        height: 3.5rem;
+        display: none;
+        
+        @media @screen-md-max {
+            display: block;
+        }
+        
+    }
+    
+    
+    h2 {
+        color: @color-black__90;
+    }
+}
+
+.forgot-password {
+    margin-top: 0.75rem;
+    display: block;
+    text-align: right;
+    color: @color-black__60;
+    
+    &:hover {
+        color: @color-primary;
+    }
+}
+
 .login__username,
 .login__password {
     width: 100%;
@@ -188,7 +245,7 @@
 }
 
 .login__buttons {
-    margin: 2rem 0 4rem 0;
+    margin: 1.6rem 0 4rem 0;
 }
 
 .register__button {

@@ -3,22 +3,27 @@
 
 {% block content %}
 
-<ul class="messages error">
-    {% for error in form.non_field_errors %}
-        <li>{{ error }}</li>
-    {% endfor %}
-</ul>
-
-
 <form method="post" action=".">
     {% csrf_token %}
     {{ wizard.management_form }}
     {% if wizard.steps.current == 'auth' %}
-        <p>{% trans "Welcome, please login." %}</p>
+        <div class="login__step-title">
+            <div>
+                <h2>{% trans "Sign in" %}</h2>
+                <p>{% trans "with your Pleio-account" %}</p>
+            </div>
+            <img src="/static/images/logo-icon.svg" class="login__step-icon"/>
+        </div>
+        
+        <ul class="messages error">
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
 
         <fieldset>
             <div class="input-field">
-                <label for="id_auth-username">{% trans "E-mailadres" %}</label>
+                <label for="id_auth-username">{% trans "Email address" %}</label>
                 {{ form.errors.username }}
                 {{ form.username }}
             </div>
@@ -26,11 +31,7 @@
                 <label for="id_auth-password">{% trans "Password" %}</label>
                 {{ form.errors.password }}
                 {{ form.password }}
-                <div class="forgot-password">
-                    <ul>
-                        <li><a href="{% url 'password_reset' %}">{% trans "Forgot password" %}</a></li>
-                    </ul>
-                </div>
+                <a href="{% url 'password_reset' %}" class="forgot-password">{% trans "Forgot password" %}?</a>
             </div>
 
             <!-- <div class="login__check">
@@ -41,12 +42,21 @@
 
             <div class="login__buttons">
                 <button name="login" class="button ___stretch ___active login__login" type="submit">{% trans "Login" %}</button>
-                <a href="{% url 'register' %}" class="button ___stretch ___white ___outline">{% trans "Register" %}</a>
+                <a href="{% url 'register' %}" class="button ___stretch ___white ___outline">{% trans "Register account" %}</a>
 
             </div>
         </fieldset>
         <input type="hidden" name="next" value="{{next}}" />
         <p></p>
+        
+        <ul class="messages info">
+            <li class="messages__link">
+                <a href="/link/">
+                    <div class="textcolor_primary">{% trans "Secure your account" %}</div>
+                    <div class="textcolor_secondary">{% trans "Enable two factor authorisation" %}</div>
+                </a>
+            </li>
+        </ul>
     {% elif wizard.steps.current == 'token' %}
 
     <script type="text/javascript">

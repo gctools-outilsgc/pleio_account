@@ -7,21 +7,23 @@
 //
 
 .input-field {
+    margin: 0 0 4.8rem 0;
 
     input {
-        margin: 0 0 3rem 0;
-        color: @color-black;
-        height: 3.4rem;
-        font-size: @font-base;
+        margin: 0;
+        color: @color-black__90;
+        height: 4.8rem;
+        font-size: @font-base-button;
         box-sizing: border-box;
     }
 
     /* label color */
     label {
-        color: @color-grey__50;
+        color: @color-black__60;
         font-size: @font-base;
         line-height: 1;
         left: 0;
+        transform: translateY(-140%);
     }
 
     /* label color */
@@ -34,8 +36,7 @@
 
     /* label color */
     label.active {
-        color: @color-grey__50;
-        font-size: 1.2rem;
+        font-size: 1.6rem;
     }
     /* label focus color */
     input[type=email]:focus + label,
