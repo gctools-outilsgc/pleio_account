@@ -52,7 +52,7 @@
             <li class="messages__link">
                 <a href="/link/">
                     <div class="textcolor_primary">{% trans "Secure your account" %}</div>
-                    <div class="textcolor_secondary">{% trans "Enable two factor authorisation" %}</div>
+                    <div class="textcolor_secondary">{% trans "Enable two factor authentication" %}</div>
                 </a>
             </li>
         </ul>
@@ -65,13 +65,27 @@
         }
       };
     </script>
-    <p>{% trans "Please fill in a two-factor code" %}</p>
+    
+    <ul class="messages info">
+        <li class="messages__link">
+            <a href="/link/">
+                <div class="textcolor_primary">{% trans "Two factor authentication" %}</div>
+                <div class="textcolor_secondary">{% trans "Fill in a code from your code generator." %}</div>
+            </a>
+        </li>
+    </ul>
+    
+    <fieldset>
         <div class="input-field">
             {{ form.errors.otp_token }}
             {{ form.otp_token.label_tag }}
             {{ form.otp_token }}
         </div>
-        <button name="volgende" class="button ___stretch ___active login__login" type="submit">{% trans "Login" %}</button>
+        <div class="login__buttons">
+            <button class="button ___stretch ___active login__login" type="submit">{% trans "Login" %}</button>
+            <a href="{% url 'login' %}" class="button ___stretch ___white ___outline">{% trans "Cancel" %}</a>
+        </div>
+    </fieldset>
     {% elif wizard.steps.current == 'backup' %}
     <script type="text/javascript">
       window.onload = function() {
@@ -83,11 +97,15 @@
     <p>{% blocktrans %}Use this form for entering backup tokens for logging in.
          These tokens have been generated for you to print and keep safe. Please
              enter one of these backup tokens to login to your account.{% endblocktrans %}</p>
-        <div class="input-field">
-            <label for="id_backup-otp_token">Token:</label>
-            <input id="id_backup-otp_token" name="backup-otp_token" type="text">
+         <fieldset>
+             <div class="input-field">
+                 <label for="id_backup-otp_token">Token:</label>
+                 <input id="id_backup-otp_token" name="backup-otp_token" type="text">
+             </div>
+         </fieldset>
+        <div class="login__buttons">
             <button name="wizard_goto_step" type="submit" class="button ___stretch ___active">{% trans "Use backuptoken" %}</button>
-            <button name="wizard_goto_step" type="submit" value="auth" class="button ___stretch ___active">{% trans "Back" %}</button>
+            <button name="wizard_goto_step" type="submit" value="auth" class="button ___stretch ___white ___outline">{% trans "Back" %}</button>
         </div>
 
     {% endif %}
@@ -95,7 +113,7 @@
       <p>{% trans "As a last resort, you can use a backup token:" %}</p>
         <div class="input-field">
             <button name="wizard_goto_step" type="submit" value="backup" class="button ___stretch ___active">{% trans "Use backuptoken" %}</button>
-            <button name="wizard_goto_step" type="submit" value="auth" class="button ___stretch ___active">{% trans "Back" %}</button>
+            <button name="wizard_goto_step" type="submit" value="auth" class="button ___stretch ___white ___outline">{% trans "Back" %}</button>
         </div>
 
     {% endif %}
