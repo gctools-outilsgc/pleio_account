@@ -267,15 +267,12 @@ class PreviousLogins(models.Model):
             if device_id is None:
                 return False
 
-            try:
-                self = PreviousLogins.objects.get(
-                    user=user,
-                    device_id=device_id
-                )
-                self.confirmed_login = True
-                self.save()
-            except:
-                pass
+            self = PreviousLogins.objects.get(
+                user=user,
+                device_id=device_id
+            )
+            self.confirmed_login = True
+            self.save()
 
             return True
 

@@ -19,12 +19,6 @@ class PleioLoginView(LoginView):
             self.request.session.set_expiry(0)
 
         user = self.get_user()
-
-        try:
-            device_id = self.request.COOKIES['device_id']
-        except:
-            device_id = None
-
         user.check_users_previous_logins(self.request)
 
         return LoginView.done(self, form_list, **kwargs)
