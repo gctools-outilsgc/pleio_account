@@ -3,16 +3,23 @@
 
 {% block content %}
 
-<ul class="messages error">
-    {% for error in form.non_field_errors %}
-        <li>{{ error }}</li>
-    {% endfor %}
-</ul>
-
 <form method="post" action=".">
     {% csrf_token %}
-    <p>{% trans "Welcome, please login." %}</p>
-
+    
+    <div class="login__step-title">
+        <div>
+            <h2>{% trans "Register" %}</h2>
+            <p>{% trans "create a Pleio-account" %}</p>
+        </div>
+        <img src="/static/images/logo-icon.svg" class="login__step-icon"/>
+    </div>
+    
+    <ul class="messages error">
+        {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+    
     <fieldset>
         <div class="input-field">
             <label for="id_name">{% trans "First- and lastname" %}</label>
@@ -44,20 +51,16 @@
             <div class="register__check">
                 {{ form.errors.receives_newsletter }}
                 {{ form.receives_newsletter }}
-                <label for="id_receives_newsletter">{% trans "Please subscribe me to the newsletter" %}</label>
+                <label for="id_receives_newsletter">{% trans "Please subscribe me to the Pleio newsletter" %}</label>
             </div>
         </div>
-
-        <div class="register__button">
-            <table><tr>
-                <td {padding: 15px;}>
-                    <button name="register" class="button ___stretch ___active" type="submit">{% trans "Register" %}</button>
-                 </td>
-                <td {padding: 15px;}>
-                    <a href="{% url 'login' %}" class="button"> {% trans "Back" %}</a>
-                </td>
-            </tr></table>
+        
+        <div class="register__buttons">
+            <button name="register" class="button ___stretch ___active" type="submit">{% trans "Register" %}</button>
+            <a href="{% url 'login' %}" class="button ___stretch ___white ___outline">{% trans "Login" %}</a>
         </div>
+        
+    </fieldset>
 
 </form>
 
