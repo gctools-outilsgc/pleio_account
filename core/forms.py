@@ -49,14 +49,6 @@ class UserProfileForm(forms.ModelForm):
         fields = ('name', 'email', 'avatar')
 
 
-class PleioAuthenticationForm(AuthenticationForm):
-    is_persistent = forms.BooleanField(required=False, initial=True)
-
-    class Meta:
-        model = User
-        fields = ('email', 'password', 'is_persistent')
-
-
 class PleioAuthenticationTokenForm(AuthenticationTokenForm):
     otp_token = forms.IntegerField(label=_("Token"), widget=forms.TextInput)
 

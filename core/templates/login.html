@@ -34,12 +34,6 @@
                 <a href="{% url 'password_reset' %}" class="forgot-password">{% trans "Forgot password" %}?</a>
             </div>
 
-            <!-- <div class="login__check">
-                {{ form.errors.is_persistent }}
-                {{ form.is_persistent }}
-                <label for="id_auth-is_persistent">{% trans "Remember me" %}</label>
-            </div> -->
-
             <div class="login__buttons">
                 <button name="login" class="button ___stretch ___active login__login" type="submit">{% trans "Login" %}</button>
                 <a href="{% url 'register' %}" class="button ___stretch ___white ___outline">{% trans "Register account" %}</a>
