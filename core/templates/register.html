@@ -49,7 +49,7 @@
             <div class="register__check">
                 {{ form.errors.accepted_terms }}
                 {{ form.accepted_terms }}
-                <label for="id_accepted_terms">{% trans "I agree with the general terms" %}</label>
+                <label for="id_accepted_terms">{% trans "I agree with the "%}</label><a href="{% url 'terms_of_use' %}">{% trans " general terms"%}</a>
             </div>
             <div class="register__check">
                 {{ form.errors.receives_newsletter }}
