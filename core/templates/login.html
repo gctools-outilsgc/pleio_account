@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load Pleio_templatetags %}
 
 {% block content %}
 
@@ -31,6 +32,7 @@
                 <label for="id_auth-password">{% trans "Password" %}</label>
                 {{ form.errors.password }}
                 {{ form.password }}
+                <span class="password__toggle">{% include_asset "icons/eye.svg" %}</span>
                 <a href="{% url 'password_reset' %}" class="forgot-password">{% trans "Forgot password" %}?</a>
             </div>
 
@@ -45,6 +47,7 @@
         <ul class="messages info">
             <li class="messages__link">
                 <a href="/link/">
+                    {% include_asset "icons/lock-plus.svg" %}
                     <div class="textcolor_primary">{% trans "Secure your account" %}</div>
                     <div class="textcolor_secondary">{% trans "Enable two factor authentication" %}</div>
                 </a>
@@ -60,9 +63,18 @@
       };
     </script>
     
+    <div class="login__step-title">
+        <div>
+            <h2>{% trans "Sign in" %}</h2>
+            <p>{% trans "with your Pleio-account" %}</p>
+        </div>
+        <img src="/static/images/logo-icon.svg" class="login__step-icon"/>
+    </div>
+    
     <ul class="messages info">
         <li class="messages__link">
             <a href="/link/">
+                {% include_asset "icons/lock-plus.svg" %}
                 <div class="textcolor_primary">{% trans "Two factor authentication" %}</div>
                 <div class="textcolor_secondary">{% trans "Fill in a code from your code generator." %}</div>
             </a>

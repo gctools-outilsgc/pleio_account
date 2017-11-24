@@ -1,5 +1,6 @@
 {% extends "base_account.html" %}
 {% load i18n %}
+{% load Pleio_templatetags %}
 
 {% block title %}Login{% endblock %}
 
@@ -21,7 +22,7 @@
                         <label for="id_email">{% trans "Email" %}</label>
                         {{ form.errors.email }}
                         {{ form.email }}
-                        <span class="badge green">{% trans "Overheid" %}</span>
+                        <span class="badge green __uppercase">{% include_asset "icons/check.svg" %}{% trans "Government" %}</span>
                     </div>
                 </fieldset>
                 <div class="card__action ___addpadding-side">

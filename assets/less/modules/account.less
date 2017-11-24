@@ -82,35 +82,6 @@
     margin-bottom: 4rem; 
 }
 
-.account__logo {
-    display: block;
-    cursor: pointer;
-
-    svg {
-        display: block;
-    }
-
-    #background,
-    #lines,
-    #text {
-        transition: fill @trans-fast;
-    }
-
-    #background {
-        fill: @color-grey__50;
-    }
-
-    &:hover {
-        #background {
-            fill: @color-grey;
-        }
-
-        #lines {
-            fill: @color-white;
-        }
-    }
-}
-
 .account__close {
     .icon(chevron-left);
     float: right;
@@ -206,6 +177,25 @@
     
     &:hover {
         color: @color-primary;
+    }
+}
+
+.password__toggle {
+    position: absolute;
+    right: 0;
+    top: 0.4rem;
+    padding: 0.8rem 0.8rem 0.6rem; 
+    cursor: pointer;
+    
+    svg {
+        fill: @color-grey__40;
+        width: 2.4rem;
+        height: 2.4rem;
+        transition: fill @trans-fast;
+    }
+    
+    &:hover svg {
+        fill: @color-black__90;
     }
 }
 
@@ -427,7 +417,10 @@
     align-items: center;
     justify-content: center;
     
-    img {
+    svg {
         width: 75%;
+        
     }
+    &.__enable .icon-lock { fill: @color-red; }
+    &.__disable .icon-lock { fill: @color-green; }
 }

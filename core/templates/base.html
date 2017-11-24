@@ -1,5 +1,6 @@
 {% load render_bundle from webpack_loader %}
 {% load i18n %}
+{% load Pleio_templatetags %}
 {% get_current_language as LANGUAGE_CODE %}
 
 <!DOCTYPE html>
@@ -22,7 +23,7 @@
             
             <div class="account">
                 <div class="account__top-bar">
-                    <a class="navigation__logo" title="{% trans "Back to the homepage" %}" href="https://www.pleio.nl/"><img src="/static/images/logo.svg" /></a>
+                    <a class="navigation__logo" title="{% trans "Back to the homepage" %}" href="https://www.pleio.nl/">{% include_asset "images/logo.svg" %}</a>
                 </div>
 
                 <div class="account__slider">

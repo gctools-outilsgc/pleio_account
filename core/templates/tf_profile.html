@@ -1,5 +1,6 @@
 {% extends "base_account.html" %}
 {% load i18n two_factor %}
+{% load Pleio_templatetags %}
 
 {% block content %}
     <h2>{% block title %}{% trans "Two-Factor Authentication" %}{% endblock %}</h2>
@@ -26,8 +27,8 @@
           {% if default_device %}
                 <h2 class="card__title ___addpadding-side">{% trans "Disable Two-Factor Authentication" %}</h2>
                 <div class="___addpadding-side">
-                    <div class="image__2fa">
-                        <img src="/static/images/2fa.svg" />
+                    <div class="image__2fa __disable">
+                        {% include_asset "images/2fa.svg" %}
                     </div>
                     {% blocktrans %}However we strongly discourage you to do so, you can
                       also disable two-factor authentication for your account.{% endblocktrans %}
@@ -38,8 +39,8 @@
           {% else %}
               <h2 class="card__title ___addpadding-side">{% trans "Enable Two-Factor Authentication" %}</h2>
               <div class="___addpadding-side">
-                  <div class="image__2fa">
-                      <img src="/static/images/2fa.svg" />
+                  <div class="image__2fa __enable">
+                      {% include_asset "images/2fa.svg" %}
                   </div>
                   {% blocktrans %}Two-factor authentication is not enabled for your
                     account. Enable two-factor authentication for enhanced account
