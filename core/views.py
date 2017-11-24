@@ -130,10 +130,6 @@ def accept_previous_login(request, acceptation_token=None):
 
 
 def terms_of_use(request):
-    try:
-        PreviousLogins.accept_previous_logins(request, acceptation_token)
-    except:
-        pass
 
     return render(request, 'terms_of_use.html')
 
