@@ -145,7 +145,6 @@ def security_pages(request):
     two_factor_authorization = ProfileView.as_view(template_name='tf_profile.html')(request).context_data
     
     user_sessions = SessionListView.as_view(template_name='security_pages.html')(request).context_data
-    object_list = user_sessions["object_list"]
 
     rendered_response = render(request, 'security_pages.html', 
             context={ 
