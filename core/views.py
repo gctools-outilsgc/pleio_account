@@ -141,7 +141,6 @@ def terms_of_use(request):
 def security_pages(request):
 
     pass_reset = auth_views.password_reset(request, template_name = 'password_reset.html').context_data
-    print("pass_reset: ", pass_reset)
 
     two_factor_authorization = ProfileView.as_view(template_name='tf_profile.html')(request).context_data
     
@@ -154,7 +153,6 @@ def security_pages(request):
                 '2FA': two_factor_authorization, 
                 'object_list': user_sessions["object_list"] 
             }) 
-    #print("render: ", rendered_response.content)
 
     return rendered_response
 
