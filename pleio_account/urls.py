@@ -23,7 +23,7 @@ from django.contrib import admin
 from core import views
 from core.class_views import PleioLoginView
 from two_factor.views import ProfileView, BackupTokensView, SetupCompleteView, DisableView
-from user_sessions.views import SessionListView
+
 
 legacy_urls = [
     url(r'^mod/profile/icondirect.php$', views.avatar, name='avatar_legacy'),
@@ -35,6 +35,7 @@ urls = [
     url(r'^register/complete/$', views.register_complete, name='register_complete'),
     url(r'^register/activate/(?P<activation_token>[-:\w]+)/$', views.register_activate, name='register_activate'),
     url(r'^termsofuse/$', views.terms_of_use, name='terms_of_use'),
+    url(r'^securitypages/$', views.security_pages, name='security_pages'),
     url(r'^password_reset/$', auth_views.password_reset, { 'template_name': 'password_reset.html' }, name='password_reset'),
     url(r'^password_reset/done/$', auth_views.password_reset_done, { 'template_name': 'password_reset_done.html' }, name='password_reset_done'),
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', auth_views.password_reset_confirm, { 'template_name': 'password_reset_confirm.html' }, name='password_reset_confirm'),
@@ -49,7 +50,6 @@ urls = [
     url(r'^account/two_factor/$', view=ProfileView.as_view(template_name='tf_profile.html'), name='tf_profile' ),
     url(r'^account/two_factor/backup/tokens/$', view=BackupTokensView.as_view(template_name='backup_tokens.html'), name = 'backup_tokens'),
     url(r'^account/two_factor/disable/$', view=DisableView.as_view(template_name='tf_disable.html'), name='disable'),
-    url(r'^account/sessions/$', view=SessionListView.as_view(template_name='session_list.html'), name='session_list'),
     url(r'^oauth/v2/authorize$', oauth2_views.AuthorizationView.as_view(), name='authorize'),
     url(r'^oauth/v2/token$', oauth2_views.TokenView.as_view(), name='token'),
     url(r'^oauth/v2/revoke_token$', oauth2_views.RevokeTokenView.as_view(), name='revoke-token'),

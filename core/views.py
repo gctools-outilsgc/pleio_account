@@ -10,6 +10,10 @@ from django_otp.util import random_hex
 import django_otp
 from django.conf import settings
 
+from django.contrib.auth import views as auth_views
+from two_factor.views import ProfileView
+from user_sessions.views import SessionListView
+
 
 def home(request):
     if request.user.is_authenticated():
@@ -132,5 +136,26 @@ def accept_previous_login(request, acceptation_token=None):
 def terms_of_use(request):
 
     return render(request, 'terms_of_use.html')
+
+
+def security_pages(request):
+
+    pass_reset = auth_views.password_reset(request, template_name = 'password_reset.html').context_data
+    print("pass_reset: ", pass_reset)
+
+    two_factor_authorization = ProfileView.as_view(template_name='tf_profile.html')(request).context_data
+    
+    user_sessions = SessionListView.as_view(template_name='security_pages.html')(request).context_data
+    object_list = user_sessions["object_list"]
+
+    rendered_response = render(request, 'security_pages.html', 
+            context={ 
+                'pass_reset_form': pass_reset['form'], 
+                '2FA': two_factor_authorization, 
+                'object_list': user_sessions["object_list"] 
+            }) 
+    #print("render: ", rendered_response.content)
+
+    return rendered_response
 
 
