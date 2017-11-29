@@ -6,51 +6,6 @@
 {% block content %}
 
 <!-- Password reset -->
-<<<<<<< HEAD
-<form method="post" action=".">
-    {% csrf_token %} 
-    <div class="login__step-title">
-        <div>
-            <h2>{% trans "Reset password" %}</h2>
-            <p>{% trans "of your Pleio-account" %}</p>
-        </div>
-        <img src="/static/images/logo-icon.svg" class="login__step-icon"/>
-    </div>
-    
-    <ul class="messages error">
-        {% for error in pass_reset_form.non_field_errors %}
-        <li>{{ error }}</li>
-        {% endfor %}
-    </ul>
-    
-    <fieldset>
-        <div class="input-field">
-            <label for="id_old_password">{% trans "Current Password" %}</label>
-            {{ pass_reset_form.errors.old_password }}
-            {{ pass_reset_form.old_password }}
-            <span class="password__toggle">{% include_asset "icons/eye.svg" %}</span>            
-        </div>
-    
-        <div class="input-field">
-            <label for="id_new_password1">{% trans "New Password" %}</label>
-            {{ pass_reset_form.errors.new_password1 }}
-            {{ pass_reset_form.new_password1 }}
-            <span class="password__toggle">{% include_asset "icons/eye.svg" %}</span>            
-        </div>
-    
-        <div class="input-field">
-            <label for="id_new_password2">{% trans "New Password (again)" %}</label>
-            {{ pass_reset_form.errors.new_password2 }}
-            {{ pass_reset_form.new_password2 }}
-            <span class="password__toggle">{% include_asset "icons/eye.svg" %}</span>
-        </div>
-    
-        <div class="register__buttons">
-            <button class="button ___stretch ___active" type="submit">{% trans "Confirm" %}</button>
-        </div>
-    </fieldset>
-</form>
-=======
 <h2>{% trans "Security" %}</h2>
 <div class="account__cards">
     
@@ -69,16 +24,23 @@
                     </ul>
                     
                     <div class="input-field">
+                        <label for="id_old_password">{% trans "Current Password" %}</label>
+                        {{ pass_reset_form.errors.old_password }}
+                        {{ pass_reset_form.old_password }}
+                        <span class="password__toggle">{% include_asset "icons/eye.svg" %}</span>            
+                    </div>
+                    
+                    <div class="input-field">
                         <label for="id_new_password1">{% trans "New Password" %}</label>
-                        {{ form.errors.new_password1 }}
-                        {{ form.new_password1 }}
+                        {{ pass_reset_form.errors.new_password1 }}
+                        {{ pass_reset_form.new_password1 }}
                         <span class="password__toggle">{% include_asset "icons/eye.svg" %}</span>            
                     </div>
                     
                     <div class="input-field">
                         <label for="id_new_password2">{% trans "New Password (again)" %}</label>
-                        {{ form.errors.new_password2 }}
-                        {{ form.new_password2 }}
+                        {{ pass_reset_form.errors.new_password2 }}
+                        {{ pass_reset_form.new_password2 }}
                         <span class="password__toggle">{% include_asset "icons/eye.svg" %}</span>
                     </div>
                     
@@ -92,7 +54,6 @@
     </div>
 </div>
 
->>>>>>> ecc8c64ffcb576342f2a508bfff53693683c7012
 
 <!-- Two factor authorization -->
 <h2>{% block title %}{% trans "Two-Factor Authentication" %}{% endblock %}</h2>
