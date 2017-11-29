@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, render_to_response
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-from .forms import RegisterForm, UserProfileForm, PleioTOTPDeviceForm
+from .forms import RegisterForm, UserProfileForm, PleioTOTPDeviceForm, ChangePasswordForm
 from .models import User, PreviousLogins
 from django.urls import reverse
 from base64 import b32encode
@@ -11,6 +11,7 @@ import django_otp
 from django.conf import settings
 
 from django.contrib.auth import views as auth_views
+from django.contrib.auth import authenticate, update_session_auth_hash
 from two_factor.views import ProfileView
 from user_sessions.views import SessionListView
 
@@ -140,19 +141,42 @@ def terms_of_use(request):
 
 def security_pages(request):
 
-    pass_reset = auth_views.password_reset(request, template_name = 'password_reset.html').context_data
+    #pass_reset = auth_views.password_reset(request, template_name = 'password_reset.html').context_data
 
-    two_factor_authorization = ProfileView.as_view(template_name='tf_profile.html')(request).context_data
+    if request.method == 'POST':
+        form = ChangePasswordForm(request.POST)
+        if form.is_valid():
+            print("form valid")
+            data = form.cleaned_data
+            old_password=data['old_password']
+            new_password1=data['new_password1']
+            new_password2=data['new_password2']
+            username = request.user.email
+            user = authenticate(username=username, password=old_password)
+            if user is not None:
+                print("password changed")
+                user.set_password(data['new_password2'])
+                user.save()
+                update_session_auth_hash(request, user)
+
+            rendered_response = render(request, 'security_pages.html', 
+                    context={ 
+                        'pass_reset_form': form, 
+                    }) 
+        else:
+            print("form invalid")
+            return redirect(security_pages)
+
+    else:
+        two_factor_authorization = ProfileView.as_view(template_name='tf_profile.html')(request).context_data
     
-    user_sessions = SessionListView.as_view(template_name='security_pages.html')(request).context_data
+        user_sessions = SessionListView.as_view(template_name='security_pages.html')(request).context_data
 
-    rendered_response = render(request, 'security_pages.html', 
-            context={ 
-                'pass_reset_form': pass_reset['form'], 
-                '2FA': two_factor_authorization, 
-                'object_list': user_sessions["object_list"] 
-            }) 
+        rendered_response = render(request, 'security_pages.html', 
+                context={ 
+                    'pass_reset_form': ChangePasswordForm, 
+                    '2FA': two_factor_authorization, 
+                    'object_list': user_sessions["object_list"] 
+                }) 
 
     return rendered_response
-
-

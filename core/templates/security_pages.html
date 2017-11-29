@@ -6,46 +6,48 @@
 {% block content %}
 
 <!-- Password reset -->
-<form method="post" action="{% url 'password_reset_done' %}">
+<form method="post" action=".">
     {% csrf_token %} 
-    
     <div class="login__step-title">
         <div>
-            <h2>{% trans "Forgot password" %}</h2>
+            <h2>{% trans "Reset password" %}</h2>
             <p>{% trans "of your Pleio-account" %}</p>
         </div>
         <img src="/static/images/logo-icon.svg" class="login__step-icon"/>
     </div>
     
     <ul class="messages error">
-        {% for error in form.non_field_errors %}
-            <li>{{ error }}</li>
+        {% for error in pass_reset_form.non_field_errors %}
+        <li>{{ error }}</li>
         {% endfor %}
     </ul>
     
     <fieldset>
         <div class="input-field">
-            <label for="{{ pass_reset_form.email.id_for_label }}">{% trans "Email address" %}</label>
-            {{ pass_reset_form.errors.email }}
-            {{ pass_reset_form.email }}
+            <label for="id_old_password">{% trans "Current Password" %}</label>
+            {{ pass_reset_form.errors.old_password }}
+            {{ pass_reset_form.old_password }}
+            <span class="password__toggle">{% include_asset "icons/eye.svg" %}</span>            
         </div>
-
-        <div class="register__buttons">
-            <button class="button ___stretch ___active" type="submit">{% trans "Reset password" %}</button>
-            <a href="{% url 'login' %}" class="button ___stretch ___white ___outline"> {% trans "Login" %}</a>
-        </div>
-
-    </fieldset>
     
-    <ul class="messages info">
-        <li class="messages__link">
-            <a href="mailto:support@pleio.org">
-                {% include_asset "icons/help-outline.svg" %}
-                <div class="textcolor_primary">{% trans "Need help?" %}</div>
-                <div class="textcolor_secondary">{% trans "Email" %} support@pleio.org</div>
-            </a>
-        </li>
-    </ul>
+        <div class="input-field">
+            <label for="id_new_password1">{% trans "New Password" %}</label>
+            {{ pass_reset_form.errors.new_password1 }}
+            {{ pass_reset_form.new_password1 }}
+            <span class="password__toggle">{% include_asset "icons/eye.svg" %}</span>            
+        </div>
+    
+        <div class="input-field">
+            <label for="id_new_password2">{% trans "New Password (again)" %}</label>
+            {{ pass_reset_form.errors.new_password2 }}
+            {{ pass_reset_form.new_password2 }}
+            <span class="password__toggle">{% include_asset "icons/eye.svg" %}</span>
+        </div>
+    
+        <div class="register__buttons">
+            <button class="button ___stretch ___active" type="submit">{% trans "Confirm" %}</button>
+        </div>
+    </fieldset>
 </form>
 
 <!-- Two factor authorization -->

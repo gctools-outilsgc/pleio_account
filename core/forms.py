@@ -55,3 +55,30 @@ class PleioAuthenticationTokenForm(AuthenticationTokenForm):
 
 class PleioTOTPDeviceForm(TOTPDeviceForm):
     token = forms.IntegerField(label=_("Token"), widget=forms.TextInput)
+
+
+class ChangePasswordForm(forms.Form):
+    error_messages = {
+        'password_mismatch': _("The two password fields didn't match."),
+    }
+
+    old_password = forms.CharField(strip=False, widget=forms.PasswordInput)
+    new_password1 = forms.CharField(strip=False, widget=forms.PasswordInput)
+    new_password2 = forms.CharField(strip=False, widget=forms.PasswordInput)
+
+    def clean_new_password2(self):
+        new_password1 = self.cleaned_data.get("new_password1")
+        new_password2 = self.cleaned_data.get("new_password2")
+
+        print("new_password1: ", new_password1)
+        print("new_password2: ", new_password2)
+
+        if new_password1 and new_password2 and new_password1 != new_password2:
+            print("password_mismatch")
+            raise forms.ValidationError(
+                self.error_messages['password_mismatch'],
+                code='password_mismatch',
+            )
+
+        password_validation.validate_password(self.cleaned_data.get('new_password2'))
+        return new_password2
