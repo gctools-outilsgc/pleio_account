@@ -78,8 +78,19 @@
     }
 }
 
-.account-overlay.___profile .account__top-bar {
-    margin-bottom: 4rem; 
+
+@media @screen-lg-max {
+    .account-overlay.___profile #show_menu:checked + .account__top-bar {
+        margin-bottom: 4rem; 
+    }
+    .account-overlay.___profile #show_menu:not(:checked) ~ .account-menu__list {
+        display: none;
+    }
+}
+@media @screen-lg {
+    .account-overlay.___profile .account__top-bar {
+        margin-bottom: 4rem; 
+    }
 }
 
 .account__close {
@@ -241,6 +252,27 @@
         max-width: none;
         min-height: 0;
         order: 2;
+    }
+}
+
+.account-menu__hamburger {
+    width: 2.4rem;
+    height: 2.4rem;
+    float: right;
+    padding: 1rem 0 0;
+    display: none;
+    cursor: pointer;
+    
+    @media @screen-lg-max {
+        display: block; 
+    }
+    
+    svg {
+        fill: @color-black__60;
+        transition: fill @trans-fast;
+    }
+    &:hover svg {
+        fill: @color-primary;
     }
 }
 
