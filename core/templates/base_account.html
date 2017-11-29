@@ -18,7 +18,9 @@
         <div class="account-overlay ___profile">
             
             <div class="account-menu">
+                <input type="checkbox" id="show_menu" />
                 <div class="account__top-bar">
+                    <label for="show_menu" class="account-menu__hamburger">{% include_asset "icons/hamburger.svg" %}</label>
                     <a class="navigation__logo" title="{% trans "Back to the homepage" %}" href="https://www.pleio.nl/">{% include_asset "images/logo.svg" %}</a>
                 </div>
                 
@@ -49,15 +51,6 @@
                             <div>
                                 <span class="title">{% trans "Security" %}</span><br />
                                 {% trans "Password" %}, {% trans "Sessions" %}, {% trans "Two-factor authentication" %}
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'tf_profile' %}">
-                            {% include_asset "icons/security.svg" %}
-                            <div>
-                                <span class="title">Temporary item</span><br />
-                                {% trans "Two-factor authentication" %}
                             </div>
                         </a>
                     </li>
