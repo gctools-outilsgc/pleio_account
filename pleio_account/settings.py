@@ -38,6 +38,7 @@ if not DEBUG:
 
 INSTALLED_APPS = [
     'core',
+    'emailvalidator',
     'api',
     'gctoken',
     'oauth2_provider',
