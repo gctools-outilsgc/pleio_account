@@ -25,12 +25,15 @@ from core.class_views import PleioLoginView
 from two_factor.views import ProfileView, BackupTokensView, SetupCompleteView, DisableView
 from user_sessions.views import SessionListView
 
+from gctoken import views as token_views
+
 legacy_urls = [
     url(r'^mod/profile/icondirect.php$', views.avatar, name='avatar_legacy'),
     url(r'^action/logout$', views.logout, name='logout_legacy')
 ]
 
 urls = [
+    url(r'^token/$', token_views.get_token, name='get_token'),
     url(r'^register/$', views.register, name='register'),
     url(r'^register/complete/$', views.register_complete, name='register_complete'),
     url(r'^register/activate/(?P<activation_token>[-:\w]+)/$', views.register_activate, name='register_activate'),

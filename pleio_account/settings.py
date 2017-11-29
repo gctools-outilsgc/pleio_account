@@ -39,6 +39,7 @@ if not DEBUG:
 INSTALLED_APPS = [
     'core',
     'api',
+    'gctoken',
     'oauth2_provider',
     'rest_framework',
     'axes',

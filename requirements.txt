@@ -14,3 +14,4 @@ django-two-factor-auth==1.6.2
 geoip2==2.5.0
 django-user-sessions==1.5.3
 gunicorn==19.7.1
+python-jose==1.4.0
