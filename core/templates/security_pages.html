@@ -16,6 +16,8 @@
             <div class="___addpadding-side">
                 {% csrf_token %} 
                 
+                {{message}}
+
                 <fieldset>
                     <ul class="messages error">
                         {% for error in form.non_field_errors %}

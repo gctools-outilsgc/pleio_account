@@ -140,13 +140,9 @@ def terms_of_use(request):
 
 
 def security_pages(request):
-
-    #pass_reset = auth_views.password_reset(request, template_name = 'password_reset.html').context_data
-
     if request.method == 'POST':
         form = ChangePasswordForm(request.POST)
         if form.is_valid():
-            print("form valid")
             data = form.cleaned_data
             old_password=data['old_password']
             new_password1=data['new_password1']
@@ -154,18 +150,15 @@ def security_pages(request):
             username = request.user.email
             user = authenticate(username=username, password=old_password)
             if user is not None:
-                print("password changed")
                 user.set_password(data['new_password2'])
                 user.save()
                 update_session_auth_hash(request, user)
 
-            rendered_response = render(request, 'security_pages.html', 
-                    context={ 
-                        'pass_reset_form': form, 
-                    }) 
-        else:
-            print("form invalid")
-            return redirect(security_pages)
+        rendered_response = render(request, 'security_pages.html', 
+                { 
+                    'pass_reset_form': form,
+                    'message': 'Het wachtwoord is succesvol veranderd.'
+                }) 
 
     else:
         two_factor_authorization = ProfileView.as_view(template_name='tf_profile.html')(request).context_data
@@ -173,8 +166,8 @@ def security_pages(request):
         user_sessions = SessionListView.as_view(template_name='security_pages.html')(request).context_data
 
         rendered_response = render(request, 'security_pages.html', 
-                context={ 
-                    'pass_reset_form': ChangePasswordForm, 
+                { 
+                    'pass_reset_form': ChangePasswordForm(), 
                     '2FA': two_factor_authorization, 
                     'object_list': user_sessions["object_list"] 
                 }) 
