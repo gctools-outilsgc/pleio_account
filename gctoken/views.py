@@ -1,10 +1,16 @@
 """
 gctoken API endpoints
 """
-from django.http import HttpResponseForbidden, HttpResponse, HttpResponseBadRequest
-from jose import jwt
+from urllib.parse import urlparse, urlencode
+import urllib.request
+import re
+
+from django.http import HttpResponseForbidden, HttpResponse, \
+    HttpResponseBadRequest
 from django.views.decorators.clickjacking import xframe_options_exempt
-from urllib.parse import urlparse
+from django.conf import settings
+
+from jose import jwt
 
 ALLOWED_TOKEN_ORIGINS = [
     'http://gcrec.lpss.me',
@@ -33,12 +39,37 @@ def get_token(request):
         return HttpResponseForbidden()
 
     if request.user.is_authenticated():
+        # HACK: Temporary to get gconnex guid
+        search_url = "http://intranet.canada.ca/search-recherche/" \
+                     "query-recherche-eng.aspx?a=s&s=3&chk4=on&%s" \
+                     % urlencode({'q': request.user.email})
+        with urllib.request.urlopen(search_url) as response:
+            search_html = response.read()
+            username_match = re.search(
+                'href="https://gcconnex.gc.ca/profile/(.*?)"',
+                search_html.decode('utf-8')
+            )
+            username = 'N/A'
+            guid = 'N/A'
+            if username_match:
+                username = username_match.group(1)
+                profile_url = "https://gcconnex.gc.ca/profile/%s" % username
+                with urllib.request.urlopen(profile_url) as profile_response:
+                    profile_html = profile_response.read()
+                    guid_match = re.search(
+                        '"guid":(.*?),',
+                        profile_html.decode('utf-8')
+                    )
+                    if guid_match:
+                        guid = guid_match.group(1)
+
         encoded = jwt.encode(
             {
                 'email': request.user.email,
-                'gcconnex_guid': '24294737'
+                'gcconnex_username': username,
+                'gcconnex_guid': guid
             },
-            'dXSAKDCEE#KJFE@KF$(ITRE@de2hf8432yfujefd42F',
+            settings.GCTOKEN_SECRET,
             algorithm='HS256'
         )
         response = HttpResponse()

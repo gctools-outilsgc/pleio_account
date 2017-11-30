@@ -34,6 +34,8 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASSWORD')
 EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')
 EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL')
 
+GCTOKEN_SECRET = os.getenv('GCTOKEN_SECRET')
+
 SEND_SUSPICIOUS_BEHAVIOR_WARNINGS \
     = os.getenv('SEND_SUSPICIOUS_BEHAVIOR_WARNINGS', 'f').lower() in [
         'true', '1', 't', 'y', 'yes', 'on'
