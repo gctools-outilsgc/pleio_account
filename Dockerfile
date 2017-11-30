@@ -1,37 +1,34 @@
-FROM python:3.6
-MAINTAINER Bart Jeukendrup <bart@jeukendrup.nl>
 
-# Install OS dependencies
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
-    apt-get install -y nodejs
-
-# Install app dependencies
-RUN mkdir /app
+# Stage 1 - Build the javascript bundle
+FROM alpine
+RUN apk --no-cache add nodejs nodejs-npm
+COPY package.json package-lock.json /app/
 WORKDIR /app
-ADD requirements.txt /app
-ADD package.json /app
-ADD package-lock.json /app
-
-RUN pip install -r requirements.txt
 RUN npm install
-
-# Add app
-ADD . /app
-
-# Build the frontend
+COPY assets /app/assets
+COPY webpack.prod.config.js /app/
 RUN npm run build
 
-# Boot script
-ADD docker/config.py /app/pleio_account/config.py
-ADD docker/start.sh /start.sh
-RUN chmod +x /start.sh
+# Stage 2 - Compile needed python dependencies
+FROM alpine
+RUN mkdir /app && apk --no-cache add python3 postgresql-dev gcc python3-dev musl-dev zlib-dev jpeg-dev && pip3 install virtualenv && virtualenv /app/env
+WORKDIR /app
+COPY requirements.txt /app
+RUN /app/env/bin/pip install -r requirements.txt
 
-# Cleanup all the build packages
-RUN apt-get remove -y nodejs
-RUN rm -rf node_modules && rm -rf /var/lib/apt/lists/*
+# Stage 3 - Build docker image suitable for execution and deployment
+FROM alpine
+LABEL maintainer Bart Jeukendrup <bart@jeukendrup.nl>
+RUN mkdir /app && apk --no-cache add python3 postgresql musl zlib jpeg 
+COPY . /app
+COPY --from=0 /app/assets /app/assets
+COPY --from=1 /app/env /app/env
+COPY docker/config.py /app/pleio_account/config.py
+COPY docker/start.sh /start.sh
 
-# HTTP port
+# RUN cp /app/docker/config.py /app/pleio_account/config.py && cp /app/docker/start.sh /start.sh && chmod +x /start.sh
+
+ENV PATH="/app/env/bin:${PATH}"
+WORKDIR /app
 EXPOSE 8000
-
-# Define run script
-CMD ["/start.sh"]
+CMD ["/bin/sh", "/start.sh"]

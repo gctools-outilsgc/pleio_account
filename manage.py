@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 import os
 import sys
+import threading
+
+# Fix for alpine segfault
+threading.stack_size(2*1024*1024)
 
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pleio_account.settings")
