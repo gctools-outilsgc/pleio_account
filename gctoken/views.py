@@ -1,7 +1,7 @@
 """
 gctoken API endpoints
 """
-from django.http import HttpResponseForbidden, HttpResponse
+from django.http import HttpResponseForbidden, HttpResponse, HttpResponseBadRequest
 from jose import jwt
 from django.views.decorators.clickjacking import xframe_options_exempt
 from urllib.parse import urlparse
@@ -22,6 +22,9 @@ def get_token(request):
     If the user is authenticated, return a JWT token, otherwise return 403.
     Additionally returns 403 unless the origin is trusted.
     """
+    if 'HTTP_REFERER' not in request.META:
+        return HttpResponseBadRequest()
+
     parsed = urlparse(request.META['HTTP_REFERER'])
     origin = "%s://%s" % (parsed.scheme, parsed.hostname)
     if parsed.port is not None:
