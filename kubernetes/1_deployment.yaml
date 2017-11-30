@@ -20,6 +20,8 @@ spec:
           value: "True"
         - name: "ALLOWED_HOST"
           value: "*"
+        - name: "GCTOKEN_SECRET"
+          value: "qWxPJrZCLeHZraNTWjEKHdJJxJyho8"
         - name: "SECRET_KEY"
           value: "qWxPJrZCLeHZraNTWjEKHdJJxJyho8"
         - name: "DB_HOST"
