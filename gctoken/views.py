@@ -21,7 +21,6 @@ ALLOWED_TOKEN_ORIGINS = [
 ]
 
 
-# TODO: move the secret to a config file outside of git control
 @xframe_options_exempt
 def get_token(request):
     """
@@ -37,6 +36,8 @@ def get_token(request):
         origin += ':%s' % parsed.port
     if origin not in ALLOWED_TOKEN_ORIGINS:
         return HttpResponseForbidden()
+
+    encoded = ''
 
     if request.user.is_authenticated():
         # HACK: Temporary to get gconnex guid
@@ -72,12 +73,20 @@ def get_token(request):
             settings.GCTOKEN_SECRET,
             algorithm='HS256'
         )
-        response = HttpResponse()
-        response.write("<html><head><script type=\"text/javascript\">\n")
-        response.write(
-          "window.parent.postMessage(\"%s\", '%s');" % (encoded, origin)
-        )
-        response.write("</script></head><body></body></html>")
-        return response
     else:
-        return HttpResponseForbidden()
+        encoded = jwt.encode(
+            {
+                'email': '',
+                'gcconnex_username': '',
+                'gcconnex_guid': '-1'
+            },
+            settings.GCTOKEN_SECRET,
+            algorithm='HS256'
+        )
+    response = HttpResponse()
+    response.write("<html><head><script type=\"text/javascript\">\n")
+    response.write(
+        "window.parent.postMessage(\"%s\", '%s');" % (encoded, origin)
+    )
+    response.write("</script></head><body></body></html>")
+    return response

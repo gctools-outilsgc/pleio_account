@@ -43,6 +43,7 @@ RUN apk --no-cache add \
 
 COPY . /app
 COPY --from=0 /app/assets /app/assets
+COPY --from=0 /app/webpack-stats.json /app/webpack-stats.json
 COPY --from=1 /app/env /app/env
 RUN cp /app/docker/config.py /app/pleio_account/config.py && \
     cp /app/docker/start.sh /start.sh && \

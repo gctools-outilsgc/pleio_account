@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: pleio-account
-        image: localhost:5000/gctools-outilsgc/pleio_account:0.0.14
+        image: localhost:5000/gctools-outilsgc/pleio_account:0.0.19
         ports:
         - containerPort: 8000
         env:
@@ -35,7 +35,7 @@ spec:
         - name: "https_proxy"
           value: "http://proxy.paz.nrc.gc.ca:8080"
       - name: pleio-account-database
-        image: postgres
+        image: localhost:5000/postgres
         ports:
         - containerPort: 5432
         volumeMounts:
