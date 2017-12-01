@@ -59,6 +59,7 @@ class PleioTOTPDeviceForm(TOTPDeviceForm):
 
 class ChangePasswordForm(forms.Form):
     error_messages = {
+        'invalid_password': _("The password is invalid."),
         'password_mismatch': _("The two password fields didn't match."),
     }
 
@@ -70,11 +71,7 @@ class ChangePasswordForm(forms.Form):
         new_password1 = self.cleaned_data.get("new_password1")
         new_password2 = self.cleaned_data.get("new_password2")
 
-        print("new_password1: ", new_password1)
-        print("new_password2: ", new_password2)
-
         if new_password1 and new_password2 and new_password1 != new_password2:
-            print("password_mismatch")
             raise forms.ValidationError(
                 self.error_messages['password_mismatch'],
                 code='password_mismatch',

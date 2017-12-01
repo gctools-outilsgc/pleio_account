@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, render_to_response
+from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from .forms import RegisterForm, UserProfileForm, PleioTOTPDeviceForm, ChangePasswordForm
@@ -14,6 +14,12 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth import authenticate, update_session_auth_hash
 from two_factor.views import ProfileView
 from user_sessions.views import SessionListView
+from django.utils.translation import gettext, gettext_lazy as _
+from django.contrib import messages
+from django.template.response import TemplateResponse
+from django.contrib.auth import password_validation
+from core.class_views import PleioBackupTokensView
+from two_factor.views.profile import DisableView
 
 
 def home(request):
@@ -86,9 +92,9 @@ def profile(request):
 def avatar(request):
     DEFAULT_AVATAR = '/static/images/gebruiker.svg'
 
-    print(request.GET['guid'])
+    #print(request.GET['guid'])
     user = User.objects.get(id=request.GET['guid'])
-    print(user.avatar)
+    #print(user.avatar)
 
     try:
         user = User.objects.get(id=int(request.GET['guid']))
@@ -102,6 +108,20 @@ def avatar(request):
 
 @login_required
 def tf_setup(request):
+    key = random_hex(20).decode('ascii')
+    rawkey = unhexlify(key.encode('ascii'))
+    b32key = b32encode(rawkey).decode('utf-8')
+
+    request.session['tf_key'] = key
+    request.session['django_two_factor-qr_secret_key'] = b32key
+
+    return TemplateResponse(request, 'security_pages.html', {
+        'form': PleioTOTPDeviceForm(key=key, user=request.user),
+        'QR_URL': reverse('two_factor:qr')
+    })
+    
+@login_required
+def tf_setup_complete(request):
     if request.method == 'POST':
         key = request.session.get('tf_key')
         form = PleioTOTPDeviceForm(data=request.POST, key=key, user=request.user)
@@ -110,19 +130,6 @@ def tf_setup(request):
             device = form.save()
             django_otp.login(request, device)
             return redirect('two_factor:setup_complete')
-
-    else:
-        key = random_hex(20).decode('ascii')
-        rawkey = unhexlify(key.encode('ascii'))
-        b32key = b32encode(rawkey).decode('utf-8')
-
-        request.session['tf_key'] = key
-        request.session['django_two_factor-qr_secret_key'] = b32key
-
-    return render(request, 'tf_setup.html', {
-        'form': PleioTOTPDeviceForm(key=key, user=request.user),
-        'QR_URL': reverse('two_factor:qr')
-    })
 
 
 def accept_previous_login(request, acceptation_token=None):
@@ -139,37 +146,87 @@ def terms_of_use(request):
     return render(request, 'terms_of_use.html')
 
 
-def security_pages(request):
+@login_required
+def security_pages(request, *args, **kwargs):
+
     if request.method == 'POST':
-        form = ChangePasswordForm(request.POST)
-        if form.is_valid():
-            data = form.cleaned_data
-            old_password=data['old_password']
-            new_password1=data['new_password1']
-            new_password2=data['new_password2']
-            username = request.user.email
-            user = authenticate(username=username, password=old_password)
-            if user is not None:
-                user.set_password(data['new_password2'])
-                user.save()
-                update_session_auth_hash(request, user)
+        page_action = request.POST.get('page_action')
 
-        rendered_response = render(request, 'security_pages.html', 
-                { 
-                    'pass_reset_form': form,
-                    'message': 'Het wachtwoord is succesvol veranderd.'
-                }) 
+        if page_action == 'ChangePassword':
+            form = ChangePasswordForm(request.POST)
+            if form.is_valid():
+                data = form.cleaned_data
+                old_password = data['old_password']
+                new_password1 = data['new_password1']
+                new_password2 = data['new_password2']
+                username = request.user.email
+                user = authenticate(username=username, password=old_password)
+                if user:
+                    user.set_password(data['new_password2'])
+                    user.save()
+                    update_session_auth_hash(request, user)
+                    messages.success(request, _('The Password has been changed successfully.'))
+                else:
+                    messages.error(request, _('Invalid Password'))
 
-    else:
-        two_factor_authorization = ProfileView.as_view(template_name='tf_profile.html')(request).context_data
-    
+                return redirect('security_pages')
+
+            return render(request, 'security_pages.html',
+                        {
+                            'pass_reset_form': form,
+                        })
+        if page_action == '2FASetUp':
+            two_factor_authorization = tf_setup(request).context_data
+            two_factor_authorization['default_device'] = 'true'
+            two_factor_authorization['state'] = 'setup'
+
+        elif page_action == '2FASetUpNext':
+            two_factor_authorization = tf_setup_complete(request)
+            return redirect('security_pages')
+
+        elif page_action == '2FAGenerateCodes':
+            two_factor_authorization = PleioBackupTokensView.as_view(template_name='security_pages.html')(request).context_data
+            two_factor_authorization['default_device'] = 'true'
+            two_factor_authorization['show_state'] = 'true'
+            two_factor_authorization['state'] = 'codes'
+
+        elif page_action == '2FADisableConfirm':
+            two_factor_authorization = DisableView.as_view(template_name='security_pages.html')(request)
+            two_factor_authorization['state'] = 'disable'
+            return redirect('security_pages')
+
+        return render(request, 'security_pages.html',
+                {
+                    'pass_reset_form': ChangePasswordForm(),
+                    '2FA': two_factor_authorization,
+                })
+
+    if request.method == 'GET':
+        page_action = request.GET.get('page_action')
+        if 'page_action' in kwargs:
+            page_action = kwargs['page_action']
+
+        if page_action == '2FAShowCodes':
+            two_factor_authorization = PleioBackupTokensView.as_view(template_name='backup_tokens.html')(request).context_data
+            two_factor_authorization['default_device'] = 'true'
+            two_factor_authorization['state'] = 'codes'
+            two_factor_authorization['show_state'] = 'true'
+        elif page_action == '2FADisable':
+            two_factor_authorization = DisableView.as_view(template_name='security_pages.html')(request).context_data
+            two_factor_authorization['state'] = 'disable'
+        else:
+            two_factor_authorization = ProfileView.as_view(template_name='security_pages.html')(request).context_data
+            two_factor_authorization['state'] = 'default'
+            two_factor_authorization['show_state'] = 'true'
+
         user_sessions = SessionListView.as_view(template_name='security_pages.html')(request).context_data
 
-        rendered_response = render(request, 'security_pages.html', 
-                { 
-                    'pass_reset_form': ChangePasswordForm(), 
-                    '2FA': two_factor_authorization, 
-                    'object_list': user_sessions["object_list"] 
-                }) 
+        return render(request, 'security_pages.html',
+                {
+                    'pass_reset_form': ChangePasswordForm(),
+                    '2FA': two_factor_authorization,
+                    'object_list': user_sessions['object_list']
+                })
 
-    return rendered_response
+    return redirect('security_pages')
+

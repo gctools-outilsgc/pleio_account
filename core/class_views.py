@@ -1,8 +1,15 @@
 from django.contrib.auth.forms import AuthenticationForm
+from django.urls import reverse_lazy
 from .forms import PleioAuthenticationTokenForm
 from .models import User
 from two_factor.forms import TOTPDeviceForm, BackupTokenForm
-from two_factor.views.core import LoginView, SetupView
+from two_factor.views.core import LoginView, SetupView, BackupTokensView
+from user_sessions.views import SessionDeleteOtherView, SessionDeleteView
+from django_otp.plugins.otp_static.models import StaticToken
+from django.template.response import TemplateResponse
+from django_otp import devices_for_user
+from django.shortcuts import redirect
+
 
 class PleioLoginView(LoginView):
     template_name = 'login.html'
@@ -15,8 +22,10 @@ class PleioLoginView(LoginView):
 
     def get_context_data(self, **kwargs):
         context = super(PleioLoginView, self).get_context_data(**kwargs)
-        context['next'] = self.request.GET.get('next')
-        print(context)
+        next = self.request.GET.get('next')
+        if next:
+            context['next'] = next 
+
         return context
 
     def done(self, form_list, **kwargs):
@@ -26,3 +35,59 @@ class PleioLoginView(LoginView):
         user.check_users_previous_logins(self.request)
 
         return LoginView.done(self, form_list, **kwargs)
+
+
+class PleioSessionDeleteView(SessionDeleteView):
+    """
+    View for deleting all user's sessions but the current.
+
+    This view allows a user to delete all other active session. For example
+    log out all sessions from a computer at the local library or a friend's
+    place.
+    """
+    def get_success_url(self):
+        return str(reverse_lazy('security_pages'))
+
+
+class PleioSessionDeleteOtherView(SessionDeleteOtherView):
+    """
+    View for deleting all user's sessions but the current.
+
+    This view allows a user to delete all other active session. For example
+    log out all sessions from a computer at the local library or a friend's
+    place.
+    """
+    def get_success_url(self):
+        return str(reverse_lazy('security_pages'))
+
+class PleioBackupTokensView(BackupTokensView):
+    """
+    View for listing and generating backup tokens.
+
+    A user can generate a number of static backup tokens. When the user loses
+    its phone, these backup tokens can be used for verification. These backup
+    tokens should be stored in a safe location; either in a safe or underneath
+    a pillow ;-).
+    """
+
+    def get_context_data(self, **kwargs):
+        context = super(BackupTokensView, self).get_context_data(**kwargs)
+        context['device'] = self.get_device()
+        device = self.get_device()
+        context['tokens'] = device.token_set.all()
+
+        return context
+
+    def form_valid(self, form):
+        """
+        Delete existing backup codes and generate new ones.
+        """
+        device = self.get_device()
+        device.token_set.all().delete()
+        for n in range(self.number_of_tokens):
+            device.token_set.create(token=StaticToken.random_token())
+   
+        return TemplateResponse(self.request, 'security_pages.html', {
+                'form': form,
+                'tokens': device.token_set.all()
+            })
