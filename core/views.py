@@ -20,6 +20,7 @@ from django.template.response import TemplateResponse
 from django.contrib.auth import password_validation
 from core.class_views import PleioBackupTokensView
 from two_factor.views.profile import DisableView
+from .helpers import str2dict
 
 
 def home(request):
@@ -167,18 +168,29 @@ def security_pages(request, *args, **kwargs):
                     update_session_auth_hash(request, user)
                     messages.success(request, _('The Password has been changed successfully.'))
                 else:
-                    messages.error(request, _('Invalid Password'))
+                    messages.error(request, _('The current Password is invalid'))
+            else:
+                try:
+                    errormessage = form.errors.get('new_password1')
+                    messages.error(request, errormessage)
+                except:
+                    pass
+                try:
+                    errormessage = form.errors.get('new_password2')
+                    messages.error(request, errormessage)
+                except:
+                    pass
+ 
+            return redirect('security_pages')
 
-                return redirect('security_pages')
-
-            return render(request, 'security_pages.html',
-                        {
-                            'pass_reset_form': form,
-                        })
         if page_action == '2FASetUp':
             two_factor_authorization = tf_setup(request).context_data
             two_factor_authorization['default_device'] = 'true'
             two_factor_authorization['state'] = 'setup'
+
+            response = redirect('security_pages', page_action='2FASetUp')
+            response.set_cookie('2FA', two_factor_authorization)
+            return response
 
         elif page_action == '2FASetUpNext':
             two_factor_authorization = tf_setup_complete(request)
@@ -189,6 +201,10 @@ def security_pages(request, *args, **kwargs):
             two_factor_authorization['default_device'] = 'true'
             two_factor_authorization['show_state'] = 'true'
             two_factor_authorization['state'] = 'codes'
+
+            response = redirect('security_pages', page_action='2FAShowCodes')
+            response.set_cookie('2FA', two_factor_authorization)
+            return response
 
         elif page_action == '2FADisableConfirm':
             two_factor_authorization = DisableView.as_view(template_name='security_pages.html')(request)
@@ -205,6 +221,7 @@ def security_pages(request, *args, **kwargs):
         page_action = request.GET.get('page_action')
         if 'page_action' in kwargs:
             page_action = kwargs['page_action']
+        print('get page_action: ', page_action)
 
         if page_action == '2FAShowCodes':
             two_factor_authorization = PleioBackupTokensView.as_view(template_name='backup_tokens.html')(request).context_data
@@ -214,6 +231,9 @@ def security_pages(request, *args, **kwargs):
         elif page_action == '2FADisable':
             two_factor_authorization = DisableView.as_view(template_name='security_pages.html')(request).context_data
             two_factor_authorization['state'] = 'disable'
+        elif page_action == '2FASetUp':
+            #two_factor_authorization = tf_setup(request).context_data
+            two_factor_authorization = str2dict(request.COOKIES['2FA'])
         else:
             two_factor_authorization = ProfileView.as_view(template_name='security_pages.html')(request).context_data
             two_factor_authorization['state'] = 'default'

@@ -118,9 +118,13 @@
                         </p>
                         <br />
                         <div class="input-field">
+<!--
                             {{ 2FA.form.errors.token }}
                             {{ 2FA.form.token.label_tag }}
                             {{ 2FA.form.token }}
+-->
+                            <label for="id_token">Token:</label>
+                            <input id="id_token" name="token" type="text" required />
                         </div>
                         
                         <p class="textcolor_secondary">
