@@ -177,7 +177,7 @@ def security_pages(request, *args, **kwargs):
                     user.save()
                     update_session_auth_hash(request, user)
                     astring =  'The Password has been changed successfully.'
-                    aheader = '<ul class="errorlist"><li>'
+                    aheader = '<ul class="message_success"><li>'
                     atrailer = '</li></ul>'
                     amsg = aheader + astring + atrailer
                     messages.error(request, _(amsg) , extra_tags='safe')
