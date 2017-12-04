@@ -176,14 +176,18 @@ def security_pages(request, *args, **kwargs):
                     user.set_password(data['new_password2'])
                     user.save()
                     update_session_auth_hash(request, user)
-                    messages.success(request, _('The Password has been changed successfully.'))
+                    astring =  'The Password has been changed successfully.'
+                    aheader = '<ul class="errorlist"><li>'
+                    atrailer = '</li></ul>'
+                    amsg = aheader + astring + atrailer
+                    messages.error(request, _(amsg) , extra_tags='safe')
+                    #messages.success(request, _('The Password has been changed successfully.'))
                 else:
-                    #astring =  _('The current Password is invalid')
                     astring =  'The current Password is invalid'
                     aheader = '<ul class="errorlist"><li>'
                     atrailer = '</li></ul>'
                     amsg = aheader + astring + atrailer
-                    messages.error(request, amsg , extra_tags='safe')
+                    messages.error(request, _(amsg) , extra_tags='safe')
             else:
                 try:
                     errormessage = form.errors.get('new_password1')
