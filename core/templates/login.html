@@ -46,7 +46,7 @@
         
         <ul class="messages info">
             <li class="messages__link">
-                <a href="{% url 'tf_setup' %}">
+                <a href="{% url 'security_pages' page_action='2fa-setup' %}">
                     {% include_asset "icons/lock-plus.svg" %}
                     <div class="textcolor_primary">{% trans "Secure your account" %}</div>
                     <div class="textcolor_secondary">{% trans "Enable two factor authentication" %}</div>

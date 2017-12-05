@@ -4,11 +4,14 @@ from .forms import PleioAuthenticationTokenForm
 from .models import User
 from two_factor.forms import TOTPDeviceForm, BackupTokenForm
 from two_factor.views.core import LoginView, SetupView, BackupTokensView
-from user_sessions.views import SessionDeleteOtherView, SessionDeleteView
+from two_factor.views.profile import ProfileView
+from user_sessions.views import SessionListView, SessionDeleteOtherView, SessionDeleteView, LoginRequiredMixin
 from django_otp.plugins.otp_static.models import StaticToken
 from django.template.response import TemplateResponse
 from django_otp import devices_for_user
 from django.shortcuts import redirect
+from django.views.generic.list import ListView
+from django.utils.timezone import now
 
 
 class PleioLoginView(LoginView):
@@ -35,6 +38,42 @@ class PleioLoginView(LoginView):
         user.check_users_previous_logins(self.request)
 
         return LoginView.done(self, form_list, **kwargs)
+
+
+class PleioProfileView(ProfileView):
+    """
+    View used by users for managing two-factor configuration.
+
+    This view shows whether two-factor has been configured for the user's
+    account. If two-factor is enabled, it also lists the primary verification
+    method and backup verification methods.
+    """
+    def dispatch(self, request, *args, **kwargs):
+        handler = getattr(self, 'get', self.http_method_not_allowed)
+
+        self.request = request
+        self.args = args
+        self.kwargs = kwargs
+
+        return handler(request, *args, **kwargs)
+
+
+class PleioSessionListView(SessionListView):
+    """
+    View for listing a user's own sessions.
+
+    This view shows list of a user's currently active sessions. You can
+    override the template by providing your own template at
+    `user_sessions/session_list.html`.
+    """
+    def dispatch(self, request, *args, **kwargs):
+        handler = getattr(self, 'get', self.http_method_not_allowed)
+
+        self.request = request
+        self.args = args
+        self.kwargs = kwargs
+
+        return handler(request, *args, **kwargs)
 
 
 class PleioSessionDeleteView(SessionDeleteView):

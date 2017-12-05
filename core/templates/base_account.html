@@ -28,7 +28,7 @@
                     <li>
                         <a href="/link/">
                             <div>
-                                <h2 class="textcolor_primary">{% trans "Welcome" %}, Duncan</h2>
+                                <h2 class="textcolor_primary">{% trans "Welcome" %}, {{request.user.name}}</h2>
                                 {% trans "in your Pleio account" %}
                             </div>
                             {% if request.user.avatar %}
@@ -74,10 +74,10 @@
             </div>
         </div>
 
-        {% render_bundle "vendor" "js" %}
-        {% render_bundle "web" "js" %}
         <script src="https://www.google.com/recaptcha/api.js"></script>
         <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+        {% render_bundle "vendor" "js" %}
+        {% render_bundle "web" "js" %}
     </body>
 </html>

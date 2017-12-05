@@ -1,6 +1,7 @@
 from django.utils.translation import gettext, gettext_lazy as _
 from django.contrib.auth import password_validation
 from django import forms
+from django.contrib.auth import authenticate 
 from django.contrib.auth.forms import AuthenticationForm
 from two_factor.forms import AuthenticationTokenForm, TOTPDeviceForm
 from two_factor.utils import totp_digits
@@ -58,6 +59,10 @@ class PleioTOTPDeviceForm(TOTPDeviceForm):
 
 
 class ChangePasswordForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super(ChangePasswordForm, self).__init__(*args, **kwargs)
+
     error_messages = {
         'invalid_password': _("The password is invalid."),
         'password_mismatch': _("The two password fields didn't match."),
@@ -66,6 +71,18 @@ class ChangePasswordForm(forms.Form):
     old_password = forms.CharField(strip=False, widget=forms.PasswordInput)
     new_password1 = forms.CharField(strip=False, widget=forms.PasswordInput)
     new_password2 = forms.CharField(strip=False, widget=forms.PasswordInput)
+
+    def clean_old_password(self):
+        old_password = self.cleaned_data.get("old_password")
+        user = authenticate(username=self.user.email, password=old_password)
+        
+        if user is None:
+            raise forms.ValidationError(
+                self.error_messages['invalid_password'],
+                code='invalid_password',
+            )
+
+        return old_password
 
     def clean_new_password2(self):
         new_password1 = self.cleaned_data.get("new_password1")
