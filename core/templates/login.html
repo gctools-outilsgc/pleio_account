@@ -116,10 +116,8 @@
 
     {% endif %}
         {% if backup_tokens %}
-      <p>{% trans "As a last resort, you can use a backup token:" %}</p>
         <div class="input-field">
-            <button name="wizard_goto_step" type="submit" value="backup" class="button ___stretch ___active">{% trans "Use backuptoken" %}</button>
-            <button name="wizard_goto_step" type="submit" value="auth" class="button ___stretch ___white ___outline">{% trans "Back" %}</button>
+            <button name="wizard_goto_step" type="submit" value="backup" class="button ___stretch ___white ___outline">{% trans "Use backuptoken" %}</button>
         </div>
 
     {% endif %}
