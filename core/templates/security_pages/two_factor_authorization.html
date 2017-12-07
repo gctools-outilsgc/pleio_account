@@ -95,7 +95,6 @@
         <div class="account__cards">
             <div class="card ___nopadding">
                 <form method="post" action="/securitypages/2fa-disableconfirm/">
-                    <input type="hidden" name="page_action" value="2fa-disableconfirm" />
                     {% csrf_token %}
                     <h2 class="card__title ___addpadding-side">{% trans "Disable Two-factor Authentication" %}</h2>
                     <fieldset class="___addpadding-side">
@@ -140,7 +139,6 @@
                 </div>
                 <form method="post" action="/securitypages/2fa-setup/">
                     <div class="card__action ___addpadding-side">
-                        <input type="hidden" name="page_action" value="2fa-setup" />
                         {% csrf_token %}
                         <button name="2fa-setup" type="submit" class="button __stretch ___clear">{% trans "Enable" %}</button>
                     </div>
