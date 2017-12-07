@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: pleio-account
-        image: localhost:5000/gctools-outilsgc/pleio_account:0.0.19
+        image: localhost:5000/gctools-outilsgc/pleio_account:0.0.24
         ports:
         - containerPort: 8000
         env:
