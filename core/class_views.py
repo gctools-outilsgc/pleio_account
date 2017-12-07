@@ -111,8 +111,8 @@ class PleioBackupTokensView(BackupTokensView):
 
     def get_context_data(self, **kwargs):
         context = super(BackupTokensView, self).get_context_data(**kwargs)
-        context['device'] = self.get_device()
         device = self.get_device()
+        context['device'] = device
         context['tokens'] = device.token_set.all()
 
         return context

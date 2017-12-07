@@ -139,9 +139,11 @@
                         security.{% endblocktrans %}
                 </div>
                 <form method="post" action="/securitypages/2fa-setup/">
+                    <div class="card__action ___addpadding-side">
                         <input type="hidden" name="page_action" value="2fa-setup" />
                         {% csrf_token %}
                         <button name="2fa-setup" type="submit" class="button __stretch ___clear">{% trans "Enable" %}</button>
+                    </div>
                 </form>
             {% endif %}
         </div>

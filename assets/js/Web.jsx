@@ -9,5 +9,23 @@ $(document).ready(function() {
                $(this).attr("type", "password");
            }
         });
-   });
+    });
+      
+    $("input").keypress(function(e) {
+        if ($(this).attr("type") == "password") {
+            var s = String.fromCharCode( e.which );
+            if ( s.toUpperCase() === s && s.toLowerCase() !== s && !e.shiftKey ) {
+                $(this).siblings(".capslock").text("CAPS LOCK is ON");
+            } else {
+                $(".capslock").text("");
+            }
+        } else {
+            $(".capslock").text("");
+    }
+    });
+      
+    $("input").blur(function(e) {
+        $(".capslock").text("");
+    });
+
 });
