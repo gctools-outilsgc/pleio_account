@@ -16,7 +16,6 @@
     </head>
     <body>
         <div class="account-overlay ___profile">
-            
             <div class="account-menu">
                 <input type="checkbox" id="show_menu" />
                 <div class="account__top-bar">
@@ -37,7 +36,11 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{% url 'profile' %}">
+                        {% if request.path == '/profile/' %}
+                            <a href="{% url 'profile' %}" class="account-menu__list current">
+                        {% else %}
+                            <a href="{% url 'profile' %}">
+                        {% endif %}
                             {% include_asset "icons/person.svg" %}
                             <div>
                                 <span class="title">{% trans "Profiel" %}</span><br />
@@ -46,7 +49,11 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{% url 'security_pages' %}">
+                        {% if request.path == '/securitypages/' %}
+                            <a href="{% url 'security_pages' %}" class="account-menu__list current">
+                        {% else %}
+                            <a href="{% url 'security_pages' %}">
+                        {% endif %}
                             {% include_asset "icons/security.svg" %}
                             <div>
                                 <span class="title">{% trans "Security" %}</span><br />
