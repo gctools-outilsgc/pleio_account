@@ -344,6 +344,14 @@ input[type=text] + .password__toggle svg {
             div {
                 flex: 1 1 auto;
             }
+            
+            &:hover .title, &.current .title {
+                color: @color-white;
+            }
+            
+            &:hover svg, &.current svg {
+                fill: @color-white;
+            }
         }
         
         svg {
@@ -354,9 +362,6 @@ input[type=text] + .password__toggle svg {
             transition: fill @trans-fast;
         }
         
-        &:hover svg {
-            fill: @color-white;
-        }
         
         .title {
             font-size: 1.8rem;
@@ -364,9 +369,7 @@ input[type=text] + .password__toggle svg {
             transition: color @trans-fast;
         }
         
-        &:hover .title {
-            color: @color-white;
-        }
+        
         
     }
 }
