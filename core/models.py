@@ -279,4 +279,10 @@ class PreviousLogins(models.Model):
         except (signing.BadSignature, PreviousLogins.DoesNotExist):
             return False
 
+class PleioPartnerSites(models.Model):
+    partner_site_url = models.URLField(null=False, db_index=True)
+    partner_site_name = models.CharField(null=False, max_length=200)
+    partner_site_logo_url = models.URLField(null=False)
+
 admin.site.register(User)
+admin.site.register(PleioPartnerSites)
