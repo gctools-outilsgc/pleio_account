@@ -22,4 +22,37 @@ class DeviceIdMiddleware(MiddlewareMixin):
             httponly=settings.SESSION_COOKIE_HTTPONLY or None
         )
 
+        try:
+            partner_site_url = request.COOKIES['partner_site_url']
+        except:
+            partner_site_url = None
+        
+        response.set_cookie('partner_site_url', partner_site_url,
+            path=settings.SESSION_COOKIE_PATH,
+            secure=settings.SESSION_COOKIE_SECURE or None,
+            httponly=settings.SESSION_COOKIE_HTTPONLY or None
+        )
+
+        try:
+            partner_site_name = request.COOKIES['partner_site_name']
+        except:
+            partner_site_name = None
+        
+        response.set_cookie('partner_site_name', partner_site_name,
+            path=settings.SESSION_COOKIE_PATH,
+            secure=settings.SESSION_COOKIE_SECURE or None,
+            httponly=settings.SESSION_COOKIE_HTTPONLY or None
+        )
+
+        try:
+            partner_site_logo_url = request.COOKIES['partner_site_logo_url']
+        except:
+            partner_site_logo_url = None
+        
+        response.set_cookie('partner_site_logo_url', partner_site_logo_url,
+            path=settings.SESSION_COOKIE_PATH,
+            secure=settings.SESSION_COOKIE_SECURE or None,
+            httponly=settings.SESSION_COOKIE_HTTPONLY or None
+        )
+
         return response

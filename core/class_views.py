@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse_lazy
 from .forms import PleioAuthenticationTokenForm
-from .models import User
+from .models import User, PleioPartnerSite
 from two_factor.forms import TOTPDeviceForm, BackupTokenForm
 from two_factor.views.core import LoginView, SetupView, BackupTokensView
 from two_factor.views.profile import ProfileView
@@ -12,6 +12,7 @@ from django_otp import devices_for_user
 from django.shortcuts import redirect
 from django.views.generic.list import ListView
 from django.utils.timezone import now
+from urllib.parse import urlparse
 
 
 class PleioLoginView(LoginView):
@@ -27,9 +28,27 @@ class PleioLoginView(LoginView):
         context = super(PleioLoginView, self).get_context_data(**kwargs)
         next = self.request.GET.get('next')
         if next:
-            context['next'] = next 
+            context['next'] = next
+        
+        self.set_partner_site_info()
 
         return context
+
+    def set_partner_site_info(self):
+        self.request.COOKIES['partner_site_url'] = None
+        self.request.COOKIES['partner_site_name'] = None
+        self.request.COOKIES['partner_site_logo_url'] = None
+        try:
+            http_referer = urlparse(self.request.META["HTTP_REFERER"])
+            clean_url = http_referer.scheme+"://"+http_referer.netloc+"/"
+            partnersite = PleioPartnerSite.objects.get(partner_site_url=clean_url)
+            self.request.COOKIES['partner_site_url'] = partnersite.partner_site_url
+            self.request.COOKIES['partner_site_name'] = partnersite.partner_site_name
+            self.request.COOKIES['partner_site_logo_url'] = partnersite.partner_site_logo_url
+        except:
+            return False
+
+        return True
 
     def done(self, form_list, **kwargs):
         self.request.session.set_expiry(30 * 24 * 60 * 60)

@@ -73,8 +73,11 @@
             </div>
             
             <div class="account-right">
-                <a href="/" class="button ___white ___outline account__close">{% trans "Sitename" %}</a>
-                
+                {% if request.COOKIES.partner_site_url != "None" %}
+                    <img src={{ request.COOKIES.partner_site_logo_url }} class="account__close" height="42" width="42">
+                    <a href={{ request.COOKIES.partner_site_url }} class="button ___white ___outline account__close">{{ request.COOKIES.partner_site_name }}</a>
+                {% endif %}
+             
                 <div class="account-right__content">
                     {% block content %}{% endblock %}
                 </div>
