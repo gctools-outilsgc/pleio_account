@@ -35,15 +35,6 @@ class PleioLoginView(LoginView):
         return context
 
     def set_partner_site_info(self):
-        try:
-            print("self.request.META['HTTP_REFERER']: ", self.request.META['HTTP_REFERER'])
-        except:
-            print("self.request.META['HTTP_REFERER']: ", "None")
-        try:
-            print("self.request.META['HTTP_HOST']: ", self.request.META['HTTP_HOST'])
-        except:
-            print("self.request.META['HTTP_HOST']: ", "None")
-
         self.request.COOKIES['partner_site_url'] = None
         self.request.COOKIES['partner_site_name'] = None
         self.request.COOKIES['partner_site_logo_url'] = None
