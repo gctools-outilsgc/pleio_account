@@ -14,12 +14,15 @@
         <link rel="icon" href="/static/images/favicon.png">
         {% render_bundle "web" "css" %}
     </head>
+{% if request.COOKIES.partner_site_url %}
+    <body style="background-image:url({{ request.COOKIES.partner_site_logo_url }})"></body>
+{% else %}
     <body>
-        <div class="account-overlay">
+{% endif %}
+    <div class="account-overlay">
             
             <div class="account-theme">
                 {% if request.COOKIES.partner_site_url %}
-                    <img src={{ request.COOKIES.partner_site_logo_url }} class="account__close" height="42" width="42">
                     <a href={{ request.COOKIES.partner_site_url }} class="button ___white ___outline account__close">{{ request.COOKIES.partner_site_name }}</a>
                 {% endif %}
             </div>

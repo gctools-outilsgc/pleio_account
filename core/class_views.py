@@ -35,16 +35,37 @@ class PleioLoginView(LoginView):
         return context
 
     def set_partner_site_info(self):
+        try:
+            print("self.request.META['HTTP_REFERER']: ", self.request.META['HTTP_REFERER'])
+        except:
+            print("self.request.META['HTTP_REFERER']: ", "None")
+        try:
+            print("self.request.META['HTTP_HOST']: ", self.request.META['HTTP_HOST'])
+        except:
+            print("self.request.META['HTTP_HOST']: ", "None")
+
         self.request.COOKIES['partner_site_url'] = None
         self.request.COOKIES['partner_site_name'] = None
         self.request.COOKIES['partner_site_logo_url'] = None
         try:
-            http_referer = urlparse(self.request.META["HTTP_REFERER"])
+            http_referer = urlparse(self.request.META['HTTP_REFERER'])
             clean_url = http_referer.scheme+"://"+http_referer.netloc+"/"
-            partnersite = PleioPartnerSite.objects.get(partner_site_url=clean_url)
-            self.request.COOKIES['partner_site_url'] = partnersite.partner_site_url
-            self.request.COOKIES['partner_site_name'] = partnersite.partner_site_name
-            self.request.COOKIES['partner_site_logo_url'] = partnersite.partner_site_logo_url
+            if http_referer.netloc == self.request.META['HTTP_HOST']:
+                return False
+            
+            try:
+                partnersite = PleioPartnerSite.objects.get(partner_site_url=clean_url)
+                self.request.COOKIES['partner_site_url'] = partnersite.partner_site_url
+                self.request.COOKIES['partner_site_name'] = partnersite.partner_site_name
+                self.request.COOKIES['partner_site_logo_url'] = partnersite.partner_site_logo_url
+            except:
+                try:
+                    partnersite = PleioPartnerSite.objects.get(partner_site_url='http://localhost')
+                    self.request.COOKIES['partner_site_url'] = clean_url
+                    self.request.COOKIES['partner_site_name'] = http_referer.netloc
+                    self.request.COOKIES['partner_site_logo_url'] = partnersite.partner_site_logo_url
+                except:
+                    return False
         except:
             return False
 
