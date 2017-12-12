@@ -27,5 +27,11 @@ $(document).ready(function() {
     $("input").blur(function(e) {
         $(".capslock").text("");
     });
+    
+    var theme_bg = $('.account-theme').data('bg');
+    console.log(theme_bg);
+    if(theme_bg){
+        $('.account-theme').css('background-image','url(' + theme_bg + ')');
+    }
 
 });
