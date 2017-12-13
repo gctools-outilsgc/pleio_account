@@ -72,8 +72,12 @@
                 </ul>
             </div>
             
+        {% if request.COOKIES.partner_site_url %}
+            <div class="account-theme" data-bg="{{ request.COOKIES.partner_site_logo_url }}">
+        {% endif %}
+
             <div class="account-right">
-                {% if request.COOKIES.partner_site_url != "None" %}
+                {% if request.COOKIES.partner_site_url %}
                     <a href={{ request.COOKIES.partner_site_url }} class="button ___white ___outline account__close">{{ request.COOKIES.partner_site_name }}</a>
                 {% endif %}
              
