@@ -38,6 +38,7 @@ if not DEBUG:
 
 INSTALLED_APPS = [
     'core',
+    'emailvalidator',
     'api',
     'oauth2_provider',
     'rest_framework',

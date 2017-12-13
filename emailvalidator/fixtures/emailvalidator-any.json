@@ -1,0 +1,17 @@
+[
+    {
+        "model": "emailvalidator.emaildomaingroup",
+        "pk": 3,
+        "fields": {
+            "name": "All"
+        }
+    },
+    {
+        "model": "emailvalidator.emailregexvalidator",
+        "pk": 5,
+        "fields": {
+            "regex": ".*",
+            "EmailDomainGroup": 3
+        }
+    }
+]

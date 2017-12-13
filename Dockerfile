@@ -1,37 +1,56 @@
-FROM python:3.6
-MAINTAINER Bart Jeukendrup <bart@jeukendrup.nl>
 
-# Install OS dependencies
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
-    apt-get install -y nodejs
+# Stage 1 - Build the javascript bundle
+FROM alpine
 
-# Install app dependencies
-RUN mkdir /app
+RUN apk --no-cache add \
+    nodejs \
+    nodejs-npm
+
+COPY package.json package-lock.json /app/
 WORKDIR /app
-ADD requirements.txt /app
-ADD package.json /app
-ADD package-lock.json /app
-
-RUN pip install -r requirements.txt
 RUN npm install
-
-# Add app
-ADD . /app
-
-# Build the frontend
+COPY assets /app/assets
+COPY webpack.prod.config.js /app/
 RUN npm run build
 
-# Boot script
-ADD docker/config.py /app/pleio_account/config.py
-ADD docker/start.sh /start.sh
-RUN chmod +x /start.sh
+# Stage 2 - Compile needed python dependencies
+FROM alpine
+RUN apk --no-cache add \
+    gcc \
+    jpeg-dev \
+    musl-dev \
+    postgresql-dev \
+    python3 \
+    python3-dev \
+    zlib-dev && \
+  pip3 install virtualenv && \
+  virtualenv /app/env
 
-# Cleanup all the build packages
-RUN apt-get remove -y nodejs
-RUN rm -rf node_modules && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
+COPY requirements.txt /app
+RUN /app/env/bin/pip install -r requirements.txt
 
-# HTTP port
+# Stage 3 - Build docker image suitable for execution and deployment
+FROM alpine
+LABEL maintainer Bart Jeukendrup <bart@jeukendrup.nl>
+RUN apk --no-cache add \
+      ca-certificates \
+      jpeg \
+      musl \
+      postgresql \
+      python3 \
+      zlib
+
+COPY . /app
+COPY --from=0 /app/assets /app/assets
+COPY --from=0 /app/webpack-stats.json /app/webpack-stats.json
+COPY --from=1 /app/env /app/env
+RUN cp /app/docker/config.py /app/pleio_account/config.py && \
+    cp /app/docker/start.sh /start.sh && \
+    chmod +x /start.sh
+
+
+ENV PATH="/app/env/bin:${PATH}"
+WORKDIR /app
 EXPOSE 8000
-
-# Define run script
 CMD ["/start.sh"]
