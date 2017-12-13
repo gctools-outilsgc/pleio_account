@@ -21,9 +21,7 @@ from oauth2_provider import views as oauth2_views
 from api import views as api_views
 from django.contrib import admin
 from core import views
-from core.class_views import PleioLoginView
-from two_factor.views import ProfileView, BackupTokensView, SetupCompleteView, DisableView
-
+from core.class_views import PleioLoginView, PleioSessionDeleteView, PleioSessionDeleteOtherView
 
 legacy_urls = [
     url(r'^mod/profile/icondirect.php$', views.avatar, name='avatar_legacy'),
@@ -35,6 +33,7 @@ urls = [
     url(r'^register/complete/$', views.register_complete, name='register_complete'),
     url(r'^register/activate/(?P<activation_token>[-:\w]+)/$', views.register_activate, name='register_activate'),
     url(r'^termsofuse/$', views.terms_of_use, name='terms_of_use'),
+    url(r'^securitypages/(?P<page_action>[\w-]+)/$', views.security_pages, name='security_pages'),
     url(r'^securitypages/$', views.security_pages, name='security_pages'),
     url(r'^password_reset/$', auth_views.password_reset, { 'template_name': 'password_reset.html' }, name='password_reset'),
     url(r'^password_reset/done/$', auth_views.password_reset_done, { 'template_name': 'password_reset_done.html' }, name='password_reset_done'),
@@ -45,11 +44,8 @@ urls = [
     url(r'^profile/$', views.profile, name='profile'),
     url(r'^accept_previous_logins/(?P<acceptation_token>[-:\w]+)/$', views.accept_previous_login, name='accept_previous_login'),
     url(r'^account/login/$', PleioLoginView.as_view(), name='login'),
-    url(r'^account/two_factor/setup/$', views.tf_setup, name='tf_setup'),
-    url(r'^account/two_factor/setup/complete/$', view=SetupCompleteView.as_view(template_name = 'setup_complete.html'), name='setup_complete' ),
-    url(r'^account/two_factor/$', view=ProfileView.as_view(template_name='tf_profile.html'), name='tf_profile' ),
-    url(r'^account/two_factor/backup/tokens/$', view=BackupTokensView.as_view(template_name='backup_tokens.html'), name = 'backup_tokens'),
-    url(r'^account/two_factor/disable/$', view=DisableView.as_view(template_name='tf_disable.html'), name='disable'),
+    url(r'^account/sessions/other/delete/$', view=PleioSessionDeleteOtherView.as_view(), name='session_delete_other'),
+    url(r'^account/sessions/(?P<pk>\w+)/delete/$', view=PleioSessionDeleteView.as_view(), name='session_delete'),
     url(r'^oauth/v2/authorize$', oauth2_views.AuthorizationView.as_view(), name='authorize'),
     url(r'^oauth/v2/token$', oauth2_views.TokenView.as_view(), name='token'),
     url(r'^oauth/v2/revoke_token$', oauth2_views.RevokeTokenView.as_view(), name='revoke-token'),

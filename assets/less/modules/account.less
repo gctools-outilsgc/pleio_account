@@ -210,6 +210,10 @@
     }
 }
 
+input[type=text] + .password__toggle svg {
+    fill: @color-primary;
+}
+
 .login__buttons, .register__buttons {
     margin: 1.6rem 0 4rem 0;
 }
@@ -223,6 +227,14 @@
     color: @color-red;
 }
 
+.capslock {
+    float: right;  
+    color: @color-red;
+}
+
+.message_success {
+    color: @color-blue;
+}
 
 .account-menu, .account-right {
     padding: 4rem 0;
@@ -332,6 +344,14 @@
             div {
                 flex: 1 1 auto;
             }
+            
+            &:hover .title, &.current .title {
+                color: @color-white;
+            }
+            
+            &:hover svg, &.current svg {
+                fill: @color-white;
+            }
         }
         
         svg {
@@ -342,9 +362,6 @@
             transition: fill @trans-fast;
         }
         
-        &:hover svg {
-            fill: @color-white;
-        }
         
         .title {
             font-size: 1.8rem;
@@ -352,9 +369,7 @@
             transition: color @trans-fast;
         }
         
-        &:hover .title {
-            color: @color-white;
-        }
+        
         
     }
 }
@@ -404,6 +419,7 @@
     @media @screen-sm-max {
         margin: 2rem 0;
     }
+    .account__cards { margin: 0; }
 }
     .account__cards .card {
         border-bottom: 0.2rem solid @color-primary;

@@ -18,7 +18,11 @@
         
         <ul class="messages error">
             {% for error in form.non_field_errors %}
-                <li>{{ error }}</li>
+                <li>
+                    {% include_asset "icons/account-alert.svg" %}
+                    <div class="textcolor_primary">{% trans "Please enter a correct email and password." %}</div>
+                    <div class="textcolor_secondary">{% trans "Note that both fields may be case-sensitive." %}</div>
+                </li>
             {% endfor %}
         </ul>
 
@@ -34,6 +38,7 @@
                 {{ form.password }}
                 <span class="password__toggle">{% include_asset "icons/eye.svg" %}</span>
                 <a href="{% url 'password_reset' %}" class="forgot-password">{% trans "Forgot password" %}?</a>
+                <p class="capslock"></p>
             </div>
 
             <div class="login__buttons">
@@ -46,7 +51,7 @@
         
         <ul class="messages info">
             <li class="messages__link">
-                <a href="{% url 'tf_setup' %}">
+                <a href="{% url 'security_pages' page_action='2fa-setup' %}">
                     {% include_asset "icons/lock-plus.svg" %}
                     <div class="textcolor_primary">{% trans "Secure your account" %}</div>
                     <div class="textcolor_secondary">{% trans "Enable two factor authentication" %}</div>
@@ -115,11 +120,10 @@
         </div>
 
     {% endif %}
-        {% if backup_tokens %}
-      <p>{% trans "As a last resort, you can use a backup token:" %}</p>
+    
+    {% if backup_tokens %}
         <div class="input-field">
-            <button name="wizard_goto_step" type="submit" value="backup" class="button ___stretch ___active">{% trans "Use backuptoken" %}</button>
-            <button name="wizard_goto_step" type="submit" value="auth" class="button ___stretch ___white ___outline">{% trans "Back" %}</button>
+            <button name="wizard_goto_step" type="submit" value="backup" class="button ___stretch ___white ___outline">{% trans "Use backuptoken" %}</button>
         </div>
 
     {% endif %}

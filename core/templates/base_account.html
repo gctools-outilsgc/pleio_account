@@ -16,7 +16,6 @@
     </head>
     <body>
         <div class="account-overlay ___profile">
-            
             <div class="account-menu">
                 <input type="checkbox" id="show_menu" />
                 <div class="account__top-bar">
@@ -28,7 +27,7 @@
                     <li>
                         <a href="/link/">
                             <div>
-                                <h2 class="textcolor_primary">{% trans "Welcome" %}, Duncan</h2>
+                                <h2 class="textcolor_primary">{% trans "Welcome" %}, {{request.user.name}}</h2>
                                 {% trans "in your Pleio account" %}
                             </div>
                             {% if request.user.avatar %}
@@ -37,7 +36,11 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{% url 'profile' %}">
+                        {% if request.path == '/profile/' %}
+                            <a href="{% url 'profile' %}" class="account-menu__list current">
+                        {% else %}
+                            <a href="{% url 'profile' %}">
+                        {% endif %}
                             {% include_asset "icons/person.svg" %}
                             <div>
                                 <span class="title">{% trans "Profiel" %}</span><br />
@@ -46,7 +49,11 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{% url 'security_pages' %}">
+                        {% if request.path == '/securitypages/' %}
+                            <a href="{% url 'security_pages' %}" class="account-menu__list current">
+                        {% else %}
+                            <a href="{% url 'security_pages' %}">
+                        {% endif %}
                             {% include_asset "icons/security.svg" %}
                             <div>
                                 <span class="title">{% trans "Security" %}</span><br />
@@ -66,18 +73,20 @@
             </div>
             
             <div class="account-right">
-                <a href="/" class="button ___white ___outline account__close">{% trans "Sitename" %}</a>
-                
+                {% if request.COOKIES.partner_site_url %}
+                    <a href={{ request.COOKIES.partner_site_url }} class="button ___white ___outline account__close">{{ request.COOKIES.partner_site_name }}</a>
+                {% endif %}
+             
                 <div class="account-right__content">
                     {% block content %}{% endblock %}
                 </div>
             </div>
         </div>
 
-        {% render_bundle "vendor" "js" %}
-        {% render_bundle "web" "js" %}
         <script src="https://www.google.com/recaptcha/api.js"></script>
         <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+        {% render_bundle "vendor" "js" %}
+        {% render_bundle "web" "js" %}
     </body>
 </html>
