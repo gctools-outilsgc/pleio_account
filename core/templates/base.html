@@ -17,9 +17,10 @@
     <body>
         <div class="account-overlay">
             
-            <div class="account-theme">
             {% if request.COOKIES.partner_site_url %}
                 <div class="account-theme" data-bg="{{ request.COOKIES.partner_site_logo_url }}">
+            {% else %}
+                <div class="account-theme">                    
             {% endif %}
                 
                 {% if request.COOKIES.partner_site_url %}
