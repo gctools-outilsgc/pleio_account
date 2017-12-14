@@ -12,10 +12,11 @@ $(document).ready(function() {
     });
       
     $("input").keypress(function(e) {
+        var strCapsLock = $('#translateHelper').data('capslock');
         if ($(this).attr("type") == "password") {
             var s = String.fromCharCode( e.which );
             if ( s.toUpperCase() === s && s.toLowerCase() !== s && !e.shiftKey ) {
-                $(this).siblings(".capslock").text("CAPS LOCK");
+                $(this).siblings(".capslock").text(strCapsLock);
             } else {
                 $(".capslock").text("");
             }

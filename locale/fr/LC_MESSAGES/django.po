@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-08 15:42+0100\n"
+"POT-Creation-Date: 2017-12-14 13:47+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,15 +18,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: core/forms.py:23 core/forms.py:68
+#: core/forms.py:17
+msgid "Your email address is not allowed."
+msgstr ""
+
+#: core/forms.py:28 core/forms.py:73
 msgid "The two password fields didn't match."
 msgstr ""
 
-#: core/forms.py:54 core/forms.py:58
+#: core/forms.py:59 core/forms.py:63
 msgid "Token"
 msgstr ""
 
-#: core/forms.py:67
+#: core/forms.py:72
 msgid "The password is invalid."
 msgstr ""
 
@@ -153,11 +157,7 @@ msgstr ""
 msgid "Generate Tokens"
 msgstr ""
 
-#: core/templates/base.html:21 core/templates/base_account.html:76
-msgid "Sitename"
-msgstr ""
-
-#: core/templates/base.html:26 core/templates/base_account.html:23
+#: core/templates/base.html:33 core/templates/base_account.html:23
 msgid "Back to the homepage"
 msgstr ""
 
@@ -312,7 +312,15 @@ msgstr ""
 msgid "Forgot password"
 msgstr ""
 
-#: core/templates/login.html:45 core/templates/login.html:96
+#: core/templates/login.html:41 core/templates/register.html:40
+#: core/templates/register.html:47
+#: core/templates/security_pages/change_password.html:26
+#: core/templates/security_pages/change_password.html:35
+#: core/templates/security_pages/change_password.html:43
+msgid "Attention: CAPS LOCK is ON"
+msgstr ""
+
+#: core/templates/login.html:45 core/templates/login.html:94
 #: core/templates/password_reset.html:32
 #: core/templates/password_reset_complete.html:23
 #: core/templates/password_reset_done.html:23 core/templates/register.html:65
@@ -332,19 +340,19 @@ msgstr ""
 msgid "Enable two factor authentication"
 msgstr ""
 
-#: core/templates/login.html:83
+#: core/templates/login.html:82
 msgid "Two factor authentication"
 msgstr ""
 
-#: core/templates/login.html:84
+#: core/templates/login.html:83
 msgid "Fill in a code from your code generator."
 msgstr ""
 
-#: core/templates/login.html:97
+#: core/templates/login.html:95
 msgid "Cancel"
 msgstr ""
 
-#: core/templates/login.html:108
+#: core/templates/login.html:106
 msgid ""
 "Use this form for entering backup tokens for logging in.\n"
 "         These tokens have been generated for you to print and keep safe. "
@@ -352,11 +360,11 @@ msgid ""
 "             enter one of these backup tokens to login to your account."
 msgstr ""
 
-#: core/templates/login.html:118 core/templates/login.html:126
+#: core/templates/login.html:116 core/templates/login.html:124
 msgid "Use backuptoken"
 msgstr ""
 
-#: core/templates/login.html:119
+#: core/templates/login.html:117
 msgid "Back"
 msgstr ""
 
@@ -716,14 +724,14 @@ msgstr ""
 msgid "The Password has been changed successfully."
 msgstr ""
 
-#: pleio_account/settings.py:136
+#: pleio_account/settings.py:138
 msgid "English"
 msgstr ""
 
-#: pleio_account/settings.py:137
+#: pleio_account/settings.py:139
 msgid "Dutch"
 msgstr ""
 
-#: pleio_account/settings.py:138
+#: pleio_account/settings.py:140
 msgid "French"
 msgstr ""

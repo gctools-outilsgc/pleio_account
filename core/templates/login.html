@@ -38,7 +38,7 @@
                 {{ form.password }}
                 <span class="password__toggle">{% include_asset "icons/eye.svg" %}</span>
                 <a href="{% url 'password_reset' %}" class="forgot-password">{% trans "Forgot password" %}?</a>
-                <p class="capslock"></p>
+                <div id="translateHelper" class="capslock" data-capslock="{% trans "Attention: CAPS LOCK is ON" %}"></div>
             </div>
 
             <div class="login__buttons">

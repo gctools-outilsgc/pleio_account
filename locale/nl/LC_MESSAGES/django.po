@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-08 15:42+0100\n"
+"POT-Creation-Date: 2017-12-14 13:47+0100\n"
 "PO-Revision-Date: 2017-12-13 18:28+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -18,15 +18,19 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.4\n"
 
-#: core/forms.py:23 core/forms.py:68
+#: core/forms.py:17
+msgid "Your email address is not allowed."
+msgstr ""
+
+#: core/forms.py:28 core/forms.py:73
 msgid "The two password fields didn't match."
 msgstr "﻿Voer hetzelfde wachtwoord in de twee wachtwoord velden in."
 
-#: core/forms.py:54 core/forms.py:58
+#: core/forms.py:59 core/forms.py:63
 msgid "Token"
 msgstr "Token"
 
-#: core/forms.py:67
+#: core/forms.py:72
 msgid "The password is invalid."
 msgstr "Het wachtwoord is ongeldig."
 
@@ -158,11 +162,7 @@ msgstr "Je hebt nog geen backup tokens."
 msgid "Generate Tokens"
 msgstr "Genereer tokens"
 
-#: core/templates/base.html:21 core/templates/base_account.html:76
-msgid "Sitename"
-msgstr "Sitenaam"
-
-#: core/templates/base.html:26 core/templates/base_account.html:23
+#: core/templates/base.html:33 core/templates/base_account.html:23
 msgid "Back to the homepage"
 msgstr "Terug naar de homepagina"
 
@@ -317,7 +317,15 @@ msgstr "E-mailadres"
 msgid "Forgot password"
 msgstr "Wachtwoord vergeten"
 
-#: core/templates/login.html:45 core/templates/login.html:96
+#: core/templates/login.html:41 core/templates/register.html:40
+#: core/templates/register.html:47
+#: core/templates/security_pages/change_password.html:26
+#: core/templates/security_pages/change_password.html:35
+#: core/templates/security_pages/change_password.html:43
+msgid "Attention: CAPS LOCK is ON"
+msgstr "Let op: Capslock is ingeschakeld"
+
+#: core/templates/login.html:45 core/templates/login.html:94
 #: core/templates/password_reset.html:32
 #: core/templates/password_reset_complete.html:23
 #: core/templates/password_reset_done.html:23 core/templates/register.html:65
@@ -337,19 +345,19 @@ msgstr "Extra beveiliging voor uw account"
 msgid "Enable two factor authentication"
 msgstr "Schakel twee-factor-authenticatie in"
 
-#: core/templates/login.html:83
+#: core/templates/login.html:82
 msgid "Two factor authentication"
 msgstr "Twee-factor-authenticatie"
 
-#: core/templates/login.html:84
+#: core/templates/login.html:83
 msgid "Fill in a code from your code generator."
 msgstr "Voer de verificatiecode uit uw codegenerator in."
 
-#: core/templates/login.html:97
+#: core/templates/login.html:95
 msgid "Cancel"
 msgstr "Annuleren"
 
-#: core/templates/login.html:108
+#: core/templates/login.html:106
 msgid ""
 "Use this form for entering backup tokens for logging in.\n"
 "         These tokens have been generated for you to print and keep safe. "
@@ -357,11 +365,11 @@ msgid ""
 "             enter one of these backup tokens to login to your account."
 msgstr "Geef een backuptoken in om toegang te krijgen tot uw account."
 
-#: core/templates/login.html:118 core/templates/login.html:126
+#: core/templates/login.html:116 core/templates/login.html:124
 msgid "Use backuptoken"
 msgstr "Gebruik backupcode"
 
-#: core/templates/login.html:119
+#: core/templates/login.html:117
 msgid "Back"
 msgstr "Terug"
 
@@ -758,17 +766,20 @@ msgstr ""
 msgid "The Password has been changed successfully."
 msgstr "Je wachtwoord is succesvol veranderd."
 
-#: pleio_account/settings.py:136
+#: pleio_account/settings.py:138
 msgid "English"
 msgstr "Engels"
 
-#: pleio_account/settings.py:137
+#: pleio_account/settings.py:139
 msgid "Dutch"
 msgstr "Nederlands"
 
-#: pleio_account/settings.py:138
+#: pleio_account/settings.py:140
 msgid "French"
 msgstr "Frans"
+
+#~ msgid "Sitename"
+#~ msgstr "Sitenaam"
 
 #~ msgid "Remember me"
 #~ msgstr "Onthoud mij"
