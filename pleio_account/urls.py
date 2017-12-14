@@ -22,6 +22,7 @@ from api import views as api_views
 from django.contrib import admin
 from core import views
 from core.class_views import PleioLoginView, PleioSessionDeleteView, PleioSessionDeleteOtherView
+from django.views.i18n import JavaScriptCatalog
 
 legacy_urls = [
     url(r'^mod/profile/icondirect.php$', views.avatar, name='avatar_legacy'),
@@ -60,8 +61,11 @@ tf_urls = [
 us_urls = [
     url(r'', include('user_sessions.urls', 'user_sessions'))
 ]
+django_urls = [
+    url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+]
 
-urlpatterns = legacy_urls + urls +  tf_urls + us_urls
+urlpatterns = legacy_urls + urls +  tf_urls + us_urls + django_urls
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -8,6 +8,7 @@
     {% csrf_token %}
     {{ wizard.management_form }}
     {% if wizard.steps.current == 'auth' %}
+        <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
         <div class="login__step-title">
             <div>
                 <h2>{% trans "Sign in" %}</h2>
@@ -38,7 +39,7 @@
                 {{ form.password }}
                 <span class="password__toggle">{% include_asset "icons/eye.svg" %}</span>
                 <a href="{% url 'password_reset' %}" class="forgot-password">{% trans "Forgot password" %}?</a>
-                <div id="translateHelper" class="capslock" data-capslock="{% trans "Attention: CAPS LOCK is ON" %}"></div>
+                <p class="capslock"></p>
             </div>
 
             <div class="login__buttons">
@@ -67,6 +68,7 @@
         }
       };
     </script>
+
     
     <div class="login__step-title">
         <div>

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-14 13:47+0100\n"
+"POT-Creation-Date: 2017-12-14 15:05+0100\n"
 "PO-Revision-Date: 2017-12-13 18:28+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -162,48 +162,48 @@ msgstr "Je hebt nog geen backup tokens."
 msgid "Generate Tokens"
 msgstr "Genereer tokens"
 
-#: core/templates/base.html:33 core/templates/base_account.html:23
+#: core/templates/base.html:34 core/templates/base_account.html:24
 msgid "Back to the homepage"
 msgstr "Terug naar de homepagina"
 
-#: core/templates/base_account.html:30
+#: core/templates/base_account.html:31
 msgid "Welcome"
 msgstr "Welkom"
 
-#: core/templates/base_account.html:31
+#: core/templates/base_account.html:32
 msgid "in your Pleio account"
 msgstr "in uw Pleio-account"
 
-#: core/templates/base_account.html:46
+#: core/templates/base_account.html:47
 msgid "Profiel"
 msgstr "Profiel"
 
-#: core/templates/base_account.html:47 core/templates/profile.html:14
+#: core/templates/base_account.html:48 core/templates/profile.html:14
 msgid "Your details"
 msgstr "Uw gegevens"
 
-#: core/templates/base_account.html:47 core/templates/profile.html:34
+#: core/templates/base_account.html:48 core/templates/profile.html:34
 msgid "Avatar"
 msgstr "Profielfoto"
 
-#: core/templates/base_account.html:59 core/templates/security_pages.html:18
+#: core/templates/base_account.html:60 core/templates/security_pages.html:18
 msgid "Security"
 msgstr "Beveiliging"
 
-#: core/templates/base_account.html:60 core/templates/login.html:36
+#: core/templates/base_account.html:61 core/templates/login.html:36
 #: core/templates/register.html:36
 msgid "Password"
 msgstr "Wachtwoord"
 
-#: core/templates/base_account.html:60
+#: core/templates/base_account.html:61
 msgid "Sessions"
 msgstr "Sessies"
 
-#: core/templates/base_account.html:60
+#: core/templates/base_account.html:61
 msgid "Two-factor authentication"
 msgstr "Twee-factor authenticatie"
 
-#: core/templates/base_account.html:68
+#: core/templates/base_account.html:69
 #: core/templates/security_pages/user_sessions.html:39
 #: core/templates/session_list.html:42
 msgid "Logout"
@@ -316,14 +316,6 @@ msgstr "E-mailadres"
 #: core/templates/password_reset_done.html:8
 msgid "Forgot password"
 msgstr "Wachtwoord vergeten"
-
-#: core/templates/login.html:41 core/templates/register.html:40
-#: core/templates/register.html:47
-#: core/templates/security_pages/change_password.html:26
-#: core/templates/security_pages/change_password.html:35
-#: core/templates/security_pages/change_password.html:43
-msgid "Attention: CAPS LOCK is ON"
-msgstr "Let op: Capslock is ingeschakeld"
 
 #: core/templates/login.html:45 core/templates/login.html:94
 #: core/templates/password_reset.html:32
@@ -466,6 +458,13 @@ msgstr "maak een Pleio-account"
 #: core/templates/register.html:26
 msgid "First- and lastname"
 msgstr "Voor- en achternaam"
+
+#: core/templates/register.html:40 core/templates/register.html:47
+#: core/templates/security_pages/change_password.html:26
+#: core/templates/security_pages/change_password.html:35
+#: core/templates/security_pages/change_password.html:43
+msgid "Attention: CAPS LOCK is ON"
+msgstr "Let op: Capslock is ingeschakeld"
 
 #: core/templates/register.html:43
 msgid "Password (again)"

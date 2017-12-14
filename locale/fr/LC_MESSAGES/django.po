@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-14 13:47+0100\n"
+"POT-Creation-Date: 2017-12-14 15:05+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -157,48 +157,48 @@ msgstr ""
 msgid "Generate Tokens"
 msgstr ""
 
-#: core/templates/base.html:33 core/templates/base_account.html:23
+#: core/templates/base.html:34 core/templates/base_account.html:24
 msgid "Back to the homepage"
 msgstr ""
 
-#: core/templates/base_account.html:30
+#: core/templates/base_account.html:31
 msgid "Welcome"
 msgstr ""
 
-#: core/templates/base_account.html:31
+#: core/templates/base_account.html:32
 msgid "in your Pleio account"
 msgstr ""
 
-#: core/templates/base_account.html:46
+#: core/templates/base_account.html:47
 msgid "Profiel"
 msgstr ""
 
-#: core/templates/base_account.html:47 core/templates/profile.html:14
+#: core/templates/base_account.html:48 core/templates/profile.html:14
 msgid "Your details"
 msgstr ""
 
-#: core/templates/base_account.html:47 core/templates/profile.html:34
+#: core/templates/base_account.html:48 core/templates/profile.html:34
 msgid "Avatar"
 msgstr ""
 
-#: core/templates/base_account.html:59 core/templates/security_pages.html:18
+#: core/templates/base_account.html:60 core/templates/security_pages.html:18
 msgid "Security"
 msgstr ""
 
-#: core/templates/base_account.html:60 core/templates/login.html:36
+#: core/templates/base_account.html:61 core/templates/login.html:36
 #: core/templates/register.html:36
 msgid "Password"
 msgstr ""
 
-#: core/templates/base_account.html:60
+#: core/templates/base_account.html:61
 msgid "Sessions"
 msgstr ""
 
-#: core/templates/base_account.html:60
+#: core/templates/base_account.html:61
 msgid "Two-factor authentication"
 msgstr ""
 
-#: core/templates/base_account.html:68
+#: core/templates/base_account.html:69
 #: core/templates/security_pages/user_sessions.html:39
 #: core/templates/session_list.html:42
 msgid "Logout"
@@ -310,14 +310,6 @@ msgstr ""
 #: core/templates/login.html:40 core/templates/password_reset.html:11
 #: core/templates/password_reset_done.html:8
 msgid "Forgot password"
-msgstr ""
-
-#: core/templates/login.html:41 core/templates/register.html:40
-#: core/templates/register.html:47
-#: core/templates/security_pages/change_password.html:26
-#: core/templates/security_pages/change_password.html:35
-#: core/templates/security_pages/change_password.html:43
-msgid "Attention: CAPS LOCK is ON"
 msgstr ""
 
 #: core/templates/login.html:45 core/templates/login.html:94
@@ -458,6 +450,13 @@ msgstr ""
 
 #: core/templates/register.html:26
 msgid "First- and lastname"
+msgstr ""
+
+#: core/templates/register.html:40 core/templates/register.html:47
+#: core/templates/security_pages/change_password.html:26
+#: core/templates/security_pages/change_password.html:35
+#: core/templates/security_pages/change_password.html:43
+msgid "Attention: CAPS LOCK is ON"
 msgstr ""
 
 #: core/templates/register.html:43

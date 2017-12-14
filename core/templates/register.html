@@ -6,6 +6,7 @@
 
 <form method="post" action=".">
     {% csrf_token %}
+    <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
     
     <div class="login__step-title">
         <div>
@@ -37,14 +38,14 @@
             {{ form.errors.password1 }}
             {{ form.password1 }}
             <span class="password__toggle">{% include_asset "icons/eye.svg" %}</span>
-            <div id="translateHelper" class="capslock" data-capslock="{% trans "Attention: CAPS LOCK is ON" %}"></div>
+            <p class="capslock"></p>
         </div>
         <div class="input-field">
             <label for="id_password2">{% trans "Password (again)" %}</label>
             {{ form.errors.password2 }}
             {{ form.password2 }}
             <span class="password__toggle">{% include_asset "icons/eye.svg" %}</span>
-            <div id="translateHelper" class="capslock" data-capslock="{% trans "Attention: CAPS LOCK is ON" %}"></div>
+            <p class="capslock"></p>
         </div>
 
         <div class="register__checks">
