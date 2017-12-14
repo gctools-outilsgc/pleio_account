@@ -15,7 +15,7 @@ $(document).ready(function() {
         if ($(this).attr("type") == "password") {
             var s = String.fromCharCode( e.which );
             if ( s.toUpperCase() === s && s.toLowerCase() !== s && !e.shiftKey ) {
-                $(this).siblings(".capslock").text("CAPS LOCK is ON");
+                $(this).siblings(".capslock").text("CAPS LOCK");
             } else {
                 $(".capslock").text("");
             }

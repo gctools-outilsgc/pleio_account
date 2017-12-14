@@ -35,22 +35,30 @@ class PleioLoginView(LoginView):
         return context
 
     def set_partner_site_info(self):
-        self.request.COOKIES['partner_site_url'] = None
-        self.request.COOKIES['partner_site_name'] = None
-        self.request.COOKIES['partner_site_logo_url'] = None
         try:
             http_referer = urlparse(self.request.META['HTTP_REFERER'])
+        except:
+            #no referer: cookies have to be deleted in PartnerSiteMiddleware
+            self.request.COOKIES['partner_site_url'] = None
+            self.request.COOKIES['partner_site_name'] = None
+            self.request.COOKIES['partner_site_logo_url'] = None
+            return False
+        
+        try:
             clean_url = http_referer.scheme+"://"+http_referer.netloc+"/"
             if http_referer.netloc == self.request.META['HTTP_HOST']:
+                #referer is this site: no action to be taken
                 return False
             
             try:
+                #search for matching partnersite data
                 partnersite = PleioPartnerSite.objects.get(partner_site_url=clean_url)
                 self.request.COOKIES['partner_site_url'] = partnersite.partner_site_url
                 self.request.COOKIES['partner_site_name'] = partnersite.partner_site_name
                 self.request.COOKIES['partner_site_logo_url'] = partnersite.partner_site_logo_url
             except:
                 try:
+                    #no matching partnersite data found: default background image will be used
                     partnersite = PleioPartnerSite.objects.get(partner_site_url='http://localhost')
                     self.request.COOKIES['partner_site_url'] = clean_url
                     self.request.COOKIES['partner_site_name'] = http_referer.netloc

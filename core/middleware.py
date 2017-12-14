@@ -26,53 +26,25 @@ class DeviceIdMiddleware(MiddlewareMixin):
 
 class PartnerSiteMiddleware(MiddlewareMixin):
     def process_response(self, request, response):
+        self.handle_partner_site_cookie(request, response, 'partner_site_url')
+        self.handle_partner_site_cookie(request, response, 'partner_site_name')
+        self.handle_partner_site_cookie(request, response, 'partner_site_logo_url')
 
+        return response
+
+    def handle_partner_site_cookie(self, request, response, acookie):
         try:
-            if request.COOKIES['partner_site_url'] is None:
-                request.COOKIES.pop['partner_site_url']
-            partner_site_url = request.COOKIES['partner_site_url']
-            response.set_cookie('partner_site_url', partner_site_url,
+            if request.COOKIES[acookie] is None:
+                request.COOKIES.pop[acookie]
+            partner_site_url = request.COOKIES[acookie]
+            response.set_cookie(acookie, partner_site_url,
                 path=settings.SESSION_COOKIE_PATH,
                 secure=settings.SESSION_COOKIE_SECURE or None,
                 httponly=settings.SESSION_COOKIE_HTTPONLY or None
             )
         except:
             try:
-                response.delete_cookie('partner_site_url',
-                path=settings.SESSION_COOKIE_PATH,
-                )
-            except:
-                pass
-
-        try:
-            if request.COOKIES['partner_site_name'] is None:
-                request.COOKIES.pop['partner_site_name']
-            partner_site_name = request.COOKIES['partner_site_name']
-            response.set_cookie('partner_site_name', partner_site_name,
-                path=settings.SESSION_COOKIE_PATH,
-                secure=settings.SESSION_COOKIE_SECURE or None,
-                httponly=settings.SESSION_COOKIE_HTTPONLY or None
-            )
-        except:
-            try:
-                response.delete_cookie('partner_site_name',
-                path=settings.SESSION_COOKIE_PATH,
-                )
-            except:
-                pass
-
-        try:
-            if request.COOKIES['partner_site_logo_url'] is None:
-                request.COOKIES.pop['partner_site_logo_url']
-            partner_site_logo_url = request.COOKIES['partner_site_logo_url']
-            response.set_cookie('partner_site_logo_url', partner_site_logo_url,
-                path=settings.SESSION_COOKIE_PATH,
-                secure=settings.SESSION_COOKIE_SECURE or None,
-                httponly=settings.SESSION_COOKIE_HTTPONLY or None
-            )
-        except:
-            try:
-                response.delete_cookie('partner_site_logo_url',
+                response.delete_cookie(acookie,
                 path=settings.SESSION_COOKIE_PATH,
                 )
             except:
