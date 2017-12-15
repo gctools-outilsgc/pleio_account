@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-14 15:05+0100\n"
+"POT-Creation-Date: 2017-12-15 16:44+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -157,7 +157,7 @@ msgstr ""
 msgid "Generate Tokens"
 msgstr ""
 
-#: core/templates/base.html:34 core/templates/base_account.html:24
+#: core/templates/base.html:33 core/templates/base_account.html:24
 msgid "Back to the homepage"
 msgstr ""
 
@@ -185,8 +185,8 @@ msgstr ""
 msgid "Security"
 msgstr ""
 
-#: core/templates/base_account.html:61 core/templates/login.html:36
-#: core/templates/register.html:36
+#: core/templates/base_account.html:61 core/templates/login.html:37
+#: core/templates/register.html:37
 msgid "Password"
 msgstr ""
 
@@ -204,147 +204,125 @@ msgstr ""
 msgid "Logout"
 msgstr ""
 
-#: core/templates/emails/base.html:893
-#: core/templates/emails/send_suspicious_login_message.html:2
-#: core/templates/emails/send_suspicious_login_message.txt:1
-msgid "<em>unknown on unknown</em>"
+#: core/templates/emails/register.html:5 core/templates/emails/register.txt:2
+#: core/templates/emails/reset_password.html:5
+#: core/templates/emails/reset_password.txt:2
+#: core/templates/emails/suspicious_login.html:5
+#: core/templates/emails/suspicious_login.txt:3
+msgid "Dear"
 msgstr ""
 
-#: core/templates/emails/base.html:893
-#: core/templates/emails/send_suspicious_login_message.html:2
-#: core/templates/emails/send_suspicious_login_message.txt:1
-msgid "<em>unknown</em>"
-msgstr ""
-
-#: core/templates/emails/register.html:6 core/templates/emails/register.txt:2
-msgid "Activate account at"
-msgstr ""
-
-#: core/templates/emails/register.html:8
-#: core/templates/emails/send_suspicious_login_message.html:14
-msgid "If it was you, please navigate to "
-msgstr ""
-
-#: core/templates/emails/register.html:9
-#: core/templates/emails/send_suspicious_login_message.html:15
-msgid "this link"
-msgstr ""
-
-#: core/templates/emails/register.html:11
-#: core/templates/emails/send_suspicious_login_message.html:17
-msgid "Or copy/paste this link into your browser"
-msgstr ""
-
-#: core/templates/emails/register.html:13 core/templates/emails/register.txt:6
-#, python-format
-msgid "This link is valid for %(expiration_days)s days."
+#: core/templates/emails/register.html:7 core/templates/emails/register.txt:4
+msgid "Please activate your account by following this link"
 msgstr ""
 
 #: core/templates/emails/register_subject.txt:1
-msgid "Please activate your account on"
+msgid "Please activate your account"
 msgstr ""
 
-#: core/templates/emails/send_suspicious_login_message.html:6
-#: core/templates/emails/send_suspicious_login_message.txt:3
-msgid "Someone has logged in using your account at "
+#: core/templates/emails/reset_password.html:7
+#: core/templates/emails/reset_password.txt:4
+msgid ""
+"You requested a new password for Pleio. Please follow this link to configure "
+"a new password."
 msgstr ""
 
-#: core/templates/emails/send_suspicious_login_message.html:8
-#: core/templates/emails/send_suspicious_login_message.txt:5
-msgid "IP address"
+#: core/templates/emails/reset_password.html:11
+#: core/templates/emails/reset_password.txt:8
+msgid "You can ignore this e-mail if you did not request a new password."
 msgstr ""
 
-#: core/templates/emails/send_suspicious_login_message.html:9
-#: core/templates/emails/send_suspicious_login_message.txt:6
-msgid "User"
+#: core/templates/emails/reset_password_subject.txt:1
+msgid "Request for a new password"
 msgstr ""
 
-#: core/templates/emails/send_suspicious_login_message.html:10
-#: core/templates/emails/send_suspicious_login_message.txt:7
-msgid "User agent"
+#: core/templates/emails/suspicious_login.html:2
+#: core/templates/emails/suspicious_login.txt:1
+msgid "<em>unknown on unknown</em>"
 msgstr ""
 
-#: core/templates/emails/send_suspicious_login_message.html:11
-#: core/templates/emails/send_suspicious_login_message.txt:8
-msgid "City"
+#: core/templates/emails/suspicious_login.html:2
+#: core/templates/emails/suspicious_login.txt:1
+msgid "<em>unknown</em>"
 msgstr ""
 
-#: core/templates/emails/send_suspicious_login_message.html:12
-#: core/templates/emails/send_suspicious_login_message.txt:9
-msgid "Country"
+#: core/templates/emails/suspicious_login.html:7
+msgid "You logged in to your account from a new location."
 msgstr ""
 
-#: core/templates/emails/send_suspicious_login_message.html:19
-#: core/templates/emails/send_suspicious_login_message.txt:12
-msgid "Otherwise you might want to change your password."
+#: core/templates/emails/suspicious_login.html:12
+#: core/templates/emails/suspicious_login.txt:10
+msgid ""
+"If it was you safely ignore this e-mail. Otherwise please change your "
+"password as soon as possible."
 msgstr ""
 
-#: core/templates/emails/send_suspicious_login_message.txt:11
-msgid "If it was you, please navigate to this link"
+#: core/templates/emails/suspicious_login.txt:5
+msgid "You logged in to your account from a new location"
 msgstr ""
 
-#: core/templates/emails/send_suspicious_login_message_subject.txt:1
-msgid "Account activity at"
+#: core/templates/emails/suspicious_login_subject.txt:1
+msgid "Logged in from a new location"
 msgstr ""
 
-#: core/templates/login.html:13 core/templates/login.html:73
+#: core/templates/login.html:14 core/templates/login.html:75
 msgid "Sign in"
 msgstr ""
 
-#: core/templates/login.html:14 core/templates/login.html:74
+#: core/templates/login.html:15 core/templates/login.html:76
 msgid "with your Pleio-account"
 msgstr ""
 
-#: core/templates/login.html:23
+#: core/templates/login.html:24
 msgid "Please enter a correct email and password."
 msgstr ""
 
-#: core/templates/login.html:24
+#: core/templates/login.html:25
 msgid "Note that both fields may be case-sensitive."
 msgstr ""
 
-#: core/templates/login.html:31 core/templates/password_reset.html:25
+#: core/templates/login.html:32 core/templates/password_reset.html:25
 msgid "Email address"
 msgstr ""
 
-#: core/templates/login.html:40 core/templates/password_reset.html:11
+#: core/templates/login.html:41 core/templates/password_reset.html:11
 #: core/templates/password_reset_done.html:8
 msgid "Forgot password"
 msgstr ""
 
-#: core/templates/login.html:45 core/templates/login.html:94
+#: core/templates/login.html:46 core/templates/login.html:96
 #: core/templates/password_reset.html:32
 #: core/templates/password_reset_complete.html:23
-#: core/templates/password_reset_done.html:23 core/templates/register.html:65
+#: core/templates/password_reset_done.html:23 core/templates/register.html:66
 #: core/templates/register_complete.html:15
 msgid "Login"
 msgstr ""
 
-#: core/templates/login.html:46
+#: core/templates/login.html:47
 msgid "Register account"
 msgstr ""
 
-#: core/templates/login.html:56
+#: core/templates/login.html:57
 msgid "Secure your account"
 msgstr ""
 
-#: core/templates/login.html:57
+#: core/templates/login.html:58
 msgid "Enable two factor authentication"
 msgstr ""
 
-#: core/templates/login.html:82
+#: core/templates/login.html:84
 msgid "Two factor authentication"
 msgstr ""
 
-#: core/templates/login.html:83
+#: core/templates/login.html:85
 msgid "Fill in a code from your code generator."
 msgstr ""
 
-#: core/templates/login.html:95
+#: core/templates/login.html:97
 msgid "Cancel"
 msgstr ""
 
-#: core/templates/login.html:106
+#: core/templates/login.html:108
 msgid ""
 "Use this form for entering backup tokens for logging in.\n"
 "         These tokens have been generated for you to print and keep safe. "
@@ -352,11 +330,11 @@ msgid ""
 "             enter one of these backup tokens to login to your account."
 msgstr ""
 
-#: core/templates/login.html:116 core/templates/login.html:124
+#: core/templates/login.html:118 core/templates/login.html:126
 msgid "Use backuptoken"
 msgstr ""
 
-#: core/templates/login.html:117
+#: core/templates/login.html:119
 msgid "Back"
 msgstr ""
 
@@ -379,7 +357,7 @@ msgid "Need help?"
 msgstr ""
 
 #: core/templates/password_reset.html:42 core/templates/profile.html:22
-#: core/templates/register.html:31
+#: core/templates/register.html:32
 msgid "Email"
 msgstr ""
 
@@ -392,17 +370,17 @@ msgid "You can now login with your new password."
 msgstr ""
 
 #: core/templates/password_reset_confirm.html:25
-#: core/templates/security_pages/change_password.html:31
+#: core/templates/security_pages/change_password.html:32
 msgid "New Password"
 msgstr ""
 
 #: core/templates/password_reset_confirm.html:32
-#: core/templates/security_pages/change_password.html:39
+#: core/templates/security_pages/change_password.html:40
 msgid "New Password (again)"
 msgstr ""
 
 #: core/templates/password_reset_confirm.html:39
-#: core/templates/security_pages/change_password.html:50
+#: core/templates/security_pages/change_password.html:51
 msgid "Confirm"
 msgstr ""
 
@@ -440,38 +418,31 @@ msgstr ""
 msgid "Remove avatar"
 msgstr ""
 
-#: core/templates/register.html:12 core/templates/register.html:64
+#: core/templates/register.html:13 core/templates/register.html:65
 msgid "Register"
 msgstr ""
 
-#: core/templates/register.html:13
+#: core/templates/register.html:14
 msgid "create a Pleio-account"
 msgstr ""
 
-#: core/templates/register.html:26
+#: core/templates/register.html:27
 msgid "First- and lastname"
 msgstr ""
 
-#: core/templates/register.html:40 core/templates/register.html:47
-#: core/templates/security_pages/change_password.html:26
-#: core/templates/security_pages/change_password.html:35
-#: core/templates/security_pages/change_password.html:43
-msgid "Attention: CAPS LOCK is ON"
-msgstr ""
-
-#: core/templates/register.html:43
+#: core/templates/register.html:44
 msgid "Password (again)"
 msgstr ""
 
-#: core/templates/register.html:54
+#: core/templates/register.html:55
 msgid "I agree with the "
 msgstr ""
 
-#: core/templates/register.html:54
+#: core/templates/register.html:55
 msgid " general terms"
 msgstr ""
 
-#: core/templates/register.html:59
+#: core/templates/register.html:60
 msgid "Please subscribe me to the Pleio newsletter"
 msgstr ""
 
@@ -492,7 +463,7 @@ msgid ""
 "Open the link in the Pleio verification email to complete your registration."
 msgstr ""
 
-#: core/templates/security_pages/change_password.html:22
+#: core/templates/security_pages/change_password.html:23
 msgid "Current Password"
 msgstr ""
 

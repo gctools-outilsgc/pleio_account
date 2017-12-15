@@ -1,0 +1,1 @@
+{% load i18n %}{% trans "Logged in from a new location" %}

@@ -2,14 +2,9 @@
 {% load i18n %}
 
 {% block content %}
-    <p>
-       {% trans "Activate account at" %} {{ site.name }}:
-        <br>
-        <br> {% trans "If it was you, please navigate to " %}
-        <a href="http://{{ site.domain }}{% url 'register_activate' activation_token %}">{% trans "this link" %}</a>
-        <br>
-        <br> {% trans "Or copy/paste this link into your browser" %}: http://{{ site.domain }}{% url 'register_activate' activation_token %}
-        <br>
-        <br>{% blocktrans %}This link is valid for {{ expiration_days }} days.{% endblocktrans %}
-    </p>
+    {% trans "Dear" %} {{ user.name }},<br />
+    <br />
+    {% trans "Please activate your account by following this link" %}:<br />
+    <br />
+    <a href="{{ protocol }}://{{ domain }}{% url 'register_activate' activation_token %}">{{ protocol }}://{{ domain }}{% url 'register_activate' activation_token %}</a><br />
 {% endblock %}

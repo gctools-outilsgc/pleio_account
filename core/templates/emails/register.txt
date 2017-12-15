@@ -1,6 +1,6 @@
 {% load i18n %}
-{% trans "Activate account at" %} {{ site.name }}:
+{% trans "Dear" %} {{ user.name }},
 
-http://{{ site.domain }}{% url 'register_activate' activation_token %}
+{% trans "Please activate your account by following this link" %}:<br />
 
-{% blocktrans %}This link is valid for {{ expiration_days }} days.{% endblocktrans %}
+{{ protocol }}://{{ domain }}{% url 'register_activate' activation_token %}

@@ -1,1 +1,1 @@
-{% load i18n %}{% blocktrans %}Please activate your account on{% endblocktrans %} {{ site.name }}
+{% load i18n %}{% trans "Please activate your account" %}

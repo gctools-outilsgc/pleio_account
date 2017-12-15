@@ -95,10 +95,13 @@ class User(AbstractBaseUser):
         send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [self.email], **kwargs)
 
     def send_activation_token(self, request):
+        current_site = get_current_site(request)
+
         template_context = {
-            'site': get_current_site(request),
-            'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS,
-            'activation_token': signing.dumps(obj=self.email)
+            'user': self,
+            'activation_token': signing.dumps(obj=self.email),
+            'protocol': 'https' if request.is_secure() else 'http',
+            'domain': current_site.domain
         }
 
         self.email_user(
@@ -181,22 +184,21 @@ class User(AbstractBaseUser):
     def send_suspicious_login_message(self, request):
         session = request.session
         device_id = request.COOKIES['device_id']
+        current_site = get_current_site(request)
 
         template_context = {
-            'site': get_current_site(request),
-            'user': self.email,
-            'user_agent': session.user_agent,
-            'ip_address': session.ip,
+            'user': self,
             'city': get_city(session.ip),
             'country': get_country(session.ip),
-            'acceptation_token': signing.dumps(obj=(device_id, self.email)),
-            'pleio_logo_small': request.build_absolute_uri("/static/images/pleio_logo_small.png")
+            'user_agent': session.user_agent,
+            'protocol': 'https' if request.is_secure() else 'http',
+            'domain': current_site.domain
         }
 
         self.email_user(
-            render_to_string('emails/send_suspicious_login_message_subject.txt', template_context),
-            render_to_string('emails/send_suspicious_login_message.txt', template_context),
-            html_message=(render_to_string('emails/send_suspicious_login_message.html', template_context)),
+            render_to_string('emails/suspicious_login_subject.txt', template_context),
+            render_to_string('emails/suspicious_login.txt', template_context),
+            html_message=(render_to_string('emails/suspicious_login.html', template_context)),
             fail_silently=True
         )
 

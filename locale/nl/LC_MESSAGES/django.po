@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-14 15:05+0100\n"
-"PO-Revision-Date: 2017-12-13 18:28+0100\n"
+"POT-Creation-Date: 2017-12-15 16:44+0100\n"
+"PO-Revision-Date: 2017-12-15 16:48+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -20,11 +20,11 @@ msgstr ""
 
 #: core/forms.py:17
 msgid "Your email address is not allowed."
-msgstr ""
+msgstr "Dit e-mailadres is niet geldig."
 
 #: core/forms.py:28 core/forms.py:73
 msgid "The two password fields didn't match."
-msgstr "﻿Voer hetzelfde wachtwoord in de twee wachtwoord velden in."
+msgstr "De twee wachtwoorden komen niet overeen."
 
 #: core/forms.py:59 core/forms.py:63
 msgid "Token"
@@ -162,7 +162,7 @@ msgstr "Je hebt nog geen backup tokens."
 msgid "Generate Tokens"
 msgstr "Genereer tokens"
 
-#: core/templates/base.html:34 core/templates/base_account.html:24
+#: core/templates/base.html:33 core/templates/base_account.html:24
 msgid "Back to the homepage"
 msgstr "Terug naar de homepagina"
 
@@ -190,8 +190,8 @@ msgstr "Profielfoto"
 msgid "Security"
 msgstr "Beveiliging"
 
-#: core/templates/base_account.html:61 core/templates/login.html:36
-#: core/templates/register.html:36
+#: core/templates/base_account.html:61 core/templates/login.html:37
+#: core/templates/register.html:37
 msgid "Password"
 msgstr "Wachtwoord"
 
@@ -209,147 +209,130 @@ msgstr "Twee-factor authenticatie"
 msgid "Logout"
 msgstr "Uitloggen"
 
-#: core/templates/emails/base.html:893
-#: core/templates/emails/send_suspicious_login_message.html:2
-#: core/templates/emails/send_suspicious_login_message.txt:1
+#: core/templates/emails/register.html:5 core/templates/emails/register.txt:2
+#: core/templates/emails/reset_password.html:5
+#: core/templates/emails/reset_password.txt:2
+#: core/templates/emails/suspicious_login.html:5
+#: core/templates/emails/suspicious_login.txt:3
+msgid "Dear"
+msgstr "Beste"
+
+#: core/templates/emails/register.html:7 core/templates/emails/register.txt:4
+msgid "Please activate your account by following this link"
+msgstr "Activeer je account door de volgende link te volgen"
+
+#: core/templates/emails/register_subject.txt:1
+msgid "Please activate your account"
+msgstr "Activeer je account"
+
+#: core/templates/emails/reset_password.html:7
+#: core/templates/emails/reset_password.txt:4
+msgid ""
+"You requested a new password for Pleio. Please follow this link to configure "
+"a new password."
+msgstr ""
+"Je hebt een nieuw wachtwoord aangevraagd. Volg de link om een nieuw "
+"wachtwoord in te stellen."
+
+#: core/templates/emails/reset_password.html:11
+#: core/templates/emails/reset_password.txt:8
+msgid "You can ignore this e-mail if you did not request a new password."
+msgstr ""
+"Je kunt deze e-mail negeren indien je geen nieuw wachtwoord hebt aangevraagd."
+
+#: core/templates/emails/reset_password_subject.txt:1
+msgid "Request for a new password"
+msgstr "Vraag een nieuw wachtwoord aan"
+
+#: core/templates/emails/suspicious_login.html:2
+#: core/templates/emails/suspicious_login.txt:1
 msgid "<em>unknown on unknown</em>"
 msgstr "<em>onbekend op onbekend</em>"
 
-#: core/templates/emails/base.html:893
-#: core/templates/emails/send_suspicious_login_message.html:2
-#: core/templates/emails/send_suspicious_login_message.txt:1
+#: core/templates/emails/suspicious_login.html:2
+#: core/templates/emails/suspicious_login.txt:1
 msgid "<em>unknown</em>"
 msgstr "<em>onbekend</em>"
 
-#: core/templates/emails/register.html:6 core/templates/emails/register.txt:2
-msgid "Activate account at"
-msgstr "Activeer account op"
+#: core/templates/emails/suspicious_login.html:7
+msgid "You logged in to your account from a new location."
+msgstr "Je bent ingelogd op je account vanaf een nieuwe locatie."
 
-#: core/templates/emails/register.html:8
-#: core/templates/emails/send_suspicious_login_message.html:14
-msgid "If it was you, please navigate to "
-msgstr "Wanneer jij dit was, ga naar "
+#: core/templates/emails/suspicious_login.html:12
+#: core/templates/emails/suspicious_login.txt:10
+msgid ""
+"If it was you safely ignore this e-mail. Otherwise please change your "
+"password as soon as possible."
+msgstr ""
+"Als jij dit was dan kun je deze e-mail negeren. Anders verander je "
+"wachtwoord zo snel mogelijk."
 
-#: core/templates/emails/register.html:9
-#: core/templates/emails/send_suspicious_login_message.html:15
-msgid "this link"
-msgstr "deze link"
+#: core/templates/emails/suspicious_login.txt:5
+msgid "You logged in to your account from a new location"
+msgstr "Je hebt ingelogd vanaf een nieuwe locatie"
 
-#: core/templates/emails/register.html:11
-#: core/templates/emails/send_suspicious_login_message.html:17
-msgid "Or copy/paste this link into your browser"
-msgstr "Of kopieer de link"
+#: core/templates/emails/suspicious_login_subject.txt:1
+msgid "Logged in from a new location"
+msgstr "Ingelogd vanaf een nieuwe locatie"
 
-#: core/templates/emails/register.html:13 core/templates/emails/register.txt:6
-#, python-format
-msgid "This link is valid for %(expiration_days)s days."
-msgstr "Deze link is %(expiration_days)s dagen geldig."
-
-#: core/templates/emails/register_subject.txt:1
-msgid "Please activate your account on"
-msgstr "Activeer je account op %(site.name)s"
-
-#: core/templates/emails/send_suspicious_login_message.html:6
-#: core/templates/emails/send_suspicious_login_message.txt:3
-msgid "Someone has logged in using your account at "
-msgstr "Iemand heeft ingelogd met je account op "
-
-#: core/templates/emails/send_suspicious_login_message.html:8
-#: core/templates/emails/send_suspicious_login_message.txt:5
-msgid "IP address"
-msgstr "IP adres"
-
-#: core/templates/emails/send_suspicious_login_message.html:9
-#: core/templates/emails/send_suspicious_login_message.txt:6
-msgid "User"
-msgstr "Gebruiker"
-
-#: core/templates/emails/send_suspicious_login_message.html:10
-#: core/templates/emails/send_suspicious_login_message.txt:7
-msgid "User agent"
-msgstr "Browser"
-
-#: core/templates/emails/send_suspicious_login_message.html:11
-#: core/templates/emails/send_suspicious_login_message.txt:8
-msgid "City"
-msgstr "Stad"
-
-#: core/templates/emails/send_suspicious_login_message.html:12
-#: core/templates/emails/send_suspicious_login_message.txt:9
-msgid "Country"
-msgstr "Land"
-
-#: core/templates/emails/send_suspicious_login_message.html:19
-#: core/templates/emails/send_suspicious_login_message.txt:12
-msgid "Otherwise you might want to change your password."
-msgstr "Anders kun je het wachtwoord veranderen."
-
-#: core/templates/emails/send_suspicious_login_message.txt:11
-msgid "If it was you, please navigate to this link"
-msgstr "Wanneer jij dit was, ga naar de volgende link"
-
-#: core/templates/emails/send_suspicious_login_message_subject.txt:1
-msgid "Account activity at"
-msgstr "Account activiteit op"
-
-#: core/templates/login.html:13 core/templates/login.html:73
+#: core/templates/login.html:14 core/templates/login.html:75
 msgid "Sign in"
 msgstr "Inloggen"
 
-#: core/templates/login.html:14 core/templates/login.html:74
+#: core/templates/login.html:15 core/templates/login.html:76
 msgid "with your Pleio-account"
 msgstr "met uw Pleio-account"
 
-#: core/templates/login.html:23
+#: core/templates/login.html:24
 msgid "Please enter a correct email and password."
 msgstr "Voer een correct e-mailadres en wachtwoord in."
 
-#: core/templates/login.html:24
+#: core/templates/login.html:25
 msgid "Note that both fields may be case-sensitive."
 msgstr "Let op: beide velden kunnen hoofdlettergevoelig zijn."
 
-#: core/templates/login.html:31 core/templates/password_reset.html:25
+#: core/templates/login.html:32 core/templates/password_reset.html:25
 msgid "Email address"
 msgstr "E-mailadres"
 
-#: core/templates/login.html:40 core/templates/password_reset.html:11
+#: core/templates/login.html:41 core/templates/password_reset.html:11
 #: core/templates/password_reset_done.html:8
 msgid "Forgot password"
 msgstr "Wachtwoord vergeten"
 
-#: core/templates/login.html:45 core/templates/login.html:94
+#: core/templates/login.html:46 core/templates/login.html:96
 #: core/templates/password_reset.html:32
 #: core/templates/password_reset_complete.html:23
-#: core/templates/password_reset_done.html:23 core/templates/register.html:65
+#: core/templates/password_reset_done.html:23 core/templates/register.html:66
 #: core/templates/register_complete.html:15
 msgid "Login"
 msgstr "Login"
 
-#: core/templates/login.html:46
+#: core/templates/login.html:47
 msgid "Register account"
 msgstr "Account aanmaken"
 
-#: core/templates/login.html:56
+#: core/templates/login.html:57
 msgid "Secure your account"
 msgstr "Extra beveiliging voor uw account"
 
-#: core/templates/login.html:57
+#: core/templates/login.html:58
 msgid "Enable two factor authentication"
 msgstr "Schakel twee-factor-authenticatie in"
 
-#: core/templates/login.html:82
+#: core/templates/login.html:84
 msgid "Two factor authentication"
 msgstr "Twee-factor-authenticatie"
 
-#: core/templates/login.html:83
+#: core/templates/login.html:85
 msgid "Fill in a code from your code generator."
 msgstr "Voer de verificatiecode uit uw codegenerator in."
 
-#: core/templates/login.html:95
+#: core/templates/login.html:97
 msgid "Cancel"
 msgstr "Annuleren"
 
-#: core/templates/login.html:106
+#: core/templates/login.html:108
 msgid ""
 "Use this form for entering backup tokens for logging in.\n"
 "         These tokens have been generated for you to print and keep safe. "
@@ -357,11 +340,11 @@ msgid ""
 "             enter one of these backup tokens to login to your account."
 msgstr "Geef een backuptoken in om toegang te krijgen tot uw account."
 
-#: core/templates/login.html:116 core/templates/login.html:124
+#: core/templates/login.html:118 core/templates/login.html:126
 msgid "Use backuptoken"
 msgstr "Gebruik backupcode"
 
-#: core/templates/login.html:117
+#: core/templates/login.html:119
 msgid "Back"
 msgstr "Terug"
 
@@ -384,7 +367,7 @@ msgid "Need help?"
 msgstr "Hulp nodig?"
 
 #: core/templates/password_reset.html:42 core/templates/profile.html:22
-#: core/templates/register.html:31
+#: core/templates/register.html:32
 msgid "Email"
 msgstr "E-mail"
 
@@ -397,17 +380,17 @@ msgid "You can now login with your new password."
 msgstr "U kunt nu inloggen met uw nieuwe wachtwoord."
 
 #: core/templates/password_reset_confirm.html:25
-#: core/templates/security_pages/change_password.html:31
+#: core/templates/security_pages/change_password.html:32
 msgid "New Password"
 msgstr "Nieuw wachtwoord"
 
 #: core/templates/password_reset_confirm.html:32
-#: core/templates/security_pages/change_password.html:39
+#: core/templates/security_pages/change_password.html:40
 msgid "New Password (again)"
 msgstr "Nieuw wachtwoord (verificatie)"
 
 #: core/templates/password_reset_confirm.html:39
-#: core/templates/security_pages/change_password.html:50
+#: core/templates/security_pages/change_password.html:51
 msgid "Confirm"
 msgstr "Bevestigen"
 
@@ -447,38 +430,31 @@ msgstr "Kies een avatar"
 msgid "Remove avatar"
 msgstr "Verwijder avatar"
 
-#: core/templates/register.html:12 core/templates/register.html:64
+#: core/templates/register.html:13 core/templates/register.html:65
 msgid "Register"
 msgstr "Registeren"
 
-#: core/templates/register.html:13
+#: core/templates/register.html:14
 msgid "create a Pleio-account"
 msgstr "maak een Pleio-account"
 
-#: core/templates/register.html:26
+#: core/templates/register.html:27
 msgid "First- and lastname"
 msgstr "Voor- en achternaam"
 
-#: core/templates/register.html:40 core/templates/register.html:47
-#: core/templates/security_pages/change_password.html:26
-#: core/templates/security_pages/change_password.html:35
-#: core/templates/security_pages/change_password.html:43
-msgid "Attention: CAPS LOCK is ON"
-msgstr "Let op: Capslock is ingeschakeld"
-
-#: core/templates/register.html:43
+#: core/templates/register.html:44
 msgid "Password (again)"
 msgstr "Wachtwoord (nogmaals)"
 
-#: core/templates/register.html:54
+#: core/templates/register.html:55
 msgid "I agree with the "
 msgstr "Ik ga akkoord met de "
 
-#: core/templates/register.html:54
+#: core/templates/register.html:55
 msgid " general terms"
 msgstr " algemene voorwaarden"
 
-#: core/templates/register.html:59
+#: core/templates/register.html:60
 msgid "Please subscribe me to the Pleio newsletter"
 msgstr "Schrijf me in voor de Pleio nieuwsbrief"
 
@@ -501,7 +477,7 @@ msgstr ""
 "Klik op de link in de Pleio verificatie e-mail om uw registratie te "
 "voltooien."
 
-#: core/templates/security_pages/change_password.html:22
+#: core/templates/security_pages/change_password.html:23
 msgid "Current Password"
 msgstr "Huidig wachtwoord"
 
@@ -777,6 +753,48 @@ msgstr "Nederlands"
 msgid "French"
 msgstr "Frans"
 
+#~ msgid "Activate account at"
+#~ msgstr "Activeer account op"
+
+#~ msgid "If it was you, please navigate to "
+#~ msgstr "Wanneer jij dit was, ga naar "
+
+#~ msgid "this link"
+#~ msgstr "deze link"
+
+#~ msgid "Or copy/paste this link into your browser"
+#~ msgstr "Of kopieer de link"
+
+#~ msgid "This link is valid for %(expiration_days)s days."
+#~ msgstr "Deze link is %(expiration_days)s dagen geldig."
+
+#~ msgid "IP address"
+#~ msgstr "IP adres"
+
+#~ msgid "User"
+#~ msgstr "Gebruiker"
+
+#~ msgid "User agent"
+#~ msgstr "Browser"
+
+#~ msgid "City"
+#~ msgstr "Stad"
+
+#~ msgid "Country"
+#~ msgstr "Land"
+
+#~ msgid "Otherwise you might want to change your password."
+#~ msgstr "Anders kun je het wachtwoord veranderen."
+
+#~ msgid "If it was you, please navigate to this link"
+#~ msgstr "Wanneer jij dit was, ga naar de volgende link"
+
+#~ msgid "Account activity at"
+#~ msgstr "Account activiteit op"
+
+#~ msgid "Attention: CAPS LOCK is ON"
+#~ msgstr "Let op: Capslock is ingeschakeld"
+
 #~ msgid "Sitename"
 #~ msgstr "Sitenaam"
 
@@ -802,11 +820,6 @@ msgstr "Frans"
 
 #~ msgid "Now please enter a new password for your account."
 #~ msgstr "Vul een nieuw wachtwoord in voor je account."
-
-#~ msgid ""
-#~ "Please check your e-mail to find the link to configure a new password."
-#~ msgstr ""
-#~ "Controleer je e-mail. Volg de link om een nieuw wachtwoord in te stellen."
 
 #~ msgid "Update profile"
 #~ msgstr "Profiel updaten"
