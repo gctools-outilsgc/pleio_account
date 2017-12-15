@@ -152,7 +152,7 @@ def two_factor_form(request, page_action):
 
         request.session['tf_key'] = key
         request.session['django_two_factor-qr_secret_key'] = b32key
-    
+
         two_factor_authorization = ({
             'form': PleioTOTPDeviceForm(key=key, user=request.user),
             'QR_URL': reverse('two_factor:qr')
@@ -165,9 +165,8 @@ def two_factor_form(request, page_action):
         if form.is_valid():
             device = form.save()
             django_otp.login(request, device)
-            two_factor_authorization['state'] = 'default'
-            two_factor_authorization['default_device'] = 'true'
-            two_factor_authorization['show_state'] = 'true'
+            two_factor_authorization['default_device'] = True
+            two_factor_authorization['show_state'] = True
         else:
             two_factor_authorization['form'] = form
             two_factor_authorization['QR_URL'] = reverse('two_factor:qr')
@@ -193,7 +192,7 @@ def two_factor_form(request, page_action):
         two_factor_authorization['default_device'] = 'true'
         two_factor_authorization['show_state'] = 'true'
         two_factor_authorization['state'] = 'codes'
-          
+
     else:
         two_factor_authorization = PleioProfileView.as_view(template_name='security_pages.html')(request).context_data
         two_factor_authorization['state'] = 'default'

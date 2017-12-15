@@ -3,7 +3,7 @@
 
 <h2>{% block title %}{% trans "Two-Factor Authentication" %}{% endblock %}</h2>
 <div class="account__cards">
-    
+
     {% if 2FA.state == 'default' %}
         {% if 2FA.default_device %}
             <div class="card ___nopadding">
@@ -24,7 +24,7 @@
             </div>
         {% endif %}
     {% endif %}
-    
+
     {% if 2FA.state == 'setup' %}
         <div class="account__cards">
             <div class="card ___nopadding">
@@ -44,7 +44,7 @@
                             {{ 2FA.form.token.label_tag }}
                             {{ 2FA.form.token }}
                         </div>
-                        
+
                         <p class="textcolor_secondary">
                             {% blocktrans %}Don't have a token generator? Try <a href="https://support.google.com/accounts/answer/1066447" target="_blank" rel="nofollow">Google Authenticator</a> or <a href="https://authy.com/download/" target="_blank" rel="nofollow">Authy</a>.{% endblocktrans %}
                         </p>
@@ -59,7 +59,6 @@
 
     {% if 2FA.state == 'codes' %}
         <form method="post" action="." "page_action=2fa-generatecodes">{% csrf_token %}{{ form }}
-                
             <div class="account__cards">
                 <div class="card ___nopadding">
                 <h2 class="card__title ___addpadding-side">{% trans "Backup Tokens" %}</h2>
@@ -146,5 +145,4 @@
             {% endif %}
         </div>
     {% endif %}
-    
 </div>
