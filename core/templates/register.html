@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load Pleio_templatetags %}
+{% load settings_value %}
+
 
 {% block content %}
 
@@ -60,14 +62,19 @@
                 <label for="id_receives_newsletter">{% trans "Please subscribe me to the Pleio newsletter" %}</label>
             </div>
         </div>
-        
+
+        {% settings_value 'GOOGLE_RECAPTCHA_SITE_KEY' as recaptcha_site_key %}
+
+        {% if recaptcha_site_key %}
+            <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
+        {% endif %}
+
         <div class="register__buttons">
             <button name="register" class="button ___stretch ___active" type="submit">{% trans "Register" %}</button>
             <a href="{% url 'login' %}" class="button ___stretch ___white ___outline">{% trans "Login" %}</a>
         </div>
         
     </fieldset>
-
 </form>
 
 {% endblock %}

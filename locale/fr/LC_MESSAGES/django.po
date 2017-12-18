@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-15 16:44+0100\n"
+"POT-Creation-Date: 2017-12-18 18:27+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,15 +22,19 @@ msgstr ""
 msgid "Your email address is not allowed."
 msgstr ""
 
-#: core/forms.py:28 core/forms.py:73
+#: core/forms.py:28 core/forms.py:85
 msgid "The two password fields didn't match."
 msgstr ""
 
-#: core/forms.py:59 core/forms.py:63
+#: core/forms.py:29
+msgid "Login failed. Please check Google captcha."
+msgstr ""
+
+#: core/forms.py:71 core/forms.py:75
 msgid "Token"
 msgstr ""
 
-#: core/forms.py:72
+#: core/forms.py:84
 msgid "The password is invalid."
 msgstr ""
 
@@ -125,7 +129,7 @@ msgstr ""
 
 #: core/templates/backup_tokens.html:5 core/templates/backup_tokens.html:9
 #: core/templates/security_pages/two_factor_authorization.html:10
-#: core/templates/security_pages/two_factor_authorization.html:65
+#: core/templates/security_pages/two_factor_authorization.html:64
 #: core/templates/tf_profile.html:10
 msgid "Backup Tokens"
 msgstr ""
@@ -143,21 +147,21 @@ msgid ""
 msgstr ""
 
 #: core/templates/backup_tokens.html:25
-#: core/templates/security_pages/two_factor_authorization.html:81
+#: core/templates/security_pages/two_factor_authorization.html:80
 msgid "Print these tokens and keep them somewhere safe."
 msgstr ""
 
 #: core/templates/backup_tokens.html:27
-#: core/templates/security_pages/two_factor_authorization.html:83
+#: core/templates/security_pages/two_factor_authorization.html:82
 msgid "You don't have any backup codes yet."
 msgstr ""
 
 #: core/templates/backup_tokens.html:31
-#: core/templates/security_pages/two_factor_authorization.html:87
+#: core/templates/security_pages/two_factor_authorization.html:86
 msgid "Generate Tokens"
 msgstr ""
 
-#: core/templates/base.html:33 core/templates/base_account.html:24
+#: core/templates/base.html:34 core/templates/base_account.html:24
 msgid "Back to the homepage"
 msgstr ""
 
@@ -185,8 +189,8 @@ msgstr ""
 msgid "Security"
 msgstr ""
 
-#: core/templates/base_account.html:61 core/templates/login.html:37
-#: core/templates/register.html:37
+#: core/templates/base_account.html:61 core/templates/login.html:38
+#: core/templates/register.html:39
 msgid "Password"
 msgstr ""
 
@@ -265,64 +269,64 @@ msgstr ""
 msgid "Logged in from a new location"
 msgstr ""
 
-#: core/templates/login.html:14 core/templates/login.html:75
+#: core/templates/login.html:15 core/templates/login.html:84
 msgid "Sign in"
 msgstr ""
 
-#: core/templates/login.html:15 core/templates/login.html:76
+#: core/templates/login.html:16 core/templates/login.html:85
 msgid "with your Pleio-account"
 msgstr ""
 
-#: core/templates/login.html:24
+#: core/templates/login.html:25
 msgid "Please enter a correct email and password."
 msgstr ""
 
-#: core/templates/login.html:25
+#: core/templates/login.html:26
 msgid "Note that both fields may be case-sensitive."
 msgstr ""
 
-#: core/templates/login.html:32 core/templates/password_reset.html:25
+#: core/templates/login.html:33 core/templates/password_reset.html:25
 msgid "Email address"
 msgstr ""
 
-#: core/templates/login.html:41 core/templates/password_reset.html:11
+#: core/templates/login.html:42 core/templates/password_reset.html:11
 #: core/templates/password_reset_done.html:8
 msgid "Forgot password"
 msgstr ""
 
-#: core/templates/login.html:46 core/templates/login.html:96
+#: core/templates/login.html:55 core/templates/login.html:105
 #: core/templates/password_reset.html:32
 #: core/templates/password_reset_complete.html:23
-#: core/templates/password_reset_done.html:23 core/templates/register.html:66
+#: core/templates/password_reset_done.html:23 core/templates/register.html:74
 #: core/templates/register_complete.html:15
 msgid "Login"
 msgstr ""
 
-#: core/templates/login.html:47
+#: core/templates/login.html:56
 msgid "Register account"
 msgstr ""
 
-#: core/templates/login.html:57
+#: core/templates/login.html:66
 msgid "Secure your account"
 msgstr ""
 
-#: core/templates/login.html:58
+#: core/templates/login.html:67
 msgid "Enable two factor authentication"
 msgstr ""
 
-#: core/templates/login.html:84
+#: core/templates/login.html:93
 msgid "Two factor authentication"
 msgstr ""
 
-#: core/templates/login.html:85
+#: core/templates/login.html:94
 msgid "Fill in a code from your code generator."
 msgstr ""
 
-#: core/templates/login.html:97
+#: core/templates/login.html:106
 msgid "Cancel"
 msgstr ""
 
-#: core/templates/login.html:108
+#: core/templates/login.html:117
 msgid ""
 "Use this form for entering backup tokens for logging in.\n"
 "         These tokens have been generated for you to print and keep safe. "
@@ -330,11 +334,11 @@ msgid ""
 "             enter one of these backup tokens to login to your account."
 msgstr ""
 
-#: core/templates/login.html:118 core/templates/login.html:126
+#: core/templates/login.html:127 core/templates/login.html:135
 msgid "Use backuptoken"
 msgstr ""
 
-#: core/templates/login.html:119
+#: core/templates/login.html:128
 msgid "Back"
 msgstr ""
 
@@ -357,7 +361,7 @@ msgid "Need help?"
 msgstr ""
 
 #: core/templates/password_reset.html:42 core/templates/profile.html:22
-#: core/templates/register.html:32
+#: core/templates/register.html:34
 msgid "Email"
 msgstr ""
 
@@ -418,31 +422,31 @@ msgstr ""
 msgid "Remove avatar"
 msgstr ""
 
-#: core/templates/register.html:13 core/templates/register.html:65
+#: core/templates/register.html:15 core/templates/register.html:73
 msgid "Register"
 msgstr ""
 
-#: core/templates/register.html:14
+#: core/templates/register.html:16
 msgid "create a Pleio-account"
 msgstr ""
 
-#: core/templates/register.html:27
+#: core/templates/register.html:29
 msgid "First- and lastname"
 msgstr ""
 
-#: core/templates/register.html:44
+#: core/templates/register.html:46
 msgid "Password (again)"
 msgstr ""
 
-#: core/templates/register.html:55
+#: core/templates/register.html:57
 msgid "I agree with the "
 msgstr ""
 
-#: core/templates/register.html:55
+#: core/templates/register.html:57
 msgid " general terms"
 msgstr ""
 
-#: core/templates/register.html:60
+#: core/templates/register.html:62
 msgid "Please subscribe me to the Pleio newsletter"
 msgstr ""
 
@@ -527,7 +531,7 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
-#: core/templates/security_pages/two_factor_authorization.html:67
+#: core/templates/security_pages/two_factor_authorization.html:66
 msgid ""
 "Backup tokens can be used when your primary and backup\n"
 "                        phone numbers aren't available. The backup tokens "
@@ -539,45 +543,45 @@ msgid ""
 "                        below will be valid."
 msgstr ""
 
-#: core/templates/security_pages/two_factor_authorization.html:99
+#: core/templates/security_pages/two_factor_authorization.html:98
 #: core/templates/tf_disable.html:9
 msgid "Disable Two-factor Authentication"
 msgstr ""
 
-#: core/templates/security_pages/two_factor_authorization.html:101
+#: core/templates/security_pages/two_factor_authorization.html:100
 msgid ""
 "You are about to disable two-factor authentication. This\n"
 "                        compromises your account security, are you sure?"
 msgstr ""
 
-#: core/templates/security_pages/two_factor_authorization.html:105
+#: core/templates/security_pages/two_factor_authorization.html:104
 #: core/templates/tf_disable.html:15
 msgid "Yes, I am sure"
 msgstr ""
 
-#: core/templates/security_pages/two_factor_authorization.html:109
-#: core/templates/security_pages/two_factor_authorization.html:128
+#: core/templates/security_pages/two_factor_authorization.html:108
+#: core/templates/security_pages/two_factor_authorization.html:127
 #: core/templates/tf_disable.html:19 core/templates/tf_profile.html:37
 msgid "Disable"
 msgstr ""
 
-#: core/templates/security_pages/two_factor_authorization.html:119
+#: core/templates/security_pages/two_factor_authorization.html:118
 #: core/templates/tf_profile.html:28
 msgid "Disable Two-Factor Authentication"
 msgstr ""
 
-#: core/templates/security_pages/two_factor_authorization.html:124
+#: core/templates/security_pages/two_factor_authorization.html:123
 msgid ""
 "However we strongly discourage you to do so, you can\n"
 "                    also disable two-factor authentication for your account."
 msgstr ""
 
-#: core/templates/security_pages/two_factor_authorization.html:131
+#: core/templates/security_pages/two_factor_authorization.html:130
 #: core/templates/tf_profile.html:40
 msgid "Enable Two-Factor Authentication"
 msgstr ""
 
-#: core/templates/security_pages/two_factor_authorization.html:136
+#: core/templates/security_pages/two_factor_authorization.html:135
 msgid ""
 "Two-factor authentication is not enabled for your\n"
 "                        account. Enable two-factor authentication for "
@@ -585,7 +589,7 @@ msgid ""
 "                        security."
 msgstr ""
 
-#: core/templates/security_pages/two_factor_authorization.html:143
+#: core/templates/security_pages/two_factor_authorization.html:142
 #: core/templates/tf_profile.html:50
 msgid "Enable"
 msgstr ""
@@ -690,7 +694,7 @@ msgid ""
 "                    security."
 msgstr ""
 
-#: core/views.py:140
+#: core/views.py:143
 msgid "The Password has been changed successfully."
 msgstr ""
 

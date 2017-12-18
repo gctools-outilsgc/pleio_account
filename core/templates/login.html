@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load Pleio_templatetags %}
+{% load settings_value %}
 
 {% block content %}
 
@@ -42,6 +43,14 @@
                 <p class="capslock"></p>
             </div>
 
+<!--
+            {% settings_value 'GOOGLE_RECAPTCHA_SITE_KEY' as recaptcha_site_key %}
+            
+            {% if recaptcha_site_key %}
+                <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
+            {% endif %}
+-->
+            
             <div class="login__buttons">
                 <button name="login" class="button ___stretch ___active login__login" type="submit">{% trans "Login" %}</button>
                 <a href="{% url 'register' %}" class="button ___stretch ___white ___outline">{% trans "Register account" %}</a>
