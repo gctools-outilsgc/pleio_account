@@ -63,8 +63,11 @@ tf_urls = [
 us_urls = [
     url(r'', include('user_sessions.urls', 'user_sessions'))
 ]
+oidc_urls = [
+    url(r'^openid/', include('oidc_provider.urls', namespace='oidc_provider'))
+]
 
-urlpatterns = legacy_urls + urls +  tf_urls + us_urls
+urlpatterns = legacy_urls + urls +  tf_urls + us_urls + oidc_urls
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
