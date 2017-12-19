@@ -1,4 +1,4 @@
-Django==1.10.6
+Django==1.11.8
 psycopg2==2.7
 django-webpack-loader==0.4.1
 django-oauth-toolkit==0.12.0
