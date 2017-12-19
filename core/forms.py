@@ -1,6 +1,7 @@
 from django.utils.translation import gettext, gettext_lazy as _
 from django.contrib.auth import password_validation
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate 
 from django.contrib.auth.forms import AuthenticationForm
 from two_factor.forms import AuthenticationTokenForm, TOTPDeviceForm
@@ -26,7 +27,7 @@ class EmailField(forms.EmailField):
 class RegisterForm(forms.Form):
     error_messages = {
         'password_mismatch': _("The two password fields didn't match."),
-        'captcha_mismatch': _("Login failed. Please check Google captcha."),
+        'captcha_mismatch': 'captcha_mismatch',
     }
 
     name = forms.CharField(required=True, max_length=100)
@@ -55,7 +56,7 @@ class RegisterForm(forms.Form):
 
     def clean(self):
         super(RegisterForm, self).clean()
-        if not verify_captcha_response(self.cleaned_data.get("g-recaptcha-response")):
+        if not verify_captcha_response(self.cleaned_data.get('g-recaptcha-response')):
             raise forms.ValidationError(
                 self.error_messages['captcha_mismatch'],
                 code='captcha_mismatch',
@@ -65,6 +66,22 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('name', 'email', 'avatar')
+
+
+class PleioAuthenticationForm(AuthenticationForm):
+    error_messages = {
+        'captcha_mismatch': 'captcha_mismatch',
+    }
+
+    def __init__(self, *args, **kwargs):
+        super(PleioAuthenticationForm, self).__init__(*args, **kwargs)
+        self.fields['g-recaptcha-response'] = forms.CharField()
+
+    def clean(self):
+        super(PleioAuthenticationForm, self).clean()
+        print(self.cleaned_data.get('username'))
+        if not verify_captcha_response(self.cleaned_data.get('g-recaptcha-response')):
+            raise forms.ValidationError('captcha_mismatch')
 
 
 class PleioAuthenticationTokenForm(AuthenticationTokenForm):

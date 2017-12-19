@@ -22,8 +22,13 @@
             {% for error in form.non_field_errors %}
                 <li>
                     {% include_asset "icons/account-alert.svg" %}
-                    <div class="textcolor_primary">{% trans "Please enter a correct email and password." %}</div>
-                    <div class="textcolor_secondary">{% trans "Note that both fields may be case-sensitive." %}</div>
+                    {% if error == 'captcha_mismatch' %}
+                        <div class="textcolor_primary">{% trans "Login failed." %}</div>
+                        <div class="textcolor_secondary">{% trans "Please check Google captcha." %}</div>
+                    {% else %}
+                        <div class="textcolor_primary">{% trans "Please enter a correct email and password." %}</div>
+                        <div class="textcolor_secondary">{% trans "Note that both fields may be case-sensitive." %}</div>
+                    {% endif %}
                 </li>
             {% endfor %}
         </ul>
@@ -43,13 +48,13 @@
                 <p class="capslock"></p>
             </div>
 
-<!--
+
             {% settings_value 'GOOGLE_RECAPTCHA_SITE_KEY' as recaptcha_site_key %}
             
             {% if recaptcha_site_key %}
                 <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
             {% endif %}
--->
+
             
             <div class="login__buttons">
                 <button name="login" class="button ___stretch ___active login__login" type="submit">{% trans "Login" %}</button>

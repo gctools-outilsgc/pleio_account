@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-18 18:27+0100\n"
+"POT-Creation-Date: 2017-12-19 15:43+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,23 +18,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: core/forms.py:17
+#: core/forms.py:18
 msgid "Your email address is not allowed."
 msgstr ""
 
-#: core/forms.py:28 core/forms.py:85
+#: core/forms.py:29 core/forms.py:100
 msgid "The two password fields didn't match."
 msgstr ""
 
-#: core/forms.py:29
+#: core/forms.py:73
 msgid "Login failed. Please check Google captcha."
 msgstr ""
 
-#: core/forms.py:71 core/forms.py:75
+#: core/forms.py:86 core/forms.py:90
 msgid "Token"
 msgstr ""
 
-#: core/forms.py:84
+#: core/forms.py:99
 msgid "The password is invalid."
 msgstr ""
 
@@ -189,7 +189,7 @@ msgstr ""
 msgid "Security"
 msgstr ""
 
-#: core/templates/base_account.html:61 core/templates/login.html:38
+#: core/templates/base_account.html:61 core/templates/login.html:46
 #: core/templates/register.html:39
 msgid "Password"
 msgstr ""
@@ -269,32 +269,40 @@ msgstr ""
 msgid "Logged in from a new location"
 msgstr ""
 
-#: core/templates/login.html:15 core/templates/login.html:84
+#: core/templates/login.html:15 core/templates/login.html:92
 msgid "Sign in"
 msgstr ""
 
-#: core/templates/login.html:16 core/templates/login.html:85
+#: core/templates/login.html:16 core/templates/login.html:93
 msgid "with your Pleio-account"
 msgstr ""
 
-#: core/templates/login.html:25
+#: core/templates/login.html:27
+msgid "Login failed."
+msgstr ""
+
+#: core/templates/login.html:28
+msgid "Please check Google captcha."
+msgstr ""
+
+#: core/templates/login.html:30
 msgid "Please enter a correct email and password."
 msgstr ""
 
-#: core/templates/login.html:26
+#: core/templates/login.html:31
 msgid "Note that both fields may be case-sensitive."
 msgstr ""
 
-#: core/templates/login.html:33 core/templates/password_reset.html:25
+#: core/templates/login.html:41 core/templates/password_reset.html:25
 msgid "Email address"
 msgstr ""
 
-#: core/templates/login.html:42 core/templates/password_reset.html:11
+#: core/templates/login.html:50 core/templates/password_reset.html:11
 #: core/templates/password_reset_done.html:8
 msgid "Forgot password"
 msgstr ""
 
-#: core/templates/login.html:55 core/templates/login.html:105
+#: core/templates/login.html:63 core/templates/login.html:113
 #: core/templates/password_reset.html:32
 #: core/templates/password_reset_complete.html:23
 #: core/templates/password_reset_done.html:23 core/templates/register.html:74
@@ -302,31 +310,31 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
-#: core/templates/login.html:56
+#: core/templates/login.html:64
 msgid "Register account"
 msgstr ""
 
-#: core/templates/login.html:66
+#: core/templates/login.html:74
 msgid "Secure your account"
 msgstr ""
 
-#: core/templates/login.html:67
+#: core/templates/login.html:75
 msgid "Enable two factor authentication"
 msgstr ""
 
-#: core/templates/login.html:93
+#: core/templates/login.html:101
 msgid "Two factor authentication"
 msgstr ""
 
-#: core/templates/login.html:94
+#: core/templates/login.html:102
 msgid "Fill in a code from your code generator."
 msgstr ""
 
-#: core/templates/login.html:106
+#: core/templates/login.html:114
 msgid "Cancel"
 msgstr ""
 
-#: core/templates/login.html:117
+#: core/templates/login.html:125
 msgid ""
 "Use this form for entering backup tokens for logging in.\n"
 "         These tokens have been generated for you to print and keep safe. "
@@ -334,11 +342,11 @@ msgid ""
 "             enter one of these backup tokens to login to your account."
 msgstr ""
 
-#: core/templates/login.html:127 core/templates/login.html:135
+#: core/templates/login.html:135 core/templates/login.html:143
 msgid "Use backuptoken"
 msgstr ""
 
-#: core/templates/login.html:128
+#: core/templates/login.html:136
 msgid "Back"
 msgstr ""
 

@@ -1,6 +1,5 @@
-from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse_lazy
-from .forms import PleioAuthenticationTokenForm
+from .forms import PleioAuthenticationTokenForm, PleioAuthenticationForm
 from .models import User, PleioPartnerSite
 from two_factor.forms import TOTPDeviceForm, BackupTokenForm
 from two_factor.views.core import LoginView, SetupView, BackupTokensView
@@ -12,14 +11,13 @@ from django_otp import devices_for_user
 from django.shortcuts import redirect
 from django.views.generic.list import ListView
 from django.utils.timezone import now
-from urllib.parse import urlparse
-
+from django.contrib.auth.forms import AuthenticationForm
 
 class PleioLoginView(LoginView):
     template_name = 'login.html'
 
     form_list = (
-        ('auth', AuthenticationForm),
+        ('auth', PleioAuthenticationForm),
         ('token', PleioAuthenticationTokenForm),
         ('backup', BackupTokenForm),
     )
