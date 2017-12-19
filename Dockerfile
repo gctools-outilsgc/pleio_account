@@ -29,7 +29,6 @@ RUN apk --no-cache add \
     python3 \
     python3-dev \
     zlib-dev && \
-  pip3 install django-oidc-provider && \
   pip3 install virtualenv && \
   virtualenv /app/env
 
