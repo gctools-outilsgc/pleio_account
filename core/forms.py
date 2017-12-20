@@ -79,9 +79,11 @@ class PleioAuthenticationForm(AuthenticationForm):
 
     def clean(self):
         super(PleioAuthenticationForm, self).clean()
-        print(self.cleaned_data.get('username'))
         if not verify_captcha_response(self.cleaned_data.get('g-recaptcha-response')):
-            raise forms.ValidationError('captcha_mismatch')
+            raise forms.ValidationError(
+                self.error_messages['captcha_mismatch'],
+                code='captcha_mismatch',
+            )
 
 
 class PleioAuthenticationTokenForm(AuthenticationTokenForm):

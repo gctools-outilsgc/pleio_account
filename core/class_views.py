@@ -17,7 +17,8 @@ class PleioLoginView(LoginView):
     template_name = 'login.html'
 
     form_list = (
-        ('auth', PleioAuthenticationForm),
+        #('auth', PleioAuthenticationForm),
+        ('auth', AuthenticationForm),
         ('token', PleioAuthenticationTokenForm),
         ('backup', BackupTokenForm),
     )
