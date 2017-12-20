@@ -74,8 +74,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django_otp.middleware.OTPMiddleware',
-    'core.middleware.DeviceIdMiddleware',
-    'core.middleware.PartnerSiteMiddleware'
+    'core.middleware.XRealIPMiddleware',
+    'core.middleware.PartnerSiteMiddleware',
+    'core.middleware.DeviceIdMiddleware'
 ]
 
 ROOT_URLCONF = 'pleio_account.urls'
