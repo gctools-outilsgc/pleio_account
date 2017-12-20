@@ -11,7 +11,7 @@
         "pk": 5,
         "fields": {
             "regex": "^.*@.*\\.gc\\.ca$",
-            "EmailDomainGroup": 3
+            "group_id": 3
         }
     },
     {
@@ -19,7 +19,7 @@
         "pk": 6,
         "fields": {
             "regex": "^.*@canada.ca$",
-            "EmailDomainGroup": 3
+            "group_id": 3
         }
     }
 ]

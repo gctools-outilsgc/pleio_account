@@ -19,4 +19,4 @@ python manage.py migrate
 
 # Start server
 echo "Starting server"
-python manage.py runserver 0.0.0.0:8000
+uwsgi --http :8000 --module pleio_account.wsgi --static-map /static=/app/static

@@ -19,6 +19,8 @@ RUN apk --no-cache add \
     gcc \
     jpeg-dev \
     musl-dev \
+    pcre-dev \
+    linux-headers \
     postgresql-dev \
     python3 \
     python3-dev \
@@ -37,6 +39,7 @@ RUN apk --no-cache add \
       ca-certificates \
       jpeg \
       musl \
+      pcre \
       postgresql \
       python3 \
       zlib
