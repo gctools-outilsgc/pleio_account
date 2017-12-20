@@ -1,6 +1,6 @@
 
 # Stage 1 - Build the javascript bundle
-FROM alpine
+FROM alpine:3.7
 
 RUN apk --no-cache add \
     nodejs \
@@ -11,10 +11,14 @@ WORKDIR /app
 RUN npm install
 COPY assets /app/assets
 COPY webpack.prod.config.js /app/
-RUN npm run build
+
+RUN npm run build && \
+    mkdir -p /stage/app && \
+    cp -r /app/assets /stage/app && \
+    cp /app/webpack-stats.json /stage/app
 
 # Stage 2 - Compile needed python dependencies
-FROM alpine
+FROM alpine:3.7
 RUN apk --no-cache add \
     gcc \
     jpeg-dev \
@@ -32,8 +36,17 @@ WORKDIR /app
 COPY requirements.txt /app
 RUN /app/env/bin/pip install -r requirements.txt
 
-# Stage 3 - Build docker image suitable for execution and deployment
-FROM alpine
+# Stage 3 - Create new layer from multiple steps
+FROM alpine:3.7
+RUN mkdir /stage
+COPY ./docker/config.py /stage/app/pleio_account/config.py
+COPY ./docker/start.sh /stage/start.sh
+COPY . /stage/app
+RUN rm -rf /stage/app/assets
+RUN chmod +x /stage/start.sh
+
+# Stage 4 - Build docker image suitable for execution and deployment
+FROM alpine:3.7
 LABEL maintainer Bart Jeukendrup <bart@jeukendrup.nl>
 RUN apk --no-cache add \
       ca-certificates \
@@ -45,14 +58,9 @@ RUN apk --no-cache add \
       python3 \
       zlib
 
-COPY . /app
-COPY --from=0 /app/assets /app/assets
-COPY --from=0 /app/webpack-stats.json /app/webpack-stats.json
+COPY --from=0 /stage /
 COPY --from=1 /app/env /app/env
-RUN cp /app/docker/config.py /app/pleio_account/config.py && \
-    cp /app/docker/start.sh /start.sh && \
-    chmod +x /start.sh
-
+COPY --from=2 /stage/ /
 
 ENV PATH="/app/env/bin:${PATH}"
 WORKDIR /app
