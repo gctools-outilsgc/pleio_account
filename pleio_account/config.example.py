@@ -44,3 +44,9 @@ EMAIL_PORT = 25
 
 # Send users a warning message when suspicious behaviour on their account occurs, e.g. a login on the account from a new (unknown) locatio
 SEND_SUSPICIOUS_BEHAVIOR_WARNINGS = True
+
+# Request an API key at https://developers.google.com/recaptcha/ for reCAPTCHA validation.
+
+# With the following test keys, you will always get No CAPTCHA and all verification requests will pass.
+GOOGLE_RECAPTCHA_SITE_KEY = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
+GOOGLE_RECAPTCHA_SECRET_KEY = '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe'

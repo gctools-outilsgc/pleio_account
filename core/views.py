@@ -38,17 +38,20 @@ def register(request):
     if request.user.is_authenticated():
         return redirect('profile')
 
-    if request.method == 'POST':
+    if request.method == "POST": 
         form = RegisterForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            user = User.objects.create_user(
-                name=data['name'],
-                email=data['email'],
-                password=data['password2'],
-                accepted_terms=data['accepted_terms'],
-                receives_newsletter=data['receives_newsletter']
-            )
+            try:
+                user = User.objects.create_user(
+                    name=data['name'],
+                    email=data['email'],
+                    password=data['password2'],
+                    accepted_terms=data['accepted_terms'],
+                    receives_newsletter=data['receives_newsletter']
+                )
+            except:
+                user = User.objects.get(email=data['email'])
 
             user.send_activation_token(request)
 
