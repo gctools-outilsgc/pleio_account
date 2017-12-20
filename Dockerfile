@@ -37,6 +37,7 @@ FROM alpine
 LABEL maintainer Bart Jeukendrup <bart@jeukendrup.nl>
 RUN apk --no-cache add \
       ca-certificates \
+      mailcap \
       jpeg \
       musl \
       pcre \
