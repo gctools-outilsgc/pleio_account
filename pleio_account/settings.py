@@ -28,12 +28,6 @@ WEBPACK_LOADER = {
     }
 }
 
-if not DEBUG:
-    WEBPACK_LOADER['DEFAULT'].update({
-        'BUNDLE_DIR_NAME': 'dist/',
-        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats-prod.json')
-    })
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -42,7 +36,6 @@ INSTALLED_APPS = [
     'api',
     'oauth2_provider',
     'rest_framework',
-    'axes',
     'webpack_loader',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -84,6 +77,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django_otp.middleware.OTPMiddleware',
+    'core.middleware.XRealIPMiddleware',
     'core.middleware.DeviceIdMiddleware'
 ]
 
@@ -181,5 +175,18 @@ OIDC_USERINFO = 'pleio_account.oidc_provider_settings.userinfo'
 PASSWORD_RESET_TIMEOUT_DAYS = 1
 ACCOUNT_ACTIVATION_DAYS = 7
 
-AXES_LOGIN_FAILURE_LIMIT = 20
-AXES_COOLOFF_TIME = 1
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+        },
+    },
+}

@@ -19,6 +19,8 @@ RUN apk --no-cache add \
     gcc \
     jpeg-dev \
     musl-dev \
+    pcre-dev \
+    linux-headers \
     postgresql-dev \
     python3 \
     python3-dev \
@@ -35,8 +37,10 @@ FROM alpine
 LABEL maintainer Bart Jeukendrup <bart@jeukendrup.nl>
 RUN apk --no-cache add \
       ca-certificates \
+      mailcap \
       jpeg \
       musl \
+      pcre \
       postgresql \
       python3 \
       zlib
