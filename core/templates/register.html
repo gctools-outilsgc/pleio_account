@@ -1,18 +1,37 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load Pleio_templatetags %}
+{% load settings_value %}
+
 
 {% block content %}
 
-<ul class="messages error">
-    {% for error in form.non_field_errors %}
-        <li>{{ error }}</li>
-    {% endfor %}
-</ul>
-
 <form method="post" action=".">
     {% csrf_token %}
-    <p>{% trans "Welcome, please login." %}</p>
-
+    <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+    
+    <div class="login__step-title">
+        <div>
+            <h2>{% trans "Register" %}</h2>
+            <p>{% trans "create a Pleio-account" %}</p>
+        </div>
+        <img src="/static/images/logo-icon.svg" class="login__step-icon"/>
+    </div>
+    
+    <ul class="messages error">
+            {% for error in form.non_field_errors %}
+            <li>
+                {% include_asset "icons/account-alert.svg" %}
+                {% if error == 'captcha_mismatch' %}
+                    <div class="textcolor_primary">{% trans "Login failed." %}</div>
+                    <div class="textcolor_secondary">{% trans "Please check Google captcha." %}</div>
+                {% else %}
+                    <div class="textcolor_secondary">{{ error }}</div>
+                {% endif %}
+            </li>
+        {% endfor %}
+</ul>
+    
     <fieldset>
         <div class="input-field">
             <label for="id_name">{% trans "First- and lastname" %}</label>
@@ -28,37 +47,42 @@
             <label for="id_password1">{% trans "Password" %}</label>
             {{ form.errors.password1 }}
             {{ form.password1 }}
+            <span class="password__toggle">{% include_asset "icons/eye.svg" %}</span>
+            <p class="capslock"></p>
         </div>
         <div class="input-field">
             <label for="id_password2">{% trans "Password (again)" %}</label>
             {{ form.errors.password2 }}
             {{ form.password2 }}
+            <span class="password__toggle">{% include_asset "icons/eye.svg" %}</span>
+            <p class="capslock"></p>
         </div>
 
         <div class="register__checks">
             <div class="register__check">
                 {{ form.errors.accepted_terms }}
                 {{ form.accepted_terms }}
-                <label for="id_accepted_terms">{% trans "I agree with the general terms" %}</label>
+                <label for="id_accepted_terms">{% trans "I agree with the "%}</label><a href="{% url 'terms_of_use' %}">{% trans " general terms"%}</a>
             </div>
             <div class="register__check">
                 {{ form.errors.receives_newsletter }}
                 {{ form.receives_newsletter }}
-                <label for="id_receives_newsletter">{% trans "Please subscribe me to the newsletter" %}</label>
+                <label for="id_receives_newsletter">{% trans "Please subscribe me to the Pleio newsletter" %}</label>
             </div>
         </div>
 
-        <div class="register__button">
-            <table><tr>
-                <td {padding: 15px;}>
-                    <button name="register" class="button ___stretch ___active" type="submit">{% trans "Register" %}</button>
-                 </td>
-                <td {padding: 15px;}>
-                    <a href="{% url 'login' %}" class="button"> {% trans "Back" %}</a>
-                </td>
-            </tr></table>
-        </div>
+        {% settings_value 'GOOGLE_RECAPTCHA_SITE_KEY' as recaptcha_site_key %}
 
+        {% if recaptcha_site_key %}
+            <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
+        {% endif %}
+
+        <div class="register__buttons">
+            <button name="register" class="button ___stretch ___active" type="submit">{% trans "Register" %}</button>
+            <a href="{% url 'login' %}" class="button ___stretch ___white ___outline">{% trans "Login" %}</a>
+        </div>
+        
+    </fieldset>
 </form>
 
 {% endblock %}

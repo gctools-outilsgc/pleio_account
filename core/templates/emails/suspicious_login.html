@@ -1,0 +1,13 @@
+{% extends "emails/base.html" %}
+{% load user_sessions i18n %}{% trans "<em>unknown on unknown</em>" as unknown_on_unknown %}{% trans "<em>unknown</em>" as unknown %}
+
+{% block content %}
+    {% trans "Dear" %} {{ user.name }},<br />
+    <br />
+    {% trans "You logged in to your account from a new location." %}<br />
+    <br />
+    {{ user_agent|device|default_if_none:unknown_on_unknown|safe }}<br />
+    {{ city }}, {{ country }}<br />
+    <br />
+    {% trans "If it was you safely ignore this e-mail. Otherwise please change your password as soon as possible." %}
+{% endblock %}

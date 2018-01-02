@@ -1,15 +1,15 @@
-{% extends "base.html" %}
+{% extends "base_account.html" %}
 {% load i18n %}
 
 {% block content %}
-<fieldset>
-    <h3>{% block title %}{% trans "Enable Two-Factor Authentication" %}{% endblock %}</h3>
-
-    <p>{% blocktrans %}Congratulations, you've successfully enabled two-factor
-      authentication.{% endblocktrans %}
-
-    <div class="input-field">
-        <a href="{% url 'two_factor:profile' %}" class="button">{% trans "Back to Profile" %}</a>
+<div class="account__cards">
+    <div class="card ___nopadding">
+        <h2 class="card__title ___addpadding-side">{% block title %}{% trans "Enable Two-factor Authentication" %}{% endblock %}</h2>
+        <p class="___addpadding-side">{% blocktrans %}Congratulations, you've successfully enabled two-factor
+          authentication.{% endblocktrans %}</p>
+        <div class="card__action ___addpadding-side">
+            <a href="{% url 'two_factor:profile' %}" class="button ___clear">{% trans "Back to Profile" %}</a>
+        </div>
     </div>
-</fieldset>
+</div>
 {% endblock %}

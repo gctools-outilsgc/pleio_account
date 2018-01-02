@@ -22,16 +22,10 @@ fieldset {
     padding: inherit;
 }
 
-.forgot-password {
-    margin-top: 0.75rem;
-    float: right;
-    font-size: 0.8em;
-}
-
 a {
     color: @color-primary;
 }
-
+.__uppercase { text-transform: uppercase; }
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -79,18 +73,42 @@ input:-webkit-autofill:active {
 }
 
 .messages {
-    margin-top: 0.5rem;
-    margin-bottom: 2rem;
-    padding-left: 0.75rem;
+    box-shadow: inset 0 0 0 1px @color-grey__30;
+    border-radius: @border-radius;
+    
+    li {
+        padding: 0.8rem 1.2rem 0.6rem 6rem;
+        position: relative;
+    }
+    
+    svg {
+        fill: @color-primary;
+        position: absolute;
+        top: 1.8rem;
+        left: 1.8rem;
+        width: 2.4rem;
+        height: 2.4rem;
+    }
+    
 
     &.error {
-        border-left: 5px solid #F44336;
+        background-color: @color-red__10;
+    }
+    &.correct {
+        background-color: @color-green__10;
+    }
+    &.info {
+        background-color: @color-blue__10;
     }
 }
-
-.forgot-password__description {
-    margin: 0 0 4rem 0;
-}
+    .messages__link {
+        display: block;
+        transition: background-color @trans-fast, color @trans-fast, box-shadow @trans-fast;
+        
+        &:hover {
+            background-color: @color-grey__30;
+        }
+    }
 
 .register__captcha {
     margin: 2rem 0 4rem 0;
@@ -100,4 +118,17 @@ input:-webkit-autofill:active {
     visibility: hidden;
     width: 0;
     height: 0;
+}
+
+.navigation__logo svg {
+    height: 3.5rem;
+    transition: opacity @trans-fast;
+    
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+.___inline li {
+    display: inline-block;
 }

@@ -1,0 +1,59 @@
+{% load user_sessions %}
+{% load i18n %}
+
+    <h2>{% trans "Active Sessions" %}</h2>
+    
+    <div class="account__cards">
+        <div class="card ___stretch ___nopadding">
+            <h2 class="card__title ___addpadding-side">{% trans "Signed in devices" %}</h2>
+            <fieldset class="___addpadding-side">
+                {% trans "unknown on unknown" as unknown_on_unknown %}
+                {% trans "unknown" as unknown %}
+
+                <table class="table ___stretch">
+                    <thead>
+                        <tr>
+                            <th>{% trans "Device" %}</th>
+                            <th>{% trans "Location" %}</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for object in user_session_form %}
+                        <tr>
+                            <td>{{ object.user_agent|device|default_if_none:unknown_on_unknown|safe }}</td>
+                            <td title="{{ object.ip }}">
+                                {{ object.ip|location|default_if_none:unknown|safe }}
+                                <small class="textcolor_secondary">
+                                    &ndash;
+                                    {% if object.session_key == session_key %}
+                                    <span class="green-text">{% trans "this session" %}</span>
+                                    {% else %}
+                                    {% blocktrans with time=object.last_activity|timesince %}{{ time }} ago{% endblocktrans %}
+                                    {% endif %}
+                                </small>
+                            </td>
+                            <td>
+                                <form method="post" action="{% url 'session_delete' object.pk %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="button __stretch ___clear">{% trans "Logout" %}</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <br />
+        
+            </fieldset>
+            
+            {% if user_session_form.count > 1 %}
+            <div class="card__action ___addpadding-side">
+                <form method="post" action="{% url 'session_delete_other' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="button ___clear">{% trans "End All Other Sessions" %}</button>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+    </div>
