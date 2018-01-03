@@ -10,38 +10,40 @@
 </ul>
 
 
-<form method="post" action=".">
+<form method="post" action="." class="ui form">
     {% csrf_token %}
     {{ wizard.management_form }}
     {% if wizard.steps.current == 'auth' %}
-        <p>{% trans "Welcome, please login." %}</p>
+        <h1 class="ui medium header">{% trans "Welcome, please login." %}</h1>
 
-        <fieldset>
-            <div class="input-field">
+        <fieldset style="border:none;">
+            <div class="field">
                 <label for="id_auth-username">{% trans "Email" %}</label>
                 {{ form.errors.username }}
                 {{ form.username }}
             </div>
-            <div class="input-field">
+            <div class="field">
                 <label for="id_auth-password">{% trans "Password" %}</label>
                 {{ form.errors.password }}
                 {{ form.password }}
             </div>
 
-            <div class="login__check">
-                {{ form.errors.is_persistent }}
-                {{ form.is_persistent }}
-                <label for="id_auth-is_persistent">{% trans "Remember me" %}</label>
+            <div class="field">
+		<div class="ui checkbox">
+		        {{ form.errors.is_persistent }}
+		        {{ form.is_persistent }}
+		        <label for="id_auth-is_persistent">{% trans "Remember me" %}</label>
+		</div>
             </div>
 
             <div class="login__buttons">
-                <button name="login" class="button ___stretch ___active login__login" type="submit">{% trans "Login" %}</button>
+                <button name="login" class="fluid ui button primary" type="submit">{% trans "Login" %}</button>
 
                 <div class="forgot-password">
-                    <ul>
-                        <li><a href="{% url 'password_reset' %}">{% trans "Forgot password" %}</a></li>
-                        <li><a href="{% url 'register' %}">{% trans "Register" %}</a></li>
-                    </ul>
+                    <div class="ui list">
+                        <a class="item" href="{% url 'password_reset' %}">{% trans "Forgot password" %}</a>
+                        <div><span style="margin-right:5px">{% trans "Don't have an account?" %}</span><a class="item" href="{% url 'register' %}">{% trans "Register" %}</a></div>
+                    </div>
                 </div>
             </div>
         </fieldset>

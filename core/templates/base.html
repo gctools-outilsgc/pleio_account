@@ -14,23 +14,23 @@
         {% render_bundle "web" "css" %}
 	<link rel="stylesheet" type="text/css" href="/static/semantic/dist/semantic.min.css">
     </head>
-    <body>
+    <body style="background:#FAFAFA">
         <div class="account-overlay ___is-visible">
-            <div class="account">
-                <div class="account__top-bar">
+            <div class="account" style="padding:4em 0;">
+                <div class="ui two column grid container">
                     <div class="row">
-                        <div class="col-xs-6">
+                        <div class="column">
                             <a class="navigation__logo" title="{% trans "Back to the homepage" %}" href="https://www.pleio.nl/">{% include '_logo.html' %}</a>
                         </div>
-                        <div class="col-xs-6 end-xs">
+                        <div class="column">
                             <a href="/"><div class="account__close"></div></a>
                         </div>
                     </div>
                 </div>
 
-                <div class="account__slider">
-                    <div class="account__content-container">
-                        <div class="account__content">
+                <div class="ui grid">
+                    <div class="ui centered raised card">
+                        <div class="content">
                             {% block content %}{% endblock %}
                         </div>
                     </div>
@@ -42,7 +42,7 @@
         {% render_bundle "web" "js" %}
         <script src="https://www.google.com/recaptcha/api.js"></script>
         <!--<script src="//code.jquery.com/jquery-3.1.1.min.js"></script>-->
-        <script src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+        <!--<script src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>-->
 
 	
 	<script
