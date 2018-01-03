@@ -9,39 +9,39 @@
     {% endfor %}
 </ul>
 
-<form method="post" action=".">
+<form method="post" action="." class="ui form">
     {% csrf_token %}
-    <p>{% trans "Welcome, please login." %}</p>
+    <h1 class="ui medium header">{% trans "Register" %}</h1>
 
     <fieldset>
-        <div class="input-field">
-            <label for="id_name">{% trans "First- and lastname" %}</label>
+        <div class="field">
+            <label for="id_name">{% trans "Full name" %}</label>
             {{ form.errors.name }}
             {{ form.name }}
         </div>
-        <div class="input-field">
+        <div class="field">
             <label for="id_email">{% trans "Email" %}</label>
             {{ form.errors.email }}
             {{ form.email }}
         </div>
-        <div class="input-field">
+        <div class="field">
             <label for="id_password1">{% trans "Password" %}</label>
             {{ form.errors.password1 }}
             {{ form.password1 }}
         </div>
-        <div class="input-field">
+        <div class="field">
             <label for="id_password2">{% trans "Password (again)" %}</label>
             {{ form.errors.password2 }}
             {{ form.password2 }}
         </div>
 
-        <div class="register__checks">
-            <div class="register__check">
+        <div class="field register__checks">
+            <div class="ui checkbox">
                 {{ form.errors.accepted_terms }}
                 {{ form.accepted_terms }}
                 <label for="id_accepted_terms">{% trans "I agree with the general terms" %}</label>
             </div>
-            <div class="register__check">
+            <div class="ui checkbox">
                 {{ form.errors.receives_newsletter }}
                 {{ form.receives_newsletter }}
                 <label for="id_receives_newsletter">{% trans "Please subscribe me to the newsletter" %}</label>
@@ -49,14 +49,11 @@
         </div>
 
         <div class="register__button">
-            <table><tr>
-                <td {padding: 15px;}>
-                    <button name="register" class="button ___stretch ___active" type="submit">{% trans "Register" %}</button>
-                 </td>
-                <td {padding: 15px;}>
-                    <a href="{% url 'login' %}" class="button"> {% trans "Back" %}</a>
-                </td>
-            </tr></table>
+  
+            <button name="register" class="fluid ui button primary" type="submit">{% trans "Register" %}</button>
+
+            <a href="{% url 'login' %}" class="button"> {% trans "Back" %}</a>
+
         </div>
 
 </form>

@@ -38,6 +38,16 @@
             </div>
         </div>
 
+	<style>
+	  fieldset {
+	    padding: .35em 0 .625em;
+	    border:none;
+	  }
+	  .ui.checkbox label {
+	    cursor:pointer;
+	  }
+	</style>
+
         {% render_bundle "vendor" "js" %}
         {% render_bundle "web" "js" %}
         <script src="https://www.google.com/recaptcha/api.js"></script>

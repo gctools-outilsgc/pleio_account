@@ -16,7 +16,7 @@
     {% if wizard.steps.current == 'auth' %}
         <h1 class="ui medium header">{% trans "Welcome, please login." %}</h1>
 
-        <fieldset style="border:none;">
+        <fieldset>
             <div class="field">
                 <label for="id_auth-username">{% trans "Email" %}</label>
                 {{ form.errors.username }}
