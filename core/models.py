@@ -201,6 +201,9 @@ class User(AbstractBaseUser):
             html_message=(render_to_string('emails/suspicious_login.html', template_context)),
             fail_silently=True
         )
+        # After sending the email confirm the previous login to prevend sending the email again
+        PreviousLogins.confirm_login(self, device_id)
+
 
     @property
     def is_staff(self):
@@ -256,19 +259,8 @@ class PreviousLogins(models.Model):
         except:
             pass
 
-    def accept_previous_logins(request, acceptation_token):
+    def confirm_login(user, device_id):
         try:
-            signed_value = signing.loads(
-                acceptation_token,
-                max_age=settings.ACCOUNT_ACTIVATION_DAYS * 86400
-            )
-            device_id = signed_value[0]
-            email = signed_value[1]
-            user = User.objects.get(email = email)
-
-            if device_id is None:
-                return False
-
             self = PreviousLogins.objects.get(
                 user=user,
                 device_id=device_id
@@ -278,13 +270,19 @@ class PreviousLogins(models.Model):
 
             return True
 
-        except (signing.BadSignature, PreviousLogins.DoesNotExist):
+        except PreviousLogins.DoesNotExist:
             return False
 
 class PleioPartnerSite(models.Model):
     partner_site_url = models.URLField(null=False, db_index=True)
     partner_site_name = models.CharField(null=False, max_length=200)
     partner_site_logo_url = models.URLField(null=False)
+
+
+class EventLog(models.Model):
+    ip = models.GenericIPAddressField(null=True, blank=True, verbose_name='IP')
+    event_type = models.CharField(null=True, blank=True, max_length=100)
+    event_time = models.DateTimeField(default=timezone.now)
 
 admin.site.register(User)
 admin.site.register(PleioPartnerSite)

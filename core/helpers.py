@@ -12,8 +12,6 @@ def unique_filepath(self, filename):
 
 
 def verify_captcha_response(response):
-    print('captcha: ', response)
-
     try:
         data = {
             'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
@@ -24,9 +22,7 @@ def verify_captcha_response(response):
 
     try:
         result = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data).json()
-        print("result['success']: ", result['success'])
         return result['success']
 
     except:
-        print('False')
         return False

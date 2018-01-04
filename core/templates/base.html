@@ -2,13 +2,14 @@
 {% load i18n %}
 {% load Pleio_templatetags %}
 {% get_current_language as LANGUAGE_CODE %}
+{% load settings_value %}
 
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Pleio</title>
+        <title>{% settings_value 'SITE_TITLE' %}</title>
         <meta name="viewport" content="width=device-width,height=device-height,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
         <link href="//fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
         <link rel="icon" href="/static/images/favicon.png">
@@ -31,7 +32,8 @@
              
             <div class="account">
                 <div class="account__top-bar">
-                    <a class="navigation__logo" title="{% trans "Back to the homepage" %}" href="https://www.pleio.nl/">{% include_asset "images/logo.svg" %}</a>
+                    {% settings_value 'SITE_LOGO' as site_logo %}
+                    <a class="navigation__logo" title="{% trans "Back to the homepage" %}" href="https://www.pleio.nl/">{% include_asset site_logo %}</a>
                 </div>
 
                 <div class="account__slider">

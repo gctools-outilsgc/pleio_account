@@ -185,3 +185,5 @@ LOGGING = {
         },
     },
 }
+SITE_TITLE = 'Pleio_account'
+SITE_LOGO = 'images/logo.svg'
