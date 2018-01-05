@@ -9,6 +9,7 @@ services:
       - DEBUG=True
       - ALLOWED_HOST=*
       - SECRET_KEY=qWxPJrZCLeHZraNTWjEKHdJJxJyho8
+      - SEND_SUSPICIOUS_BEHAVIOR_WARNINGS=True
       - DB_HOST=db
       - DB_USER=postgres
       - DB_PASSWORD=postgres

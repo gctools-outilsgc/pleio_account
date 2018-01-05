@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'core',
     'emailvalidator',
     'api',
+    'gctoken',
     'oauth2_provider',
     'rest_framework',
     'webpack_loader',
@@ -140,7 +141,7 @@ LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
 )
 
-TIME_ZONE = 'Europe/Amsterdam'
+TIME_ZONE = 'America/Toronto'
 
 USE_I18N = True
 

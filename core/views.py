@@ -38,10 +38,12 @@ def register(request):
                 accepted_terms=data['accepted_terms'],
                 receives_newsletter=data['receives_newsletter']
             )
+            user.is_active = True  # Disabled email validation for now
+            user.save()
+            # user.send_activation_token(request)
 
-            user.send_activation_token(request)
-
-            return redirect('register_complete')
+            # return redirect('register_complete')
+            return redirect('login')
     else:
         form = RegisterForm()
 

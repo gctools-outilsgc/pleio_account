@@ -1,0 +1,51 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: pleio-account
+  namespace: gctoolsv2
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: pleio-account
+    spec:
+      containers:
+      - name: pleio-account
+        image: localhost:5000/gctools-outilsgc/pleio_account:0.0.40
+        ports:
+        - containerPort: 8000
+        env:
+        - name: "DEBUG"
+          value: "True"
+        - name: "ALLOWED_HOST"
+          value: "*"
+        - name: "GCTOKEN_SECRET"
+          value: "qWxPJrZCLeHZraNTWjEKHdJJxJyho8"
+        - name: "SECRET_KEY"
+          value: "qWxPJrZCLeHZraNTWjEKHdJJxJyho8"
+        - name: "DB_HOST"
+          value: "localhost"
+        - name: "DB_USER"
+          value: "postgres"
+        - name: "DB_PASSWORD"
+          value: "postgres"
+        - name: "http_proxy"
+          value: "http://proxy.paz.nrc.gc.ca:8080"
+        - name: "https_proxy"
+          value: "http://proxy.paz.nrc.gc.ca:8080"
+        - name: "SITE_URL"
+          value: "https://gcidentity.lpss.me"
+        - name: "CORS_ORIGIN_WHITELIST"
+          value: "gctools.lpss.me,nrc-005081:3000"
+      - name: pleio-account-database
+        image: localhost:5000/postgres
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: pg-data
+      volumes:
+      - name: pg-data
+        persistentVolumeClaim:
+          claimName: pleio-pv-claim

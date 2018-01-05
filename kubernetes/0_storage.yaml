@@ -1,0 +1,29 @@
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: pleio-pv
+spec:
+  capacity:
+    storage: 2Gi
+  persistentVolumeReclaimPolicy: "Retain"
+  storageClassName: gctoolsv2-pleio
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    server: 167.37.33.21
+    path: "/home/nfs/pleio"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pleio-pv-claim
+  namespace: gctoolsv2
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: gctoolsv2-pleio
+  resources:
+    requests:
+      storage: 2Gi
+---

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pleio-account
+  namespace: gctoolsv2
+  labels:
+    name: pleio-account
+  annotations:
+    VIRTUAL_HOST: "gcidentity.lpss.me"
+    VIRTUAL_PORT: "8000"
+spec:
+  ports:
+  - port: 8000
+    targetPort: 8000
+  selector:
+    name: pleio-account
