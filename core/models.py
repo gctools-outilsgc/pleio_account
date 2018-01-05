@@ -286,5 +286,21 @@ class PleioPartnerSite(models.Model):
     partner_site_name = models.CharField(null=False, max_length=200)
     partner_site_logo_url = models.URLField(null=False)
 
+class AppCustomization(models.Model):
+    BG_IMAGE_OPTIONS = (
+        ('C', 'Cover'),
+        ('T', 'Tiled'),
+    )
+
+    product_title = models.CharField(max_length=50)
+    color_hex = models.CharField("your product's main brand color (Hex)", max_length=6)
+    logo_image = models.ImageField(null=True, blank=True)
+    app_favicon = models.ImageField(null=True, blank=True)
+    app_background_photo = models.ImageField(null=True, blank=True)
+    app_background_options = models.CharField(max_length=1, choices=BG_IMAGE_OPTIONS)
+    display_language_toggle = models.BooleanField(default=True)
+    display_logo_title = models.BooleanField("Display Logo and Title together", default=True)    
+
 admin.site.register(User)
 admin.site.register(PleioPartnerSite)
+admin.site.register(AppCustomization)
