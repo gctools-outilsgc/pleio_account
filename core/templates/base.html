@@ -8,15 +8,16 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Pleio</title>
+        <title>{% block page_title %}{% endblock %}</title>
         <meta name="viewport" content="width=device-width,height=device-height,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
         <link href="//fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
         <link rel="icon" href="/static/images/favicon.png">
         {% render_bundle "web" "css" %}
         <script src='https://www.google.com/recaptcha/api.js'></script>
+	<link rel="stylesheet" type="text/css" href="/static/semantic/dist/semantic.min.css">
     </head>
     <body>
-        <div class="account-overlay">
+        <div class="account-overlay  ui container">
             
             {% if request.COOKIES.partner_site_url %}
                 <div class="account-theme" data-bg="{{ request.COOKIES.partner_site_logo_url }}">
@@ -34,9 +35,9 @@
                     <a class="navigation__logo" title="{% trans "Back to the homepage" %}" href="https://www.pleio.nl/">{% include_asset "images/logo.svg" %}</a>
                 </div>
 
-                <div class="account__slider">
-                    <div class="account__content-container">
-                        <div class="account__content">
+                <div class="ui grid">
+                    <div class="ui centered raised card">
+                        <div class="content">
                             {% block content %}{% endblock %}
                         </div>
                     </div>
@@ -44,10 +45,59 @@
             </div>
         </div>
 
+	<style>
+.account {
+padding-top:2rem;
+}
+.navigation__logo {
+display:block;
+width: 200px;
+padding-bottom: 1rem;
+}
+.account__top-bar {
+padding-bottom:2rem;
+}
+	  body {
+	    background: #FAFAFA;
+	  }
+	  fieldset {
+	    padding: .35em 0 .625em;
+	    border:none;
+	  }
+	  .ui.checkbox label {
+	    cursor:pointer;
+	  }
+.field {
+position:relative;
+}
+.password__toggle {
+position: absolute;
+right:0;
+top:1.2rem;
+padding: 0.8rem 0.8rem 0.6rem;
+cursor:pointer;
+}
+.password__toggle svg{
+width:2rem;
+height:2rem;
+fill:#b4b4b4;
+transtition:fill 0.2s cubic-bexier(0.4, 0, 0.2, 1);
+}
+.password__toggle svg:hover {
+fill:#757575;
+}
+	</style>
+
         <script src="https://www.google.com/recaptcha/api.js"></script>
         <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
         {% render_bundle "vendor" "js" %}
         {% render_bundle "web" "js" %}
+
+	<script
+	  src="https://code.jquery.com/jquery-3.1.1.min.js"
+	  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+	  crossorigin="anonymous"></script>
+	<script src="/static/semantic/dist/semantic.min.js"></script>
     </body>
 </html>

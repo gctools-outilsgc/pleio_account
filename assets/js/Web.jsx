@@ -1,4 +1,4 @@
-import "../less/all.less"
+//import "../less/all.less"
 
 $(document).ready(function() {
    $(".password__toggle").on('click',function(e) {

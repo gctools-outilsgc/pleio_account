@@ -3,54 +3,59 @@
 {% load Pleio_templatetags %}
 {% load settings_value %}
 
+{% block page_title %}
+{% trans "Register" %}
+{% endblock %}
 
 {% block content %}
 
-<form method="post" action=".">
+<form method="post" action="." class="ui form">
     {% csrf_token %}
     <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
     
     <div class="login__step-title">
         <div>
-            <h2>{% trans "Register" %}</h2>
-            <p>{% trans "create a Pleio-account" %}</p>
+            <h1 class="ui large header">{% trans "Register" %}<div class="sub header">{% trans "create a Pleio-account" %}</div></h1>
+            
         </div>
-        <img src="/static/images/logo-icon.svg" class="login__step-icon"/>
-    </div>
+        <!--<img src="/static/images/logo-icon.svg" class="login__step-icon"/>
+-->    </div>
     
-    <ul class="messages error">
+    
             {% for error in form.non_field_errors %}
-            <li>
-                {% include_asset "icons/account-alert.svg" %}
+	<div class="ui icon negative message">
+            <i class="icon">{% include_asset "icons/account-alert.svg" %}</i>
+            <div class="content">
                 {% if error == 'captcha_mismatch' %}
                     <div class="textcolor_primary">{% trans "Login failed." %}</div>
                     <div class="textcolor_secondary">{% trans "Please check Google captcha." %}</div>
                 {% else %}
                     <div class="textcolor_secondary">{{ error }}</div>
                 {% endif %}
-            </li>
+            </div>
+    	</div>
         {% endfor %}
-</ul>
+
     
     <fieldset>
-        <div class="input-field">
-            <label for="id_name">{% trans "First- and lastname" %}</label>
+        <div class="field">
+            <label for="id_name">{% trans "First and last name" %}</label>
             {{ form.errors.name }}
             {{ form.name }}
         </div>
-        <div class="input-field">
+        <div class="field">
             <label for="id_email">{% trans "Email" %}</label>
             {{ form.errors.email }}
             {{ form.email }}
         </div>
-        <div class="input-field">
+        <div class="field">
             <label for="id_password1">{% trans "Password" %}</label>
             {{ form.errors.password1 }}
             {{ form.password1 }}
             <span class="password__toggle">{% include_asset "icons/eye.svg" %}</span>
             <p class="capslock"></p>
         </div>
-        <div class="input-field">
+        <div class="field">
             <label for="id_password2">{% trans "Password (again)" %}</label>
             {{ form.errors.password2 }}
             {{ form.password2 }}
@@ -58,13 +63,13 @@
             <p class="capslock"></p>
         </div>
 
-        <div class="register__checks">
-            <div class="register__check">
+        <div class="register__checks field">
+            <div class="register__check ui checkbox">
                 {{ form.errors.accepted_terms }}
                 {{ form.accepted_terms }}
-                <label for="id_accepted_terms">{% trans "I agree with the "%}</label><a href="{% url 'terms_of_use' %}">{% trans " general terms"%}</a>
+                <label for="id_accepted_terms">{% trans "I agree with the "%}<a href="{% url 'terms_of_use' %}">{% trans " general terms"%}</a></label>
             </div>
-            <div class="register__check">
+            <div class="register__check ui checkbox">
                 {{ form.errors.receives_newsletter }}
                 {{ form.receives_newsletter }}
                 <label for="id_receives_newsletter">{% trans "Please subscribe me to the Pleio newsletter" %}</label>
@@ -78,8 +83,8 @@
         {% endif %}
 
         <div class="register__buttons">
-            <button name="register" class="button ___stretch ___active" type="submit">{% trans "Register" %}</button>
-            <a href="{% url 'login' %}" class="button ___stretch ___white ___outline">{% trans "Login" %}</a>
+            <button name="register" class="fluid ui button primary" type="submit">{% trans "Register" %}</button>
+            <a href="{% url 'login' %}" >{% trans "Return to sign in" %}</a>
         </div>
         
     </fieldset>

@@ -9,9 +9,10 @@
     
     <form enctype="multipart/form-data" method="post" action=".">
         <div class="account__cards">
-            <div class="card ___nopadding">
+            <div class="card ___nopadding ui card">
+		<div class="content">
                 {% csrf_token %}
-                <h2 class="card__title ___addpadding-side">{% trans "Your details" %}</h2>
+                <h2 class="card__title ___addpadding-side header">{% trans "Your details" %}</h2>
                 <fieldset class="___addpadding-side">
                     <div class="input-field">
                         <label for="id_name">{% trans "Name" %}</label>
@@ -28,14 +29,16 @@
                 <div class="card__action ___addpadding-side">
                     <button name="update" class="button ___clear" type="submit">{% trans "Save" %}</button>
                 </div>
+		</div>
             </div>
             
-            <div class="card ___nopadding">
-                <h2 class="card__title ___addpadding-side">{% trans "Avatar" %}</h2>
+            <div class="card ___nopadding ui card">
+		<div class="content">
+                <h2 class="card__title ___addpadding-side header">{% trans "Avatar" %}</h2>
                 <div class="account-user__pickavatar ___addpadding-side">
                     <div class="input-field">
                         {% if request.user.avatar %}
-                            <img src="/media/{{ request.user.avatar }}" border=0 class="account-user__avatar">
+                            <img src="/media/{{ request.user.avatar }}" border=0 class="account-user__avatar ui small image circular">
                             <input id="avatar-clear_id" name="avatar-clear" type="checkbox">
                         {% else %}
                             <img src="/static/icons/person.svg" border=0 class="account-user__avatar">
@@ -49,6 +52,7 @@
                 <div class="card__action ___addpadding-side">
                     <button name="update" class="button ___clear" onClick="javascript:document.getElementById('avatar-clear_id').checked='true'; this.form.submit(); return false;">{% trans "Remove avatar" %}</button>
                 </div>
+		</div>
             </div>
             
         </div>

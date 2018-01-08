@@ -14,28 +14,30 @@
         <link rel="icon" href="/static/images/favicon.png">
         {% render_bundle "web" "css" %}
         <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+<link rel="stylesheet" type="text/css" href="/static/semantic/dist/semantic.min.css">
     </head>
     <body>
         <div class="account-overlay ___profile">
             <div class="account-menu">
                 <input type="checkbox" id="show_menu" />
                 <div class="account__top-bar">
-                    <label for="show_menu" class="account-menu__hamburger">{% include_asset "icons/hamburger.svg" %}</label>
                     <a class="navigation__logo" title="{% trans "Back to the homepage" %}" href="https://www.pleio.nl/">{% include_asset "images/logo.svg" %}</a>
+                    <label for="show_menu" class="account-menu__hamburger">{% include_asset "icons/hamburger.svg" %}</label>
                 </div>
                 
-                <ul class="account-menu__list">
-                    <li>
-                        <a href="/profile/">
-                            <div>
-                                <h2 class="textcolor_primary">{% trans "Welcome" %}, {{request.user.name}}</h2>
-                                {% trans "in your Pleio account" %}
-                            </div>
-                            {% if request.user.avatar %}
-                            <img src="/media/{{ request.user.avatar }}" class="account-menu__avatar" />
-                            {% endif %}
-                        </a>
-                    </li>
+                   
+                <div>
+                     <h2 class="textcolor_primary ui header medium"><div class="content">{% trans "Welcome" %}, {{request.user.name}}<div class="sub header">{% trans "in your Pleio account" %}</div></div>
+                     
+		     {% if request.user.avatar %}
+                     <img src="/media/{{ request.user.avatar }}" class="account-menu__avatar ui mini image" />
+                     {% endif %}
+
+			</h2>
+                </div>
+                     
+                <ul class="account-menu__list"> 
+  
                     <li>
                         {% if request.path == '/profile/' %}
                             <a href="{% url 'profile' %}" class="account-menu__list current">
@@ -44,8 +46,7 @@
                         {% endif %}
                             {% include_asset "icons/person.svg" %}
                             <div>
-                                <span class="title">{% trans "Profiel" %}</span><br />
-                                {% trans "Your details" %}, {% trans "Avatar" %}
+                                <div class="title ui header">{% trans "Profile" %}<div class="sub header">{% trans "Your details" %}, {% trans "Avatar" %}</div></div><br /> 
                             </div>
                         </a>
                     </li>
@@ -57,8 +58,7 @@
                         {% endif %}
                             {% include_asset "icons/security.svg" %}
                             <div>
-                                <span class="title">{% trans "Security" %}</span><br />
-                                {% trans "Password" %}, {% trans "Sessions" %}, {% trans "Two-factor authentication" %}
+                                <div class="title ui header">{% trans "Security" %}<div class="sub header">{% trans "Password" %}, {% trans "Sessions" %}, {% trans "Two-factor authentication" %}</div></div><br />
                             </div>
                         </a>
                     </li>
@@ -66,7 +66,7 @@
                         <a href="{% url 'logout' %}">
                             {% include_asset "icons/lock-open.svg" %}
                             <div>
-                                <span class="title">{% trans "Logout" %}</span><br />
+                                <div class="title ui header">{% trans "Logout" %}</div><br />
                             </div>
                         </a>
                     </li>
@@ -84,10 +84,82 @@
             </div>
         </div>
 
+	<style>
+
+.account {
+padding-top:2rem;
+}
+.account-menu__list {
+color:#4183c4 !important;
+}
+.navigation__logo {
+display:block;
+width: 175px;
+padding-bottom: 1rem;
+}
+.account-menu__hamburger {
+display:block;
+width: 30px;
+}
+.account__top-bar {
+padding-bottom:2rem;
+}
+body {
+background: #FAFAFA;
+}
+fieldset {
+padding: .35em 0 .625em;
+border:none;
+}
+.ui.checkbox label {
+cursor:pointer;
+}
+.field {
+position:relative;
+}
+.password__toggle {
+position: absolute;
+right:0;
+top:1.2rem;
+padding: 0.8rem 0.8rem 0.6rem;
+cursor:pointer;
+}
+.password__toggle svg{
+width:2rem;
+height:2rem;
+fill:#b4b4b4;
+transtition:fill 0.2s cubic-bexier(0.4, 0, 0.2, 1);
+}
+.password__toggle svg:hover {
+fill:#757575;
+}
+.account-overlay {
+display: flex;
+height:100%;
+}
+.account-menu {
+background: #FEFEFE;
+width:375px;
+box-shadow: 0 0 24em rgba(0, 0, 0, 0.15);
+
+}
+
+.account-menu__list {
+list-style:none;
+padding:0;
+}
+	</style>
+
         <script src="https://www.google.com/recaptcha/api.js"></script>
         <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
         {% render_bundle "vendor" "js" %}
         {% render_bundle "web" "js" %}
+
+	<script
+	  src="https://code.jquery.com/jquery-3.1.1.min.js"
+	  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+	  crossorigin="anonymous"></script>
+	<script src="/static/semantic/dist/semantic.min.js"></script>
     </body>
 </html>
