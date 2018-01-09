@@ -26,14 +26,14 @@
                 </div>
                 
                    
-                <div>
-                     <h2 class="textcolor_primary ui header medium"><div class="content">{% trans "Welcome" %}, {{request.user.name}}<div class="sub header">{% trans "in your Pleio account" %}</div></div>
+                <div class="account-menu__header">
+                     <h2 class="textcolor_primary ui header medium"><div class="content">{% trans "Welcome" %}, {{request.user.name}}<div class="sub header">{% trans "in your Pleio account" %}</div></div></h2>
                      
 		     {% if request.user.avatar %}
-                     <img src="/media/{{ request.user.avatar }}" class="account-menu__avatar ui mini image" />
+                     <img src="/media/{{ request.user.avatar }}" class="account-menu__avatar" />
                      {% endif %}
 
-			</h2>
+
                 </div>
                      
                 <ul class="account-menu__list"> 
@@ -46,7 +46,8 @@
                         {% endif %}
                             {% include_asset "icons/person.svg" %}
                             <div>
-                                <div class="title ui header">{% trans "Profile" %}<div class="sub header">{% trans "Your details" %}, {% trans "Avatar" %}</div></div><br /> 
+                                <div class="title">{% trans "Profile" %}</div>
+				<div class="">{% trans "Your details" %}, {% trans "Avatar" %}</div>
                             </div>
                         </a>
                     </li>
@@ -58,7 +59,8 @@
                         {% endif %}
                             {% include_asset "icons/security.svg" %}
                             <div>
-                                <div class="title ui header">{% trans "Security" %}<div class="sub header">{% trans "Password" %}, {% trans "Sessions" %}, {% trans "Two-factor authentication" %}</div></div><br />
+                                <div class="title">{% trans "Security" %}</div>
+				<div>{% trans "Password" %}, {% trans "Sessions" %}, {% trans "Two-factor authentication" %}</div>
                             </div>
                         </a>
                     </li>
@@ -66,7 +68,7 @@
                         <a href="{% url 'logout' %}">
                             {% include_asset "icons/lock-open.svg" %}
                             <div>
-                                <div class="title ui header">{% trans "Logout" %}</div><br />
+                                <div class="title">{% trans "Logout" %}</div>
                             </div>
                         </a>
                     </li>
@@ -85,21 +87,33 @@
         </div>
 
 	<style>
-
+#show_menu {
+display:none;
+}
 .account {
 padding-top:2rem;
 }
-.account-menu__list {
-color:#4183c4 !important;
-}
 .navigation__logo {
-display:block;
-width: 175px;
 padding-bottom: 1rem;
 }
+.navigation__logo svg {
+height:2.5rem;
+}
+.account__top-bar {
+padding: 1.5rem 1.5rem;
+}
 .account-menu__hamburger {
+float:right;
+width:1.8rem;
+height:1.8rem;
 display:block;
-width: 30px;
+fill: #757575;
+padding:0.8rem 0 0;
+display:none;
+}
+.account-menu__hamburger:hover {
+fill: #1565c0;
+cursor:pointer;
 }
 .account__top-bar {
 padding-bottom:2rem;
@@ -143,10 +157,105 @@ width:375px;
 box-shadow: 0 0 24em rgba(0, 0, 0, 0.15);
 
 }
-
+.account-menu__header {
+padding-bottom: 1rem;
+display:flex;
+padding: 0 1.5rem 1rem;
+}
+.account-menu__header .header {
+flex: 1 1 auto;
+}
+.account-menu__avatar {
+border-radius:50%;
+overflow:hidden;
+width:4rem;
+height:4rem;
+margin-left:1.2rem;
+border:1px solid #1565c0;
+}
 .account-menu__list {
 list-style:none;
 padding:0;
+margin:0;
+border-top:0.1rem solid #e0e0e0;
+}
+.account-menu__list li {
+display:block;
+border-bottom:0.1rem solid #e0e0e0;
+position:relative;
+}
+.account-menu__list li .title {
+font-size:1.2rem;
+color:#212121;
+transition: color 0.2s;
+}
+.account-menu__list li a {
+color: #757575;
+display:flex;
+padding-top: 1rem;
+padding-bottom:1rem;
+justify-content: center;
+align-items: center;
+transition: color 0.2s, background 0.2s;
+}
+.account-menu__list li a:hover, .account-menu__list li a.current {
+color: #fff;
+background-color:#1565c0;
+}
+.account-menu__list li a:hover svg, .account-menu__list li a.current svg {
+fill: #fff;
+}
+.account-menu__list li a:hover .title, .account-menu__list li a.current .title {
+color: #fff;
+}
+.account-menu__list a {
+padding-left: 3rem;
+padding-right: 4rem;
+}
+.account-menu__list svg {
+padding-right:3rem;
+transition: fill 0.2s;
+}
+.account-menu__list li a div {
+flex: 1 1 auto;
+}
+.account-right {
+flex: 1 1 auto;
+order: 2;
+padding-left: 3em;
+padding-right: 3em;
+padding-top: 3rem;
+}
+.account-right__content {
+padding-top: 2rem;
+}
+
+@media (max-width: 1023px) {
+.account-menu {
+flex: 1 0 auto;
+max-width: none;
+min-height:0;
+width:100%;
+}
+.account-menu__hamburger {
+display:block;
+}
+.account-menu__header {
+display:none;
+}
+.account-menu__list {
+display:none;
+padding-bottom:1rem;
+}
+.account-overlay {
+display:block;
+}
+.account-overlay.__profile {
+flex-direction: column;
+}
+.account-right {
+width:100%;
+}
 }
 	</style>
 
