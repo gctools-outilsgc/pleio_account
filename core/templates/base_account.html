@@ -93,9 +93,6 @@ display:none;
 .account {
 padding-top:2rem;
 }
-.navigation__logo {
-padding-bottom: 1rem;
-}
 .navigation__logo svg {
 height:2.5rem;
 }
@@ -149,12 +146,12 @@ fill:#757575;
 }
 .account-overlay {
 display: flex;
-height:100%;
+min-height:100%;
 }
 .account-menu {
 background: #FEFEFE;
 width:375px;
-box-shadow: 0 0 24em rgba(0, 0, 0, 0.15);
+box-shadow: 0 0 14em rgba(0, 0, 0, 0.15);
 
 }
 .account-menu__header {
@@ -229,7 +226,18 @@ padding-top: 3rem;
 .account-right__content {
 padding-top: 2rem;
 }
-
+.account-user__avatar {
+width:7rem;
+height:7rem;
+border-width:0.2rem;
+display:block;
+margin-left:0;
+background-color:#f5f5f5;
+border-radius:50%;
+overflow:hidden;
+border: 0.1rem solid #1565c0;
+float:left;
+}
 @media (max-width: 1023px) {
 .account-menu {
 flex: 1 0 auto;
@@ -261,7 +269,7 @@ width:100%;
 
         <script src="https://www.google.com/recaptcha/api.js"></script>
         <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+        <!--<script src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>-->
         {% render_bundle "vendor" "js" %}
         {% render_bundle "web" "js" %}
 

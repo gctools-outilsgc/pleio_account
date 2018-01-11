@@ -7,29 +7,30 @@
 {% block content %}
     <h2>{% trans "Profile" %}</h2>
     
-    <form enctype="multipart/form-data" method="post" action=".">
-        <div class="account__cards">
+    <form enctype="multipart/form-data" method="post" action="." class="ui form">
+        <div class="account__cards ui cards">
             <div class="card ___nopadding ui card">
 		<div class="content">
                 {% csrf_token %}
                 <h2 class="card__title ___addpadding-side header">{% trans "Your details" %}</h2>
                 <fieldset class="___addpadding-side">
-                    <div class="input-field">
+                    <div class="field">
                         <label for="id_name">{% trans "Name" %}</label>
                         {{ form.errors.name }}
                         {{ form.name }}
                     </div>
-                    <div class="input-field">
+                    <div class="field">
                         <label for="id_email">{% trans "Email" %}</label>
                         {{ form.errors.email }}
                         {{ form.email }}
-                        <span class="badge green __uppercase">{% include_asset "icons/check.svg" %}{% trans "Government" %}</span>
+                        <span class="badge green __uppercase ui label"><i class="icon">{% include_asset "icons/check.svg" %}</i>{% trans "Government" %}</span>
                     </div>
                 </fieldset>
-                <div class="card__action ___addpadding-side">
-                    <button name="update" class="button ___clear" type="submit">{% trans "Save" %}</button>
-                </div>
 		</div>
+                <div class="card__action ___addpadding-side extra content">
+                    <button name="update" class="button ___clear ui button right floated primary" type="submit">{% trans "Save" %}</button>
+                </div>
+		
             </div>
             
             <div class="card ___nopadding ui card">
@@ -38,7 +39,7 @@
                 <div class="account-user__pickavatar ___addpadding-side">
                     <div class="input-field">
                         {% if request.user.avatar %}
-                            <img src="/media/{{ request.user.avatar }}" border=0 class="account-user__avatar ui small image circular">
+                            <img src="/media/{{ request.user.avatar }}" border=0 class="account-user__avatar">
                             <input id="avatar-clear_id" name="avatar-clear" type="checkbox">
                         {% else %}
                             <img src="/static/icons/person.svg" border=0 class="account-user__avatar">
@@ -47,11 +48,14 @@
                         {{ form.errors.avatar }}
                         <input id="id_avatar" name="avatar" type="file" accept=".jpg, .jpeg, .png" onchange="this.form.submit()">
                      </div>
-                    <button class="button" onClick="javascript:document.getElementById('id_avatar').click(); return false;">{% trans "Choose an avatar" %}</button>
+                    <button class="button ui primary right floated" onClick="javascript:document.getElementById('id_avatar').click(); return false;">{% trans "Choose an avatar" %}</button>
                 </div>
-                <div class="card__action ___addpadding-side">
-                    <button name="update" class="button ___clear" onClick="javascript:document.getElementById('avatar-clear_id').checked='true'; this.form.submit(); return false;">{% trans "Remove avatar" %}</button>
+		</div>
+		{% if request.user.avatar %}
+                <div class="card__action ___addpadding-side extra content">
+                    <button name="update" class="button ___clear ui button negative right floated" onClick="javascript:document.getElementById('avatar-clear_id').checked='true'; this.form.submit(); return false;">{% trans "Remove avatar" %}</button>
                 </div>
+		{% endif %}
 		</div>
             </div>
             
