@@ -7,8 +7,7 @@
 
 <form method="post" action=".">
     {% csrf_token %}
-    {{ wizard.management_form }}
-    {% if wizard.steps.current == 'auth' %}
+    {% if login_step == 'login' %}
         <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
         <div class="login__step-title">
             <div>
@@ -55,7 +54,6 @@
                 <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
             {% endif %}
 
-            
             <div class="login__buttons">
                 <button name="login" class="button ___stretch ___active login__login" type="submit">{% trans "Login" %}</button>
                 <a href="{% url 'register' %}" class="button ___stretch ___white ___outline">{% trans "Register account" %}</a>
@@ -73,12 +71,12 @@
                 </a>
             </li>
         </ul>
-    {% elif wizard.steps.current == 'token' %}
+    {% elif login_step == 'token' %}
 
     <script type="text/javascript">
       window.onload = function() {
          {
-          document.getElementById("id_token-otp_token").focus();
+          document.getElementById("id_otp_token").focus();
         }
       };
     </script>
@@ -111,7 +109,11 @@
             <a href="{% url 'login' %}" class="button ___stretch ___white ___outline">{% trans "Cancel" %}</a>
         </div>
     </fieldset>
-    {% elif wizard.steps.current == 'backup' %}
+
+    <div class="input-field">
+        <button name="wizard_goto_step" type="submit" value="backup" class="button ___stretch ___white ___outline">{% trans "Use backuptoken" %}</button>
+    </div>
+    {% elif login_step == 'backup' %}
     <script type="text/javascript">
       window.onload = function() {
          {
@@ -135,12 +137,5 @@
 
     {% endif %}
     
-    {% if backup_tokens %}
-        <div class="input-field">
-            <button name="wizard_goto_step" type="submit" value="backup" class="button ___stretch ___white ___outline">{% trans "Use backuptoken" %}</button>
-        </div>
-
-    {% endif %}
-
 </form>
 {% endblock %}

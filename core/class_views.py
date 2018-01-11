@@ -8,20 +8,20 @@ from user_sessions.views import SessionListView, SessionDeleteOtherView, Session
 from django_otp.plugins.otp_static.models import StaticToken
 from django.template.response import TemplateResponse
 from django_otp import devices_for_user
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 from django.utils.timezone import now
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UsernameField
+from .helpers import verify_captcha_response
+from django.contrib import messages
+from django.core.exceptions import ValidationError
+from django.views.generic import TemplateView
+from django.contrib.auth import login as auth_login
+from two_factor.utils import default_device
+import django_otp
 
-class PleioLoginView(LoginView):
-    template_name = 'login.html'
-
-    form_list = (
-        #('auth', PleioAuthenticationForm),
-        ('auth', AuthenticationForm),
-        ('token', PleioAuthenticationTokenForm),
-        ('backup', BackupTokenForm),
-    )
+class PleioLoginView(TemplateView):
+    form_context = {}
 
     def get_context_data(self, **kwargs):
         context = super(PleioLoginView, self).get_context_data(**kwargs)
@@ -32,6 +32,62 @@ class PleioLoginView(LoginView):
         self.set_partner_site_info()
 
         return context
+
+    def get(self, request, *args, **kwargs):
+        login_step = request.session.get('login_step')
+        if not login_step:
+            login_step = 'login'
+            request.session['login_step'] = login_step
+
+        self.form_context['login_step'] = login_step
+
+        if login_step == 'login':
+            self.form_context['form'] = PleioAuthenticationForm()
+        elif login_step == 'token':
+            user = User.objects.get(email=request.session.get('username'))
+            self.form_context['form'] = PleioAuthenticationTokenForm(user, request)
+        elif login_step == 'backup':
+            self.form_context['form'] = BackupTokenForm(request.session.get('user'), request.session.get('device'))
+
+        return render(request, 'login.html', self.form_context)
+
+    def post(self, request, *args, **kwargs):
+        login_step = request.session.get('login_step')
+        self.form_context['login_step'] = login_step
+
+        if login_step == 'login':
+            form = PleioAuthenticationForm(data=request.POST)
+            print('post login is_bound: ', form.is_bound)
+            self.form_context['form'] = PleioAuthenticationForm(data=request.POST)
+            if form.is_valid():
+                username = form.cleaned_data.get('username')
+                user = User.objects.get(email=username)
+                request.session['username'] = username
+                device = default_device(user)
+                if not device:
+                    auth_login(request, user)
+                    return redirect('/profile')
+                else:
+                    self.form_context['login_step'] = 'token'
+                    request.session['login_step'] = 'token'
+                    self.form_context['form'] = PleioAuthenticationTokenForm(user, request)
+            else:
+                print('login form.errors: ', form.errors)
+        elif login_step == 'token':
+            user = User.objects.get(email=request.session.get('username'))
+            form = PleioAuthenticationTokenForm(user, request)
+            print('post token request.POST: ', request.POST)
+            print('post token is_bound: ', form.is_bound)
+            if form.is_valid():
+                django_otp.login(request, device)
+                return redirect('/profile')
+            else:
+                print('token form.errors: ', form.errors)
+        elif login_step == 'backup':
+            device = default_device(form.get_user())
+            self.form_context['form'] = BackupTokenForm(form.get_user(), device)
+
+        return render(request, 'login.html', self.form_context)
 
     def set_partner_site_info(self):
         try:
@@ -68,14 +124,6 @@ class PleioLoginView(LoginView):
             return False
 
         return True
-
-    def done(self, form_list, **kwargs):
-        self.request.session.set_expiry(30 * 24 * 60 * 60)
-
-        user = self.get_user()
-        user.check_users_previous_logins(self.request)
-
-        return LoginView.done(self, form_list, **kwargs)
 
 
 class PleioProfileView(ProfileView):

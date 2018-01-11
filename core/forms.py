@@ -9,6 +9,8 @@ from two_factor.utils import totp_digits
 from emailvalidator.validator import is_email_valid
 from .models import User
 from .helpers import verify_captcha_response
+from django_otp.forms import OTPTokenForm
+from django.forms import Form
 
 class EmailField(forms.EmailField):
     def clean(self, value):
@@ -62,6 +64,7 @@ class RegisterForm(forms.Form):
                 code='captcha_mismatch',
             )
 
+
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = User
@@ -71,22 +74,31 @@ class UserProfileForm(forms.ModelForm):
 class PleioAuthenticationForm(AuthenticationForm):
     error_messages = {
         'captcha_mismatch': 'captcha_mismatch',
+        'invalid_login': _(
+            "Please enter a correct %(username)s and password. Note that both "
+            "fields may be case-sensitive."
+        ),
+        'inactive': _("This account is inactive."),
     }
 
     def __init__(self, *args, **kwargs):
         super(PleioAuthenticationForm, self).__init__(*args, **kwargs)
         self.fields['g-recaptcha-response'] = forms.CharField()
 
-    def clean(self):
-        super(PleioAuthenticationForm, self).clean()
-        if not verify_captcha_response(self.cleaned_data.get('g-recaptcha-response')):
+    def clean(self):        
+        g_recaptcha_response = self.cleaned_data.get('g-recaptcha-response')
+
+        if not verify_captcha_response(g_recaptcha_response):
             raise forms.ValidationError(
                 self.error_messages['captcha_mismatch'],
                 code='captcha_mismatch',
             )
 
+        super(PleioAuthenticationForm, self).clean()
 
-class PleioAuthenticationTokenForm(AuthenticationTokenForm):
+
+
+class PleioAuthenticationTokenForm(OTPTokenForm):
     otp_token = forms.IntegerField(label=_("Token"), widget=forms.TextInput)
 
 
