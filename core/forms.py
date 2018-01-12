@@ -5,12 +5,13 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate 
 from django.contrib.auth.forms import AuthenticationForm
 from two_factor.forms import AuthenticationTokenForm, TOTPDeviceForm
-from two_factor.utils import totp_digits
+from two_factor.utils import totp_digits, default_device
 from emailvalidator.validator import is_email_valid
-from .models import User
-from .helpers import verify_captcha_response
+from .models import User, EventLog
 from django_otp.forms import OTPTokenForm
 from django.forms import Form
+from django.conf import settings
+import requests
 
 class EmailField(forms.EmailField):
     def clean(self, value):
@@ -74,32 +75,79 @@ class UserProfileForm(forms.ModelForm):
 class PleioAuthenticationForm(AuthenticationForm):
     error_messages = {
         'captcha_mismatch': 'captcha_mismatch',
-        'invalid_login': _(
-            "Please enter a correct %(username)s and password. Note that both "
-            "fields may be case-sensitive."
-        ),
+        'invalid_login': 'invalid_login',
         'inactive': _("This account is inactive."),
     }
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, request=None, *args, **kwargs):
         super(PleioAuthenticationForm, self).__init__(*args, **kwargs)
-        self.fields['g-recaptcha-response'] = forms.CharField()
 
-    def clean(self):        
-        g_recaptcha_response = self.cleaned_data.get('g-recaptcha-response')
+        if EventLog.reCAPTCHA_needed(request):
+            self.fields['g-recaptcha-response'] = forms.CharField()
 
-        if not verify_captcha_response(g_recaptcha_response):
-            raise forms.ValidationError(
-                self.error_messages['captcha_mismatch'],
-                code='captcha_mismatch',
-            )
+    def clean(self):
+        if self.fields.get('g-recaptcha-response'):
+            g_recaptcha_response = self.cleaned_data.get('g-recaptcha-response')
+
+            if not self.verify_captcha_response(g_recaptcha_response):
+                raise forms.ValidationError(
+                    self.error_messages['captcha_mismatch'],
+                    code='captcha_mismatch',
+                )
 
         super(PleioAuthenticationForm, self).clean()
 
+    def verify_captcha_response(self, response):
+        try:
+            data = {
+                'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+                'response': response
+            }
+        except AttributeError:
+            return True
 
+        if not response:
+            return False
+        
+        try:
+            result = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data).json()
+            return result['success']
+
+        except:
+            return False
 
 class PleioAuthenticationTokenForm(OTPTokenForm):
     otp_token = forms.IntegerField(label=_("Token"), widget=forms.TextInput)
+    otp_device = forms.ChoiceField(choices=[], required=False)
+
+    def clean(self):
+        self.clean_otp(self.user)
+        return self.cleaned_data
+
+    def clean_otp(self, user):
+        if user is None:
+            return
+
+        device = default_device(user)
+        token = self.cleaned_data.get('otp_token')
+
+        user.otp_device = None
+
+        try:
+            if self.cleaned_data.get('otp_challenge'):
+                self._handle_challenge(device)
+            elif token:
+                user.otp_device = self._verify_token(user, token, device)
+            else:
+                raise forms.ValidationError(_('Please enter your OTP token.'), code='required')
+        finally:
+            if user.otp_device is None:
+                self._update_form(user)
+
+
+class PleioBackupTokenForm(OTPTokenForm):
+    otp_token = forms.CharField(label=_("Token"))
+    otp_device = forms.ChoiceField(choices=[], required=False)
 
 
 class PleioTOTPDeviceForm(TOTPDeviceForm):

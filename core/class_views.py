@@ -1,6 +1,6 @@
 from django.urls import reverse_lazy
-from .forms import PleioAuthenticationTokenForm, PleioAuthenticationForm
-from .models import User, PleioPartnerSite
+from .forms import PleioAuthenticationTokenForm, PleioAuthenticationForm, PleioBackupTokenForm
+from .models import User, PleioPartnerSite, EventLog
 from two_factor.forms import TOTPDeviceForm, BackupTokenForm
 from two_factor.views.core import LoginView, SetupView, BackupTokensView
 from two_factor.views.profile import ProfileView
@@ -12,7 +12,6 @@ from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 from django.utils.timezone import now
 from django.contrib.auth.forms import AuthenticationForm, UsernameField
-from .helpers import verify_captcha_response
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.views.generic import TemplateView
@@ -21,7 +20,6 @@ from two_factor.utils import default_device
 import django_otp
 
 class PleioLoginView(TemplateView):
-    form_context = {}
 
     def get_context_data(self, **kwargs):
         context = super(PleioLoginView, self).get_context_data(**kwargs)
@@ -34,61 +32,92 @@ class PleioLoginView(TemplateView):
         return context
 
     def get(self, request, *args, **kwargs):
-        login_step = request.session.get('login_step')
+        login_step = kwargs.get('login_step')
+        if login_step:
+            request.session['login_step'] = login_step
+        else:
+            login_step = request.session.get('login_step')
+
         if not login_step:
             login_step = 'login'
             request.session['login_step'] = login_step
 
-        self.form_context['login_step'] = login_step
-
         if login_step == 'login':
-            self.form_context['form'] = PleioAuthenticationForm()
-        elif login_step == 'token':
-            user = User.objects.get(email=request.session.get('username'))
-            self.form_context['form'] = PleioAuthenticationTokenForm(user, request)
-        elif login_step == 'backup':
-            self.form_context['form'] = BackupTokenForm(request.session.get('user'), request.session.get('device'))
-
-        return render(request, 'login.html', self.form_context)
-
-    def post(self, request, *args, **kwargs):
-        login_step = request.session.get('login_step')
-        self.form_context['login_step'] = login_step
-
-        if login_step == 'login':
-            form = PleioAuthenticationForm(data=request.POST)
-            print('post login is_bound: ', form.is_bound)
-            self.form_context['form'] = PleioAuthenticationForm(data=request.POST)
-            if form.is_valid():
-                username = form.cleaned_data.get('username')
-                user = User.objects.get(email=username)
-                request.session['username'] = username
-                device = default_device(user)
-                if not device:
-                    auth_login(request, user)
-                    return redirect('/profile')
-                else:
-                    self.form_context['login_step'] = 'token'
-                    request.session['login_step'] = 'token'
-                    self.form_context['form'] = PleioAuthenticationTokenForm(user, request)
-            else:
-                print('login form.errors: ', form.errors)
+            form = PleioAuthenticationForm(request=request)
         elif login_step == 'token':
             user = User.objects.get(email=request.session.get('username'))
             form = PleioAuthenticationTokenForm(user, request)
-            print('post token request.POST: ', request.POST)
-            print('post token is_bound: ', form.is_bound)
-            if form.is_valid():
-                django_otp.login(request, device)
+        elif login_step == 'backup':
+            user = User.objects.get(email=request.session.get('username'))
+            form = PleioBackupTokenForm(user, request)
+
+        return render(request, 'login.html', { 
+                    'form' : form, 
+                    'login_step' : login_step,
+                    'reCAPTCHA' : EventLog.reCAPTCHA_needed(request) 
+                    })
+
+    def post(self, request, *args, **kwargs):
+        login_step = kwargs.get('login_step')
+        if login_step:
+            request.session['login_step'] = login_step
+        else:
+            login_step = request.session.get('login_step')
+
+        if login_step == 'login':
+            response = self.post_login(request, *args, **kwargs)
+        elif login_step == 'token':
+            response = self.post_token(request, *args, **kwargs)
+        elif login_step == 'backup':
+            response = self.post_backuptoken(request, *args, **kwargs)
+
+        return response
+            
+    def post_login(self, request, *args, **kwargs):
+        form = PleioAuthenticationForm(request=request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            user = User.objects.get(email=username)
+            request.session['username'] = username
+            device = default_device(user)
+            if not device:
+                auth_login(request, user)
                 return redirect('/profile')
             else:
-                print('token form.errors: ', form.errors)
-        elif login_step == 'backup':
-            device = default_device(form.get_user())
-            self.form_context['form'] = BackupTokenForm(form.get_user(), device)
+                request.session['login_step'] = 'token'
+                form = PleioAuthenticationTokenForm(user, request)
+        else:
+            EventLog.add_event(request, 'invalid login')
 
-        return render(request, 'login.html', self.form_context)
+        return render(request, 'login.html', {
+            'form' : form, 
+            'login_step' : request.session.get('login_step'),
+            'reCAPTCHA' : EventLog.reCAPTCHA_needed(request) 
+            }
+        )
 
+    def post_token(self, request, *args, **kwargs):
+        user = User.objects.get(email=request.session.get('username'))
+        form = PleioAuthenticationTokenForm(user, request, data=request.POST)
+        if form.is_valid():
+            auth_login(request, user)
+            return redirect('/profile')
+        else:
+            EventLog.add_event(request, 'invalid login')
+
+        return render(request, 'login.html', {'form' : form, 'login_step' : request.session.get('login_step') })
+
+    def post_backuptoken(self, request, *args, **kwargs):
+        user = User.objects.get(email=request.session.get('username'))
+        form = PleioBackupTokenForm(user, request, data=request.POST)
+        if form.is_valid():
+            auth_login(request, user)
+            return redirect('/profile')
+        else:
+            EventLog.add_event(request, 'invalid login')
+
+        return render(request, 'login.html', {'form' : form, 'login_step' : request.session.get('login_step') })
+    
     def set_partner_site_info(self):
         try:
             http_referer = urlparse(self.request.META['HTTP_REFERER'])

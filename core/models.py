@@ -10,6 +10,7 @@ from django.conf import settings
 from django.template.loader import render_to_string
 from .helpers import unique_filepath
 from .login_session_helpers import get_city, get_country, get_device, get_lat_lon
+from datetime import timedelta
 
 class Manager(BaseUserManager):
     def create_user(self, email, name, password=None, accepted_terms=False, receives_newsletter=False):
@@ -283,6 +284,27 @@ class EventLog(models.Model):
     ip = models.GenericIPAddressField(null=True, blank=True, verbose_name='IP')
     event_type = models.CharField(null=True, blank=True, max_length=100)
     event_time = models.DateTimeField(default=timezone.now)
+
+    def add_event(request, event_type):
+        session = request.session
+
+        event = EventLog.objects.create(
+            ip = session.ip,
+            event_type = event_type,
+         )
+        event.save()
+
+    def reCAPTCHA_needed(request):
+        time_threshold = timezone.now() - timedelta(minutes=settings.RECAPTCHA_MINUTES_THRESHOLD)
+        session = request.session
+        events = EventLog.objects.filter(
+	        ip = session.ip,
+        	event_time__gt=time_threshold, 
+	        event_type = 'invalid login'
+        )
+
+        return (events.count() > settings.RECAPTCHA_NUMBER_INVALID_LOGINS)
+        
 
 admin.site.register(User)
 admin.site.register(PleioPartnerSite)

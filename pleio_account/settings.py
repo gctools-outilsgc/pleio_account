@@ -170,6 +170,9 @@ LOGOUT_REDIRECT_URL = 'two_factor:login'
 PASSWORD_RESET_TIMEOUT_DAYS = 1
 ACCOUNT_ACTIVATION_DAYS = 7
 
+RECAPTCHA_MINUTES_THRESHOLD = 30
+RECAPTCHA_NUMBER_INVALID_LOGINS = 10
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -187,3 +190,4 @@ LOGGING = {
 }
 SITE_TITLE = 'Pleio_account'
 SITE_LOGO = 'images/logo.svg'
+SITE_FAVICON = '/static/images/favicon.png'
