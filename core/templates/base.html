@@ -39,7 +39,9 @@
                         <div class="account__content">
 
                             {% block content %}{% endblock %}
-                            {% include "language.html" %} 
+                            <div style='position:fixed; bottom:0; text-align:center'>
+                                {% include "language.html" %} 
+                            </div>
                         </div>
                     </div>
                 </div>

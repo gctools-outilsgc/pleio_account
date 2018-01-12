@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-08 13:45-0500\n"
+"POT-Creation-Date: 2018-01-12 11:26-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -157,48 +157,44 @@ msgstr ""
 msgid "Generate Tokens"
 msgstr ""
 
-#: core/templates/base.html:38 core/templates/base_account.html:24
+#: core/templates/base.html:34 core/templates/base_account.html:25
 msgid "Back to the homepage"
 msgstr ""
 
-#: core/templates/base_account.html:31
-msgid "Welcome"
-msgstr ""
-
 #: core/templates/base_account.html:32
+msgid "Welcome"
+msgstr "Bienvenue"
+
+#: core/templates/base_account.html:33
 msgid "in your Pleio account"
-msgstr ""
+msgstr "dans votre compte Pleio"
 
-#: core/templates/base_account.html:47
-msgid "Profiel"
-msgstr ""
-
-#: core/templates/base_account.html:48 core/templates/profile.html:14
+#: core/templates/base_account.html:49 core/templates/profile.html:14
 msgid "Your details"
-msgstr ""
+msgstr "Vos détails"
 
-#: core/templates/base_account.html:48 core/templates/profile.html:34
+#: core/templates/base_account.html:49 core/templates/profile.html:34
 msgid "Avatar"
-msgstr ""
+msgstr "Avatar"
 
-#: core/templates/base_account.html:60 core/templates/security_pages.html:18
+#: core/templates/base_account.html:61 core/templates/security_pages.html:18
 msgid "Security"
-msgstr ""
+msgstr "Sécurité"
 
-#: core/templates/base_account.html:61 core/templates/login.html:43
+#: core/templates/base_account.html:62 core/templates/login.html:43
 #: core/templates/register.html:47
 msgid "Password"
-msgstr ""
+msgstr "Mot de passe"
 
-#: core/templates/base_account.html:61
+#: core/templates/base_account.html:62
 msgid "Sessions"
 msgstr ""
 
-#: core/templates/base_account.html:61
+#: core/templates/base_account.html:62
 msgid "Two-factor authentication"
 msgstr ""
 
-#: core/templates/base_account.html:69
+#: core/templates/base_account.html:70
 #: core/templates/security_pages/user_sessions.html:39
 #: core/templates/session_list.html:42
 msgid "Logout"
@@ -267,7 +263,7 @@ msgstr ""
 
 #: core/templates/login.html:15 core/templates/login.html:89
 msgid "Sign in"
-msgstr "Enregistrez-vous"
+msgstr "Connectez-vous"
 
 #: core/templates/login.html:16 core/templates/login.html:90
 msgid "with your Pleio-account"
@@ -291,12 +287,12 @@ msgstr ""
 
 #: core/templates/login.html:38 core/templates/password_reset.html:25
 msgid "Email address"
-msgstr ""
+msgstr "Courriel"
 
 #: core/templates/login.html:47 core/templates/password_reset.html:11
 #: core/templates/password_reset_done.html:8
 msgid "Forgot password"
-msgstr ""
+msgstr "Mot de passe perdu?"
 
 #: core/templates/login.html:60 core/templates/login.html:110
 #: core/templates/password_reset.html:32
@@ -304,11 +300,11 @@ msgstr ""
 #: core/templates/password_reset_done.html:23 core/templates/register.html:82
 #: core/templates/register_complete.html:15
 msgid "Login"
-msgstr ""
+msgstr "Ouvrir uen session"
 
 #: core/templates/login.html:61
 msgid "Register account"
-msgstr ""
+msgstr "S'inscrir"
 
 #: core/templates/login.html:71
 msgid "Secure your account"
@@ -420,11 +416,11 @@ msgstr ""
 
 #: core/templates/profile.html:47
 msgid "Choose an avatar"
-msgstr ""
+msgstr "Choisissez un avatar"
 
 #: core/templates/profile.html:50
 msgid "Remove avatar"
-msgstr ""
+msgstr "Enlever l'avatar"
 
 #: core/templates/register.html:15 core/templates/register.html:81
 msgid "Register"
@@ -698,7 +694,7 @@ msgid ""
 "                    security."
 msgstr ""
 
-#: core/views.py:143
+#: core/views.py:141
 msgid "The Password has been changed successfully."
 msgstr ""
 

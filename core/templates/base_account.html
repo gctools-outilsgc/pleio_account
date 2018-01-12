@@ -3,6 +3,7 @@
 {% load Pleio_templatetags %}
 {% get_current_language as LANGUAGE_CODE %}
 
+{% language request.COOKIES.lang %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
     <head>
@@ -71,6 +72,9 @@
                         </a>
                     </li>
                 </ul>
+                <div style='position:fixed; bottom:0; text-align:center; padding-left:5%'>
+                    {% include "language.html" %} 
+                </div>
             </div>
             
             <div class="account-right">
@@ -91,3 +95,4 @@
         {% render_bundle "web" "js" %}
     </body>
 </html>
+{% endlanguage %}

@@ -1,20 +1,13 @@
 
 {% load i18n %}
-{% get_available_languages as languages %}
-{% load i18n %}
-{% load Pleio_templatetags %}
-{% load settings_value %}
 
-{% url 'some-url-name' arg arg2 as the_url %}
-
-<a href="{{ current_path }}" class="ui primary button" style="margin-top:10%" onclick="changeLanguage();" id='btn' title="{{ language.1 }}">
-  {% if request.COOKIES.lang == 'en'%}
-    fr
-  {% else %}
-    en
-  {% endif %}
-</a>
-
+<a href="{{ current_path }}" class="ui primary button" onclick="changeLanguage();" id='btn' title="change language of the site">
+      {% if request.COOKIES.lang == 'en'%}
+        fr
+      {% else %}
+        en
+      {% endif %}
+    </a>
 
 <script>
 function getCookie(cname) {
@@ -40,8 +33,6 @@ function changeLanguage() {
         setCookie("lang", 'en');
     }
 }
-
-console.log(getCookie("lang"))
 
 function setCookie(sName, sValue, oExpires, sPath, sDomain, bSecure) {
     var sCookie = sName + "=" + encodeURIComponent(sValue);

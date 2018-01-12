@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-08 13:45-0500\n"
+"POT-Creation-Date: 2018-01-12 11:26-0500\n"
 "PO-Revision-Date: 2017-12-15 16:48+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -162,48 +162,48 @@ msgstr "Je hebt nog geen backup tokens."
 msgid "Generate Tokens"
 msgstr "Genereer tokens"
 
-#: core/templates/base.html:38 core/templates/base_account.html:24
+#: core/templates/base.html:34 core/templates/base_account.html:25
 msgid "Back to the homepage"
 msgstr "Terug naar de homepagina"
 
-#: core/templates/base_account.html:31
+#: core/templates/base_account.html:32
 msgid "Welcome"
 msgstr "Welkom"
 
-#: core/templates/base_account.html:32
+#: core/templates/base_account.html:33
 msgid "in your Pleio account"
 msgstr "in uw Pleio-account"
 
-#: core/templates/base_account.html:47
+#: core/templates/base_account.html:48
 msgid "Profiel"
 msgstr "Profiel"
 
-#: core/templates/base_account.html:48 core/templates/profile.html:14
+#: core/templates/base_account.html:49 core/templates/profile.html:14
 msgid "Your details"
 msgstr "Uw gegevens"
 
-#: core/templates/base_account.html:48 core/templates/profile.html:34
+#: core/templates/base_account.html:49 core/templates/profile.html:34
 msgid "Avatar"
 msgstr "Profielfoto"
 
-#: core/templates/base_account.html:60 core/templates/security_pages.html:18
+#: core/templates/base_account.html:61 core/templates/security_pages.html:18
 msgid "Security"
 msgstr "Beveiliging"
 
-#: core/templates/base_account.html:61 core/templates/login.html:43
+#: core/templates/base_account.html:62 core/templates/login.html:43
 #: core/templates/register.html:47
 msgid "Password"
 msgstr "Wachtwoord"
 
-#: core/templates/base_account.html:61
+#: core/templates/base_account.html:62
 msgid "Sessions"
 msgstr "Sessies"
 
-#: core/templates/base_account.html:61
+#: core/templates/base_account.html:62
 msgid "Two-factor authentication"
 msgstr "Twee-factor authenticatie"
 
-#: core/templates/base_account.html:69
+#: core/templates/base_account.html:70
 #: core/templates/security_pages/user_sessions.html:39
 #: core/templates/session_list.html:42
 msgid "Logout"
@@ -747,7 +747,7 @@ msgstr ""
 "Twee-factor-authenticatie is niet geactiveerd voor uw account. Activeer twee-"
 "factor-authenticatie voor een betere beveiliging."
 
-#: core/views.py:143
+#: core/views.py:141
 msgid "The Password has been changed successfully."
 msgstr "Je wachtwoord is succesvol veranderd."
 
