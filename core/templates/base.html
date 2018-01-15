@@ -1,6 +1,7 @@
 {% load render_bundle from webpack_loader %}
 {% load i18n %}
 {% load Pleio_templatetags %}
+{% load app_customization %}
 {% get_current_language as LANGUAGE_CODE %}
 
 <!DOCTYPE html>
@@ -11,7 +12,7 @@
         <title>{% block page_title %}{% endblock %}</title>
         <meta name="viewport" content="width=device-width,height=device-height,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
         <link href="//fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
-        <link rel="icon" href="/static/images/favicon.png">
+        <link rel="icon" href="{% show_customizations_favicon %}">
         {% render_bundle "web" "css" %}
         <script src='https://www.google.com/recaptcha/api.js'></script>
 	<link rel="stylesheet" type="text/css" href="/static/semantic/dist/semantic.min.css">
@@ -32,7 +33,14 @@
              
             <div class="account">
                 <div class="account__top-bar">
+                    <img alt ="Graphic Element" src="{% show_customizations_logo %}" class="ui top aligned mini image">
+                    <span class="ui huge header">                        
+                        {% show_customizations_title %}
+                    </span>
+                    {% comment 'removing for now' %}
                     <a class="navigation__logo" title="{% trans "Back to the homepage" %}" href="https://www.pleio.nl/">{% include_asset "images/logo.svg" %}</a>
+                    {% endcomment %}
+                    
                 </div>
 
                 <div class="ui grid">
@@ -59,6 +67,7 @@ padding-bottom:2rem;
 }
 	  body {
 	    background: #FAFAFA;
+        background-image: {% show_customizations_bg_image %}
 	  }
 	  fieldset {
 	    padding: .35em 0 .625em;
@@ -85,6 +94,15 @@ transtition:fill 0.2s cubic-bexier(0.4, 0, 0.2, 1);
 }
 .password__toggle svg:hover {
 fill:#757575;
+}
+
+.ui.primary.button, .ui.primary.button:active{
+    background-color: #{% show_customizations_color %};
+}
+
+.ui.primary.button:hover{
+    background-color: #{% show_customizations_color %};
+    opacity: 0.8;
 }
 	</style>
 
