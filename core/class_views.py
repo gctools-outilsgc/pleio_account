@@ -87,6 +87,15 @@ class PleioLoginView(TemplateView):
                 request.session['login_step'] = 'token'
                 form = PleioAuthenticationTokenForm(user, request)
         else:
+            for key, value in form.errors.items():
+                if value[0] == 'inactive':
+                    try:
+                        username = request.POST.get('username')
+                        user = User.objects.get(email=username)
+                        user.send_activation_token(request)
+                        return redirect('register_complete')
+                    except:
+                        pass
             EventLog.add_event(request, 'invalid login')
 
         return render(request, 'login.html', {

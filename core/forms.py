@@ -76,7 +76,7 @@ class PleioAuthenticationForm(AuthenticationForm):
     error_messages = {
         'captcha_mismatch': 'captcha_mismatch',
         'invalid_login': 'invalid_login',
-        'inactive': _("This account is inactive."),
+        'inactive': 'inactive',
     }
 
     def __init__(self, request=None, *args, **kwargs):
@@ -95,7 +95,31 @@ class PleioAuthenticationForm(AuthenticationForm):
                     code='captcha_mismatch',
                 )
 
-        super(PleioAuthenticationForm, self).clean()
+        #super(PleioAuthenticationForm, self).clean()
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+
+        if username is not None and password:
+            self.user_cache = authenticate(self.request, username=username, password=password)
+            if self.user_cache is None:
+                user = User.objects.filter(email=username, is_active=False)
+                if user:
+                    raise forms.ValidationError(
+                        self.error_messages['inactive'],
+                        code='inactive',
+                        params={'username': self.username_field.verbose_name},
+                    )
+                else:
+                    raise forms.ValidationError(
+                        self.error_messages['invalid_login'],
+                        code='invalid_login',
+                        params={'username': self.username_field.verbose_name},
+                    )
+            else:
+                self.confirm_login_allowed(self.user_cache)
+
+        return self.cleaned_data
+
 
     def verify_captcha_response(self, response):
         try:
