@@ -165,8 +165,8 @@ GEOIP_PATH = os.path.join(BASE_DIR, 'assets/geopip2/')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
-LOGIN_URL = '/account/login/'
-# LOGIN_URL = 'two_factor:login'
+LOGIN_URL = '/accounts/login/'
+#LOGIN_URL = 'two_factor:login'
 LOGIN_REDIRECT_URL = '/profile/'
 LOGOUT_REDIRECT_URL = 'two_factor:login'
 
