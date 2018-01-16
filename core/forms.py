@@ -2,7 +2,7 @@ from django.utils.translation import gettext, gettext_lazy as _
 from django.contrib.auth import password_validation
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import authenticate 
+from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from two_factor.forms import AuthenticationTokenForm, TOTPDeviceForm
 from two_factor.utils import totp_digits
@@ -30,10 +30,10 @@ class RegisterForm(forms.Form):
         'captcha_mismatch': 'captcha_mismatch',
     }
 
-    name = forms.CharField(required=True, max_length=100)
-    email = EmailField(required=True)
-    password1 = forms.CharField(strip=False, widget=forms.PasswordInput)
-    password2 = forms.CharField(strip=False, widget=forms.PasswordInput)
+    name = forms.CharField(required=True, max_length=100, widget=forms.TextInput(attrs={'aria-labelledby':"error_name"}))
+    email = EmailField(required=True, widget=forms.TextInput(attrs={'aria-labelledby':"error_email"}))
+    password1 = forms.CharField(strip=False, widget=forms.PasswordInput(attrs={'aria-labelledby':"error_password1"}))
+    password2 = forms.CharField(strip=False, widget=forms.PasswordInput(attrs={'aria-labelledby':"error_password2"}))
     accepted_terms = forms.BooleanField(required=True)
     receives_newsletter = forms.BooleanField(required=False)
 
@@ -73,6 +73,8 @@ class PleioAuthenticationForm(AuthenticationForm):
         'captcha_mismatch': 'captcha_mismatch',
     }
 
+    username = forms.CharField(required=True, max_length=254, widget=forms.TextInput(attrs={'id':"id_auth-username"}))
+
     def __init__(self, *args, **kwargs):
         super(PleioAuthenticationForm, self).__init__(*args, **kwargs)
         self.fields['g-recaptcha-response'] = forms.CharField()
@@ -104,14 +106,14 @@ class ChangePasswordForm(forms.Form):
         'password_mismatch': _("The two password fields didn't match."),
     }
 
-    old_password = forms.CharField(strip=False, widget=forms.PasswordInput)
-    new_password1 = forms.CharField(strip=False, widget=forms.PasswordInput)
-    new_password2 = forms.CharField(strip=False, widget=forms.PasswordInput)
+    old_password = forms.CharField(strip=False, widget=forms.PasswordInput(attrs={'aria-labelledby':"error_id_old_password"}))
+    new_password1 = forms.CharField(strip=False, widget=forms.PasswordInput(attrs={'aria-labelledby':"error_id_new_password1"}))
+    new_password2 = forms.CharField(strip=False, widget=forms.PasswordInput(attrs={'aria-labelledby':"error_id_new_password2"}))
 
     def clean_old_password(self):
         old_password = self.cleaned_data.get("old_password")
         user = authenticate(username=self.user.email, password=old_password)
-        
+
         if user is None:
             raise forms.ValidationError(
                 self.error_messages['invalid_password'],
