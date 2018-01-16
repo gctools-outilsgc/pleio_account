@@ -42,6 +42,7 @@ RUN apk --no-cache add \
       musl \
       pcre \
       postgresql \
+      gettext \
       python3 \
       zlib
 

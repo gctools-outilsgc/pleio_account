@@ -14,6 +14,7 @@ from django.utils.timezone import now
 from django.contrib.auth.forms import AuthenticationForm
 
 class PleioLoginView(LoginView):
+
     template_name = 'login.html'
 
     form_list = (
@@ -24,6 +25,11 @@ class PleioLoginView(LoginView):
     )
 
     def get_context_data(self, **kwargs):
+        if "lang" in self.request.COOKIES.keys():
+            pass
+        else:
+             self.request.COOKIES['lang'] = 'en'
+
         context = super(PleioLoginView, self).get_context_data(**kwargs)
         next = self.request.GET.get('next')
         if next:

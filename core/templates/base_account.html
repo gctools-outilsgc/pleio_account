@@ -3,6 +3,7 @@
 {% load Pleio_templatetags %}
 {% get_current_language as LANGUAGE_CODE %}
 
+{% language request.COOKIES.lang %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
     <head>
@@ -73,6 +74,9 @@
                         </a>
                     </li>
                 </ul>
+                <div style='position:fixed; bottom:0; text-align:center; padding-left:5%'>
+                    {% include "language.html" %} 
+                </div>
             </div>
 
             <div class="account-right">
@@ -264,3 +268,6 @@ width:100%;
 	<script src="/static/semantic/dist/semantic.min.js"></script>
     </body>
 </html>
+
+{% endlanguage %}
+
