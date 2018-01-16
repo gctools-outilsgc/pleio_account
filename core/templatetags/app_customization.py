@@ -9,7 +9,7 @@ def show_customizations_title():
         q = AppCustomization.objects.get(id=1)
         return q.product_title
     except AppCustomization.DoesNotExist:
-        return False
+        return ''
 
 @register.simple_tag()
 def show_customizations_color():
@@ -25,7 +25,7 @@ def show_customizations_logo():
         q = AppCustomization.objects.get(id=1)
         return q.logo_image.url
     except AppCustomization.DoesNotExist:
-        return None
+        return ''
 
 @register.simple_tag()
 def show_customizations_bg_image():
