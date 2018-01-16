@@ -23,3 +23,16 @@ class DeviceIdMiddleware(MiddlewareMixin):
         )
 
         return response
+
+class XRealIPMiddleware(object):
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        try:
+            real_ip = request.META['HTTP_X_REAL_IP']
+        except KeyError:
+            pass
+        else:
+            request.META['REMOTE_ADDR'] = real_ip
+        return self.get_response(request)
