@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-16 12:08+0100\n"
+"POT-Creation-Date: 2018-01-16 16:52+0100\n"
 "PO-Revision-Date: 2017-12-15 16:48+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -22,23 +22,23 @@ msgstr ""
 msgid "Your email address is not allowed."
 msgstr "Dit e-mailadres is niet geldig."
 
-#: core/forms.py:32 core/forms.py:188
+#: core/forms.py:32 core/forms.py:215
 msgid "The two password fields didn't match."
 msgstr "De twee wachtwoorden komen niet overeen."
 
-#: core/forms.py:144 core/forms.py:173 core/forms.py:178
+#: core/forms.py:75 core/forms.py:214
+msgid "The password is invalid."
+msgstr "Het wachtwoord is ongeldig."
+
+#: core/forms.py:171 core/forms.py:200 core/forms.py:205
 msgid "Token"
 msgstr "Token"
 
-#: core/forms.py:166
+#: core/forms.py:193
 #, fuzzy
 #| msgid "Please activate your account"
 msgid "Please enter your OTP token."
 msgstr "Activeer je account"
-
-#: core/forms.py:187
-msgid "The password is invalid."
-msgstr "Het wachtwoord is ongeldig."
 
 #: core/login_session_helpers.py:9
 msgid "Chrome"
@@ -188,7 +188,7 @@ msgstr "Profiel"
 msgid "Your details"
 msgstr "Uw gegevens"
 
-#: core/templates/base_account.html:52 core/templates/profile.html:34
+#: core/templates/base_account.html:52 core/templates/profile.html:54
 msgid "Avatar"
 msgstr "Profielfoto"
 
@@ -406,7 +406,7 @@ msgstr "Herstel wachtwoord"
 msgid "Need help?"
 msgstr "Hulp nodig?"
 
-#: core/templates/password_reset.html:42 core/templates/profile.html:22
+#: core/templates/password_reset.html:42 core/templates/profile.html:34
 #: core/templates/register.html:42
 msgid "Email"
 msgstr "E-mail"
@@ -420,17 +420,17 @@ msgid "You can now login with your new password."
 msgstr "U kunt nu inloggen met uw nieuwe wachtwoord."
 
 #: core/templates/password_reset_confirm.html:25
-#: core/templates/security_pages/change_password.html:32
+#: core/templates/security_pages/change_password.html:31
 msgid "New Password"
 msgstr "Nieuw wachtwoord"
 
 #: core/templates/password_reset_confirm.html:32
-#: core/templates/security_pages/change_password.html:40
+#: core/templates/security_pages/change_password.html:39
 msgid "New Password (again)"
 msgstr "Nieuw wachtwoord (verificatie)"
 
 #: core/templates/password_reset_confirm.html:39
-#: core/templates/security_pages/change_password.html:51
+#: core/templates/security_pages/change_password.html:50
 msgid "Confirm"
 msgstr "Bevestigen"
 
@@ -450,23 +450,39 @@ msgstr ""
 msgid "Profile"
 msgstr "Profiel"
 
-#: core/templates/profile.html:17
+#: core/templates/profile.html:20
+#, fuzzy
+#| msgid "Please enter a correct email and password."
+msgid "Please enter a valid password."
+msgstr "Voer een correct e-mailadres en wachtwoord in."
+
+#: core/templates/profile.html:21
+#, fuzzy
+#| msgid "Note that both fields may be case-sensitive."
+msgid "Note that the password field may be case-sensitive."
+msgstr "Let op: beide velden kunnen hoofdlettergevoelig zijn."
+
+#: core/templates/profile.html:29
 msgid "Name"
 msgstr "Naam"
 
-#: core/templates/profile.html:25
+#: core/templates/profile.html:37
 msgid "Government"
 msgstr "Overheid"
 
-#: core/templates/profile.html:29
+#: core/templates/profile.html:40
+msgid "Password (for verification user's identity)"
+msgstr "Wachtwoord (om uw identiteit te controleren)"
+
+#: core/templates/profile.html:49
 msgid "Save"
 msgstr "Opslaan"
 
-#: core/templates/profile.html:47
+#: core/templates/profile.html:67
 msgid "Choose an avatar"
 msgstr "Kies een avatar"
 
-#: core/templates/profile.html:50
+#: core/templates/profile.html:70
 msgid "Remove avatar"
 msgstr "Verwijder avatar"
 
@@ -777,7 +793,7 @@ msgstr ""
 "Twee-factor-authenticatie is niet geactiveerd voor uw account. Activeer twee-"
 "factor-authenticatie voor een betere beveiliging."
 
-#: core/views.py:143
+#: core/views.py:142
 msgid "The Password has been changed successfully."
 msgstr "Je wachtwoord is succesvol veranderd."
 
