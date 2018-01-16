@@ -95,16 +95,12 @@ class User(AbstractBaseUser):
     def email_user(self, subject, message, **kwargs):
         send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [self.email], **kwargs)
 
-    def send_activation_token(self, request):
-        current_site = get_current_site(request)
-
+    def send_activation_token(self):
         template_context = {
             'user': self,
             'activation_token': signing.dumps(obj=self.email),
-            'protocol': 'https' if request.is_secure() else 'http',
-            'domain': current_site.domain
         }
-
+ 
         self.email_user(
             render_to_string('emails/register_subject.txt', template_context),
             render_to_string('emails/register.txt', template_context),

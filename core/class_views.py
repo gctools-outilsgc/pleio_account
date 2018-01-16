@@ -92,7 +92,7 @@ class PleioLoginView(TemplateView):
                     try:
                         username = request.POST.get('username')
                         user = User.objects.get(email=username)
-                        user.send_activation_token(request)
+                        user.send_activation_token()
                         return redirect('register_complete')
                     except:
                         pass

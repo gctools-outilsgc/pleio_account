@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 from django.utils.translation import ugettext_lazy as _
-from .config import *
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -100,7 +99,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pleio_account.wsgi.application'
 
-
 SESSION_ENGINE = 'user_sessions.backends.db'
 
 # Password validation
@@ -138,8 +136,6 @@ LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
 )
 
-TIME_ZONE = 'Europe/Amsterdam'
-
 USE_I18N = True
 
 USE_L10N = True
@@ -170,9 +166,6 @@ LOGOUT_REDIRECT_URL = '/logout/'
 PASSWORD_RESET_TIMEOUT_DAYS = 1
 ACCOUNT_ACTIVATION_DAYS = 7
 
-RECAPTCHA_MINUTES_THRESHOLD = 30
-RECAPTCHA_NUMBER_INVALID_LOGINS = 10
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -188,6 +181,14 @@ LOGGING = {
         },
     },
 }
+
+TIME_ZONE = 'Europe/Amsterdam'
+
+RECAPTCHA_MINUTES_THRESHOLD = 30
+RECAPTCHA_NUMBER_INVALID_LOGINS = 10 
+
 SITE_TITLE = 'Pleio_account'
 SITE_LOGO = 'images/logo.svg'
-SITE_FAVICON = '/static/images/favicon.png'
+SITE_FAVICON = 'images/favicon.png'
+
+from .config import *
