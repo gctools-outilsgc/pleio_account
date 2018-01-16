@@ -28,7 +28,7 @@ class PleioLoginView(LoginView):
         next = self.request.GET.get('next')
         if next:
             context['next'] = next
-        
+
         self.set_partner_site_info()
 
         return context
@@ -42,13 +42,13 @@ class PleioLoginView(LoginView):
             self.request.COOKIES['partner_site_name'] = None
             self.request.COOKIES['partner_site_logo_url'] = None
             return False
-        
+
         try:
             clean_url = http_referer.scheme+"://"+http_referer.netloc+"/"
             if http_referer.netloc == self.request.META['HTTP_HOST']:
                 #referer is this site: no action to be taken
                 return False
-            
+
             try:
                 #search for matching partnersite data
                 partnersite = PleioPartnerSite.objects.get(partner_site_url=clean_url)
@@ -163,7 +163,7 @@ class PleioBackupTokensView(BackupTokensView):
         device.token_set.all().delete()
         for n in range(self.number_of_tokens):
             device.token_set.create(token=StaticToken.random_token())
-   
+
         return TemplateResponse(self.request, 'security_pages.html', {
                 'form': form,
                 'tokens': device.token_set.all()

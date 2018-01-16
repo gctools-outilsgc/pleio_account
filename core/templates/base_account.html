@@ -24,20 +24,20 @@
                     <a class="navigation__logo" title="{% trans "Back to the homepage" %}" href="https://www.pleio.nl/">{% include_asset "images/logo.svg" %}</a>
                     <label for="show_menu" class="account-menu__hamburger">{% include_asset "icons/hamburger.svg" %}</label>
                 </div>
-                
-                   
+
+
                 <div class="account-menu__header">
                      <h2 class="textcolor_primary ui header medium"><div class="content">{% trans "Welcome" %}, {{request.user.name}}<div class="sub header">{% trans "in your Pleio account" %}</div></div></h2>
-                     
+
 		     {% if request.user.avatar %}
                      <img src="/media/{{ request.user.avatar }}" class="account-menu__avatar" />
                      {% endif %}
 
 
                 </div>
-                     
-                <ul class="account-menu__list"> 
-  
+
+                <ul class="account-menu__list">
+
                     <li>
                         {% if request.path == '/profile/' %}
                             <a href="{% url 'profile' %}" class="account-menu__list current">
@@ -74,12 +74,12 @@
                     </li>
                 </ul>
             </div>
-            
+
             <div class="account-right">
                 {% if request.COOKIES.partner_site_url %}
                     <a href={{ request.COOKIES.partner_site_url }} class="button ___white ___outline account__close">{{ request.COOKIES.partner_site_name }}</a>
                 {% endif %}
-             
+
                 <div class="account-right__content">
                     {% block content %}{% endblock %}
                 </div>
@@ -127,22 +127,6 @@ cursor:pointer;
 }
 .field {
 position:relative;
-}
-.password__toggle {
-position: absolute;
-right:0;
-top:1.2rem;
-padding: 0.8rem 0.8rem 0.6rem;
-cursor:pointer;
-}
-.password__toggle svg{
-width:2rem;
-height:2rem;
-fill:#b4b4b4;
-transtition:fill 0.2s cubic-bexier(0.4, 0, 0.2, 1);
-}
-.password__toggle svg:hover {
-fill:#757575;
 }
 .account-overlay {
 display: flex;

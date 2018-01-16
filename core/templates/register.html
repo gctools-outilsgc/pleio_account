@@ -12,19 +12,19 @@
 <form method="post" action="." class="ui form">
     {% csrf_token %}
     <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
-    
+
     <div class="login__step-title">
         <div>
             <h1 class="ui large header">{% trans "Register" %}<div class="sub header">{% trans "create a Pleio-account" %}</div></h1>
-            
+
         </div>
         <!--<img src="/static/images/logo-icon.svg" class="login__step-icon"/>
 -->    </div>
-    
-    
+
+
             {% for error in form.non_field_errors %}
-	<div class="ui icon negative message">
-            <i class="icon">{% include_asset "icons/account-alert.svg" %}</i>
+	<div class="ui negative message">
+
             <div class="content">
                 {% if error == 'captcha_mismatch' %}
                     <div class="textcolor_primary">{% trans "Login failed." %}</div>
@@ -36,7 +36,7 @@
     	</div>
         {% endfor %}
 
-    
+
     <fieldset>
         <div class="field">
             <label for="id_name">{% trans "First and last name" %}</label>
@@ -45,25 +45,25 @@
         </div>
         <div class="field">
             <label for="id_email">{% trans "Email" %}</label>
-            {{ form.errors.email }}
+            <span id="error_email">{{ form.errors.email }}</span>
             {{ form.email }}
         </div>
         <div class="field">
             <label for="id_password1">{% trans "Password" %}</label>
-            {{ form.errors.password1 }}
-	    <div>
+            <span id="error_password1">{{ form.errors.password1 }}</span>
+	    <div class="password_field">
             {{ form.password1 }}
             <span class="password__toggle">{% include_asset "icons/eye.svg" %}</span>
-            <p class="capslock"></p>
+            <p class="capslock" aria-live="assertive"></p>
 	    </div>
         </div>
         <div class="field">
             <label for="id_password2">{% trans "Password (again)" %}</label>
-            {{ form.errors.password2 }}
-	    <div>
+            <span id="error_password2">{{ form.errors.password2 }}</span>
+	    <div class="password_field">
             {{ form.password2 }}
             <span class="password__toggle">{% include_asset "icons/eye.svg" %}</span>
-            <p class="capslock"></p>
+            <p class="capslock" aria-live="assertive"></p>
 	    </div>
         </div>
 
@@ -73,11 +73,12 @@
                 {{ form.accepted_terms }}
                 <label for="id_accepted_terms">{% trans "I agree with the "%}<a href="{% url 'terms_of_use' %}">{% trans " general terms"%}</a></label>
             </div>
+            <!--
             <div class="register__check ui checkbox">
                 {{ form.errors.receives_newsletter }}
                 {{ form.receives_newsletter }}
                 <label for="id_receives_newsletter">{% trans "Please subscribe me to the Pleio newsletter" %}</label>
-            </div>
+            </div>-->
         </div>
 
         {% settings_value 'GOOGLE_RECAPTCHA_SITE_KEY' as recaptcha_site_key %}
@@ -90,7 +91,7 @@
             <button name="register" class="fluid ui button primary" type="submit">{% trans "Register" %}</button>
             <a href="{% url 'login' %}" >{% trans "Return to sign in" %}</a>
         </div>
-        
+
     </fieldset>
 </form>
 

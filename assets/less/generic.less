@@ -8,14 +8,50 @@
 }
 
 #id_avatar {
-visibility:hidden;
-width:0;
-height:0;
-z-index:-1;
+  visibility:hidden;
+  width:0;
+  height:0;
+  z-index:-1;
 }
 #avatar-clear_id {
-visibility:hidden;
-width:0;
-height:0;
-z-index:-1;
+  visibility:hidden;
+  width:0;
+  height:0;
+  z-index:-1;
+}
+
+
+.errorlist {
+  list-style:none;
+  padding:0;
+  font-weight: bold;
+  color:#e00;
+/*  padding: .67857143em 1em;
+  background-color: #ffe8e6;
+  color:#db2828;
+  box-shadow:0 0 0 1px #db2828 inset, 0 0 0 transparent;
+  border-radius:4px;*/
+}
+.password_field {
+  position:relative;
+}
+.password__toggle {
+  position: absolute;
+  right:0;
+  top:0;
+  padding: 0.4rem 0.4rem 0.6rem;
+  cursor:pointer;
+}
+.password__toggle svg{
+  width:2rem;
+  height:2rem;
+  fill:#b4b4b4;
+  transtition:fill 0.2s;
+}
+.password__toggle svg:hover {
+  fill:#757575;
+}
+.capslock {
+  font-weight: bold;
+  color:#e00;
 }
