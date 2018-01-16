@@ -59,7 +59,7 @@ class RegisterForm(forms.Form):
 
     def clean(self):
         super(RegisterForm, self).clean()
-        if not verify_captcha_response(self.cleaned_data.get('g-recaptcha-response')):
+        if not PleioAuthenticationForm.verify_captcha_response(None, self.cleaned_data.get('g-recaptcha-response')):
             raise forms.ValidationError(
                 self.error_messages['captcha_mismatch'],
                 code='captcha_mismatch',
@@ -70,6 +70,34 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('name', 'email', 'avatar')
+
+    error_messages = {
+        'invalid_password': _("The password is invalid."),
+    }
+
+    def __init__(self, *args, **kwargs):
+        self.form_user = kwargs.get('instance', None)
+        self.current_user = User.objects.get(pk=self.form_user.pk)
+        super(UserProfileForm, self).__init__(*args, **kwargs)
+
+        self.fields['current_password'] = forms.CharField(strip=False, widget=forms.PasswordInput, required=None)
+
+    def clean(self):
+        name = self.cleaned_data.get('name')
+        email = self.cleaned_data.get('email')
+
+        if (name != self.current_user.name) or (email != self.current_user.email):
+            if not self.check_current_password():
+                raise forms.ValidationError(
+                    self.error_messages['invalid_password'],
+                    code='invalid_password',
+                )
+
+    def check_current_password(self):
+        current_password = self.cleaned_data.get("current_password")
+        user = authenticate(username=self.current_user.email, password=current_password)
+
+        return (user != None)
 
 
 class PleioAuthenticationForm(AuthenticationForm):
@@ -95,7 +123,6 @@ class PleioAuthenticationForm(AuthenticationForm):
                     code='captcha_mismatch',
                 )
 
-        #super(PleioAuthenticationForm, self).clean()
         username = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password')
 

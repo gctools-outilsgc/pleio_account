@@ -85,7 +85,6 @@ def profile(request):
         form = UserProfileForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             user = form.save()
-
     else:
         form = UserProfileForm(instance=request.user)
 

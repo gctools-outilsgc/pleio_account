@@ -12,6 +12,18 @@
             <div class="card ___nopadding">
                 {% csrf_token %}
                 <h2 class="card__title ___addpadding-side">{% trans "Your details" %}</h2>
+                
+                <ul class="messages error">
+                    {% for error in form.non_field_errors %}
+                        <li>
+                        {% include_asset "icons/account-alert.svg" %}
+                        <div class="textcolor_primary">{% trans "Please enter a valid password." %}</div>
+                        <div class="textcolor_secondary">{% trans "Note that the password field may be case-sensitive." %}</div>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <p></p><p></p>
+    
                 <fieldset class="___addpadding-side">
                     <div class="input-field">
                         <label for="id_name">{% trans "Name" %}</label>
@@ -24,7 +36,15 @@
                         {{ form.email }}
                         <span class="badge green __uppercase">{% include_asset "icons/check.svg" %}{% trans "Government" %}</span>
                     </div>
-                </fieldset>
+                    <div class="input-field">
+                        <label for="id_current_password">{% trans "Password (for verification user's identity)" %}</label>
+                        {{ form.errors.current_password }}
+                        {{ form.current_password }}
+                        <span class="password__toggle">{% include_asset "icons/eye.svg" %}</span>            
+                        <p class="capslock"></p>
+                    </div>
+                    <p id="capslockon" class="errorlist"></p>
+            </fieldset>
                 <div class="card__action ___addpadding-side">
                     <button name="update" class="button ___clear" type="submit">{% trans "Save" %}</button>
                 </div>
