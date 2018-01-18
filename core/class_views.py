@@ -1,5 +1,5 @@
 from django.urls import reverse_lazy
-from .forms import PleioAuthenticationTokenForm, PleioAuthenticationForm
+from .forms import PleioAuthenticationTokenForm, PleioAuthenticationForm, LabelledLoginForm
 from .models import User, PleioPartnerSite
 from two_factor.forms import TOTPDeviceForm, BackupTokenForm
 from two_factor.views.core import LoginView, SetupView, BackupTokensView
@@ -19,7 +19,8 @@ class PleioLoginView(LoginView):
 
     form_list = (
         #('auth', PleioAuthenticationForm),
-        ('auth', AuthenticationForm),
+        #('auth', AuthenticationForm),
+        ('auth', LabelledLoginForm),
         ('token', PleioAuthenticationTokenForm),
         ('backup', BackupTokenForm),
     )

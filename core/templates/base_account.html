@@ -20,6 +20,7 @@
     <body>
         <div class="account-overlay ___profile">
             <div class="account-menu">
+              <div class="account-menu-container ui sticky">
                 <input type="checkbox" id="show_menu" />
                 <div class="account__top-bar">
                     <a class="navigation__logo" title="{% trans "Back to the homepage" %}" href="https://www.pleio.nl/">{% include_asset "images/logo.svg" %}</a>
@@ -75,11 +76,12 @@
                     </li>
                 </ul>
                 <div style='position:fixed; bottom:0; text-align:center; padding-left:5%'>
-                    {% include "language.html" %} 
+                    {% include "language.html" %}
                 </div>
+              </div>
             </div>
 
-            <div class="account-right">
+            <div class="account-right" id="account-content">
                 {% if request.COOKIES.partner_site_url %}
                     <a href={{ request.COOKIES.partner_site_url }} class="button ___white ___outline account__close">{{ request.COOKIES.partner_site_name }}</a>
                 {% endif %}
@@ -115,9 +117,6 @@ display:none;
 .account-menu__hamburger:hover {
 fill: #1565c0;
 cursor:pointer;
-}
-.account__top-bar {
-padding-bottom:2rem;
 }
 body {
 background: #FAFAFA;
@@ -207,9 +206,7 @@ flex: 1 1 auto;
 .account-right {
 flex: 1 1 auto;
 order: 2;
-padding-left: 3em;
-padding-right: 3em;
-padding-top: 3rem;
+padding: 3em;
 }
 .account-right__content {
 padding-top: 2rem;
@@ -232,6 +229,7 @@ flex: 1 0 auto;
 max-width: none;
 min-height:0;
 width:100%;
+box-shadow: none;
 }
 .account-menu__hamburger {
 display:block;
@@ -270,4 +268,3 @@ width:100%;
 </html>
 
 {% endlanguage %}
-

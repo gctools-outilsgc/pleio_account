@@ -3,13 +3,15 @@
 {% load i18n %}
 {% load Pleio_templatetags %}
 
+{% block page_title %}Security{% endblock %}
+
 {% block content %}
 <script type="text/javascript">
     window.onload = function() {
        {
         document.getElementById("id_old_password").focus();
         var state = "{{2FA.state}}";
-        if ( state == "setup"  ) {        
+        if ( state == "setup"  ) {
             document.getElementById("id_token").focus();
             }
       }

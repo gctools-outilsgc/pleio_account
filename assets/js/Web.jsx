@@ -11,7 +11,7 @@ $(document).ready(function() {
            }
         });
     });
-      
+
     $("input").keypress(function(e) {
         if ($(this).attr("type") == "password") {
             var s = String.fromCharCode( e.which );
@@ -24,15 +24,18 @@ $(document).ready(function() {
             $(".capslock").text("");
     }
     });
-      
+
     $("input").blur(function(e) {
         $(".capslock").text("");
     });
-    
+
     var theme_bg = $('.account-theme').data('bg');
     console.log(theme_bg);
     if(theme_bg){
         $('.account-theme').css('background-image','url(' + theme_bg + ')');
     }
 
+    $('.ui.sticky').sticky({
+    context: '#account-content'
+    });
 });
