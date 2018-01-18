@@ -1,0 +1,8 @@
+{% load i18n %}
+{% load absolute_url %}
+{% trans "Dear" %} {{ user.name }},
+
+{% trans "Please verify your new email address by following this link" %}:<br />
+
+{% url 'change_email_activate' activation_token as activation_token_url %}
+{% absolute_url activation_token_url %}

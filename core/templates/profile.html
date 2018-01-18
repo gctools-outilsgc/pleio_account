@@ -17,13 +17,13 @@
                     {% for error in form.non_field_errors %}
                         <li>
                         {% include_asset "icons/account-alert.svg" %}
-                        <div class="textcolor_primary">{% trans "Please enter a valid password." %}</div>
-                        <div class="textcolor_secondary">{% trans "Note that the password field may be case-sensitive." %}</div>
+                        <div class="textcolor_primary">{% trans "Invalid email." %}</div>
+                        <div class="textcolor_secondary">{{ error }}</div>
                         </li>
                     {% endfor %}
                 </ul>
                 <p></p><p></p>
-    
+    l
                 <fieldset class="___addpadding-side">
                     <div class="input-field">
                         <label for="id_name">{% trans "Name" %}</label>
@@ -36,14 +36,16 @@
                         {{ form.email }}
                         <span class="badge green __uppercase">{% include_asset "icons/check.svg" %}{% trans "Government" %}</span>
                     </div>
-                    <div class="input-field">
-                        <label for="id_current_password">{% trans "Password (for verification user's identity)" %}</label>
-                        {{ form.errors.current_password }}
-                        {{ form.current_password }}
-                        <span class="password__toggle">{% include_asset "icons/eye.svg" %}</span>            
-                        <p class="capslock"></p>
+                    <div>
+                            <input type="hidden" name="new_email" id="id_new_email" maxlength="255" />
                     </div>
-                    <p id="capslockon" class="errorlist"></p>
+                    {% if text_change_pending %}
+                        <div>
+                            {{ text_change_pending }}<b>{{ text_email }}</b><br>
+                            {% trans "Please check your inbox to validate the change." %}<br> 
+                            {% trans "Click " %}<a href="{% url 'change_email' %}"><b>{% trans "here" %}</b></a> {% trans "to resend the confirmation e-mail." %}
+                        </div>
+                    {% endif %}
             </fieldset>
                 <div class="card__action ___addpadding-side">
                     <button name="update" class="button ___clear" type="submit">{% trans "Save" %}</button>

@@ -72,32 +72,48 @@ class UserProfileForm(forms.ModelForm):
         fields = ('name', 'email', 'avatar')
 
     error_messages = {
-        'invalid_password': _("The password is invalid."),
+        'duplicate_email': _("This email is already registered."),
     }
 
     def __init__(self, *args, **kwargs):
         self.form_user = kwargs.get('instance', None)
         self.current_user = User.objects.get(pk=self.form_user.pk)
+        self.email_save = self.current_user.email
+        self.new_email_save = self.current_user.new_email
         super(UserProfileForm, self).__init__(*args, **kwargs)
 
-        self.fields['current_password'] = forms.CharField(strip=False, widget=forms.PasswordInput, required=None)
-
-    def clean(self):
-        name = self.cleaned_data.get('name')
+    def clean_email(self):
         email = self.cleaned_data.get('email')
 
-        if (name != self.current_user.name) or (email != self.current_user.email):
-            if not self.check_current_password():
+        if email != self.email_save:
+            try:
+                user = User.objects.get(email=email)
+            except:
+                user = None
+
+            if user:
                 raise forms.ValidationError(
-                    self.error_messages['invalid_password'],
-                    code='invalid_password',
+                    self.error_messages['duplicate_email'],
+                    code='duplicate_email',
                 )
+            else:
+                self.current_user.new_email = email
+                email = self.email_save
+        else:
+            self.current_user.new_email = None
 
-    def check_current_password(self):
-        current_password = self.cleaned_data.get("current_password")
-        user = authenticate(username=self.current_user.email, password=current_password)
+        return email
 
-        return (user != None)
+    def clean_new_email(self):
+        new_email = self.current_user.new_email
+        
+        return new_email
+
+    def clean(self):
+        super(UserProfileForm, self).clean()
+
+        self.cleaned_data['new_email'] = self.clean_new_email()
+        data = self.cleaned_data
 
 
 class PleioAuthenticationForm(AuthenticationForm):

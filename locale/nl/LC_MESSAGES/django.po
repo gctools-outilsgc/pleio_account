@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-16 16:52+0100\n"
+"POT-Creation-Date: 2018-01-18 17:10+0100\n"
 "PO-Revision-Date: 2017-12-15 16:48+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -22,23 +22,27 @@ msgstr ""
 msgid "Your email address is not allowed."
 msgstr "Dit e-mailadres is niet geldig."
 
-#: core/forms.py:32 core/forms.py:215
+#: core/forms.py:32 core/forms.py:231
 msgid "The two password fields didn't match."
 msgstr "De twee wachtwoorden komen niet overeen."
 
-#: core/forms.py:75 core/forms.py:214
-msgid "The password is invalid."
-msgstr "Het wachtwoord is ongeldig."
+#: core/forms.py:75
+msgid "This email is already registered."
+msgstr "Dit e-mailadres is al geregistreerd"
 
-#: core/forms.py:171 core/forms.py:200 core/forms.py:205
+#: core/forms.py:187 core/forms.py:216 core/forms.py:221
 msgid "Token"
 msgstr "Token"
 
-#: core/forms.py:193
+#: core/forms.py:209
 #, fuzzy
 #| msgid "Please activate your account"
 msgid "Please enter your OTP token."
 msgstr "Activeer je account"
+
+#: core/forms.py:230
+msgid "The password is invalid."
+msgstr "Het wachtwoord is ongeldig."
 
 #: core/login_session_helpers.py:9
 msgid "Chrome"
@@ -188,7 +192,7 @@ msgstr "Profiel"
 msgid "Your details"
 msgstr "Uw gegevens"
 
-#: core/templates/base_account.html:52 core/templates/profile.html:54
+#: core/templates/base_account.html:52 core/templates/profile.html:56
 msgid "Avatar"
 msgstr "Profielfoto"
 
@@ -215,6 +219,8 @@ msgstr "Twee-factor authenticatie"
 msgid "Logout"
 msgstr "Uitloggen"
 
+#: core/templates/emails/change_email.html:7
+#: core/templates/emails/change_email.txt:3
 #: core/templates/emails/register.html:7 core/templates/emails/register.txt:3
 #: core/templates/emails/reset_password.html:5
 #: core/templates/emails/reset_password.txt:2
@@ -222,6 +228,15 @@ msgstr "Uitloggen"
 #: core/templates/emails/suspicious_login.txt:3
 msgid "Dear"
 msgstr "Beste"
+
+#: core/templates/emails/change_email.html:9
+#: core/templates/emails/change_email.txt:5
+msgid "Please verify your new email address by following this link"
+msgstr "Bevestig uw nieuwe e-mailadres door de volgende link te volgen"
+
+#: core/templates/emails/change_email_subject.txt:1
+msgid "Please verify your new email address"
+msgstr "Verifieer uw nieuwe e-mailadres"
 
 #: core/templates/emails/register.html:9 core/templates/emails/register.txt:5
 msgid "Please activate your account by following this link"
@@ -308,16 +323,12 @@ msgid "Note that both fields may be case-sensitive."
 msgstr "Let op: beide velden kunnen hoofdlettergevoelig zijn."
 
 #: core/templates/login.html:31
-#, fuzzy
-#| msgid "This account is inactive."
 msgid "This account is inactive."
 msgstr "Dit account is niet actief"
 
 #: core/templates/login.html:32
-#, fuzzy
-#| msgid "Please check your e-mail to validate your account."
 msgid "Please check your email to validate your account."
-msgstr "Controleer je e-mail om je account te valideren."
+msgstr "Controleer uw e-mail om je account te valideren."
 
 #: core/templates/login.html:34
 msgid "Invalid login."
@@ -452,15 +463,9 @@ msgstr "Profiel"
 
 #: core/templates/profile.html:20
 #, fuzzy
-#| msgid "Please enter a correct email and password."
-msgid "Please enter a valid password."
-msgstr "Voer een correct e-mailadres en wachtwoord in."
-
-#: core/templates/profile.html:21
-#, fuzzy
-#| msgid "Note that both fields may be case-sensitive."
-msgid "Note that the password field may be case-sensitive."
-msgstr "Let op: beide velden kunnen hoofdlettergevoelig zijn."
+#| msgid "Invalid login."
+msgid "Invalid email."
+msgstr "Ongeldige login."
 
 #: core/templates/profile.html:29
 msgid "Name"
@@ -470,19 +475,31 @@ msgstr "Naam"
 msgid "Government"
 msgstr "Overheid"
 
-#: core/templates/profile.html:40
-msgid "Password (for verification user's identity)"
-msgstr "Wachtwoord (om uw identiteit te controleren)"
+#: core/templates/profile.html:45
+msgid "Please check your inbox to validate the change."
+msgstr "Controleer uw e-mail om uw account te valideren."
 
-#: core/templates/profile.html:49
+#: core/templates/profile.html:46
+msgid "Click "
+msgstr "Klik "
+
+#: core/templates/profile.html:46
+msgid "here"
+msgstr "hier"
+
+#: core/templates/profile.html:46
+msgid "to resend the confirmation e-mail."
+msgstr "om de bevestigingsmail nogmaals te ontvangen."
+
+#: core/templates/profile.html:51
 msgid "Save"
 msgstr "Opslaan"
 
-#: core/templates/profile.html:67
+#: core/templates/profile.html:69
 msgid "Choose an avatar"
 msgstr "Kies een avatar"
 
-#: core/templates/profile.html:70
+#: core/templates/profile.html:72
 msgid "Remove avatar"
 msgstr "Verwijder avatar"
 
@@ -793,7 +810,11 @@ msgstr ""
 "Twee-factor-authenticatie is niet geactiveerd voor uw account. Activeer twee-"
 "factor-authenticatie voor een betere beveiliging."
 
-#: core/views.py:142
+#: core/views.py:112
+msgid "There is a pending change of your email to "
+msgstr "Na uw bevestiging wordt uw e-mailadres veranderd in "
+
+#: core/views.py:167
 msgid "The Password has been changed successfully."
 msgstr "Je wachtwoord is succesvol veranderd."
 
@@ -808,6 +829,19 @@ msgstr "Nederlands"
 #: pleio_account/settings.py:132
 msgid "French"
 msgstr "Frans"
+
+#, fuzzy
+#~| msgid "Please enter a correct email and password."
+#~ msgid "Please enter a valid password."
+#~ msgstr "Voer een correct e-mailadres en wachtwoord in."
+
+#, fuzzy
+#~| msgid "Note that both fields may be case-sensitive."
+#~ msgid "Note that the password field may be case-sensitive."
+#~ msgstr "Let op: beide velden kunnen hoofdlettergevoelig zijn."
+
+#~ msgid "Password (for verification user's identity)"
+#~ msgstr "Wachtwoord (om uw identiteit te controleren)"
 
 #~ msgid "Login failed. Please check Google captcha."
 #~ msgstr "Login mislukt. Ongeldige Google captcha waarde."

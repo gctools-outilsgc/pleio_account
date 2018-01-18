@@ -52,6 +52,7 @@ class User(AbstractBaseUser):
     accepted_terms = models.BooleanField(default=False)
     receives_newsletter = models.BooleanField(default=False)
     avatar = models.ImageField(upload_to=unique_filepath, null=True, blank=True)
+    new_email = models.CharField(max_length=255, null=True, default=None)
 
     is_active = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
@@ -93,7 +94,11 @@ class User(AbstractBaseUser):
         return self.name
 
     def email_user(self, subject, message, **kwargs):
-        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [self.email], **kwargs)
+        email = kwargs.pop('email')
+        if not email:
+            email = self.email
+        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [email], **kwargs)
+        
 
     def send_activation_token(self):
         template_context = {
@@ -106,6 +111,20 @@ class User(AbstractBaseUser):
             render_to_string('emails/register.txt', template_context),
             html_message = (render_to_string('emails/register.html', template_context)),
             fail_silently = True
+        )
+
+    def send_change_email_activation_token(self):
+        template_context = {
+            'user': self,
+            'activation_token': signing.dumps(obj=self.new_email),
+        }
+ 
+        self.email_user(
+            render_to_string('emails/change_email_subject.txt', template_context),
+            render_to_string('emails/change_email.txt', template_context),
+            html_message = (render_to_string('emails/change_email.html', template_context)),
+            fail_silently = True,
+            email=self.new_email
         )
 
     def activate_user(self, activation_token):
@@ -124,6 +143,27 @@ class User(AbstractBaseUser):
                 return None
 
             self.is_active = True
+            self.save()
+
+            return self
+
+        except (signing.BadSignature, User.DoesNotExist):
+            return None
+
+    def change_email(self, activation_token):
+        try:
+            email = signing.loads(
+                activation_token,
+                max_age=settings.ACCOUNT_ACTIVATION_DAYS * 86400
+            )
+
+            if email is None:
+                return None
+
+            self = User.objects.get(new_email=email)
+
+            self.email = self.new_email
+            self.new_email = None
             self.save()
 
             return self

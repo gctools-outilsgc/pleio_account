@@ -1,0 +1,12 @@
+{% extends "emails/base.html" %}
+{% load i18n %}
+{% load absolute_url %}
+{% url 'change_email_activate' activation_token as activation_token_url %}
+
+{% block content %}
+    {% trans "Dear" %} {{ user.name }},<br />
+    <br />
+    {% trans "Please verify your new email address by following this link" %}:<br />
+    <br />
+    <a href="{% absolute_url activation_token_url %}">{% absolute_url activation_token_url %}</a><br />
+{% endblock %}

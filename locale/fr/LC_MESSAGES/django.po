@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-16 16:52+0100\n"
+"POT-Creation-Date: 2018-01-18 17:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,20 +22,24 @@ msgstr ""
 msgid "Your email address is not allowed."
 msgstr ""
 
-#: core/forms.py:32 core/forms.py:215
+#: core/forms.py:32 core/forms.py:231
 msgid "The two password fields didn't match."
 msgstr ""
 
-#: core/forms.py:75 core/forms.py:214
-msgid "The password is invalid."
+#: core/forms.py:75
+msgid "This email is already registered."
 msgstr ""
 
-#: core/forms.py:171 core/forms.py:200 core/forms.py:205
+#: core/forms.py:187 core/forms.py:216 core/forms.py:221
 msgid "Token"
 msgstr ""
 
-#: core/forms.py:193
+#: core/forms.py:209
 msgid "Please enter your OTP token."
+msgstr ""
+
+#: core/forms.py:230
+msgid "The password is invalid."
 msgstr ""
 
 #: core/login_session_helpers.py:9
@@ -181,7 +185,7 @@ msgstr ""
 msgid "Your details"
 msgstr ""
 
-#: core/templates/base_account.html:52 core/templates/profile.html:54
+#: core/templates/base_account.html:52 core/templates/profile.html:56
 msgid "Avatar"
 msgstr ""
 
@@ -208,12 +212,23 @@ msgstr ""
 msgid "Logout"
 msgstr ""
 
+#: core/templates/emails/change_email.html:7
+#: core/templates/emails/change_email.txt:3
 #: core/templates/emails/register.html:7 core/templates/emails/register.txt:3
 #: core/templates/emails/reset_password.html:5
 #: core/templates/emails/reset_password.txt:2
 #: core/templates/emails/suspicious_login.html:5
 #: core/templates/emails/suspicious_login.txt:3
 msgid "Dear"
+msgstr ""
+
+#: core/templates/emails/change_email.html:9
+#: core/templates/emails/change_email.txt:5
+msgid "Please verify your new email address by following this link"
+msgstr ""
+
+#: core/templates/emails/change_email_subject.txt:1
+msgid "Please verify your new email address"
 msgstr ""
 
 #: core/templates/emails/register.html:9 core/templates/emails/register.txt:5
@@ -431,11 +446,7 @@ msgid "Profile"
 msgstr ""
 
 #: core/templates/profile.html:20
-msgid "Please enter a valid password."
-msgstr ""
-
-#: core/templates/profile.html:21
-msgid "Note that the password field may be case-sensitive."
+msgid "Invalid email."
 msgstr ""
 
 #: core/templates/profile.html:29
@@ -446,19 +457,31 @@ msgstr ""
 msgid "Government"
 msgstr ""
 
-#: core/templates/profile.html:40
-msgid "Password (for verification user's identity)"
+#: core/templates/profile.html:45
+msgid "Please check your inbox to validate the change."
 msgstr ""
 
-#: core/templates/profile.html:49
+#: core/templates/profile.html:46
+msgid "Click "
+msgstr ""
+
+#: core/templates/profile.html:46
+msgid "here"
+msgstr ""
+
+#: core/templates/profile.html:46
+msgid "to resend the confirmation e-mail."
+msgstr ""
+
+#: core/templates/profile.html:51
 msgid "Save"
 msgstr ""
 
-#: core/templates/profile.html:67
+#: core/templates/profile.html:69
 msgid "Choose an avatar"
 msgstr ""
 
-#: core/templates/profile.html:70
+#: core/templates/profile.html:72
 msgid "Remove avatar"
 msgstr ""
 
@@ -734,7 +757,11 @@ msgid ""
 "                    security."
 msgstr ""
 
-#: core/views.py:142
+#: core/views.py:112
+msgid "There is a pending change of your email to "
+msgstr ""
+
+#: core/views.py:167
 msgid "The Password has been changed successfully."
 msgstr ""
 

@@ -79,16 +79,41 @@ def register_activate(request, activation_token=None):
     return render(request, 'register_activate.html')
 
 
+def change_email(request):
+    #user = User.objects.get(email=data['email'])
+    user = request.user
+    user.send_change_email_activation_token()
+
+    return redirect('profile')
+
+def change_email_activate(request, activation_token=None):
+    user = User.change_email(None, activation_token)
+
+    return redirect('profile')
+
 @login_required
 def profile(request):
     if request.method == 'POST':
+        new_email_save = request.user.new_email
         form = UserProfileForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
+            data = form.cleaned_data
+            new_email = data['new_email']
             user = form.save()
+            user.new_email = new_email
+            user.save()
+            if new_email and (new_email != new_email_save):
+                change_email(request)
+            form = UserProfileForm(instance=request.user)
     else:
         form = UserProfileForm(instance=request.user)
 
-    return render(request, 'profile.html', {'form': form})
+    if request.user.new_email:
+        text_change_pending = _('There is a pending change of your email to ')
+    else:
+        text_change_pending = None
+
+    return render(request, 'profile.html', {'form': form, 'text_change_pending': text_change_pending, 'text_email': request.user.new_email})
 
 
 def avatar(request):
