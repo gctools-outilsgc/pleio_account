@@ -113,7 +113,6 @@ class UserProfileForm(forms.ModelForm):
         super(UserProfileForm, self).clean()
 
         self.cleaned_data['new_email'] = self.clean_new_email()
-        data = self.cleaned_data
 
 
 class PleioAuthenticationForm(AuthenticationForm):

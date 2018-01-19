@@ -89,6 +89,9 @@ def change_email(request):
 def change_email_activate(request, activation_token=None):
     user = User.change_email(None, activation_token)
 
+    if user:
+        messages.success(request, _('The email adress has been changed successfully.'))
+
     return redirect('profile')
 
 @login_required

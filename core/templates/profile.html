@@ -7,7 +7,17 @@
 {% block content %}
     <h2>{% trans "Profile" %}</h2>
     
-    <form enctype="multipart/form-data" method="post" action=".">
+    {% if messages %}
+        <ul class="message_success">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                {% if 'safe' in message.tags %}{{ message|safe }}{% else %}{{ message }}{% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+        <form enctype="multipart/form-data" method="post" action=".">
         <div class="account__cards">
             <div class="card ___nopadding">
                 {% csrf_token %}
@@ -17,13 +27,13 @@
                     {% for error in form.non_field_errors %}
                         <li>
                         {% include_asset "icons/account-alert.svg" %}
-                        <div class="textcolor_primary">{% trans "Invalid email." %}</div>
+                        <div class="textcolor_primary">{% trans "Invalid email address." %}</div>
                         <div class="textcolor_secondary">{{ error }}</div>
                         </li>
                     {% endfor %}
                 </ul>
                 <p></p><p></p>
-    l
+    
                 <fieldset class="___addpadding-side">
                     <div class="input-field">
                         <label for="id_name">{% trans "Name" %}</label>
@@ -35,9 +45,6 @@
                         {{ form.errors.email }}
                         {{ form.email }}
                         <span class="badge green __uppercase">{% include_asset "icons/check.svg" %}{% trans "Government" %}</span>
-                    </div>
-                    <div>
-                            <input type="hidden" name="new_email" id="id_new_email" maxlength="255" />
                     </div>
                     {% if text_change_pending %}
                         <div>

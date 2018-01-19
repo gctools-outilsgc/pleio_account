@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-18 17:10+0100\n"
+"POT-Creation-Date: 2018-01-19 11:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -181,11 +181,11 @@ msgstr ""
 msgid "Profiel"
 msgstr ""
 
-#: core/templates/base_account.html:52 core/templates/profile.html:14
+#: core/templates/base_account.html:52 core/templates/profile.html:24
 msgid "Your details"
 msgstr ""
 
-#: core/templates/base_account.html:52 core/templates/profile.html:56
+#: core/templates/base_account.html:52 core/templates/profile.html:66
 msgid "Avatar"
 msgstr ""
 
@@ -403,7 +403,7 @@ msgstr ""
 msgid "Need help?"
 msgstr ""
 
-#: core/templates/password_reset.html:42 core/templates/profile.html:34
+#: core/templates/password_reset.html:42 core/templates/profile.html:44
 #: core/templates/register.html:42
 msgid "Email"
 msgstr ""
@@ -445,43 +445,43 @@ msgstr ""
 msgid "Profile"
 msgstr ""
 
-#: core/templates/profile.html:20
-msgid "Invalid email."
+#: core/templates/profile.html:30
+msgid "Invalid email address."
 msgstr ""
 
-#: core/templates/profile.html:29
+#: core/templates/profile.html:39
 msgid "Name"
 msgstr ""
 
-#: core/templates/profile.html:37
+#: core/templates/profile.html:47
 msgid "Government"
 msgstr ""
 
-#: core/templates/profile.html:45
+#: core/templates/profile.html:55
 msgid "Please check your inbox to validate the change."
 msgstr ""
 
-#: core/templates/profile.html:46
+#: core/templates/profile.html:56
 msgid "Click "
 msgstr ""
 
-#: core/templates/profile.html:46
+#: core/templates/profile.html:56
 msgid "here"
 msgstr ""
 
-#: core/templates/profile.html:46
+#: core/templates/profile.html:56
 msgid "to resend the confirmation e-mail."
 msgstr ""
 
-#: core/templates/profile.html:51
+#: core/templates/profile.html:61
 msgid "Save"
 msgstr ""
 
-#: core/templates/profile.html:69
+#: core/templates/profile.html:79
 msgid "Choose an avatar"
 msgstr ""
 
-#: core/templates/profile.html:72
+#: core/templates/profile.html:82
 msgid "Remove avatar"
 msgstr ""
 
@@ -757,11 +757,15 @@ msgid ""
 "                    security."
 msgstr ""
 
-#: core/views.py:112
+#: core/views.py:93
+msgid "The email adress has been changed successfully."
+msgstr ""
+
+#: core/views.py:115
 msgid "There is a pending change of your email to "
 msgstr ""
 
-#: core/views.py:167
+#: core/views.py:170
 msgid "The Password has been changed successfully."
 msgstr ""
 

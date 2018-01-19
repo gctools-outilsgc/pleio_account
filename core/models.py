@@ -94,9 +94,11 @@ class User(AbstractBaseUser):
         return self.name
 
     def email_user(self, subject, message, **kwargs):
-        email = kwargs.pop('email')
-        if not email:
+        try:
+            email = kwargs.pop('email')
+        except:
             email = self.email
+            
         send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [email], **kwargs)
         
 
