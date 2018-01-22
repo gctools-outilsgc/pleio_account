@@ -3,6 +3,7 @@
 {% load Pleio_templatetags %}
 {% load app_customization %}
 {% get_current_language as LANGUAGE_CODE %}
+{% load app_customization %}
 
 {% language request.COOKIES.lang %}
 <!DOCTYPE html>
@@ -10,7 +11,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Pleio</title>
+        <title>{% block page_title %}{% endblock %}</title>
         <meta name="viewport" content="width=device-width,height=device-height,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
         <link href="//fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
         <link rel="icon" href="{% show_customizations_favicon %}">
@@ -21,6 +22,7 @@
     <body>
         <div class="account-overlay ___profile">
             <div class="account-menu">
+              <div class="account-menu-container ui sticky">
                 <input type="checkbox" id="show_menu" />
                 <div class="account__top-bar">
                     {% comment 'removing for now' %}
@@ -35,7 +37,7 @@
 
 
                 <div class="account-menu__header">
-                     <h2 class="textcolor_primary ui header medium"><div class="content">{% trans "Welcome" %}, {{request.user.name}}<div class="sub header">{% trans "in your Pleio account" %}</div></div></h2>
+                     <div class="textcolor_primary ui header welcome-header">{% trans "Welcome" %}, {{request.user.name}}<div class="sub header">{% trans "in your Pleio account" %}</div></div>
 
 		     {% if request.user.avatar %}
                      <img src="/media/{{ request.user.avatar }}" class="account-menu__avatar" />
@@ -68,7 +70,7 @@
                             {% include_asset "icons/security.svg" %}
                             <div>
                                 <div class="title">{% trans "Security" %}</div>
-				<div>{% trans "Password" %}, {% trans "Sessions" %}, {% trans "Two-factor authentication" %}</div>
+				                        <div>{% trans "Password" %}, {% trans "Sessions" %}, {% trans "Two-factor authentication" %}</div>
                             </div>
                         </a>
                     </li>
@@ -82,15 +84,18 @@
                     </li>
                 </ul>
                 <div style='position:fixed; bottom:0; text-align:center; padding-left:5%'>
-                    {% include "language.html" %} 
+                    {% include "language.html" %}
                 </div>
+              </div>
             </div>
 
-            <div class="account-right">
+            <div class="account-right" id="account-content">
                 {% if request.COOKIES.partner_site_url %}
                     <a href={{ request.COOKIES.partner_site_url }} class="button ___white ___outline account__close">{{ request.COOKIES.partner_site_name }}</a>
                 {% endif %}
-
+                <div class="page-heading ui sticky">
+                  <h1 class="ui large header">{% block page_header %}{% endblock %}</h1>
+                </div>
                 <div class="account-right__content">
                     {% block content %}{% endblock %}
                 </div>
@@ -98,6 +103,11 @@
         </div>
 
 	<style>
+
+.page-heading {
+  background-color: #{% show_customizations_color %};
+}
+
 #show_menu {
 display:none;
 }
@@ -106,9 +116,6 @@ padding-top:2rem;
 }
 .navigation__logo svg {
 height:2.5rem;
-}
-.account__top-bar {
-padding: 1.5rem 1.5rem;
 }
 .account-menu__hamburger {
 float:right;
@@ -122,9 +129,6 @@ display:none;
 .account-menu__hamburger:hover {
 fill: #1565c0;
 cursor:pointer;
-}
-.account__top-bar {
-padding-bottom:2rem;
 }
 body {
 background: #FAFAFA;
@@ -156,6 +160,7 @@ padding: 0 1.5rem 1rem;
 }
 .account-menu__header .header {
 flex: 1 1 auto;
+padding-top:.6em;
 }
 .account-menu__avatar {
 border-radius:50%;
@@ -214,12 +219,9 @@ flex: 1 1 auto;
 .account-right {
 flex: 1 1 auto;
 order: 2;
-padding-left: 3em;
-padding-right: 3em;
-padding-top: 3rem;
 }
 .account-right__content {
-padding-top: 2rem;
+padding: 1em 3em 3em;
 }
 .account-user__avatar {
 width:7rem;
@@ -247,6 +249,7 @@ flex: 1 0 auto;
 max-width: none;
 min-height:0;
 width:100%;
+box-shadow: none;
 }
 .account-menu__hamburger {
 display:block;
@@ -285,4 +288,3 @@ width:100%;
 </html>
 
 {% endlanguage %}
-

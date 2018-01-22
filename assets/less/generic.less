@@ -1,9 +1,28 @@
 @media (max-width: 1023px) {
     .account-overlay.___profile #show_menu:checked  ~ .account-menu__list {
-	display:block;
+	     display:block;
+       position:absolute;
+       z-index:899;
+       width:100%;
+       background: #FEFEFE;
+       box-shadow: 0 0 1em rgba(0, 0, 0, 0.15), 0 0 1em rgba(0, 0, 0, 0.15);
     }
     .account-overlay.___profile #show_menu:not(:checked) ~ .account-menu__list {
         display: none;
+    }
+
+    .account-menu-container {
+          box-shadow: 0 0 1em rgba(0, 0, 0, 0.15), 0 0 1em rgba(0, 0, 0, 0.15);
+    }
+    .account__top-bar {
+      background:#fefefe;
+      z-index:900;
+      position:relative;
+      padding: .75rem 1.5rem !important;
+    }
+
+    .stick-offset {
+      margin-top:60px !important;
     }
 }
 
@@ -20,6 +39,22 @@
   z-index:-1;
 }
 
+.account-menu-container {
+  background: #FEFEFE;
+}
+
+.account__top-bar {
+    padding: 1.5rem 1.5rem;
+}
+
+.page-heading {
+  width:100%;
+  padding: 1em 2em;
+}
+
+.page-heading h1 {
+  color: white !important;
+}
 
 .errorlist {
   list-style:none;
@@ -54,4 +89,13 @@
 .capslock {
   font-weight: bold;
   color:#e00;
+}
+
+ul.horizontal.list {
+  padding:0;
+}
+
+ul.horizontal.list li {
+  display:inline-block;
+  margin:3px;
 }

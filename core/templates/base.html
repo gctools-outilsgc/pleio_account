@@ -23,9 +23,9 @@
             {% if request.COOKIES.partner_site_url %}
                 <div class="account-theme" data-bg="{{ request.COOKIES.partner_site_logo_url }}">
             {% else %}
-                <div class="account-theme">                    
+                <div class="account-theme">
             {% endif %}
-                
+
                 {% if request.COOKIES.partner_site_url %}
                     <a href={{ request.COOKIES.partner_site_url }} class="button ___white ___outline account__close">{{ request.COOKIES.partner_site_name }}</a>
                 {% endif %}
@@ -34,19 +34,22 @@
             <div class="account">
                 <div class="account__top-bar">
                     <img alt ="Graphic Element" src="{% show_customizations_logo %}" class="ui top aligned mini image">
-                    <span class="ui huge header">                       
+                    <span class="ui huge header">
                         {% show_customizations_title %}
                     </span>
                     {% comment 'removing for now' %}
                     <a class="navigation__logo" title="{% trans "Back to the homepage" %}" href="https://www.pleio.nl/">{% include_asset "images/logo.svg" %}</a>
                     {% endcomment %}
-                    
+
                 </div>
 
                 <div class="ui grid">
                     <div class="ui centered raised card">
                         <div class="content">
                             {% block content %}{% endblock %}
+                            <div style='position:fixed; bottom:0; text-align:center'>
+                                {% include "language.html" %}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -79,22 +82,6 @@ padding-bottom:2rem;
 .field {
 position:relative;
 }
-.password__toggle {
-position: absolute;
-right:0;
-top:1.2rem;
-padding: 0.8rem 0.8rem 0.6rem;
-cursor:pointer;
-}
-.password__toggle svg{
-width:2rem;
-height:2rem;
-fill:#b4b4b4;
-transtition:fill 0.2s cubic-bexier(0.4, 0, 0.2, 1);
-}
-.password__toggle svg:hover {
-fill:#757575;
-}
 
 .ui.primary.button, .ui.primary.button:active{
     background-color: #{% show_customizations_color %};
@@ -119,3 +106,5 @@ fill:#757575;
 	<script src="/static/semantic/dist/semantic.min.js"></script>
     </body>
 </html>
+
+{% endlanguage %}

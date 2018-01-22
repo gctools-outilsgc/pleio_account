@@ -67,13 +67,15 @@ class UserProfileForm(forms.ModelForm):
         model = User
         fields = ('name', 'email', 'avatar')
 
+class LabelledLoginForm(AuthenticationForm):
+        username = forms.CharField(required=True, max_length=254, widget=forms.TextInput(attrs={'id':"id_auth-username", 'aria-labelledby':"error_login"}))
 
 class PleioAuthenticationForm(AuthenticationForm):
     error_messages = {
         'captcha_mismatch': 'captcha_mismatch',
     }
 
-    username = forms.CharField(required=True, max_length=254, widget=forms.TextInput(attrs={'id':"id_auth-username"}))
+    username = forms.CharField(required=True, max_length=254, widget=forms.TextInput(attrs={'id':"id_auth-username", 'aria-labelledby':"error_login"}))
 
     def __init__(self, *args, **kwargs):
         super(PleioAuthenticationForm, self).__init__(*args, **kwargs)
@@ -86,7 +88,6 @@ class PleioAuthenticationForm(AuthenticationForm):
                 self.error_messages['captcha_mismatch'],
                 code='captcha_mismatch',
             )
-
 
 class PleioAuthenticationTokenForm(AuthenticationTokenForm):
     otp_token = forms.IntegerField(label=_("Token"), widget=forms.TextInput)
