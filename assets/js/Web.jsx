@@ -35,7 +35,16 @@ $(document).ready(function() {
         $('.account-theme').css('background-image','url(' + theme_bg + ')');
     }
 
-    $('.ui.sticky').sticky({
+    $('.account-menu-container.ui.sticky').sticky({
     context: '#account-content'
+    });
+    $('.page-heading.ui.sticky').sticky({
+    context:'.account-right__content',
+    onStick: function(){
+      $('.page-heading').css('box-shadow', '0 0 1em rgba(0, 0, 0, 0.15), 0 0 1em rgba(0, 0, 0, 0.15)').css('z-index', '700').addClass('stick-offset');
+    },
+    onUnstick: function(){
+      $('.page-heading').css('box-shadow', 'none').removeClass('stick-offset');
+    }
     });
 });
