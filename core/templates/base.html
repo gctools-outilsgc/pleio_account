@@ -4,7 +4,6 @@
 {% load app_customization %}
 {% get_current_language as LANGUAGE_CODE %}
 
-{% language request.COOKIES.lang %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
     <head>
@@ -18,10 +17,9 @@
         <script src='https://www.google.com/recaptcha/api.js'></script>
 	<link rel="stylesheet" type="text/css" href="/static/semantic/dist/semantic.min.css">
     </head>
-
     <body>
         <div class="account-overlay  ui container">
-
+            
             {% if request.COOKIES.partner_site_url %}
                 <div class="account-theme" data-bg="{{ request.COOKIES.partner_site_logo_url }}">
             {% else %}
@@ -32,10 +30,11 @@
                     <a href={{ request.COOKIES.partner_site_url }} class="button ___white ___outline account__close">{{ request.COOKIES.partner_site_name }}</a>
                 {% endif %}
             </div>
+             
             <div class="account">
                 <div class="account__top-bar">
                     <img alt ="Graphic Element" src="{% show_customizations_logo %}" class="ui top aligned mini image">
-                    <span class="ui huge header">                        
+                    <span class="ui huge header">                       
                         {% show_customizations_title %}
                     </span>
                     {% comment 'removing for now' %}
@@ -47,11 +46,7 @@
                 <div class="ui grid">
                     <div class="ui centered raised card">
                         <div class="content">
-
                             {% block content %}{% endblock %}
-                            <div style='position:fixed; bottom:0; text-align:center'>
-                                {% include "language.html" %} 
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -123,7 +118,4 @@ fill:#757575;
 	  crossorigin="anonymous"></script>
 	<script src="/static/semantic/dist/semantic.min.js"></script>
     </body>
-</html>        
-
-{% endlanguage %}
-
+</html>
