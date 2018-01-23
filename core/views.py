@@ -90,7 +90,7 @@ def change_email_activate(request, activation_token=None):
     user = User.change_email(None, activation_token)
 
     if user:
-        messages.success(request, _('The email adress has been changed successfully.'))
+        messages.success(request, _('Email address changed'), extra_tags='email')
 
     return redirect('profile')
 
@@ -167,7 +167,7 @@ def change_password_form(request, page_action):
             user.set_password(data['new_password2'])
             user.save()
             update_session_auth_hash(request, user)
-            messages.success(request, _('The Password has been changed successfully.'))
+            messages.success(request, _('Password changed'), extra_tags='password')
     else:
         form = ChangePasswordForm()
 

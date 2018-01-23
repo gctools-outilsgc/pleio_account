@@ -10,3 +10,4 @@ webpack-stats-prod.json
 media/
 .idea/
 pleio_account/config.py
+.vscode/

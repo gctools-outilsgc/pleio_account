@@ -8,10 +8,16 @@
     <h2>{% trans "Profile" %}</h2>
     
     {% if messages %}
-        <ul class="message_success">
+        <ul class="messages correct">
             {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
-                {% if 'safe' in message.tags %}{{ message|safe }}{% else %}{{ message }}{% endif %}
+            <li>
+                {% include_asset "icons/check.svg" %}
+                {% if 'email' in message.tags %}
+                    <div class="textcolor_primary">{% trans "Email address changed" %}</div>
+                    <div class="textcolor_secondary">{% trans "You can now login using your new email adress" %}</div>
+                {% else %}
+                    <div class="textcolor_secondary">{{ message }}</div>
+                {% endif %}
             </li>
             {% endfor %}
         </ul>

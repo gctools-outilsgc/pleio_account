@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-19 11:01+0100\n"
+"POT-Creation-Date: 2018-01-23 11:27+0100\n"
 "PO-Revision-Date: 2017-12-15 16:48+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "Your email address is not allowed."
 msgstr "Dit e-mailadres is niet geldig."
 
-#: core/forms.py:32 core/forms.py:231
+#: core/forms.py:32 core/forms.py:230
 msgid "The two password fields didn't match."
 msgstr "De twee wachtwoorden komen niet overeen."
 
@@ -30,17 +30,17 @@ msgstr "De twee wachtwoorden komen niet overeen."
 msgid "This email is already registered."
 msgstr "Dit e-mailadres is al geregistreerd"
 
-#: core/forms.py:187 core/forms.py:216 core/forms.py:221
+#: core/forms.py:186 core/forms.py:215 core/forms.py:220
 msgid "Token"
 msgstr "Token"
 
-#: core/forms.py:209
+#: core/forms.py:208
 #, fuzzy
 #| msgid "Please activate your account"
 msgid "Please enter your OTP token."
 msgstr "Activeer je account"
 
-#: core/forms.py:230
+#: core/forms.py:229
 msgid "The password is invalid."
 msgstr "Het wachtwoord is ongeldig."
 
@@ -188,11 +188,11 @@ msgstr "in je Pleio-account"
 msgid "Profiel"
 msgstr "Profiel"
 
-#: core/templates/base_account.html:52 core/templates/profile.html:24
+#: core/templates/base_account.html:52 core/templates/profile.html:30
 msgid "Your details"
 msgstr "Je gegevens"
 
-#: core/templates/base_account.html:52 core/templates/profile.html:66
+#: core/templates/base_account.html:52 core/templates/profile.html:69
 msgid "Avatar"
 msgstr "Profielfoto"
 
@@ -417,7 +417,7 @@ msgstr "Herstel wachtwoord"
 msgid "Need help?"
 msgstr "Hulp nodig?"
 
-#: core/templates/password_reset.html:42 core/templates/profile.html:44
+#: core/templates/password_reset.html:42 core/templates/profile.html:50
 #: core/templates/register.html:42
 msgid "Email"
 msgstr "E-mail"
@@ -461,43 +461,51 @@ msgstr ""
 msgid "Profile"
 msgstr "Profiel"
 
-#: core/templates/profile.html:30
+#: core/templates/profile.html:16 core/views.py:93
+msgid "Email address changed"
+msgstr "E-mailadres gewijzigd"
+
+#: core/templates/profile.html:17
+msgid "You can now login using your new email adress"
+msgstr "Je kan nu inloggen met je nieuwe e-mailadres."
+
+#: core/templates/profile.html:36
 msgid "Invalid email address."
 msgstr "Ongeldig e-mailadres."
 
-#: core/templates/profile.html:39
+#: core/templates/profile.html:45
 msgid "Name"
 msgstr "Naam"
 
-#: core/templates/profile.html:47
+#: core/templates/profile.html:53
 msgid "Government"
 msgstr "Overheid"
 
-#: core/templates/profile.html:55
+#: core/templates/profile.html:58
 msgid "Please check your inbox to validate the change."
 msgstr "Controleer je e-mail om je wijziging te bevestigen."
 
-#: core/templates/profile.html:56
+#: core/templates/profile.html:59
 msgid "Click "
 msgstr "Klik "
 
-#: core/templates/profile.html:56
+#: core/templates/profile.html:59
 msgid "here"
 msgstr "hier"
 
-#: core/templates/profile.html:56
+#: core/templates/profile.html:59
 msgid "to resend the confirmation e-mail."
 msgstr "om de bevestigingsmail nogmaals te ontvangen."
 
-#: core/templates/profile.html:61
+#: core/templates/profile.html:64
 msgid "Save"
 msgstr "Opslaan"
 
-#: core/templates/profile.html:79
+#: core/templates/profile.html:82
 msgid "Choose an avatar"
 msgstr "Kies een avatar"
 
-#: core/templates/profile.html:82
+#: core/templates/profile.html:85
 msgid "Remove avatar"
 msgstr "Verwijder avatar"
 
@@ -547,6 +555,14 @@ msgid ""
 msgstr ""
 "Klik op de link in de Pleio verificatie e-mail om je registratie te "
 "voltooien."
+
+#: core/templates/security_pages.html:26 core/views.py:170
+msgid "Password changed"
+msgstr "Wachtwoord gewijzigd"
+
+#: core/templates/security_pages.html:27
+msgid "You can now login using your new password"
+msgstr "Je kan nu inloggen met je nieuwe wachtwoord."
 
 #: core/templates/security_pages/change_password.html:23
 msgid "Current Password"
@@ -769,8 +785,8 @@ msgid ""
 "If you don't have any device with you, you can access\n"
 "                your account using backup tokens."
 msgstr ""
-"Als je geen codegenerator bij je hebt kan je backupcodes gebruiken om in "
-"te loggen."
+"Als je geen codegenerator bij je hebt kan je backupcodes gebruiken om in te "
+"loggen."
 
 #: core/templates/tf_profile.html:15
 #, python-format
@@ -808,17 +824,9 @@ msgstr ""
 "Twee-factor-authenticatie is niet geactiveerd voor je account. Activeer twee-"
 "factor-authenticatie voor een betere beveiliging."
 
-#: core/views.py:93
-msgid "The email adress has been changed successfully."
-msgstr "Je e-mailadres is succesvol veranderd."
-
 #: core/views.py:115
 msgid "There is a pending change of your email to "
 msgstr "Na bevestiging word je e-mailadres veranderd in "
-
-#: core/views.py:170
-msgid "The Password has been changed successfully."
-msgstr "Je wachtwoord is succesvol veranderd."
 
 #: pleio_account/settings.py:130
 msgid "English"
@@ -831,6 +839,12 @@ msgstr "Nederlands"
 #: pleio_account/settings.py:132
 msgid "French"
 msgstr "Frans"
+
+#~ msgid "The email adress has been changed successfully."
+#~ msgstr "Je e-mailadres is succesvol veranderd."
+
+#~ msgid "The Password has been changed successfully."
+#~ msgstr "Je wachtwoord is succesvol veranderd."
 
 #, fuzzy
 #~| msgid "Please enter a correct email and password."

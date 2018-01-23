@@ -24,10 +24,10 @@
                     {% if error == 'captcha_mismatch' %}
                         <div class="textcolor_primary">{% trans "Login failed." %}</div>
                         <div class="textcolor_secondary">{% trans "Please check Google captcha." %}</div>
-                        {% elif error == 'invalid_login' %}
+                    {% elif error == 'invalid_login' %}
                         <div class="textcolor_primary">{% trans "Please enter a correct email and password." %}</div>
                         <div class="textcolor_secondary">{% trans "Note that both fields may be case-sensitive." %}</div>
-                        {% elif error == 'inactive' %}
+                    {% elif error == 'inactive' %}
                         <div class="textcolor_primary">{% trans "This account is inactive." %}</div>
                         <div class="textcolor_secondary">{% trans "Please check your email to validate your account." %}</div>
                     {% else %}

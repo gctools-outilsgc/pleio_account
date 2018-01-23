@@ -11,6 +11,8 @@ from django_otp import devices_for_user
 from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 from django.utils.timezone import now
+from django.utils.http import is_safe_url, urlsafe_base64_decode
+from django.conf import settings
 from django.contrib.auth.forms import AuthenticationForm, UsernameField
 from django.contrib import messages
 from django.core.exceptions import ValidationError
@@ -18,6 +20,7 @@ from django.views.generic import TemplateView
 from django.contrib.auth import login as auth_login
 from two_factor.utils import default_device
 import django_otp
+from urllib.parse import urlparse
 
 class PleioLoginView(TemplateView):
 
@@ -26,12 +29,16 @@ class PleioLoginView(TemplateView):
         next = self.request.GET.get('next')
         if next:
             context['next'] = next
-        
+       
         self.set_partner_site_info()
 
         return context
 
     def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        next = context.get('next')
+        if not is_safe_url(next):
+            next = ''
         login_step = kwargs.get('login_step')
         if login_step:
             request.session['login_step'] = login_step
@@ -54,7 +61,8 @@ class PleioLoginView(TemplateView):
         return render(request, 'login.html', { 
                     'form' : form, 
                     'login_step' : login_step,
-                    'reCAPTCHA' : EventLog.reCAPTCHA_needed(request) 
+                    'reCAPTCHA' : EventLog.reCAPTCHA_needed(request),
+                    'next' : next 
                     })
 
     def post(self, request, *args, **kwargs):
@@ -74,6 +82,9 @@ class PleioLoginView(TemplateView):
         return response
             
     def post_login(self, request, *args, **kwargs):
+        next = request.POST.get('next')
+        if not is_safe_url(next):
+            next = settings.LOGIN_REDIRECT_URL
         form = PleioAuthenticationForm(request=request, data=request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
@@ -82,7 +93,7 @@ class PleioLoginView(TemplateView):
             device = default_device(user)
             if not device:
                 auth_login(request, user)
-                return redirect('/profile')
+                return redirect(next)
             else:
                 request.session['login_step'] = 'token'
                 form = PleioAuthenticationTokenForm(user, request)
@@ -101,7 +112,8 @@ class PleioLoginView(TemplateView):
         return render(request, 'login.html', {
             'form' : form, 
             'login_step' : request.session.get('login_step'),
-            'reCAPTCHA' : EventLog.reCAPTCHA_needed(request) 
+            'reCAPTCHA' : EventLog.reCAPTCHA_needed(request), 
+            'next' : next 
             }
         )
 

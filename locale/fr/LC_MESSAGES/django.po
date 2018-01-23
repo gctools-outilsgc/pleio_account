@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-19 11:01+0100\n"
+"POT-Creation-Date: 2018-01-23 11:27+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "Your email address is not allowed."
 msgstr ""
 
-#: core/forms.py:32 core/forms.py:231
+#: core/forms.py:32 core/forms.py:230
 msgid "The two password fields didn't match."
 msgstr ""
 
@@ -30,15 +30,15 @@ msgstr ""
 msgid "This email is already registered."
 msgstr ""
 
-#: core/forms.py:187 core/forms.py:216 core/forms.py:221
+#: core/forms.py:186 core/forms.py:215 core/forms.py:220
 msgid "Token"
 msgstr ""
 
-#: core/forms.py:209
+#: core/forms.py:208
 msgid "Please enter your OTP token."
 msgstr ""
 
-#: core/forms.py:230
+#: core/forms.py:229
 msgid "The password is invalid."
 msgstr ""
 
@@ -181,11 +181,11 @@ msgstr ""
 msgid "Profiel"
 msgstr ""
 
-#: core/templates/base_account.html:52 core/templates/profile.html:24
+#: core/templates/base_account.html:52 core/templates/profile.html:30
 msgid "Your details"
 msgstr ""
 
-#: core/templates/base_account.html:52 core/templates/profile.html:66
+#: core/templates/base_account.html:52 core/templates/profile.html:69
 msgid "Avatar"
 msgstr ""
 
@@ -403,7 +403,7 @@ msgstr ""
 msgid "Need help?"
 msgstr ""
 
-#: core/templates/password_reset.html:42 core/templates/profile.html:44
+#: core/templates/password_reset.html:42 core/templates/profile.html:50
 #: core/templates/register.html:42
 msgid "Email"
 msgstr ""
@@ -445,43 +445,51 @@ msgstr ""
 msgid "Profile"
 msgstr ""
 
-#: core/templates/profile.html:30
+#: core/templates/profile.html:16 core/views.py:93
+msgid "Email address changed"
+msgstr ""
+
+#: core/templates/profile.html:17
+msgid "You can now login using your new email adress"
+msgstr ""
+
+#: core/templates/profile.html:36
 msgid "Invalid email address."
 msgstr ""
 
-#: core/templates/profile.html:39
+#: core/templates/profile.html:45
 msgid "Name"
 msgstr ""
 
-#: core/templates/profile.html:47
+#: core/templates/profile.html:53
 msgid "Government"
 msgstr ""
 
-#: core/templates/profile.html:55
+#: core/templates/profile.html:58
 msgid "Please check your inbox to validate the change."
 msgstr ""
 
-#: core/templates/profile.html:56
+#: core/templates/profile.html:59
 msgid "Click "
 msgstr ""
 
-#: core/templates/profile.html:56
+#: core/templates/profile.html:59
 msgid "here"
 msgstr ""
 
-#: core/templates/profile.html:56
+#: core/templates/profile.html:59
 msgid "to resend the confirmation e-mail."
 msgstr ""
 
-#: core/templates/profile.html:61
+#: core/templates/profile.html:64
 msgid "Save"
 msgstr ""
 
-#: core/templates/profile.html:79
+#: core/templates/profile.html:82
 msgid "Choose an avatar"
 msgstr ""
 
-#: core/templates/profile.html:82
+#: core/templates/profile.html:85
 msgid "Remove avatar"
 msgstr ""
 
@@ -528,6 +536,14 @@ msgstr ""
 #: core/templates/register_complete.html:10
 msgid ""
 "Open the link in the Pleio verification email to complete your registration."
+msgstr ""
+
+#: core/templates/security_pages.html:26 core/views.py:170
+msgid "Password changed"
+msgstr ""
+
+#: core/templates/security_pages.html:27
+msgid "You can now login using your new password"
 msgstr ""
 
 #: core/templates/security_pages/change_password.html:23
@@ -757,16 +773,8 @@ msgid ""
 "                    security."
 msgstr ""
 
-#: core/views.py:93
-msgid "The email adress has been changed successfully."
-msgstr ""
-
 #: core/views.py:115
 msgid "There is a pending change of your email to "
-msgstr ""
-
-#: core/views.py:170
-msgid "The Password has been changed successfully."
 msgstr ""
 
 #: pleio_account/settings.py:130
