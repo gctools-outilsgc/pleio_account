@@ -7,6 +7,7 @@
 
 <form method="post" action=".">
     {% csrf_token %}
+    <input type="hidden" name="next" value="{{next}}" />
     {% if login_step == 'login' %}
         <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
         <div class="login__step-title">
@@ -63,7 +64,6 @@
                 <a href="{% url 'register' %}" class="button ___stretch ___white ___outline">{% trans "Register account" %}</a>
             </div>
         </fieldset>
-        <input type="hidden" name="next" value="{{next}}" />
         <p></p>
         
         <ul class="messages info">
@@ -127,6 +127,7 @@
     <div class="input-field">
         <a href="{% url 'login' login_step='backup' %}" class="button ___stretch ___white ___outline">{% trans "Use backuptoken" %}</a>
     </div>
+
     {% elif login_step == 'backup' %}
     <script type="text/javascript">
       window.onload = function() {

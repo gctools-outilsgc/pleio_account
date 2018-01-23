@@ -29,14 +29,15 @@ class PleioLoginView(TemplateView):
         next = self.request.GET.get('next')
         if next:
             context['next'] = next
-       
+            self.request.session['next'] = next
+        
         self.set_partner_site_info()
 
         return context
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
-        next = context.get('next')
+        next = request.session.get('next')
         if not is_safe_url(next):
             next = ''
         login_step = kwargs.get('login_step')
@@ -118,22 +119,28 @@ class PleioLoginView(TemplateView):
         )
 
     def post_token(self, request, *args, **kwargs):
+        next = request.POST.get('next')
+        if not is_safe_url(next):
+            next = settings.LOGIN_REDIRECT_URL
         user = User.objects.get(email=request.session.get('username'))
         form = PleioAuthenticationTokenForm(user, request, data=request.POST)
         if form.is_valid():
             auth_login(request, user)
-            return redirect('/profile')
+            return redirect(next)
         else:
             EventLog.add_event(request, 'invalid login')
 
         return render(request, 'login.html', {'form' : form, 'login_step' : request.session.get('login_step') })
 
     def post_backuptoken(self, request, *args, **kwargs):
+        next = request.POST.get('next')
+        if not is_safe_url(next):
+            next = settings.LOGIN_REDIRECT_URL
         user = User.objects.get(email=request.session.get('username'))
         form = PleioBackupTokenForm(user, request, data=request.POST)
         if form.is_valid():
             auth_login(request, user)
-            return redirect('/profile')
+            return redirect(next)
         else:
             EventLog.add_event(request, 'invalid login')
 
