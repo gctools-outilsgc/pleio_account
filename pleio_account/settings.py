@@ -172,6 +172,7 @@ LOGIN_REDIRECT_URL = '/profile/'
 LOGOUT_REDIRECT_URL = 'two_factor:login'
 
 OIDC_USERINFO = 'pleio_account.oidc_provider_settings.userinfo'
+OIDC_EXTRA_SCOPE_CLAIMS = 'pleio_account.oidc_provider_settings.CustomScopeCl'
 
 PASSWORD_RESET_TIMEOUT_DAYS = 1
 ACCOUNT_ACTIVATION_DAYS = 7
