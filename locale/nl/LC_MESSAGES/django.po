@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-19 15:43+0100\n"
+"POT-Creation-Date: 2018-01-23 11:27+0100\n"
 "PO-Revision-Date: 2017-12-15 16:48+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -18,23 +18,29 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.4\n"
 
-#: core/forms.py:18
+#: core/forms.py:21
 msgid "Your email address is not allowed."
 msgstr "Dit e-mailadres is niet geldig."
 
-#: core/forms.py:29 core/forms.py:100
+#: core/forms.py:32 core/forms.py:230
 msgid "The two password fields didn't match."
 msgstr "De twee wachtwoorden komen niet overeen."
 
-#: core/forms.py:73
-msgid "Login failed. Please check Google captcha."
-msgstr "Login mislukt. Ongeldige Google captcha waarde."
+#: core/forms.py:75
+msgid "This email is already registered."
+msgstr "Dit e-mailadres is al geregistreerd"
 
-#: core/forms.py:86 core/forms.py:90
+#: core/forms.py:186 core/forms.py:215 core/forms.py:220
 msgid "Token"
 msgstr "Token"
 
-#: core/forms.py:99
+#: core/forms.py:208
+#, fuzzy
+#| msgid "Please activate your account"
+msgid "Please enter your OTP token."
+msgstr "Activeer je account"
+
+#: core/forms.py:229
 msgid "The password is invalid."
 msgstr "Het wachtwoord is ongeldig."
 
@@ -145,10 +151,10 @@ msgid ""
 "tokens shown\n"
 "                    below will be valid."
 msgstr ""
-"Back-tokens kunnen worden gebruikt als uw primaire- en reserve "
+"Back-tokens kunnen worden gebruikt als je primaire- en reserve "
 "telefoonnummers niet beschikbaar zijn. De backup-tokens hieronder kunnen "
-"worden gebruikt voor inlogverificatie. Als u alle back-upcodes hebt "
-"gebruikt, kunt u nieuwe codes genereren. Alleen onderstaande codes zijn "
+"worden gebruikt voor inlogverificatie. Als je alle back-upcodes hebt "
+"gebruikt, kan je nieuwe codes genereren. Alleen onderstaande codes zijn "
 "geldig."
 
 #: core/templates/backup_tokens.html:25
@@ -166,54 +172,56 @@ msgstr "Je hebt nog geen backup tokens."
 msgid "Generate Tokens"
 msgstr "Genereer tokens"
 
-#: core/templates/base.html:34 core/templates/base_account.html:24
+#: core/templates/base.html:38 core/templates/base_account.html:28
 msgid "Back to the homepage"
 msgstr "Terug naar de homepagina"
 
-#: core/templates/base_account.html:31
+#: core/templates/base_account.html:35
 msgid "Welcome"
 msgstr "Welkom"
 
-#: core/templates/base_account.html:32
+#: core/templates/base_account.html:36
 msgid "in your Pleio account"
-msgstr "in uw Pleio-account"
+msgstr "in je Pleio-account"
 
-#: core/templates/base_account.html:47
+#: core/templates/base_account.html:51
 msgid "Profiel"
 msgstr "Profiel"
 
-#: core/templates/base_account.html:48 core/templates/profile.html:14
+#: core/templates/base_account.html:52 core/templates/profile.html:30
 msgid "Your details"
-msgstr "Uw gegevens"
+msgstr "Je gegevens"
 
-#: core/templates/base_account.html:48 core/templates/profile.html:34
+#: core/templates/base_account.html:52 core/templates/profile.html:69
 msgid "Avatar"
 msgstr "Profielfoto"
 
-#: core/templates/base_account.html:60 core/templates/security_pages.html:18
+#: core/templates/base_account.html:64 core/templates/security_pages.html:18
 msgid "Security"
 msgstr "Beveiliging"
 
-#: core/templates/base_account.html:61 core/templates/login.html:46
-#: core/templates/register.html:39
+#: core/templates/base_account.html:65 core/templates/login.html:48
+#: core/templates/register.html:47
 msgid "Password"
 msgstr "Wachtwoord"
 
-#: core/templates/base_account.html:61
+#: core/templates/base_account.html:65
 msgid "Sessions"
 msgstr "Sessies"
 
-#: core/templates/base_account.html:61
+#: core/templates/base_account.html:65
 msgid "Two-factor authentication"
 msgstr "Twee-factor authenticatie"
 
-#: core/templates/base_account.html:69
+#: core/templates/base_account.html:73
 #: core/templates/security_pages/user_sessions.html:39
 #: core/templates/session_list.html:42
 msgid "Logout"
 msgstr "Uitloggen"
 
-#: core/templates/emails/register.html:5 core/templates/emails/register.txt:2
+#: core/templates/emails/change_email.html:7
+#: core/templates/emails/change_email.txt:3
+#: core/templates/emails/register.html:7 core/templates/emails/register.txt:3
 #: core/templates/emails/reset_password.html:5
 #: core/templates/emails/reset_password.txt:2
 #: core/templates/emails/suspicious_login.html:5
@@ -221,7 +229,16 @@ msgstr "Uitloggen"
 msgid "Dear"
 msgstr "Beste"
 
-#: core/templates/emails/register.html:7 core/templates/emails/register.txt:4
+#: core/templates/emails/change_email.html:9
+#: core/templates/emails/change_email.txt:5
+msgid "Please verify your new email address by following this link"
+msgstr "Bevestig je nieuwe e-mailadres door de volgende link te volgen"
+
+#: core/templates/emails/change_email_subject.txt:1
+msgid "Please verify your new email address"
+msgstr "Verifieer je nieuwe e-mailadres"
+
+#: core/templates/emails/register.html:9 core/templates/emails/register.txt:5
 msgid "Please activate your account by following this link"
 msgstr "Activeer je account door de volgende link te volgen"
 
@@ -242,7 +259,7 @@ msgstr ""
 #: core/templates/emails/reset_password.txt:8
 msgid "You can ignore this e-mail if you did not request a new password."
 msgstr ""
-"Je kunt deze e-mail negeren indien je geen nieuw wachtwoord hebt aangevraagd."
+"Je kan deze e-mail negeren indien je geen nieuw wachtwoord hebt aangevraagd."
 
 #: core/templates/emails/reset_password_subject.txt:1
 msgid "Request for a new password"
@@ -279,86 +296,106 @@ msgstr "Je hebt ingelogd vanaf een nieuwe locatie"
 msgid "Logged in from a new location"
 msgstr "Ingelogd vanaf een nieuwe locatie"
 
-#: core/templates/login.html:15 core/templates/login.html:92
+#: core/templates/login.html:14 core/templates/login.html:91
 msgid "Sign in"
 msgstr "Inloggen"
 
-#: core/templates/login.html:16 core/templates/login.html:93
+#: core/templates/login.html:15 core/templates/login.html:92
 msgid "with your Pleio-account"
-msgstr "met uw Pleio-account"
+msgstr "met je Pleio-account"
 
-#: core/templates/login.html:27
+#: core/templates/login.html:25 core/templates/register.html:26
 msgid "Login failed."
-msgstr ""
+msgstr "Login mislukt."
 
-#: core/templates/login.html:28
+#: core/templates/login.html:26 core/templates/register.html:27
 #, fuzzy
 #| msgid "Login failed. Please check Google captcha."
 msgid "Please check Google captcha."
 msgstr "Login mislukt. Ongeldige Google captcha waarde."
 
-#: core/templates/login.html:30
+#: core/templates/login.html:28
 msgid "Please enter a correct email and password."
 msgstr "Voer een correct e-mailadres en wachtwoord in."
 
-#: core/templates/login.html:31
+#: core/templates/login.html:29
 msgid "Note that both fields may be case-sensitive."
 msgstr "Let op: beide velden kunnen hoofdlettergevoelig zijn."
 
-#: core/templates/login.html:41 core/templates/password_reset.html:25
+#: core/templates/login.html:31
+msgid "This account is inactive."
+msgstr "Dit account is niet actief"
+
+#: core/templates/login.html:32
+msgid "Please check your email to validate your account."
+msgstr "Controleer je e-mail om je account te valideren."
+
+#: core/templates/login.html:34
+msgid "Invalid login."
+msgstr "Ongeldige login."
+
+#: core/templates/login.html:43 core/templates/password_reset.html:25
 msgid "Email address"
 msgstr "E-mailadres"
 
-#: core/templates/login.html:50 core/templates/password_reset.html:11
+#: core/templates/login.html:52 core/templates/password_reset.html:11
 #: core/templates/password_reset_done.html:8
 msgid "Forgot password"
 msgstr "Wachtwoord vergeten"
 
-#: core/templates/login.html:63 core/templates/login.html:113
+#: core/templates/login.html:62 core/templates/login.html:122
 #: core/templates/password_reset.html:32
 #: core/templates/password_reset_complete.html:23
-#: core/templates/password_reset_done.html:23 core/templates/register.html:74
+#: core/templates/password_reset_done.html:23 core/templates/register.html:82
 #: core/templates/register_complete.html:15
 msgid "Login"
 msgstr "Login"
 
-#: core/templates/login.html:64
+#: core/templates/login.html:63
 msgid "Register account"
 msgstr "Account aanmaken"
 
-#: core/templates/login.html:74
+#: core/templates/login.html:73
 msgid "Secure your account"
-msgstr "Extra beveiliging voor uw account"
+msgstr "Extra beveiliging voor je account"
 
-#: core/templates/login.html:75
+#: core/templates/login.html:74
 msgid "Enable two factor authentication"
 msgstr "Schakel twee-factor-authenticatie in"
 
-#: core/templates/login.html:101
+#: core/templates/login.html:101 core/templates/login.html:147
+msgid "Invalid token."
+msgstr "Ongeldig token."
+
+#: core/templates/login.html:102 core/templates/login.html:148
+msgid "Please make sure you have entered it correctly."
+msgstr "Voer een geldig token in."
+
+#: core/templates/login.html:110
 msgid "Two factor authentication"
 msgstr "Twee-factor-authenticatie"
 
-#: core/templates/login.html:102
+#: core/templates/login.html:111
 msgid "Fill in a code from your code generator."
-msgstr "Voer de verificatiecode uit uw codegenerator in."
+msgstr "Voer de verificatiecode uit je codegenerator in."
 
-#: core/templates/login.html:114
+#: core/templates/login.html:123
 msgid "Cancel"
 msgstr "Annuleren"
 
-#: core/templates/login.html:125
+#: core/templates/login.html:128 core/templates/login.html:159
+msgid "Use backuptoken"
+msgstr "Gebruik backupcode"
+
+#: core/templates/login.html:138
 msgid ""
 "Use this form for entering backup tokens for logging in.\n"
 "         These tokens have been generated for you to print and keep safe. "
 "Please\n"
 "             enter one of these backup tokens to login to your account."
-msgstr "Geef een backuptoken in om toegang te krijgen tot uw account."
+msgstr "Geef een backuptoken in om toegang te krijgen tot je account."
 
-#: core/templates/login.html:135 core/templates/login.html:143
-msgid "Use backuptoken"
-msgstr "Gebruik backupcode"
-
-#: core/templates/login.html:136
+#: core/templates/login.html:160
 msgid "Back"
 msgstr "Terug"
 
@@ -367,7 +404,7 @@ msgstr "Terug"
 #: core/templates/password_reset_confirm.html:12
 #: core/templates/password_reset_done.html:9
 msgid "of your Pleio-account"
-msgstr "van uw Pleio-account"
+msgstr "van je Pleio-account"
 
 #: core/templates/password_reset.html:31
 #: core/templates/password_reset_complete.html:8
@@ -380,8 +417,8 @@ msgstr "Herstel wachtwoord"
 msgid "Need help?"
 msgstr "Hulp nodig?"
 
-#: core/templates/password_reset.html:42 core/templates/profile.html:22
-#: core/templates/register.html:34
+#: core/templates/password_reset.html:42 core/templates/profile.html:50
+#: core/templates/register.html:42
 msgid "Email"
 msgstr "E-mail"
 
@@ -391,20 +428,20 @@ msgstr "Wachtwoord gewijzigd"
 
 #: core/templates/password_reset_complete.html:18
 msgid "You can now login with your new password."
-msgstr "U kunt nu inloggen met uw nieuwe wachtwoord."
+msgstr "Je kan nu inloggen met je nieuwe wachtwoord."
 
 #: core/templates/password_reset_confirm.html:25
-#: core/templates/security_pages/change_password.html:32
+#: core/templates/security_pages/change_password.html:31
 msgid "New Password"
 msgstr "Nieuw wachtwoord"
 
 #: core/templates/password_reset_confirm.html:32
-#: core/templates/security_pages/change_password.html:40
+#: core/templates/security_pages/change_password.html:39
 msgid "New Password (again)"
 msgstr "Nieuw wachtwoord (verificatie)"
 
 #: core/templates/password_reset_confirm.html:39
-#: core/templates/security_pages/change_password.html:51
+#: core/templates/security_pages/change_password.html:50
 msgid "Confirm"
 msgstr "Bevestigen"
 
@@ -417,34 +454,62 @@ msgid ""
 "When the address is registered in our system you will receive an e-mail with "
 "a link to configure a new password."
 msgstr ""
-"Als uw e-mailadres in ons systeem staat ontvangt u een link om uw wachtwoord "
+"Als je e-mailadres in ons systeem staat ontvang je een link om je wachtwoord "
 "opnieuw in te stellen."
 
 #: core/templates/profile.html:8
 msgid "Profile"
 msgstr "Profiel"
 
+#: core/templates/profile.html:16 core/views.py:93
+msgid "Email address changed"
+msgstr "E-mailadres gewijzigd"
+
 #: core/templates/profile.html:17
+msgid "You can now login using your new email adress"
+msgstr "Je kan nu inloggen met je nieuwe e-mailadres."
+
+#: core/templates/profile.html:36
+msgid "Invalid email address."
+msgstr "Ongeldig e-mailadres."
+
+#: core/templates/profile.html:45
 msgid "Name"
 msgstr "Naam"
 
-#: core/templates/profile.html:25
+#: core/templates/profile.html:53
 msgid "Government"
 msgstr "Overheid"
 
-#: core/templates/profile.html:29
+#: core/templates/profile.html:58
+msgid "Please check your inbox to validate the change."
+msgstr "Controleer je e-mail om je wijziging te bevestigen."
+
+#: core/templates/profile.html:59
+msgid "Click "
+msgstr "Klik "
+
+#: core/templates/profile.html:59
+msgid "here"
+msgstr "hier"
+
+#: core/templates/profile.html:59
+msgid "to resend the confirmation e-mail."
+msgstr "om de bevestigingsmail nogmaals te ontvangen."
+
+#: core/templates/profile.html:64
 msgid "Save"
 msgstr "Opslaan"
 
-#: core/templates/profile.html:47
+#: core/templates/profile.html:82
 msgid "Choose an avatar"
 msgstr "Kies een avatar"
 
-#: core/templates/profile.html:50
+#: core/templates/profile.html:85
 msgid "Remove avatar"
 msgstr "Verwijder avatar"
 
-#: core/templates/register.html:15 core/templates/register.html:73
+#: core/templates/register.html:15 core/templates/register.html:81
 msgid "Register"
 msgstr "Registeren"
 
@@ -452,44 +517,52 @@ msgstr "Registeren"
 msgid "create a Pleio-account"
 msgstr "maak een Pleio-account"
 
-#: core/templates/register.html:29
+#: core/templates/register.html:37
 msgid "First- and lastname"
 msgstr "Voor- en achternaam"
 
-#: core/templates/register.html:46
+#: core/templates/register.html:54
 msgid "Password (again)"
 msgstr "Wachtwoord (nogmaals)"
 
-#: core/templates/register.html:57
+#: core/templates/register.html:65
 msgid "I agree with the "
 msgstr "Ik ga akkoord met de "
 
-#: core/templates/register.html:57
+#: core/templates/register.html:65
 msgid " general terms"
 msgstr " algemene voorwaarden"
 
-#: core/templates/register.html:62
+#: core/templates/register.html:70
 msgid "Please subscribe me to the Pleio newsletter"
 msgstr "Schrijf me in voor de Pleio nieuwsbrief"
 
 #: core/templates/register_activate.html:9
 msgid "We could not activate your account"
-msgstr "We konden uw account niet activeren"
+msgstr "We konden je account niet activeren"
 
 #: core/templates/register_activate.html:10
 msgid "Maybe your account already is activated."
-msgstr "Misschien is uw account al geactiveerd."
+msgstr "Misschien is je account al geactiveerd."
 
 #: core/templates/register_complete.html:9
 msgid "Verify your email address"
-msgstr "Verifieer uw e-mailadres"
+msgstr "Verifieer je e-mailadres"
 
 #: core/templates/register_complete.html:10
 msgid ""
 "Open the link in the Pleio verification email to complete your registration."
 msgstr ""
-"Klik op de link in de Pleio verificatie e-mail om uw registratie te "
+"Klik op de link in de Pleio verificatie e-mail om je registratie te "
 "voltooien."
+
+#: core/templates/security_pages.html:26 core/views.py:170
+msgid "Password changed"
+msgstr "Wachtwoord gewijzigd"
+
+#: core/templates/security_pages.html:27
+msgid "You can now login using your new password"
+msgstr "Je kan nu inloggen met je nieuwe wachtwoord."
 
 #: core/templates/security_pages/change_password.html:23
 msgid "Current Password"
@@ -510,8 +583,8 @@ msgid ""
 "If you don't have any device with you, you can access\n"
 "                    your account using backup tokens."
 msgstr ""
-"Als u geen toegang tot een codegenerator heeft kunt u toegang\n"
-"krijgen tot uw account met backupcodes."
+"Als je geen toegang tot een codegenerator hebt kan je toegang\n"
+"krijgen tot je account met backupcodes."
 
 #: core/templates/security_pages/two_factor_authorization.html:15
 #, python-format
@@ -525,7 +598,7 @@ msgid_plural ""
 "                    "
 msgstr[0] ""
 "\n"
-"U heeft slechts één backupcode over "
+"Je hebt slechts één backupcode over "
 msgstr[1] ""
 "\n"
 "Je hebt %(counter)s codes over "
@@ -546,7 +619,7 @@ msgid ""
 "Scan the QR-code below with your token generator and enter the generated "
 "token."
 msgstr ""
-"Scan onderstaande QR-code met uw codegenerator en voer de code in ter "
+"Scan onderstaande QR-code met je codegenerator en voer de code in ter "
 "controle."
 
 #: core/templates/security_pages/two_factor_authorization.html:49
@@ -578,10 +651,10 @@ msgid ""
 "backup tokens shown\n"
 "                        below will be valid."
 msgstr ""
-"Backup codes kunnen worden gebruikt als uw primaire- en reserve "
+"Backup codes kunnen worden gebruikt als je primaire- en reserve "
 "telefoonnummers niet beschikbaar zijn. De backup-tokens hieronder kunnen "
-"worden gebruikt voor inlogverificatie. Als u alle back-upcodes hebt "
-"gebruikt, kunt u nieuwe codes genereren. Alleen onderstaande codes zijn "
+"worden gebruikt voor inlogverificatie. Als je alle back-upcodes hebt "
+"gebruikt, kan je nieuwe codes genereren. Alleen onderstaande codes zijn "
 "geldig."
 
 #: core/templates/security_pages/two_factor_authorization.html:98
@@ -594,8 +667,8 @@ msgid ""
 "You are about to disable two-factor authentication. This\n"
 "                        compromises your account security, are you sure?"
 msgstr ""
-"U schakelt twee-factor-authenticatie hiermee uit. Dit maakt uw account "
-"minder veilig. Wilt u doorgaan?"
+"Je schakelt twee-factor-authenticatie hiermee uit. Dit maakt je account "
+"minder veilig. Wil je doorgaan?"
 
 #: core/templates/security_pages/two_factor_authorization.html:104
 #: core/templates/tf_disable.html:15
@@ -618,8 +691,8 @@ msgid ""
 "However we strongly discourage you to do so, you can\n"
 "                    also disable two-factor authentication for your account."
 msgstr ""
-"Hoewel we het ten strengste afraden kunt u twee-factor-authenticatie "
-"uitschakelen voor uw account."
+"Hoewel we het ten strengste afraden kan je twee-factor-authenticatie "
+"uitschakelen voor je account."
 
 #: core/templates/security_pages/two_factor_authorization.html:130
 #: core/templates/tf_profile.html:40
@@ -633,7 +706,7 @@ msgid ""
 "enhanced account\n"
 "                        security."
 msgstr ""
-"Twee-factor-authenticatie is niet geactiveerd voor uw account. Activeer twee-"
+"Twee-factor-authenticatie is niet geactiveerd voor je account. Activeer twee-"
 "factor-authenticatie voor een betere beveiliging."
 
 #: core/templates/security_pages/two_factor_authorization.html:142
@@ -691,7 +764,7 @@ msgstr "Beëindig alle andere sessies"
 msgid ""
 "Congratulations, you've successfully enabled two-factor\n"
 "          authentication."
-msgstr "Gefeliciteerd, u heeft twee-factor-authenticatie succesvol ingesteld."
+msgstr "Gefeliciteerd, je hebt twee-factor-authenticatie succesvol ingesteld."
 
 #: core/templates/setup_complete.html:11
 msgid "Back to Profile"
@@ -705,15 +778,15 @@ msgstr "algemene voorwaarden"
 msgid ""
 "You are about to disable two-factor authentication. This\n"
 "                compromises your account security, are you sure?"
-msgstr "U schakelt twee-factor-authenticatie hiermee uit. Wilt u doorgaan?"
+msgstr "Je schakelt twee-factor-authenticatie hiermee uit. Wil je doorgaan?"
 
 #: core/templates/tf_profile.html:13
 msgid ""
 "If you don't have any device with you, you can access\n"
 "                your account using backup tokens."
 msgstr ""
-"Als u geen codegenerator bij zicht heeft kunt u backupcodes gebruiken om in "
-"te loggen."
+"Als je geen codegenerator bij je hebt kan je backupcodes gebruiken om in te "
+"loggen."
 
 #: core/templates/tf_profile.html:15
 #, python-format
@@ -727,7 +800,7 @@ msgid_plural ""
 "                "
 msgstr[0] ""
 "\n"
-"U heeft slechts één backupcode over "
+"Je hebtt slechts één backupcode over "
 msgstr[1] ""
 "\n"
 "Je hebt %(counter)s codes over "
@@ -738,8 +811,8 @@ msgid ""
 "                      also disable two-factor authentication for your "
 "account."
 msgstr ""
-"Hoewel we het ten strengste afraden kunt u twee-factor-authenticatie "
-"uitschakelen voor uw account."
+"Hoewel we het ten strengste afraden kan je twee-factor-authenticatie "
+"uitschakelen voor je account."
 
 #: core/templates/tf_profile.html:45
 msgid ""
@@ -748,24 +821,46 @@ msgid ""
 "account\n"
 "                    security."
 msgstr ""
-"Twee-factor-authenticatie is niet geactiveerd voor uw account. Activeer twee-"
+"Twee-factor-authenticatie is niet geactiveerd voor je account. Activeer twee-"
 "factor-authenticatie voor een betere beveiliging."
 
-#: core/views.py:143
-msgid "The Password has been changed successfully."
-msgstr "Je wachtwoord is succesvol veranderd."
+#: core/views.py:115
+msgid "There is a pending change of your email to "
+msgstr "Na bevestiging word je e-mailadres veranderd in "
 
-#: pleio_account/settings.py:138
+#: pleio_account/settings.py:130
 msgid "English"
 msgstr "Engels"
 
-#: pleio_account/settings.py:139
+#: pleio_account/settings.py:131
 msgid "Dutch"
 msgstr "Nederlands"
 
-#: pleio_account/settings.py:140
+#: pleio_account/settings.py:132
 msgid "French"
 msgstr "Frans"
+
+#~ msgid "The email adress has been changed successfully."
+#~ msgstr "Je e-mailadres is succesvol veranderd."
+
+#~ msgid "The Password has been changed successfully."
+#~ msgstr "Je wachtwoord is succesvol veranderd."
+
+#, fuzzy
+#~| msgid "Please enter a correct email and password."
+#~ msgid "Please enter a valid password."
+#~ msgstr "Voer een correct e-mailadres en wachtwoord in."
+
+#, fuzzy
+#~| msgid "Note that both fields may be case-sensitive."
+#~ msgid "Note that the password field may be case-sensitive."
+#~ msgstr "Let op: beide velden kunnen hoofdlettergevoelig zijn."
+
+#~ msgid "Password (for verification user's identity)"
+#~ msgstr "Wachtwoord (om je identiteit te controleren)"
+
+#~ msgid "Login failed. Please check Google captcha."
+#~ msgstr "Login mislukt. Ongeldige Google captcha waarde."
 
 #~ msgid "Activate account at"
 #~ msgstr "Activeer account op"
@@ -798,7 +893,7 @@ msgstr "Frans"
 #~ msgstr "Land"
 
 #~ msgid "Otherwise you might want to change your password."
-#~ msgstr "Anders kun je het wachtwoord veranderen."
+#~ msgstr "Anders kan je het wachtwoord veranderen."
 
 #~ msgid "If it was you, please navigate to this link"
 #~ msgstr "Wanneer jij dit was, ga naar de volgende link"
@@ -838,9 +933,6 @@ msgstr "Frans"
 #~ msgid "Update profile"
 #~ msgstr "Profiel updaten"
 
-#~ msgid "Please check your e-mail to validate your account."
-#~ msgstr "Controleer je e-mail om je account te valideren."
-
 #~ msgid "Last Activity"
 #~ msgstr "Laatste activiteit"
 
@@ -854,7 +946,7 @@ msgstr "Frans"
 #~ "You can also end all other sessions but the current.\n"
 #~ "        This will log you out on all other devices."
 #~ msgstr ""
-#~ "Je kunt ook alle andere sessies afsluiten. Dit logt je in op alle andere "
+#~ "Je kan ook alle andere sessies afsluiten. Dit logt je in op alle andere "
 #~ "apparaten."
 
 #~ msgid ""

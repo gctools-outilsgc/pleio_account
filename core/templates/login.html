@@ -7,8 +7,7 @@
 
 <form method="post" action=".">
     {% csrf_token %}
-    {{ wizard.management_form }}
-    {% if wizard.steps.current == 'auth' %}
+    {% if login_step == 'login' %}
         <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
         <div class="login__step-title">
             <div>
@@ -19,15 +18,21 @@
         </div>
         
         <ul class="messages error">
-            {% for error in form.non_field_errors %}
+                {% for error in form.non_field_errors %}
                 <li>
                     {% include_asset "icons/account-alert.svg" %}
                     {% if error == 'captcha_mismatch' %}
                         <div class="textcolor_primary">{% trans "Login failed." %}</div>
                         <div class="textcolor_secondary">{% trans "Please check Google captcha." %}</div>
-                    {% else %}
+                    {% elif error == 'invalid_login' %}
                         <div class="textcolor_primary">{% trans "Please enter a correct email and password." %}</div>
                         <div class="textcolor_secondary">{% trans "Note that both fields may be case-sensitive." %}</div>
+                    {% elif error == 'inactive' %}
+                        <div class="textcolor_primary">{% trans "This account is inactive." %}</div>
+                        <div class="textcolor_secondary">{% trans "Please check your email to validate your account." %}</div>
+                    {% else %}
+                        <div class="textcolor_primary">{% trans "Invalid login." %}</div>
+                        <div class="textcolor_secondary">{{ error }}</div>
                     {% endif %}
                 </li>
             {% endfor %}
@@ -48,14 +53,11 @@
                 <p class="capslock"></p>
             </div>
 
-
             {% settings_value 'GOOGLE_RECAPTCHA_SITE_KEY' as recaptcha_site_key %}
-            
-            {% if recaptcha_site_key %}
+            {% if recaptcha_site_key and reCAPTCHA %}
                 <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
             {% endif %}
 
-            
             <div class="login__buttons">
                 <button name="login" class="button ___stretch ___active login__login" type="submit">{% trans "Login" %}</button>
                 <a href="{% url 'register' %}" class="button ___stretch ___white ___outline">{% trans "Register account" %}</a>
@@ -73,12 +75,12 @@
                 </a>
             </li>
         </ul>
-    {% elif wizard.steps.current == 'token' %}
+    {% elif login_step == 'token' %}
 
     <script type="text/javascript">
       window.onload = function() {
          {
-          document.getElementById("id_token-otp_token").focus();
+          document.getElementById("id_otp_token").focus();
         }
       };
     </script>
@@ -91,7 +93,17 @@
         </div>
         <img src="/static/images/logo-icon.svg" class="login__step-icon"/>
     </div>
-    
+
+    <ul class="messages error">
+            {% for error in form.errors %}
+            <li>
+                {% include_asset "icons/account-alert.svg" %}
+                <div class="textcolor_primary">{% trans "Invalid token." %}</div>
+                <div class="textcolor_secondary">{% trans "Please make sure you have entered it correctly." %}</div>
+            </li>
+        {% endfor %}
+    </ul>
+
     <ul class="messages info">
         <li class="messages__link">
             {% include_asset "icons/lock-plus.svg" %}
@@ -108,10 +120,14 @@
         </div>
         <div class="login__buttons">
             <button class="button ___stretch ___active login__login" type="submit">{% trans "Login" %}</button>
-            <a href="{% url 'login' %}" class="button ___stretch ___white ___outline">{% trans "Cancel" %}</a>
+            <a href="{% url 'login' login_step='login' %}" class="button ___stretch ___white ___outline">{% trans "Cancel" %}</a>
         </div>
     </fieldset>
-    {% elif wizard.steps.current == 'backup' %}
+
+    <div class="input-field">
+        <a href="{% url 'login' login_step='backup' %}" class="button ___stretch ___white ___outline">{% trans "Use backuptoken" %}</a>
+    </div>
+    {% elif login_step == 'backup' %}
     <script type="text/javascript">
       window.onload = function() {
          {
@@ -123,24 +139,28 @@
          These tokens have been generated for you to print and keep safe. Please
              enter one of these backup tokens to login to your account.{% endblocktrans %}</p>
          <fieldset>
-             <div class="input-field">
-                 <label for="id_backup-otp_token">Token:</label>
-                 <input id="id_backup-otp_token" name="backup-otp_token" type="text">
+
+                <ul class="messages error">
+                        {% for error in form.errors %}
+                        <li>
+                            {% include_asset "icons/account-alert.svg" %}
+                            <div class="textcolor_primary">{% trans "Invalid token." %}</div>
+                            <div class="textcolor_secondary">{% trans "Please make sure you have entered it correctly." %}</div>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+            <div class="input-field">
+                 <label for="id_otp_token">Token:</label>
+                 <input id="id_otp_token" name="otp_token" type="text">
              </div>
          </fieldset>
         <div class="login__buttons">
             <button name="wizard_goto_step" type="submit" class="button ___stretch ___active">{% trans "Use backuptoken" %}</button>
-            <button name="wizard_goto_step" type="submit" value="auth" class="button ___stretch ___white ___outline">{% trans "Back" %}</button>
+            <a href="{% url 'login' login_step='token' %}" class="button ___stretch ___white ___outline">{% trans "Back" %}</a>
         </div>
 
     {% endif %}
     
-    {% if backup_tokens %}
-        <div class="input-field">
-            <button name="wizard_goto_step" type="submit" value="backup" class="button ___stretch ___white ___outline">{% trans "Use backuptoken" %}</button>
-        </div>
-
-    {% endif %}
-
 </form>
 {% endblock %}

@@ -37,13 +37,25 @@ DATABASES = {
     }
 }
 
-
 FROM_EMAIL = 'noreply@pleio.nl'
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 25
 
-# Send users a warning message when suspicious behaviour on their account occurs, e.g. a login on the account from a new (unknown) locatio
+TIME_ZONE = 'Europe/Amsterdam'
+
+EXTERNAL_HOST = 'https://www.pleio_account.nl/'
+EMAIL_LOGO = '/images/email-logo.png'
+
+SITE_TITLE = 'Pleio_account'
+SITE_LOGO = 'images/logo.svg'
+SITE_FAVICON = 'images/favicon.png'
+
+# Send users a warning message when suspicious behaviour on their account occurs, e.g. a login on the account from a new (unknown) location.
 SEND_SUSPICIOUS_BEHAVIOR_WARNINGS = True
+
+#Google reCAPTCHA Will be present on login page when from that IP adress more than RECAPTCHA_NUMBER_INVALID_LOGINS during the last RECAPTCHA_MINUTES_THRESHOLD have occurred.
+RECAPTCHA_MINUTES_THRESHOLD = 30
+RECAPTCHA_NUMBER_INVALID_LOGINS = 10 
 
 # Request an API key at https://developers.google.com/recaptcha/ for reCAPTCHA validation.
 

@@ -10,6 +10,7 @@ from django.conf import settings
 from django.template.loader import render_to_string
 from .helpers import unique_filepath
 from .login_session_helpers import get_city, get_country, get_device, get_lat_lon
+from datetime import timedelta
 
 class Manager(BaseUserManager):
     def create_user(self, email, name, password=None, accepted_terms=False, receives_newsletter=False):
@@ -51,6 +52,7 @@ class User(AbstractBaseUser):
     accepted_terms = models.BooleanField(default=False)
     receives_newsletter = models.BooleanField(default=False)
     avatar = models.ImageField(upload_to=unique_filepath, null=True, blank=True)
+    new_email = models.CharField(max_length=255, null=True, default=None)
 
     is_active = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
@@ -92,23 +94,39 @@ class User(AbstractBaseUser):
         return self.name
 
     def email_user(self, subject, message, **kwargs):
-        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [self.email], **kwargs)
+        try:
+            email = kwargs.pop('email')
+        except:
+            email = self.email
+            
+        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [email], **kwargs)
+        
 
-    def send_activation_token(self, request):
-        current_site = get_current_site(request)
-
+    def send_activation_token(self):
         template_context = {
             'user': self,
             'activation_token': signing.dumps(obj=self.email),
-            'protocol': 'https' if request.is_secure() else 'http',
-            'domain': current_site.domain
         }
-
+ 
         self.email_user(
             render_to_string('emails/register_subject.txt', template_context),
             render_to_string('emails/register.txt', template_context),
             html_message = (render_to_string('emails/register.html', template_context)),
             fail_silently = True
+        )
+
+    def send_change_email_activation_token(self):
+        template_context = {
+            'user': self,
+            'activation_token': signing.dumps(obj=self.new_email),
+        }
+ 
+        self.email_user(
+            render_to_string('emails/change_email_subject.txt', template_context),
+            render_to_string('emails/change_email.txt', template_context),
+            html_message = (render_to_string('emails/change_email.html', template_context)),
+            fail_silently = True,
+            email=self.new_email
         )
 
     def activate_user(self, activation_token):
@@ -127,6 +145,27 @@ class User(AbstractBaseUser):
                 return None
 
             self.is_active = True
+            self.save()
+
+            return self
+
+        except (signing.BadSignature, User.DoesNotExist):
+            return None
+
+    def change_email(self, activation_token):
+        try:
+            email = signing.loads(
+                activation_token,
+                max_age=settings.ACCOUNT_ACTIVATION_DAYS * 86400
+            )
+
+            if email is None:
+                return None
+
+            self = User.objects.get(new_email=email)
+
+            self.email = self.new_email
+            self.new_email = None
             self.save()
 
             return self
@@ -201,6 +240,9 @@ class User(AbstractBaseUser):
             html_message=(render_to_string('emails/suspicious_login.html', template_context)),
             fail_silently=True
         )
+        # After sending the email confirm the previous login to prevend sending the email again
+        PreviousLogins.confirm_login(self, device_id)
+
 
     @property
     def is_staff(self):
@@ -256,19 +298,8 @@ class PreviousLogins(models.Model):
         except:
             pass
 
-    def accept_previous_logins(request, acceptation_token):
+    def confirm_login(user, device_id):
         try:
-            signed_value = signing.loads(
-                acceptation_token,
-                max_age=settings.ACCOUNT_ACTIVATION_DAYS * 86400
-            )
-            device_id = signed_value[0]
-            email = signed_value[1]
-            user = User.objects.get(email = email)
-
-            if device_id is None:
-                return False
-
             self = PreviousLogins.objects.get(
                 user=user,
                 device_id=device_id
@@ -278,13 +309,40 @@ class PreviousLogins(models.Model):
 
             return True
 
-        except (signing.BadSignature, PreviousLogins.DoesNotExist):
+        except PreviousLogins.DoesNotExist:
             return False
 
 class PleioPartnerSite(models.Model):
     partner_site_url = models.URLField(null=False, db_index=True)
     partner_site_name = models.CharField(null=False, max_length=200)
     partner_site_logo_url = models.URLField(null=False)
+
+
+class EventLog(models.Model):
+    ip = models.GenericIPAddressField(null=True, blank=True, verbose_name='IP')
+    event_type = models.CharField(null=True, blank=True, max_length=100)
+    event_time = models.DateTimeField(default=timezone.now)
+
+    def add_event(request, event_type):
+        session = request.session
+
+        event = EventLog.objects.create(
+            ip = session.ip,
+            event_type = event_type,
+         )
+        event.save()
+
+    def reCAPTCHA_needed(request):
+        time_threshold = timezone.now() - timedelta(minutes=settings.RECAPTCHA_MINUTES_THRESHOLD)
+        session = request.session
+        events = EventLog.objects.filter(
+	        ip = session.ip,
+        	event_time__gt=time_threshold, 
+	        event_type = 'invalid login'
+        )
+
+        return (events.count() > settings.RECAPTCHA_NUMBER_INVALID_LOGINS)
+        
 
 admin.site.register(User)
 admin.site.register(PleioPartnerSite)

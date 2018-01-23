@@ -17,51 +17,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import url, include
 from django.contrib.auth import views as auth_views
-from django.core.urlresolvers import RegexURLPattern, RegexURLResolver
-from django.views.decorators.clickjacking import xframe_options_exempt
 from oauth2_provider import views as oauth2_views
 from api import views as api_views
 from django.contrib import admin
 from core import views
 from core.class_views import PleioLoginView, PleioSessionDeleteView, PleioSessionDeleteOtherView
 from django.views.i18n import JavaScriptCatalog
-
-
-class DecoratedURLPattern(RegexURLPattern):
-    def resolve(self, *args, **kwargs):
-        result = super(DecoratedURLPattern, self).resolve(*args, **kwargs)
-        if result:
-            result.func = self._decorate_with(result.func)
-        return result
-
-
-class DecoratedRegexURLResolver(RegexURLResolver):
-    def resolve(self, *args, **kwargs):
-        result = super(DecoratedRegexURLResolver, self) \
-            .resolve(*args, **kwargs)
-        if result:
-            result.func = self._decorate_with(result.func)
-        return result
-
-
-def decorated_includes(func, includes):
-    """
-    Include URLconf from module but apply the specified decorator to each.
-    """
-    urlconf_module, app_name, namespace = includes
-    urlconf_urls = urlconf_module.urlpatterns
-
-    for item in urlconf_urls:
-        if isinstance(item, RegexURLPattern):
-            item.__class__ = DecoratedURLPattern
-            item._decorate_with = func
-
-        elif isinstance(item, RegexURLResolver):
-            item.__class__ = DecoratedRegexURLResolver
-            item._decorate_with = func
-
-    return urlconf_module, app_name, namespace
-
 
 legacy_urls = [
     url(r'^mod/profile/icondirect.php$', views.avatar, name='avatar_legacy'),
@@ -72,6 +33,8 @@ urls = [
     url(r'^register/$', views.register, name='register'),
     url(r'^register/complete/$', views.register_complete, name='register_complete'),
     url(r'^register/activate/(?P<activation_token>[-:\w]+)/$', views.register_activate, name='register_activate'),
+    url(r'^change-email/$', views.change_email, name='change_email'),
+    url(r'^change-email/activate/(?P<activation_token>[-:\w]+)/$', views.change_email_activate, name='change_email_activate'),
     url(r'^termsofuse/$', views.terms_of_use, name='terms_of_use'),
     url(r'^securitypages/(?P<page_action>[\w-]+)/$', views.security_pages, name='security_pages'),
     url(r'^securitypages/$', views.security_pages, name='security_pages'),
@@ -79,11 +42,10 @@ urls = [
     url(r'^password_reset/done/$', auth_views.password_reset_done, { 'template_name': 'password_reset_done.html' }, name='password_reset_done'),
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', auth_views.password_reset_confirm, { 'template_name': 'password_reset_confirm.html' }, name='password_reset_confirm'),
     url(r'^reset/done/$', auth_views.password_reset_complete, { 'template_name': 'password_reset_complete.html' }, name='password_reset_complete'),
+    url(r'^login/(?P<login_step>[\w-]+)/$', PleioLoginView.as_view(), name='login'),
     url(r'^login/$', PleioLoginView.as_view(), name='login'),
     url(r'^logout/$', views.logout, name='logout'),
     url(r'^profile/$', views.profile, name='profile'),
-    url(r'^accept_previous_logins/(?P<acceptation_token>[-:\w]+)/$', views.accept_previous_login, name='accept_previous_login'),
-    url(r'^account/login/$', PleioLoginView.as_view(), name='login'),
     url(r'^account/sessions/other/delete/$', view=PleioSessionDeleteOtherView.as_view(), name='session_delete_other'),
     url(r'^account/sessions/(?P<pk>\w+)/delete/$', view=PleioSessionDeleteView.as_view(), name='session_delete'),
     url(r'^oauth/v2/authorize$', oauth2_views.AuthorizationView.as_view(), name='authorize'),

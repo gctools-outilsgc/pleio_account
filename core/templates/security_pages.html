@@ -18,14 +18,21 @@
 <h2>{% trans "Security" %}</h2>
 
 {% if messages %}
-<ul class="message_success">
+<ul class="messages correct">
     {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
-        {% if 'safe' in message.tags %}{{ message|safe }}{% else %}{{ message }}{% endif %}
+    <li>
+        {% include_asset "icons/check.svg" %}
+        {% if 'password' in message.tags %}
+            <div class="textcolor_primary">{% trans "Password changed" %}</div>
+            <div class="textcolor_secondary">{% trans "You can now login using your new password" %}</div>
+        {% else %}
+            <div class="textcolor_secondary">{{ message }}</div>
+        {% endif %}
     </li>
     {% endfor %}
 </ul>
 {% endif %}
+
 
 <!-- Password reset -->
 {% include 'security_pages/change_password.html' %}

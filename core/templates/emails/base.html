@@ -1,3 +1,7 @@
+{% load static %}
+{% load settings_value %}
+{% load absolute_url %}
+{% settings_value 'EMAIL_LOGO' as EMAIL_LOGO %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
@@ -203,7 +207,7 @@
                                 <tr>
                                     <td class="header" style="color:#ffffff; font-family:Arial,sans-serif; font-size:26px; line-height:30px; text-align:left; padding:15px 50px; font-weight:bold"
                                         bgcolor="#01689b">
-                                        <span class="link-white" style="color:#ffffff; text-decoration:none">Pleio</span>
+                                        <span class="link-white" style="color:#ffffff; text-decoration:none">{% settings_value 'SITE_TITLE' %}</span>
                                     </td>
                                 </tr>
                                 <!-- END Header -->
@@ -253,9 +257,8 @@
                                                 <tbody>
                                                     <tr>
                                                         <td valign="top" style="padding-right: 9px; padding-left: 9px; padding-top: 0; padding-bottom: 0; text-align:center;">
-
-                                                            <a href="https://www.pleio.nl">
-                                                                <img align="center" alt="Pleio logo" src="https://d95acc204d31494586c35e16014afbba.objectstore.eu/static/pleio-email.png" width="84"
+                                                            <a href="{% settings_value 'EXTERNAL_HOST' %}">
+                                                                <img align="center" alt="Pleio logo" src="{% absolute_url EMAIL_LOGO %}" width="84"
                                                                     style="max-width:168px; padding-bottom: 0; display: inline !important; vertical-align: bottom;"
                                                                     class="img-m-center">
                                                             </a>
