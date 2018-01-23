@@ -24,6 +24,34 @@ class DeviceIdMiddleware(MiddlewareMixin):
 
         return response
 
+class PartnerSiteMiddleware(MiddlewareMixin):
+    def process_response(self, request, response):
+        self.handle_partner_site_cookie(request, response, 'partner_site_url')
+        self.handle_partner_site_cookie(request, response, 'partner_site_name')
+        self.handle_partner_site_cookie(request, response, 'partner_site_logo_url')
+
+        return response
+
+    def handle_partner_site_cookie(self, request, response, acookie):
+        try:
+            if request.COOKIES[acookie] is None:
+                request.COOKIES.pop[acookie]
+            partner_site_url = request.COOKIES[acookie]
+            response.set_cookie(acookie, partner_site_url,
+                path=settings.SESSION_COOKIE_PATH,
+                secure=settings.SESSION_COOKIE_SECURE or None,
+                httponly=settings.SESSION_COOKIE_HTTPONLY or None
+            )
+        except:
+            try:
+                response.delete_cookie(acookie,
+                path=settings.SESSION_COOKIE_PATH,
+                )
+            except:
+                pass
+
+        return response
+
 class XRealIPMiddleware(object):
     def __init__(self, get_response):
         self.get_response = get_response

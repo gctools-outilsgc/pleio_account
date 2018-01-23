@@ -1,52 +1,85 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load Pleio_templatetags %}
+{% load settings_value %}
+
+{% block page_title %}
+{% trans "Sign in" %}
+{% endblock %}
 
 {% block content %}
 
-<ul class="messages error">
-    {% for error in form.non_field_errors %}
-        <li>{{ error }}</li>
-    {% endfor %}
-</ul>
-
-
-<form method="post" action=".">
+<form method="post" action="." class="ui form">
     {% csrf_token %}
     {{ wizard.management_form }}
     {% if wizard.steps.current == 'auth' %}
-        <p>{% trans "Welcome, please login." %}</p>
+        <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+        <div class="login__step-title">
+            <div>
+                <h1 class="ui large header">{% trans "Sign in" %} <div class="sub header">{% trans "with your Pleio-account" %}</div></h1>
+
+            </div>
+            <!--<img src="/static/images/logo-icon.svg" class="login__step-icon"/>-->
+        </div>
+
+
+            {% for error in form.non_field_errors %}
+        	<div class="ui negative message" id="error_login">
+                <div class="content">
+
+                    {% if error == 'captcha_mismatch' %}
+                        <div class="textcolor_primary">{% trans "Login failed." %}</div>
+                        <div class="textcolor_secondary">{% trans "Please check Google captcha." %}</div>
+                    {% else %}
+                        <div class="textcolor_primary">{% trans "Please enter a correct email and password." %}</div>
+                        <div class="textcolor_secondary">{% trans "Note that both fields may be case-sensitive." %}</div>
+                    {% endif %}
+                </div>
+        	</div>
+            {% endfor %}
+
 
         <fieldset>
-            <div class="input-field">
-                <label for="id_auth-username">{% trans "Email" %}</label>
+            <div class="field">
+                <label for="id_auth-username">{% trans "Email address" %}</label>
                 {{ form.errors.username }}
                 {{ form.username }}
             </div>
-            <div class="input-field">
+            <div class="field">
                 <label for="id_auth-password">{% trans "Password" %}</label>
                 {{ form.errors.password }}
-                {{ form.password }}
+                <div class="password_field">
+                  {{ form.password }}
+                  <span class="password__toggle">{% include_asset "icons/eye.svg" %}</span>
+                </div>
+                <a href="{% url 'password_reset' %}" class="forgot-password">{% trans "Forgot password" %}?</a>
+                <p class="capslock"></p>
             </div>
 
-            <div class="login__check">
-                {{ form.errors.is_persistent }}
-                {{ form.is_persistent }}
-                <label for="id_auth-is_persistent">{% trans "Remember me" %}</label>
-            </div>
+
+            {% settings_value 'GOOGLE_RECAPTCHA_SITE_KEY' as recaptcha_site_key %}
+
+            {% if recaptcha_site_key %}
+                <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
+            {% endif %}
+
 
             <div class="login__buttons">
-                <button name="login" class="button ___stretch ___active login__login" type="submit">{% trans "Login" %}</button>
-
-                <div class="forgot-password">
-                    <ul>
-                        <li><a href="{% url 'password_reset' %}">{% trans "Forgot password" %}</a></li>
-                        <li><a href="{% url 'register' %}">{% trans "Register" %}</a></li>
-                    </ul>
-                </div>
+                <button name="login" class="fluid ui button primary" type="submit">{% trans "Login" %}</button>
+                <div><span style="margin-right:5px">{% trans "Don't have an account?" %}</span><a class="item" href="{% url 'register' %}">{% trans "Register" %}</a></div>
             </div>
         </fieldset>
         <input type="hidden" name="next" value="{{next}}" />
-        <p></p>
+
+	<a href="{% url 'security_pages' page_action='2fa-setup' %}">
+        <div class="messages info ui icon message">
+		        <i class="icon">{% include_asset "icons/lock-plus.svg" %}</i>
+		          <div class="content">
+                    <div class="textcolor_primary header">{% trans "Secure your account" %}</div>
+                    <p class="textcolor_secondary">{% trans "Enable two factor authentication" %}</p>
+		          </div>
+        </div>
+	</a>
     {% elif wizard.steps.current == 'token' %}
 
     <script type="text/javascript">
@@ -56,13 +89,34 @@
         }
       };
     </script>
-    <p>{% trans "Please fill in a two-factor code" %}</p>
-        <div class="input-field">
+
+
+    <div class="login__step-title">
+        <div>
+            <h1 class="ui large header">{% trans "Sign in" %} <div class="sub header">{% trans "with your Pleio-account" %}</div></h1>
+        </div>
+
+    </div>
+
+    <div class="messages info ui icon message">
+        <i class="icon">{% include_asset "icons/lock-plus.svg" %}</i>
+          <div class="content">
+                <div class="textcolor_primary header">{% trans "Two factor authentication" %}</div>
+                <p class="textcolor_secondary">{% trans "Fill in a code from your code generator." %}</p>
+          </div>
+    </div>
+
+    <fieldset>
+        <div class="field">
             {{ form.errors.otp_token }}
             {{ form.otp_token.label_tag }}
             {{ form.otp_token }}
         </div>
-        <button name="volgende" class="button ___stretch ___active login__login" type="submit">{% trans "Login" %}</button>
+        <div class="login__buttons">
+            <button class="button ___stretch ___active login__login fluid ui button primary" type="submit">{% trans "Login" %}</button>
+            <a href="{% url 'login' %}" class="button ___stretch ___white ___outline">{% trans "Cancel" %}</a>
+        </div>
+    </fieldset>
     {% elif wizard.steps.current == 'backup' %}
     <script type="text/javascript">
       window.onload = function() {
@@ -74,19 +128,22 @@
     <p>{% blocktrans %}Use this form for entering backup tokens for logging in.
          These tokens have been generated for you to print and keep safe. Please
              enter one of these backup tokens to login to your account.{% endblocktrans %}</p>
-        <div class="input-field">
-            <label for="id_backup-otp_token">Token:</label>
-            <input id="id_backup-otp_token" name="backup-otp_token" type="text">
-            <button name="wizard_goto_step" type="submit" class="button ___stretch ___active">{% trans "Use backuptoken" %}</button>
-            <button name="wizard_goto_step" type="submit" value="auth" class="button ___stretch ___active">{% trans "Back" %}</button>
+         <fieldset>
+             <div class="field">
+                 <label for="id_backup-otp_token">Token:</label>
+                 <input id="id_backup-otp_token" name="backup-otp_token" type="text">
+             </div>
+         </fieldset>
+        <div class="login__buttons">
+            <button name="wizard_goto_step" type="submit" class="button ___stretch ___active fluid ui button primary">{% trans "Use backuptoken" %}</button>
+            <button name="wizard_goto_step" type="submit" value="auth" class="button ___stretch ___white ___outline">{% trans "Back" %}</button>
         </div>
 
     {% endif %}
-        {% if backup_tokens %}
-      <p>{% trans "As a last resort, you can use a backup token:" %}</p>
+
+    {% if backup_tokens %}
         <div class="input-field">
-            <button name="wizard_goto_step" type="submit" value="backup" class="button ___stretch ___active">{% trans "Use backuptoken" %}</button>
-            <button name="wizard_goto_step" type="submit" value="auth" class="button ___stretch ___active">{% trans "Back" %}</button>
+            <button name="wizard_goto_step" type="submit" value="backup" class="button ___stretch ___white ___outline">{% trans "Use backuptoken" %}</button>
         </div>
 
     {% endif %}

@@ -66,6 +66,7 @@ REST_FRAMEWORK = {
 }
 
 MIDDLEWARE = [
+    'core.middleware.XRealIPMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'user_sessions.middleware.SessionMiddleware',
@@ -77,7 +78,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django_otp.middleware.OTPMiddleware',
-    'core.middleware.XRealIPMiddleware',
+    'core.middleware.PartnerSiteMiddleware',
     'core.middleware.DeviceIdMiddleware'
 ]
 

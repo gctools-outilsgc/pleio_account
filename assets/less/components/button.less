@@ -1,12 +1,12 @@
 .button {
     display: inline-block;
     vertical-align: middle;
-    height: 5rem;
-    line-height: 5rem;
-    margin: 0 0 2rem 0;
-    padding: 0 2rem;
+    height: 4.8rem;
+    line-height: 4.8rem;
+    margin: 0 0 0.8rem 0;
+    padding: 0 1.6rem;
     background-color: @color-primary;
-    font-size: @font-base;
+    font-size: @font-base-button;
     font-weight: 400;
     color: @color-white;
     text-decoration: none;
@@ -29,6 +29,7 @@
 
 .button.___stretch {
     display: block;
+    width: 100%;
     text-align: center;
 }
 
@@ -38,10 +39,10 @@
 
 .button.___outline {
     background-color: transparent;
-    box-shadow: inset 0 0 0 1px @color-grey__50;
+    box-shadow: inset 0 0 0 1px @color-grey__30;
 
     &:hover {
-        background-color: @color-grey__50;
+        background-color: @color-grey__30;
         box-shadow: none;
     }
 
@@ -66,11 +67,16 @@
 
 .button.___white {
     background-color: @color-white;
-    color: @color-primary;
+    color: @color-black__60;
 
     &:hover {
         color: @color-tertiary;
     }
+}
+
+.button.___clear {
+    background-color: transparent;
+    color: @color-primary;
 }
 
 .button.___round {

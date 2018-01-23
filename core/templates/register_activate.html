@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load Pleio_templatetags %}
 
 {% block content %}
-    {% trans "We could not activate your account. Maybe your account already is activated." %}
+    <ul class="messages error">
+        <li class="messages__link">
+            {% include_asset "icons/account-alert.svg" %}
+            <div class="textcolor_primary">{% trans "We could not activate your account" %}</div>
+            <div class="textcolor_secondary">{% trans "Maybe your account already is activated." %} </div>
+        </li>
+    </ul>
 {% endblock %}

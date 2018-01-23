@@ -7,21 +7,23 @@
 //
 
 .input-field {
+    margin: 0 0 4rem 0;
 
     input {
-        margin: 0 0 3rem 0;
-        color: @color-black;
-        height: 3.4rem;
-        font-size: @font-base;
+        margin: 0;
+        color: @color-black__90;
+        height: 4.8rem;
+        font-size: @font-base-button;
         box-sizing: border-box;
     }
 
     /* label color */
     label {
-        color: @color-grey__50;
+        color: @color-black__60;
         font-size: @font-base;
         line-height: 1;
         left: 0;
+        transform: translateY(-140%);
     }
 
     /* label color */
@@ -34,8 +36,7 @@
 
     /* label color */
     label.active {
-        color: @color-grey__50;
-        font-size: 1.2rem;
+        font-size: 1.6rem;
     }
     /* label focus color */
     input[type=email]:focus + label,
@@ -163,6 +164,7 @@
 
 [type="checkbox"]+label {
     padding-left: 3rem;
+    color: @color-black__60;
     font-size: @font-medium;
     height: 2.2rem;
     line-height: 2.2rem;
@@ -199,6 +201,31 @@
     border-color: @color-grey__40;
 }
 
-label {
-    color: @color-black;
+// badge
+span.badge{
+    border-radius: @border-radius;
+    padding:0 0.6rem;
+    font-size:1.4rem;
+    line-height:3.2rem;
+    height:3.2rem;
+    color:@color-white;
+    
+    &.___tag {
+        float: none;
+        display: inline-block;
+        margin: 0 0.4rem 0.4rem;
+    }
+    
+    svg {
+        width: 1.6rem;
+        height: 1.6rem;
+        fill: currentColor;
+        vertical-align: middle;
+        margin-right: 0.3rem;
+    }
 }
+    .input-field .badge {
+        position: absolute;
+        right: 0;
+        bottom: 0.8rem;
+    }

@@ -1,0 +1,43 @@
+{% extends "base_account.html" %}
+{% load user_sessions %}
+{% load i18n %}
+{% load Pleio_templatetags %}
+
+{% block page_title %}Security Settings{% endblock %}
+
+{% block page_header %}Security{% endblock %}
+
+{% block content %}
+<script type="text/javascript">
+    window.onload = function() {
+       {
+        document.getElementById("id_old_password").focus();
+        var state = "{{2FA.state}}";
+        if ( state == "setup"  ) {
+            document.getElementById("id_token").focus();
+            }
+      }
+    };
+  </script>
+<h2>{% trans "Security" %}</h2>
+
+{% if messages %}
+<ul class="message_success">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+        {% if 'safe' in message.tags %}{{ message|safe }}{% else %}{{ message }}{% endif %}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<!-- Password reset -->
+{% include 'security_pages/change_password.html' %}
+
+<!-- Two factor authorization -->
+{% include 'security_pages/two_factor_authorization.html' %}
+
+<!-- User sessions -->
+{% include 'security_pages/user_sessions.html' %}
+
+{% endblock %}

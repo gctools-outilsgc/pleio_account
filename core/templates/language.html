@@ -1,0 +1,53 @@
+
+{% load i18n %}
+
+<a href="{{ current_path }}" class="ui primary button" onclick="changeLanguage();" id='btn' title="change language of the site">
+      {% if request.COOKIES.lang == 'en'%}
+        fr
+      {% else %}
+        en
+      {% endif %}
+    </a>
+
+<script>
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+function changeLanguage() {
+    if (getCookie('lang') == 'en') {
+        setCookie("lang", 'fr');
+    } else {
+        setCookie("lang", 'en');
+    }
+}
+
+function setCookie(sName, sValue, oExpires, sPath, sDomain, bSecure) {
+    var sCookie = sName + "=" + encodeURIComponent(sValue);
+    if (oExpires) {
+        sCookie += "; expires=" + oExpires.toGMTString();
+    }
+    if (sPath) {
+        sCookie += "; path=" + sPath;
+    }
+    if (sDomain) {
+        sCookie += "; domain=" + sDomain;
+    }
+    if (bSecure) {
+        sCookie += "; secure";
+    }
+    document.cookie = sCookie;
+}
+</script>

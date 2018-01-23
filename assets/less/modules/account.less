@@ -1,86 +1,116 @@
 .account-overlay {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    background-color: @color-grey__10;
-    z-index: 4;
-    overflow-y: scroll;
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility @trans-normal, opacity @trans-normal;
+    display: flex;
+    align-items: stretch;
+    background-color: @color-grey__20;
+    min-height: 100%;
+    
+    @media @screen-md-max {
+        flex-direction: column;
+    }
+    
+    &.___profile {
+        @media @screen-lg-max {
+            flex-direction: column;
+        }
+    
+    }
+}
 
-    &.___is-visible {
-        visibility: visible;
-        opacity: 1;
+.account, .account-theme {
+    padding: 6rem 8rem 4rem;
+    
+    @media @screen-lg-max {
+        padding: 4rem 4rem 2rem;
+    }
+    
+    @media @screen-md-max {
+        padding: 4rem 8rem 4rem;
+    }
+    
+    @media @screen-sm-max {
+        padding: 4rem 4rem 2rem;
+    }
+    
+    @media @screen-xs-max {
+        padding: 3.2rem 2.4rem;
     }
 }
 
 .account {
+    flex: 0 1 50%;
+    max-width: 60rem;
     display: flex;
+    order: 1;
     flex-direction: column;
+    color: @color-black__60;
     min-height: 100%;
-    max-width: 112rem;
-    margin: 0 auto;
-    padding: 4rem 0;
     overflow: hidden;
-
-    @media @screen-sm-max {
-        padding: 2rem 0;
+    background-color: @color-white;
+    box-shadow: 0 0 24rem rgba(0,0,0,0.15);
+    
+    @media @screen-md-max {
+        flex: 1 0 auto;
+        max-width: none;
+        min-height: 0;
+        order: 2;
     }
 }
 
-.account__top-bar {
-    padding: 0 4rem;
-
-    @media @screen-sm-max {
-        padding: 0 2rem;
+.account-theme {
+    flex: 1 1 auto;
+    order: 2;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    
+    @media @screen-md-max {
+        flex: 0 0 50vw;
+        order: 1;
     }
 }
 
-.account__logo {
-    display: block;
-    cursor: pointer;
 
-    svg {
-        display: block;
+.account-overlay:not(.___profile) .account__top-bar {
+    margin-bottom: 4rem; 
+    
+    @media @screen-md-max {
+        display: none;
     }
+}
 
-    #background,
-    #lines,
-    #text {
-        transition: fill @trans-fast;
+
+@media @screen-lg-max {
+    .account-overlay.___profile #show_menu:checked + .account__top-bar {
+        margin-bottom: 4rem; 
     }
-
-    #background {
-        fill: @color-grey__50;
+    .account-overlay.___profile #show_menu:not(:checked) ~ .account-menu__list {
+        display: none;
     }
-
-    &:hover {
-        #background {
-            fill: @color-grey;
-        }
-
-        #lines {
-            fill: @color-white;
-        }
+}
+@media @screen-lg {
+    .account-overlay.___profile .account__top-bar {
+        margin-bottom: 4rem; 
     }
 }
 
 .account__close {
-    padding: 1rem;
-    .icon(close);
-    cursor: pointer;
+    .icon(chevron-left);
+    float: right;
 
     &:before {
-        font-size: 2rem;
+        font-size: 0.6em;
+        vertical-align: baseline;
+        margin-right: 0.6em;
         color: @color-grey__50;
         transition: color @trans-fast;
     }
 
     &:hover:before {
         color: @color-grey;
+    }
+    
+    @media @screen-sm-max {
+        font-size: 1.6rem;
     }
 }
 
@@ -103,24 +133,12 @@
 
 .account__content-container {
     width: 50%;
-    padding: 0 4rem;
-
-    @media @screen-sm-max {
-        padding: 0 2rem;
-    }
 }
 
 .account__content {
-    width: 100%;
-    max-width: 40rem;
-    margin: 0 auto;
-    padding: 4rem;
-    background-color: #fff;
-    color: #000;
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12), 0 3px 1px -2px rgba(0,0,0,.2);
-
-    @media @screen-sm-max {
-        padding: 4rem 0 2rem 0;
+    
+    fieldset {
+        margin-top: 5rem; 
     }
 }
 
@@ -130,7 +148,6 @@
     margin: 0 auto;
     padding: 4rem;
     background-color: #fff;
-    color: #000;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12), 0 3px 1px -2px rgba(0,0,0,.2);
 
     @media @screen-sm-max {
@@ -138,62 +155,320 @@
     }
 }
 
-.account__divider {
-    position: relative;
-    text-align: center;
-    margin: 4rem 0;
-
-    &:before {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 1px;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        margin: auto 0;
-        background-color: @color-grey__50;
-        z-index: -1;
+.login__step-title {
+    margin-bottom: 2.4rem;
+    display: flex;
+    
+    div {
+        flex: 1 1 auto; 
     }
-
-    span {
-        display: inline-block;
-        padding: 0 1rem;
-        background-color: @color-black;
+    
+    .login__step-icon {
+        width: 3.5rem;
+        height: 3.5rem;
+        display: none;
+        
+        @media @screen-md-max {
+            display: block;
+        }
+        
     }
-}
-
-.login__username,
-.login__password {
-    width: 100%;
-    height: 5rem;
-    background-color: transparent;
-    border: none;
-    color: @color-white;
-}
-
-.login__buttons {
-    margin: 2rem 0 4rem 0;
-
-    .button {
-        margin: 0;
+    
+    
+    h2 {
+        color: @color-black__90;
     }
 }
 
-.register__button {
-    margin: 4rem 0 0 0;
-
-    .button {
-        margin: 0;
+.forgot-password {
+    margin-top: 0.75rem;
+    display: block;
+    text-align: right;
+    color: @color-black__60;
+    
+    &:hover {
+        color: @color-primary;
     }
+}
+
+.password__toggle {
+    position: absolute;
+    right: 0;
+    top: 0.4rem;
+    padding: 0.8rem 0.8rem 0.6rem; 
+    cursor: pointer;
+    
+    svg {
+        fill: @color-grey__40;
+        width: 2.4rem;
+        height: 2.4rem;
+        transition: fill @trans-fast;
+    }
+    
+    &:hover svg {
+        fill: @color-black__90;
+    }
+}
+
+input[type=text] + .password__toggle svg {
+    fill: @color-primary;
+}
+
+.login__buttons, .register__buttons {
+    margin: 1.6rem 0 4rem 0;
 }
 
 .login__check,
 .register__check {
-    font-size: 1.6rem;
-    line-height: 3rem;
+    line-height: 4rem;
 }
 
-.register__checks {
-    margin: 2rem 0 0 0;
+.errorlist {
+    color: @color-red;
+}
+
+.capslock {
+    float: right;  
+    color: @color-red;
+}
+
+.message_success {
+    color: @color-blue;
+}
+
+.account-menu, .account-right {
+    padding: 4rem 0;
+    
+    @media @screen-lg-max {
+        padding: 3.2rem 0;
+    }
+    @media @screen-xs-max {
+        padding: 2.4rem 0;
+    }
+}
+
+.account-menu {
+    flex: 0 1 60%;
+    max-width: 50rem;
+    display: flex;
+    order: 1;
+    flex-direction: column;
+    color: @color-black__60;
+    min-height: 100%;
+    overflow: hidden;
+    background-color: @color-white;
+    box-shadow: 0 0 24rem rgba(0,0,0,0.15);
+    
+    @media @screen-lg-max {
+        flex: 1 0 auto;
+        max-width: none;
+        min-height: 0;
+        order: 2;
+    }
+}
+
+.account-menu__hamburger {
+    width: 2.4rem;
+    height: 2.4rem;
+    float: right;
+    padding: 1rem 0 0;
+    display: none;
+    cursor: pointer;
+    
+    @media @screen-lg-max {
+        display: block; 
+    }
+    
+    svg {
+        fill: @color-black__60;
+        transition: fill @trans-fast;
+    }
+    &:hover svg {
+        fill: @color-primary;
+    }
+}
+
+.account-right {
+    flex: 1 1 auto;
+    order: 2;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    padding-left: 4rem;
+    padding-right: 4rem;
+    
+    .account-right__content {
+        max-width: 100rem;
+        padding-top: 6rem;
+    }
+    
+    @media @screen-sm-max {
+        padding-left: 2.4rem;
+        padding-right: 2.4rem;
+    }
+}
+
+
+.account-menu .account__top-bar, .account-menu__list a {
+    padding-left: 6rem;
+    padding-right: 4rem;
+    
+    @media @screen-sm-max {
+        padding-left: 3rem;
+        padding-right: 2.4rem;
+    }
+}
+
+
+.account-menu__list {
+
+    li {
+        display: block;
+        border-bottom: 0.1rem solid @color-grey__30;
+        position: relative;
+        
+        a {
+            color: @color-black__60;
+            display: flex;
+            padding-top: 1.4rem;
+            padding-bottom: 1.4rem;
+            justify-content: center;
+            align-items: center;
+            transition: color @trans-fast, background @trans-fast;
+            
+            &:hover, &.current {
+                color: @color-white;
+                background-color: @color-primary;
+            }
+            
+            div {
+                flex: 1 1 auto;
+            }
+            
+            &:hover .title, &.current .title {
+                color: @color-white;
+            }
+            
+            &:hover svg, &.current svg {
+                fill: @color-white;
+            }
+        }
+        
+        svg {
+            fill: @color-primary;
+            width: 2.4rem;
+            height: 2.4rem;
+            margin-right: 2rem;
+            transition: fill @trans-fast;
+        }
+        
+        
+        .title {
+            font-size: 1.8rem;
+            color: @color-black__90;
+            transition: color @trans-fast;
+        }
+        
+        
+        
+    }
+}
+
+.account-user__pickavatar {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-bottom: 1.2rem;
+    
+    .input-field {
+        flex: 0 0 10rem;
+        margin: 0;
+    }
+    .button {
+        flex: 0 1 auto;
+    }
+    #id_avatar {
+        position: absolute;
+        z-index: -1;
+    }
+}
+
+.account-menu__avatar, .account-user__avatar {
+    border-radius: 50%;
+    overflow: hidden;
+    width: 5.6rem;
+    height: 5.6rem;
+    margin-left: 1.2rem;
+    border: 0.1rem solid @color-primary;
+}
+.account-user__avatar {
+    width: 10rem;
+    height: 10rem;
+    border-width: 0.2rem;
+    display: block;
+    margin-left: 0;
+    background-color: @color-grey__20;
+}
+    
+
+.account__cards {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 2rem -1rem;
+    
+    @media @screen-sm-max {
+        margin: 2rem 0;
+    }
+    .account__cards { margin: 0; }
+}
+    .account__cards .card {
+        border-bottom: 0.2rem solid @color-primary;
+        margin-bottom: 2rem;
+        max-height: none;
+    }
+    
+.table {
+    
+    &.___stretch {
+        width: 100%;
+    }
+    
+    td, th {
+        padding: 0;
+        padding-right: 2.4rem;
+    }
+    
+    td:last-child, .th:last-child {
+        padding-right: 0;
+        text-align: right;
+    }
+    
+    th {
+        color: @color-black__60;
+        font-weight: normal;
+    }
+    
+    tbody tr {
+        border-bottom: 0.1rem solid @color-grey__30;
+    }
+}
+
+.image__2fa {
+    float: right;
+    width: 10rem;
+    height: 10rem;
+    margin: -1rem 0 0 2.4rem;
+    background: #dbe7f5;
+    text-align: center;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    svg {
+        width: 75%;
+        
+    }
+    &.__enable .icon-lock { fill: @color-red; }
+    &.__disable .icon-lock { fill: @color-green; }
 }

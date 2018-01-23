@@ -1,26 +1,24 @@
-{% extends "base.html" %}
+{% extends "base_account.html" %}
 {% load i18n %}
 
 {% block content %}
-<form method="post">
-    {% csrf_token %}
-    <fieldset>
-      <h3>{% block title %}{% trans "Disable Two-factor Authentication" %}{% endblock %}</h3>
-      <p>{% blocktrans %}You are about to disable two-factor authentication. This
-        compromises your account security, are you sure?{% endblocktrans %}</p>
-<!--
-    <table>{{ form }}</table>
--->
-    <div class="login__check">
-        <input id="id_understand" name="understand" type="checkbox" required="">
-        <label for="id_understand">{% trans "Yes, I am sure" %}</label>
+<div class="account__cards">
+    <div class="card ___nopadding">
+        <form method="post">
+            {% csrf_token %}
+            <h2 class="card__title ___addpadding-side">{% block title %}{% trans "Disable Two-factor Authentication" %}{% endblock %}</h2>
+            <fieldset class="___addpadding-side">
+                <p>{% blocktrans %}You are about to disable two-factor authentication. This
+                compromises your account security, are you sure?{% endblocktrans %}</p>
+                <div class="login__check">
+                  <input id="id_understand" name="understand" type="checkbox" required="">
+                  <label for="id_understand">{% trans "Yes, I am sure" %}</label>
+                </div>
+            </fieldset>
+            <div class="card__action ___addpadding-side">
+                <button class="button ___clear" type="submit">{% trans "Disable" %}</button>
+            </div>
+        </form>
     </div>
-    <div class="input-field">
-        <button class="button"
-                type="submit">{% trans "Disable" %}</button>
-                <a href="{% url 'two_factor:profile' %}" class="button">{% trans "Back" %}</a>
-        </div>
-    </fieldset>
-</form>
-
+</div>
 {% endblock %}

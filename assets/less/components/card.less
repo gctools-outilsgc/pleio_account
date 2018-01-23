@@ -3,10 +3,15 @@
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
-    width: 34rem;
+    width: 48rem;
     background-color: @color-white;
     user-select: none;
+    border-radius: @border-radius;
     .box-shadow();
+    
+    &.___stretch {
+        width: 100%;
+    }
 
     &.___blue-bg {
         background-color: @color-tertiary;
@@ -26,7 +31,6 @@
         width: 100%;
         margin: 0 0 2rem 0;
         padding: 2rem;
-        padding-bottom: 5rem;
 
         &.___big {
             min-height: 33rem;
@@ -37,8 +41,21 @@
         height: 100%;
         max-height: 60rem;
         margin: 0 1rem;
-        padding: 4rem;
-        padding-bottom: 8rem;
+        padding: 2.4rem;
+    }
+    
+    &.___nopadding {
+        padding: 0;
+    }
+    
+    .___addpadding-side {
+        padding-left: 2.4rem;
+        padding-right: 2.4rem;
+    }
+    
+    .___addpadding-topbottom {
+        padding-top: 2.4rem;
+        padding-bottom: 2.4rem;
     }
 }
 
@@ -106,8 +123,11 @@
 }
 
 .card__title {
-    margin: 0 0 2rem 0;
-    color: @color-black;
+    margin-bottom: 2rem;
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 0.1rem solid @color-grey__30;
+    color: @color-primary;
 
     .___blue-bg & {
         color: @color-white;
@@ -125,6 +145,18 @@
     .___green & {
         color: @color-green;
     }
+    
+    & + fieldset, & + .account-user__pickavatar, & + form { margin-top: 2rem; }
+}
+    
+.card__action {
+    margin: 2rem 0 -0.6rem;
+    border-top: 0.1rem solid @color-grey__30;
+    text-align: right;
+    
+    .button:last-child {
+        margin-right: -1.6rem;
+    }
 }
 
 h1.card__title {
@@ -139,10 +171,6 @@ h1.card__title {
 h2.card__title {
     .font(title-small);
     font-weight: 400;
-
-    @media @screen-sm-max {
-        .font(large);
-    }
 }
 
 .card__content {
