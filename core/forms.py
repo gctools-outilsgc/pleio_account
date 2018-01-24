@@ -1,5 +1,6 @@
 from django.utils.translation import gettext, gettext_lazy as _
 from django.contrib.auth import password_validation
+from django.conf import settings
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate
@@ -39,7 +40,9 @@ class RegisterForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(RegisterForm, self).__init__(*args, **kwargs)
-        self.fields["g-recaptcha-response"] = forms.CharField()
+        
+        if getattr(settings, "GOOGLE_RECAPTCHA_SITE_KEY", None):
+            self.fields["g-recaptcha-response"] = forms.CharField()
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
@@ -79,7 +82,9 @@ class PleioAuthenticationForm(AuthenticationForm):
 
     def __init__(self, *args, **kwargs):
         super(PleioAuthenticationForm, self).__init__(*args, **kwargs)
-        self.fields['g-recaptcha-response'] = forms.CharField()
+
+        if getattr(settings, "GOOGLE_RECAPTCHA_SITE_KEY", None):
+            self.fields['g-recaptcha-response'] = forms.CharField()
 
     def clean(self):
         super(PleioAuthenticationForm, self).clean()
