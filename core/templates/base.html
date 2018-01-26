@@ -20,7 +20,7 @@
     </head>
     <body>
         <div class="account-overlay  ui container">
-            
+
             {% if request.COOKIES.partner_site_url %}
                 <div class="account-theme" data-bg="{{ request.COOKIES.partner_site_logo_url }}">
             {% else %}
@@ -31,7 +31,7 @@
                     <a href={{ request.COOKIES.partner_site_url }} class="button ___white ___outline account__close">{{ request.COOKIES.partner_site_name }}</a>
                 {% endif %}
             </div>
-             
+
             <div class="account">
                 <div class="account__top-bar">
                     <img alt ="Graphic Element" src="{% show_customizations_logo %}" class="ui top aligned mini image">
@@ -41,16 +41,15 @@
                     {% comment 'removing for now' %}
                     <a class="navigation__logo" title="{% trans "Back to the homepage" %}" href="https://www.pleio.nl/">{% include_asset "images/logo.svg" %}</a>
                     {% endcomment %}
-
+                    <div class="language-toggle">
+                        {% include "language.html" %}
+                    </div>
                 </div>
 
-                <div class="ui grid">
+                <div class="ui grid" style="padding-top:40px">
                     <div class="ui centered raised card">
                         <div class="content">
                             {% block content %}{% endblock %}
-                            <div style='position:fixed; bottom:0; text-align:center'>
-                                {% include "language.html" %}
-                            </div>
                         </div>
                     </div>
                 </div>

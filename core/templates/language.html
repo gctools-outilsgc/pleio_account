@@ -1,11 +1,13 @@
 
 {% load i18n %}
 
-<a href="{{ current_path }}" class="ui primary button" onclick="changeLanguage();" id='btn' title="change language of the site">
+<a href="{{ current_path }}" class="ui primary button compact" onclick="changeLanguage();" id='btn' title="{% trans "Change language" %}">
       {% if request.COOKIES.lang == 'en'%}
-        fr
+        <span aria-hidden="true">FR</span>
+        <span class="invisible" lang="fr">Français</span>
       {% else %}
-        en
+        <span aria-hidden="true">EN</span>
+        <span class="invisible" lang="en">English</span>
       {% endif %}
     </a>
 

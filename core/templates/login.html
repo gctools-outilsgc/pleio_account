@@ -73,7 +73,7 @@
 
 	<a href="{% url 'security_pages' page_action='2fa-setup' %}">
         <div class="messages info ui icon message">
-		        <i class="icon">{% include_asset "icons/lock-plus.svg" %}</i>
+		        <i class="icon" aria-hidden="true">{% include_asset "icons/lock-plus.svg" %}</i>
 		          <div class="content">
                     <div class="textcolor_primary header">{% trans "Secure your account" %}</div>
                     <p class="textcolor_secondary">{% trans "Enable two factor authentication" %}</p>
@@ -114,7 +114,12 @@
         </div>
         <div class="login__buttons">
             <button class="button ___stretch ___active login__login fluid ui button primary" type="submit">{% trans "Login" %}</button>
-            <a href="{% url 'login' %}" class="button ___stretch ___white ___outline">{% trans "Cancel" %}</a>
+            {% if backup_tokens %}
+
+            <button name="wizard_goto_step" type="submit" value="backup" class="button ___stretch ___white ___outline fluid basic ui" style="margin:5px 0">{% trans "Use backup token" %}</button>
+
+            {% endif %}
+            <a href="{% url 'login' %}">{% trans "Return to sign in" %}</a>
         </div>
     </fieldset>
     {% elif wizard.steps.current == 'backup' %}
@@ -125,28 +130,24 @@
         }
       };
     </script>
+    <h1 style="margin-top:0" class="ui header large">{% trans "Backup token" %}</h1>
     <p>{% blocktrans %}Use this form for entering backup tokens for logging in.
          These tokens have been generated for you to print and keep safe. Please
              enter one of these backup tokens to login to your account.{% endblocktrans %}</p>
          <fieldset>
              <div class="field">
-                 <label for="id_backup-otp_token">Token:</label>
+                 <label for="id_backup-otp_token">Token</label>
                  <input id="id_backup-otp_token" name="backup-otp_token" type="text">
              </div>
          </fieldset>
         <div class="login__buttons">
-            <button name="wizard_goto_step" type="submit" class="button ___stretch ___active fluid ui button primary">{% trans "Use backuptoken" %}</button>
-            <button name="wizard_goto_step" type="submit" value="auth" class="button ___stretch ___white ___outline">{% trans "Back" %}</button>
+            <button name="wizard_goto_step" type="submit" class="button ___stretch ___active fluid ui button primary">{% trans "Login" %}</button>
+            <a href="{% url 'login' %}">{% trans "Return to sign in" %}</a>
         </div>
 
     {% endif %}
 
-    {% if backup_tokens %}
-        <div class="input-field">
-            <button name="wizard_goto_step" type="submit" value="backup" class="button ___stretch ___white ___outline">{% trans "Use backuptoken" %}</button>
-        </div>
 
-    {% endif %}
 
 </form>
 {% endblock %}
