@@ -59,7 +59,7 @@
                         {% else %}
                             <a href="{% url 'profile' %}">
                         {% endif %}
-                            <div aria-hidden="true">{% include_asset "icons/person.svg" %}</div>
+                            <i aria-hidden="true">{% include_asset "icons/person.svg" %}</i>
                             <div>
                                 <div class="title">{% trans "Profile" %}</div>
 				                        <div class="">{% trans "Your details" %}, {% trans "Avatar" %}</div>
@@ -72,7 +72,7 @@
                         {% else %}
                             <a href="{% url 'security_pages' %}">
                         {% endif %}
-                            <div aria-hidden="true">{% include_asset "icons/security.svg" %}</div>
+                            <i aria-hidden="true">{% include_asset "icons/security.svg" %}</i>
                             <div>
                                 <div class="title">{% trans "Security" %}</div>
 				                        <div>{% trans "Password" %}, {% trans "Sessions" %}, {% trans "Two-factor authentication" %}</div>
@@ -81,7 +81,7 @@
                     </li>
                     <li>
                         <a href="{% url 'logout' %}">
-                            <div aria-hidden="true">{% include_asset "icons/lock-open.svg" %}</div>
+                            <i aria-hidden="true">{% include_asset "icons/lock-open.svg" %}</i>
                             <div>
                                 <div class="title">{% trans "Logout" %}</div>
                             </div>
@@ -211,8 +211,10 @@ color: #fff;
 padding-left: 3rem;
 padding-right: 4rem;
 }
+.account-menu__list i {
+  padding-right:1em;
+}
 .account-menu__list svg {
-padding-right:3rem;
 transition: fill 0.2s;
 }
 .account-menu__list li a div {
