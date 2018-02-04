@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load Pleio_templatetags %}
+{% load settings_value %}
+
+{% block page_title %}
+{% trans "Error" %}
+{% endblock %}
+
+{% block content %}
+
+<h3>{{ error }}</h3>
+<p>{{ description }}</p>
+
+{% endblock %}
