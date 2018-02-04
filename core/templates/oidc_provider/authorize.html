@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% load Pleio_templatetags %}
-{% load settings_value %}
 
 {% block page_title %}
 {% trans "Authorize" %}
@@ -11,9 +9,9 @@
 
 <form method="post" action="{% url 'oidc_provider:authorize' %}" class="ui form">
 
-	<h1 class="ui large header">Authorize</h1>
+    <h1 class="ui large header">{% trans "Authorize" %}</h1>
 
-	<p><strong>{{ client.name }}</strong> would like to access the following account information:</p>
+    <p><strong>{{ client.name }}</strong> {% trans "would like to access the following account information:" %}</p>
 
     {% csrf_token %}
 

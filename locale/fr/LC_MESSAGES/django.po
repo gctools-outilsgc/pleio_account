@@ -302,6 +302,14 @@ msgstr "Mot de passe perdu?"
 msgid "Login"
 msgstr "Ouvrir uen session"
 
+#: core/templates/oidc_provider/authorize.html:12
+msgid "Authorize"
+msgstr "Autoriser"
+
+#: core/templates/oidc_provider/authorize.html:14
+msgid "would like to access the following account information:"
+msgstr "souhaite accéder aux informations de compte suivantes :"
+
 #: core/templates/login.html:61
 msgid "Register account"
 msgstr "S'inscrir"
