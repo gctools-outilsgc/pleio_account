@@ -18,8 +18,8 @@
     {{ hidden_inputs }}
 
     <ul>
-    {% for scope in params.scope %}
-        <li><strong>{{ scope }}</strong></li>
+    {% for scope in scopes %}
+        <li><strong>{{ scope.name }}</strong><br><i>{{ scope.description }}</i>
     {% endfor %}
     </ul>
 
