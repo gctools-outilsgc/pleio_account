@@ -2,12 +2,18 @@
 {% load i18n %}
 {% load Pleio_templatetags %}
 
+{% block page_title %}
+{% trans "Activation error" %}
+{% endblock %}
+
 {% block content %}
-    <ul class="messages error">
-        <li class="messages__link">
-            {% include_asset "icons/account-alert.svg" %}
+    <h1 class="ui large header">{% trans "Activation error" %}</h1>
+    <div class="messages ui error">
+        <i class="icon" aria-hidden="true">{% include_asset "icons/account-alert.svg" %}<i>
+        <div class="content">
             <div class="textcolor_primary">{% trans "We could not activate your account" %}</div>
             <div class="textcolor_secondary">{% trans "Maybe your account already is activated." %} </div>
-        </li>
-    </ul>
+        </div>
+    </div>
+    <a href="{% url 'login' %}" >{% trans "Return to sign in" %}</a>
 {% endblock %}
