@@ -53,10 +53,16 @@
                         </div>
                     </div>
                 </div>
+                {% if show_footer_images %}
                 <div class="account__fip">
-                    <div class="left floated fip__signature" style="height:22px; float:left;">{% include_asset "images/sig-en.svg" %}</div>
-                    <div class="right floated fip__watermark" style="width:139px; float:right;">{% include_asset "images/wmms-alt.svg" %}</div>
+                    <div class="left floated fip__signature" style="height:22px; float:left;">
+                        <img alt="Graphic Element" src="{% show_footer_image_left %}">
+                    </div>
+                    <div class="right floated fip__watermark" style="width:139px; float:right;">
+                        <img alt="Graphic Element" src="{% show_footer_image_right %}">
+                    </div>
                 </div>
+                {% endif %}
             </div>
         </div>
 

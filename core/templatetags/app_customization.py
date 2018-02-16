@@ -56,4 +56,37 @@ def show_customizations_favicon():
         else:
             return q.app_favicon.url
     except AppCustomization.DoesNotExist:
-        return ''                
+        return ''
+
+@register.simple_tag()
+def show_footer_images():
+    try:
+        q = AppCustomization.objects.get(id=1)
+        if q.footer_image_left and q.footer_image_right:
+            return true
+        else:
+            return false
+    except AppCustomization.DoesNotExist:
+        return ''
+
+@register.simple_tag()
+def show_footer_image_left():
+    try:
+        q = AppCustomization.objects.get(id=1)
+        if not q.footer_image_left:
+            return ''
+        else:
+            return q.footer_image_left.url
+    except AppCustomization.DoesNotExist:
+        return ''
+
+@register.simple_tag()
+def show_footer_image_right():
+    try:
+        q = AppCustomization.objects.get(id=1)
+        if not q.footer_image_right:
+            return ''
+        else:
+            return q.footer_image_right.url
+    except AppCustomization.DoesNotExist:
+        return ''

@@ -300,6 +300,8 @@ class AppCustomization(models.Model):
     app_background_options = models.CharField(max_length=1, choices=BG_IMAGE_OPTIONS)
     display_language_toggle = models.BooleanField(default=True)
     display_logo_title = models.BooleanField("Display Logo and Title together", default=True)    
+    footer_image_left = models.ImageField(null=True, blank=True)
+    footer_image_right = models.ImageField(null=True, blank=True)
 
 admin.site.register(User)
 admin.site.register(PleioPartnerSite)
