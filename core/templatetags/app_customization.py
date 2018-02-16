@@ -58,14 +58,14 @@ def show_customizations_favicon():
     except AppCustomization.DoesNotExist:
         return ''
 
-@register.simple_tag()
+@register.assignment_tag()
 def show_footer_images():
     try:
         q = AppCustomization.objects.get(id=1)
         if q.footer_image_left and q.footer_image_right:
-            return true
+            return True
         else:
-            return false
+            return False
     except AppCustomization.DoesNotExist:
         return ''
 

@@ -24,8 +24,6 @@ class Migration(migrations.Migration):
                 ('app_background_options', models.CharField(choices=[('C', 'Cover'), ('T', 'Tiled')], max_length=1)),
                 ('display_language_toggle', models.BooleanField(default=True)),
                 ('display_logo_title', models.BooleanField(default=True, verbose_name='Display Logo and Title together')),
-                ('footer_image_left', models.ImageField(blank=True, null=True, upload_to='')),
-                ('footer_image_right', models.ImageField(blank=True, null=True, upload_to='')),
             ],
         ),
     ]
