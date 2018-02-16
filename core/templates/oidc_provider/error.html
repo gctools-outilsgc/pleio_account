@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block page_title %}
+{% trans "Error" %}
+{% endblock %}
+
+{% block content %}
+
+<h3>{{ error }}</h3>
+<p>{{ description }}</p>
+
+{% endblock %}

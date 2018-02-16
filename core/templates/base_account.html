@@ -29,9 +29,14 @@
                     <a class="navigation__logo" title="{% trans "Back to the homepage" %}" href="https://www.pleio.nl/">{% include_asset "images/logo.svg" %}</a>
                     {% endcomment %}
                     <img alt ="Graphic Element" src="{% show_customizations_logo %}" class="ui top aligned mini image">
-                    <span class="ui huge header">                        
+                    <span class="ui huge header">
                         {% show_customizations_title %}
                     </span>
+
+                    <div class="base-language-toggle">
+                        {% include "language.html" %}
+                    </div>
+
                     <label for="show_menu" class="account-menu__hamburger">{% include_asset "icons/hamburger.svg" %}</label>
                 </div>
 
@@ -39,8 +44,8 @@
                 <div class="account-menu__header">
                      <div class="textcolor_primary ui header welcome-header">{% trans "Welcome" %}, {{request.user.name}}<div class="sub header">{% trans "in your Pleio account" %}</div></div>
 
-		     {% if request.user.avatar %}
-                     <img src="/media/{{ request.user.avatar }}" class="account-menu__avatar" />
+		                 {% if request.user.avatar %}
+                      <img aria-hidden="true" src="/media/{{ request.user.avatar }}" class="account-menu__avatar" />
                      {% endif %}
 
 
@@ -54,10 +59,10 @@
                         {% else %}
                             <a href="{% url 'profile' %}">
                         {% endif %}
-                            {% include_asset "icons/person.svg" %}
+                            <i aria-hidden="true">{% include_asset "icons/person.svg" %}</i>
                             <div>
                                 <div class="title">{% trans "Profile" %}</div>
-				<div class="">{% trans "Your details" %}, {% trans "Avatar" %}</div>
+				                        <div class="">{% trans "Your details" %}, {% trans "Avatar" %}</div>
                             </div>
                         </a>
                     </li>
@@ -67,7 +72,7 @@
                         {% else %}
                             <a href="{% url 'security_pages' %}">
                         {% endif %}
-                            {% include_asset "icons/security.svg" %}
+                            <i aria-hidden="true">{% include_asset "icons/security.svg" %}</i>
                             <div>
                                 <div class="title">{% trans "Security" %}</div>
 				                        <div>{% trans "Password" %}, {% trans "Sessions" %}, {% trans "Two-factor authentication" %}</div>
@@ -76,16 +81,13 @@
                     </li>
                     <li>
                         <a href="{% url 'logout' %}">
-                            {% include_asset "icons/lock-open.svg" %}
+                            <i aria-hidden="true">{% include_asset "icons/lock-open.svg" %}</i>
                             <div>
                                 <div class="title">{% trans "Logout" %}</div>
                             </div>
                         </a>
                     </li>
                 </ul>
-                <div style='position:fixed; bottom:0; text-align:center; padding-left:5%'>
-                    {% include "language.html" %}
-                </div>
               </div>
             </div>
 
@@ -209,8 +211,10 @@ color: #fff;
 padding-left: 3rem;
 padding-right: 4rem;
 }
+.account-menu__list i {
+  padding-right:1em;
+}
 .account-menu__list svg {
-padding-right:3rem;
 transition: fill 0.2s;
 }
 .account-menu__list li a div {

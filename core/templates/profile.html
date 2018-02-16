@@ -2,9 +2,9 @@
 {% load i18n %}
 {% load Pleio_templatetags %}
 
-{% block page_title %}Account Settings{% endblock %}
+{% block page_title %}{% trans "Account Settings" %}{% endblock %}
 
-{% block page_header %}Account Settings{% endblock %}
+{% block page_header %}{% trans "Account Settings" %}{% endblock %}
 
 {% block content %}
     <h2 class="ui header">{% trans "Profile" %}</h2>
@@ -25,7 +25,7 @@
                         <label for="id_email">{% trans "Email" %}</label>
                         {{ form.errors.email }}
                         {{ form.email }}
-                        <span class="badge green __uppercase ui label"><i class="icon">{% include_asset "icons/check.svg" %}</i>{% trans "Government" %}</span>
+                        <!--<span class="badge green __uppercase ui label"><i class="icon">{% include_asset "icons/check.svg" %}</i>{% trans "Government" %}</span>-->
                     </div>
                 </fieldset>
 		</div>
