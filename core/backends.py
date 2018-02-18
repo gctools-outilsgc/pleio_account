@@ -19,22 +19,23 @@ class ElggBackend:
         valid_pass_result = valid_pass_json["result"] if 'result' in valid_pass_json else False
         valid_pass = valid_pass_result["valid"] if 'valid' in valid_pass_result else False
         name = valid_pass_result["name"] if 'name' in valid_pass_result else username
+        admin = valid_pass_result["admin"] if 'admin' in valid_pass_result else False
 
+        # If valid, create new user with Elgg attributes
         if valid_user is True and valid_pass is True:
-            try:
-                user = User.objects.get(username=username)
-            except User.DoesNotExist:
-                user = User.objects.create_user(
-                    name=name,
-                    email=username,
-                    password=password,
-                    accepted_terms=True,
-                    receives_newsletter=False
-                )
-                user.is_active = True
-                user.save()
+            user = User.objects.create_user(
+                name=name,
+                email=username,
+                password=password,
+                accepted_terms=True,
+                receives_newsletter=False
+            )
+            user.is_active = True
+            user.is_admin = admin
+            user.save()
             return user
-        return None
+        else:
+            return None
 
     def get_user(self, user_id):
         try:
