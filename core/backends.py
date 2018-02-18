@@ -5,14 +5,20 @@ from .models import User
 class ElggBackend:
 
     def authenticate(self, request, username=None, password=None):
-        valid_user_request = requests.post("https://dev.gccollab.ca/services/api/rest/json/", data={'method': 'pleio.userexists', 'user': username})
-        valid_user_json = json.loads(valid_user_request.text)
-        valid_user = valid_user_json["result"]
+        # TODO: Pull Elgg url out into config settings
+        elgg_url = "https://dev.gccollab.ca"
 
-        valid_pass_request = requests.post("https://dev.gccollab.ca/services/api/rest/json/", data={'method': 'pleio.verifyuser', 'user': username, 'password': password})
+        # Verify user exists in Elgg database
+        valid_user_request = requests.post(elgg_url + "/services/api/rest/json/", data={'method': 'pleio.userexists', 'user': username})
+        valid_user_json = json.loads(valid_user_request.text)
+        valid_user = valid_user_json["result"] if 'result' in valid_user_json else False
+
+        # Verify username/password combination
+        valid_pass_request = requests.post(elgg_url + "/services/api/rest/json/", data={'method': 'pleio.verifyuser', 'user': username, 'password': password})
         valid_pass_json = json.loads(valid_pass_request.text)
-        valid_pass = valid_pass_json["result"]["valid"]
-        name = valid_pass_json["result"]["name"]
+        valid_pass_result = valid_pass_json["result"] if 'result' in valid_pass_json else False
+        valid_pass = valid_pass_result["valid"] if 'valid' in valid_pass_result else False
+        name = valid_pass_result["name"] if 'name' in valid_pass_result else username
 
         if valid_user is True and valid_pass is True:
             try:
