@@ -82,6 +82,11 @@ MIDDLEWARE = [
     'core.middleware.DeviceIdMiddleware'
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'core.backends.ElggBackend'
+]
+
 ROOT_URLCONF = 'pleio_account.urls'
 
 TEMPLATES = [
