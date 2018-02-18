@@ -14,7 +14,7 @@ class ElggBackend:
         valid_pass = valid_pass_json["result"]["valid"]
         name = valid_pass_json["result"]["name"]
 
-        if valid_user and valid_pass:
+        if valid_user is True and valid_pass is True:
             try:
                 user = User.objects.get(username=username)
             except User.DoesNotExist:
