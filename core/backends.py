@@ -6,9 +6,9 @@ from django.conf import settings
 class ElggBackend:
 
     def authenticate(self, request, username=None, password=None):
-        if settings.ELGG_URL is None
+        if not settings.ELGG_URL:
             return None
-            
+
         elgg_url = settings.ELGG_URL
 
         # Verify user exists in Elgg database
