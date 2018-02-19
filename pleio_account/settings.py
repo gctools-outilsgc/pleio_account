@@ -177,6 +177,8 @@ LOGOUT_REDIRECT_URL = '/logout/'
 
 OIDC_USERINFO = 'pleio_account.oidc_provider_settings.userinfo'
 
+ELGG_URL = 'https://dev.gccollab.ca'
+
 PASSWORD_RESET_TIMEOUT_DAYS = 1
 ACCOUNT_ACTIVATION_DAYS = 7
 

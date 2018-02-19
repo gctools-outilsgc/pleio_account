@@ -1,12 +1,15 @@
 import requests
 import json
 from .models import User
+from django.conf import settings
 
 class ElggBackend:
 
     def authenticate(self, request, username=None, password=None):
-        # TODO: Pull Elgg url out into config settings
-        elgg_url = "https://dev.gccollab.ca"
+        if settings.ELGG_URL is None
+            return None
+            
+        elgg_url = settings.ELGG_URL
 
         # Verify user exists in Elgg database
         valid_user_request = requests.post(elgg_url + "/services/api/rest/json/", data={'method': 'pleio.userexists', 'user': username})
