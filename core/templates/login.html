@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load Pleio_templatetags %}
 {% load settings_value %}
+{% load app_customization %}
 
 {% block page_title %}
 {% trans "Sign in" %}
@@ -16,8 +17,7 @@
         <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
         <div class="login__step-title">
             <div>
-                <h1 class="ui large header">{% trans "Sign in" %} <div class="sub header">{% trans "with your Pleio-account" %}</div></h1>
-
+                <h1 class="ui large header">{% trans "Sign in" %} <div class="sub header">{% trans "with your account" %}</div></h1>
             </div>
             <!--<img src="/static/images/logo-icon.svg" class="login__step-icon"/>-->
         </div>
@@ -76,7 +76,7 @@
 		        <i class="icon" aria-hidden="true">{% include_asset "icons/lock-plus.svg" %}</i>
 		          <div class="content">
                     <div class="textcolor_primary header">{% trans "Secure your account" %}</div>
-                    <p class="textcolor_secondary">{% trans "Enable two factor authentication" %}</p>
+                    <p class="textcolor_secondary">{% trans "Enable two-factor authentication" %}</p>
 		          </div>
         </div>
 	</a>
@@ -93,7 +93,7 @@
 
     <div class="login__step-title">
         <div>
-            <h1 class="ui large header">{% trans "Sign in" %} <div class="sub header">{% trans "with your Pleio-account" %}</div></h1>
+            <h1 class="ui large header">{% trans "Sign in" %} <div class="sub header">{% trans "with your account" %}</div></h1>
         </div>
 
     </div>

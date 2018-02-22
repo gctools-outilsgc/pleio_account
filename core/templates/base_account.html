@@ -42,10 +42,11 @@
 
 
                 <div class="account-menu__header">
-                     <div class="textcolor_primary ui header welcome-header">{% trans "Welcome" %}, {{request.user.name}}<div class="sub header">{% trans "in your Pleio account" %}</div></div>
+                    {% show_customizations_title as title %}
+                     <div class="textcolor_primary ui header welcome-header">{% trans "Welcome" %} {{request.user.name}}</div>
 
 		                 {% if request.user.avatar %}
-                      <img aria-hidden="true" src="/media/{{ request.user.avatar }}" class="account-menu__avatar" />
+                      <img aria-hidden="true" src="/media/{{ request.user.avatar }}" class="account-menu__avatar" alt="{% trans "Your custom avatar" %}"/>
                      {% endif %}
 
 

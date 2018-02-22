@@ -41,10 +41,10 @@
                 <div class="account-user__pickavatar ___addpadding-side">
                     <div class="input-field">
                         {% if request.user.avatar %}
-                            <img src="/media/{{ request.user.avatar }}" border=0 class="account-user__avatar" alt="{% trans "Your avatar" %}">
+                            <img src="/media/{{ request.user.avatar }}" border=0 class="account-user__avatar" alt="{% trans "Your custom avatar" %}">
                             <input id="avatar-clear_id" name="avatar-clear" type="checkbox">
                         {% else %}
-                            <img src="/static/icons/person.svg" border=0 class="account-user__avatar">
+                            <img src="/static/icons/person.svg" border=0 class="account-user__avatar" alt="{% trans "Default avatar" %}">
                         {% endif %}
 
                         {{ form.errors.avatar }}

@@ -1,3 +1,5 @@
+{% load app_customization %}
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
@@ -85,6 +87,13 @@
             display: block;
             height: 161px;
         }
+
+        #templateFooter a {
+          text-decoration: none;
+          font-size:1.8em;
+          color:#666666;
+        }
+
         /* Mobile styles */
 
         @media only screen and (max-device-width: 480px),
@@ -202,8 +211,8 @@
                                 <!-- Header -->
                                 <tr>
                                     <td class="header" style="color:#ffffff; font-family:Arial,sans-serif; font-size:26px; line-height:30px; text-align:left; padding:15px 50px; font-weight:bold"
-                                        bgcolor="#01689b">
-                                        <span class="link-white" style="color:#ffffff; text-decoration:none">Pleio</span>
+                                        bgcolor="#{% show_customizations_color %}">
+                                        <span class="link-white" style="color:#ffffff; text-decoration:none">{% show_customizations_title %}</span>
                                     </td>
                                 </tr>
                                 <!-- END Header -->
@@ -254,10 +263,11 @@
                                                     <tr>
                                                         <td valign="top" style="padding-right: 9px; padding-left: 9px; padding-top: 0; padding-bottom: 0; text-align:center;">
 
-                                                            <a href="https://www.pleio.nl">
-                                                                <img align="center" alt="Pleio logo" src="https://d95acc204d31494586c35e16014afbba.objectstore.eu/static/pleio-email.png" width="84"
-                                                                    style="max-width:168px; padding-bottom: 0; display: inline !important; vertical-align: bottom;"
+                                                            <a href="{{ protocol }}://{{ domain }}">
+                                                                <img align="center" alt="{% show_customizations_title %}" src="{{ protocol }}://{{ domain }}{% show_customizations_logo %}" width="84"
+                                                                    style="max-width:30px; padding-bottom: 0; display: inline !important; vertical-align: top;"
                                                                     class="img-m-center">
+                                                                    {% show_customizations_title %}
                                                             </a>
                                                         </td>
                                                     </tr>

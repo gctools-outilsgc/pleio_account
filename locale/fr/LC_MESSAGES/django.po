@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-12 11:26-0500\n"
+"POT-Creation-Date: 2018-02-22 07:42-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,21 +18,21 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: core/forms.py:18
+#: core/forms.py:19
 msgid "Your email address is not allowed."
 msgstr ""
 
-#: core/forms.py:29 core/forms.py:104
+#: core/forms.py:30 core/forms.py:112
 msgid "The two password fields didn't match."
-msgstr ""
+msgstr "Les deux champs de mot de passe ne correspondaient pas."
 
-#: core/forms.py:90 core/forms.py:94
+#: core/forms.py:98 core/forms.py:102
 msgid "Token"
-msgstr ""
+msgstr "Jeton"
 
-#: core/forms.py:103
+#: core/forms.py:111
 msgid "The password is invalid."
-msgstr ""
+msgstr "Le mot de passe est invalide"
 
 #: core/login_session_helpers.py:9
 msgid "Chrome"
@@ -123,12 +123,17 @@ msgstr ""
 msgid "%(browser)s on %(device)s"
 msgstr ""
 
-#: core/templates/backup_tokens.html:5 core/templates/backup_tokens.html:9
-#: core/templates/security_pages/two_factor_authorization.html:10
-#: core/templates/security_pages/two_factor_authorization.html:64
-#: core/templates/tf_profile.html:10
+#: core/templates/backup_tokens.html:5 core/templates/tf_profile.html:10
+#, fuzzy
+#| msgid "Backup tokens"
 msgid "Backup Tokens"
-msgstr ""
+msgstr "Jetons de sauvegarde"
+
+#: core/templates/backup_tokens.html:9
+#: core/templates/security_pages/two_factor_authorization.html:11
+#: core/templates/security_pages/two_factor_authorization.html:70
+msgid "Backup tokens"
+msgstr "Jetons de sauvegarde"
 
 #: core/templates/backup_tokens.html:11
 msgid ""
@@ -141,110 +146,141 @@ msgid ""
 "tokens shown\n"
 "                    below will be valid."
 msgstr ""
+"Les jetons de sauvegarde peuvent être utilisés lorsque votre numéro de "
+"téléphone principal et votre numéro de téléphone de secours ne sont pas "
+"disponibles. Les jetons de sauvegarde ci-dessous peuvent être utilisés pour "
+"vérifier la connexion. Si vous avez utilisé tous vos jetons de sauvegarde, "
+"vous pouvez générer un nouveau jeu de jetons de sauvegarde. Seuls les jetons "
+"de sauvegarde indiqués ci-dessous seront valides."
 
 #: core/templates/backup_tokens.html:25
-#: core/templates/security_pages/two_factor_authorization.html:80
+#: core/templates/security_pages/two_factor_authorization.html:87
 msgid "Print these tokens and keep them somewhere safe."
-msgstr ""
+msgstr "Imprimez ces jetons et conservez-les dans un endroit sécuritaire."
 
 #: core/templates/backup_tokens.html:27
-#: core/templates/security_pages/two_factor_authorization.html:82
+#: core/templates/security_pages/two_factor_authorization.html:89
 msgid "You don't have any backup codes yet."
-msgstr ""
+msgstr "Vous n’avez pas encore de codes de sauvegarde."
 
 #: core/templates/backup_tokens.html:31
-#: core/templates/security_pages/two_factor_authorization.html:86
-msgid "Generate Tokens"
-msgstr ""
+#: core/templates/security_pages/two_factor_authorization.html:95
+msgid "Generate tokens"
+msgstr "Générer des jetons"
 
-#: core/templates/base.html:34 core/templates/base_account.html:25
+#: core/templates/base.html:42 core/templates/base_account.html:29
 msgid "Back to the homepage"
-msgstr ""
+msgstr "Retour à la page d’accueil"
 
-#: core/templates/base_account.html:32
+#: core/templates/base_account.html:46 core/templates/emails/register.html:5
 msgid "Welcome"
 msgstr "Bienvenue"
 
-#: core/templates/base_account.html:33
-msgid "in your Pleio account"
-msgstr "dans votre compte Pleio"
+#: core/templates/base_account.html:49 core/templates/profile.html:44
+msgid "Your custom avatar"
+msgstr "Votre avatar personnalisé"
 
-#: core/templates/base_account.html:49 core/templates/profile.html:14
+#: core/templates/base_account.html:65 core/templates/profile.html:10
+msgid "Profile"
+msgstr "Profil"
+
+#: core/templates/base_account.html:66 core/templates/profile.html:17
 msgid "Your details"
 msgstr "Vos détails"
 
-#: core/templates/base_account.html:49 core/templates/profile.html:34
+#: core/templates/base_account.html:66 core/templates/profile.html:40
 msgid "Avatar"
 msgstr "Avatar"
 
-#: core/templates/base_account.html:61 core/templates/security_pages.html:18
+#: core/templates/base_account.html:78 core/templates/security_pages.html:8
+#: core/templates/security_pages.html:22
 msgid "Security"
 msgstr "Sécurité"
 
-#: core/templates/base_account.html:62 core/templates/login.html:43
-#: core/templates/register.html:47
+#: core/templates/base_account.html:79 core/templates/login.html:49
+#: core/templates/register.html:54
 msgid "Password"
 msgstr "Mot de passe"
 
-#: core/templates/base_account.html:62
+#: core/templates/base_account.html:79
 msgid "Sessions"
-msgstr ""
+msgstr "Séances"
 
-#: core/templates/base_account.html:62
+#: core/templates/base_account.html:79
+#: core/templates/security_pages/two_factor_authorization.html:4
 msgid "Two-factor authentication"
-msgstr ""
+msgstr "Authentification à deux facteurs"
 
-#: core/templates/base_account.html:70
+#: core/templates/base_account.html:87
 #: core/templates/security_pages/user_sessions.html:39
 #: core/templates/session_list.html:42
 msgid "Logout"
-msgstr ""
+msgstr "Déconnexion"
 
-#: core/templates/emails/register.html:5 core/templates/emails/register.txt:2
-#: core/templates/emails/reset_password.html:5
+#: core/templates/emails/register.html:7 core/templates/emails/register.txt:4
+msgid "Please activate your account by following this link"
+msgstr "Veuillez activer votre compte en suivant ce lien."
+
+#: core/templates/emails/register.txt:2
 #: core/templates/emails/reset_password.txt:2
-#: core/templates/emails/suspicious_login.html:5
 #: core/templates/emails/suspicious_login.txt:3
 msgid "Dear"
 msgstr ""
 
-#: core/templates/emails/register.html:7 core/templates/emails/register.txt:4
-msgid "Please activate your account by following this link"
-msgstr ""
-
 #: core/templates/emails/register_subject.txt:1
 msgid "Please activate your account"
-msgstr ""
+msgstr "Veuillez activer votre compte"
+
+#: core/templates/emails/reset_password.html:5
+#: core/templates/emails/suspicious_login.html:5
+msgid "Hello"
+msgstr "Bonjour"
 
 #: core/templates/emails/reset_password.html:7
-#: core/templates/emails/reset_password.txt:4
 msgid ""
-"You requested a new password for Pleio. Please follow this link to configure "
-"a new password."
+"You have requested a new password. Please follow this link to set a new "
+"password."
 msgstr ""
+"Vous avez demandé à modifier votre mot de passe. Veuillez suivre ce lien "
+"pour définir un nouveau mot de passe."
 
 #: core/templates/emails/reset_password.html:11
 #: core/templates/emails/reset_password.txt:8
 msgid "You can ignore this e-mail if you did not request a new password."
 msgstr ""
+"Vous pouvez ignorer ce courriel si vous n’avez pas demandé à modifier votre "
+"mot de passe."
+
+#: core/templates/emails/reset_password.txt:4
+#, fuzzy
+#| msgid ""
+#| "You have requested a new password. Please follow this link to set a new "
+#| "password."
+msgid ""
+"You requested a new password for Pleio. Please follow this link to configure "
+"a new password."
+msgstr ""
+"Vous avez demandé à modifier votre mot de passe. Veuillez suivre ce lien "
+"pour définir un nouveau mot de passe."
 
 #: core/templates/emails/reset_password_subject.txt:1
 msgid "Request for a new password"
-msgstr ""
+msgstr "Demande d’un nouveau mot de passe"
 
 #: core/templates/emails/suspicious_login.html:2
 #: core/templates/emails/suspicious_login.txt:1
 msgid "<em>unknown on unknown</em>"
-msgstr ""
+msgstr "<em>inconnu, inconnu</em>"
 
 #: core/templates/emails/suspicious_login.html:2
 #: core/templates/emails/suspicious_login.txt:1
 msgid "<em>unknown</em>"
-msgstr ""
+msgstr "<em>inconnu</em>"
 
 #: core/templates/emails/suspicious_login.html:7
 msgid "You logged in to your account from a new location."
 msgstr ""
+"Vous vous êtes connecté à votre compte à partir d’un nouvel emplacement."
 
 #: core/templates/emails/suspicious_login.html:12
 #: core/templates/emails/suspicious_login.txt:10
@@ -252,60 +288,123 @@ msgid ""
 "If it was you safely ignore this e-mail. Otherwise please change your "
 "password as soon as possible."
 msgstr ""
+"Si vous vous êtes connecté en toute sécurité, vous pouvez ignorer ce "
+"courriel. Sinon, veuillez changer votre mot de passe dès que possible."
 
 #: core/templates/emails/suspicious_login.txt:5
 msgid "You logged in to your account from a new location"
 msgstr ""
+"Vous vous êtes connecté à votre compte à partir d’un nouvel emplacement."
 
 #: core/templates/emails/suspicious_login_subject.txt:1
 msgid "Logged in from a new location"
-msgstr ""
+msgstr "Connecté à partir d'un nouvel emplacement"
 
-#: core/templates/login.html:15 core/templates/login.html:89
+#: core/templates/language.html:4
+msgid "Change language"
+msgstr "Changer de langue"
+
+#: core/templates/login.html:8 core/templates/login.html:20
+#: core/templates/login.html:96
 msgid "Sign in"
 msgstr "Connectez-vous"
 
-#: core/templates/login.html:16 core/templates/login.html:90
-msgid "with your Pleio-account"
-msgstr ""
+#: core/templates/login.html:20 core/templates/login.html:96
+msgid "with your account"
+msgstr "de votre compte"
 
-#: core/templates/login.html:26 core/templates/register.html:26
+#: core/templates/login.html:31 core/templates/register.html:32
 msgid "Login failed."
-msgstr ""
+msgstr "Échec de la connexion"
 
-#: core/templates/login.html:27 core/templates/register.html:27
+#: core/templates/login.html:32 core/templates/register.html:33
 msgid "Please check Google captcha."
-msgstr ""
+msgstr "Veuillez vérifier le captcha de Google"
 
-#: core/templates/login.html:29
+#: core/templates/login.html:34
 msgid "Please enter a correct email and password."
-msgstr ""
+msgstr "Veuillez entrer un courriel et un mot de passe valides."
 
-#: core/templates/login.html:30
+#: core/templates/login.html:35
 msgid "Note that both fields may be case-sensitive."
-msgstr ""
+msgstr "Notez que les deux champs sont sensibles à la casse."
 
-#: core/templates/login.html:38 core/templates/password_reset.html:25
+#: core/templates/login.html:44 core/templates/password_reset.html:29
 msgid "Email address"
 msgstr "Courriel"
 
-#: core/templates/login.html:47 core/templates/password_reset.html:11
-#: core/templates/password_reset_done.html:8
+#: core/templates/login.html:55 core/templates/password_reset.html:6
+#: core/templates/password_reset.html:15
+#: core/templates/password_reset_done.html:12
 msgid "Forgot password"
 msgstr "Mot de passe perdu?"
 
-#: core/templates/login.html:60 core/templates/login.html:110
-#: core/templates/password_reset.html:32
-#: core/templates/password_reset_complete.html:23
-#: core/templates/password_reset_done.html:23 core/templates/register.html:82
-#: core/templates/register_complete.html:15
+#: core/templates/login.html:68 core/templates/login.html:116
+#: core/templates/login.html:144
 msgid "Login"
 msgstr "Ouvrir uen session"
 
-#: core/templates/oidc_provider/authorize.html:26
-msgid "Decline"
-msgstr "Refuser"
+#: core/templates/login.html:69
+msgid "Don't have an account?"
+msgstr "Vous n’avez pas de compte?"
 
+#: core/templates/login.html:69 core/templates/register.html:8
+#: core/templates/register.html:20 core/templates/register.html:94
+msgid "Register"
+msgstr "Inscription"
+
+#: core/templates/login.html:78
+msgid "Secure your account"
+msgstr "Protéger votre compte"
+
+#: core/templates/login.html:79
+#: core/templates/security_pages/two_factor_authorization.html:35
+msgid "Enable two-factor authentication"
+msgstr "Activer l’authentification à deux facteurs"
+
+#: core/templates/login.html:104
+#, fuzzy
+#| msgid "Two-factor authentication"
+msgid "Two factor authentication"
+msgstr "Authentification à deux facteurs"
+
+#: core/templates/login.html:105
+msgid "Fill in a code from your code generator."
+msgstr "Inscrivez un code de votre générateur de codes."
+
+#: core/templates/login.html:119
+msgid "Use backup token"
+msgstr "Utiliser un jeton de sauvegarde"
+
+#: core/templates/login.html:122 core/templates/login.html:145
+#: core/templates/password_reset.html:36
+#: core/templates/password_reset_complete.html:25
+#: core/templates/password_reset_done.html:26 core/templates/register.html:95
+#: core/templates/register_activate.html:18
+#: core/templates/register_complete.html:19
+msgid "Return to sign in"
+msgstr "Retournez pour vous connecter"
+
+#: core/templates/login.html:133
+#, fuzzy
+#| msgid "Backup tokens"
+msgid "Backup token"
+msgstr "Jetons de sauvegarde"
+
+#: core/templates/login.html:134
+msgid ""
+"Use this form for entering backup tokens for logging in.\n"
+"         These tokens have been generated for you to print and keep safe. "
+"Please\n"
+"             enter one of these backup tokens to login to your account."
+msgstr ""
+"Utilisez ce formulaire pour entrer des jetons de sauvegarde pour vous "
+"connecter. Ces jetons ont été générés pour que vous puissiez les imprimer et "
+"les conserver dans un endroit sécuritaire Veuillez entrer l’un de ces jetons "
+"de sauvegarde pour vous connecter à votre compte."
+
+#: core/templates/oidc_provider/authorize.html:5
+#: core/templates/oidc_provider/authorize.html:12
 #: core/templates/oidc_provider/authorize.html:27
 msgid "Authorize"
 msgstr "Autoriser"
@@ -314,197 +413,182 @@ msgstr "Autoriser"
 msgid "would like to access the following account information:"
 msgstr "souhaite accéder aux informations de compte suivantes :"
 
+#: core/templates/oidc_provider/authorize.html:26
+msgid "Decline"
+msgstr "Refuser"
+
 #: core/templates/oidc_provider/error.html:5
 msgid "Error"
 msgstr "Erreur"
 
-#: core/templates/login.html:61
-msgid "Register account"
-msgstr "S'inscrir"
-
-#: core/templates/login.html:71
-msgid "Secure your account"
-msgstr ""
-
-#: core/templates/login.html:72
-msgid "Enable two factor authentication"
-msgstr ""
-
-#: core/templates/login.html:98
-msgid "Two factor authentication"
-msgstr ""
-
-#: core/templates/login.html:99
-msgid "Fill in a code from your code generator."
-msgstr ""
-
-#: core/templates/login.html:111
-msgid "Cancel"
-msgstr ""
-
-#: core/templates/login.html:122
-msgid ""
-"Use this form for entering backup tokens for logging in.\n"
-"         These tokens have been generated for you to print and keep safe. "
-"Please\n"
-"             enter one of these backup tokens to login to your account."
-msgstr ""
-
-#: core/templates/login.html:132 core/templates/login.html:140
-msgid "Use backuptoken"
-msgstr ""
-
-#: core/templates/login.html:133
-msgid "Back"
-msgstr ""
-
-#: core/templates/password_reset.html:12
-#: core/templates/password_reset_complete.html:9
-#: core/templates/password_reset_confirm.html:12
-#: core/templates/password_reset_done.html:9
-msgid "of your Pleio-account"
-msgstr ""
-
-#: core/templates/password_reset.html:31
-#: core/templates/password_reset_complete.html:8
-#: core/templates/password_reset_confirm.html:11
-#: core/templates/security_pages/change_password.html:6
+#: core/templates/password_reset.html:35
+#: core/templates/password_reset_complete.html:12
+#: core/templates/password_reset_confirm.html:6
+#: core/templates/password_reset_confirm.html:15
+#: core/templates/security_pages/change_password.html:9
 msgid "Reset password"
-msgstr ""
+msgstr "Réinitialiser le mot de passe"
 
-#: core/templates/password_reset.html:41
+#: core/templates/password_reset.html:44
 msgid "Need help?"
-msgstr ""
+msgstr "Besoin d’aide?"
 
-#: core/templates/password_reset.html:42 core/templates/profile.html:22
-#: core/templates/register.html:42
+#: core/templates/password_reset.html:45 core/templates/profile.html:25
+#: core/templates/register.html:49
 msgid "Email"
-msgstr ""
+msgstr "Courriel"
 
-#: core/templates/password_reset_complete.html:17
-msgid "Password resetted"
-msgstr ""
+#: core/templates/password_reset_complete.html:6
+#: core/templates/password_reset_complete.html:19
+msgid "Password reset"
+msgstr "Mot de passe réinitialisé"
 
-#: core/templates/password_reset_complete.html:18
+#: core/templates/password_reset_complete.html:20
 msgid "You can now login with your new password."
-msgstr ""
+msgstr "Vous pouvez maintenant vous connecter avec votre nouveau mot de passe."
 
-#: core/templates/password_reset_confirm.html:25
-#: core/templates/security_pages/change_password.html:32
-msgid "New Password"
-msgstr ""
+#: core/templates/password_reset_confirm.html:29
+#: core/templates/security_pages/change_password.html:35
+msgid "New password"
+msgstr "Nouveau mot de passe"
 
-#: core/templates/password_reset_confirm.html:32
-#: core/templates/security_pages/change_password.html:40
-msgid "New Password (again)"
-msgstr ""
+#: core/templates/password_reset_confirm.html:38
+#: core/templates/security_pages/change_password.html:45
+#, fuzzy
+msgid "Confirm new password"
+msgstr "Confirmer le nouveau mot de passe."
 
-#: core/templates/password_reset_confirm.html:39
-#: core/templates/security_pages/change_password.html:51
+#: core/templates/password_reset_confirm.html:47
+#: core/templates/security_pages/change_password.html:60
 msgid "Confirm"
-msgstr ""
+msgstr "Confirmer"
 
-#: core/templates/password_reset_done.html:17
+#: core/templates/password_reset_done.html:6
+#: core/templates/password_reset_done.html:20
 msgid "Email sent"
-msgstr ""
+msgstr "Courriel envoyé"
 
-#: core/templates/password_reset_done.html:18
+#: core/templates/password_reset_done.html:21
 msgid ""
 "When the address is registered in our system you will receive an e-mail with "
 "a link to configure a new password."
 msgstr ""
+"Si votre adresse de courriel est enregistrée dans notre système, vous "
+"recevrez un courriel dans lequel il y a un lien pour configurer un nouveau "
+"mot de passe."
 
-#: core/templates/profile.html:8
-msgid "Profile"
-msgstr ""
+#: core/templates/profile.html:5 core/templates/profile.html:7
+msgid "Account Settings"
+msgstr "Paramètres du compte"
 
-#: core/templates/profile.html:17
+#: core/templates/profile.html:20
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
-#: core/templates/profile.html:25
+#: core/templates/profile.html:28
 msgid "Government"
-msgstr ""
+msgstr "Gouvernement"
 
-#: core/templates/profile.html:29
+#: core/templates/profile.html:33
 msgid "Save"
-msgstr ""
+msgstr "Sauvegarder"
 
 #: core/templates/profile.html:47
+msgid "Default avatar"
+msgstr "Avatar par défaut"
+
+#: core/templates/profile.html:53
 msgid "Choose an avatar"
 msgstr "Choisissez un avatar"
 
-#: core/templates/profile.html:50
+#: core/templates/profile.html:58
 msgid "Remove avatar"
 msgstr "Enlever l'avatar"
 
-#: core/templates/register.html:15 core/templates/register.html:81
-msgid "Register"
-msgstr ""
+#: core/templates/register.html:20
+msgid "to create an account"
+msgstr "pour créer un compte"
 
-#: core/templates/register.html:16
-msgid "create a Pleio-account"
-msgstr ""
+#: core/templates/register.html:44
+msgid "First and last name"
+msgstr "Prénom et nom"
 
-#: core/templates/register.html:37
-msgid "First- and lastname"
-msgstr ""
+#: core/templates/register.html:63
+msgid "Confirm password"
+msgstr "Confirmez le mot de passe"
 
-#: core/templates/register.html:54
-msgid "Password (again)"
-msgstr ""
-
-#: core/templates/register.html:65
+#: core/templates/register.html:76
 msgid "I agree with the "
-msgstr ""
+msgstr "J’accepte les"
 
-#: core/templates/register.html:65
+#: core/templates/register.html:76
 msgid " general terms"
-msgstr ""
+msgstr "conditions générales"
 
-#: core/templates/register.html:70
+#: core/templates/register.html:82
 msgid "Please subscribe me to the Pleio newsletter"
 msgstr ""
 
-#: core/templates/register_activate.html:9
-msgid "We could not activate your account"
-msgstr ""
-
+#: core/templates/register_activate.html:6
 #: core/templates/register_activate.html:10
-msgid "Maybe your account already is activated."
+msgid "Activation error"
 msgstr ""
 
-#: core/templates/register_complete.html:9
-msgid "Verify your email address"
-msgstr ""
+#: core/templates/register_activate.html:14
+msgid "We could not activate your account"
+msgstr "Nous n’avons pas pu activer votre compte"
 
+#: core/templates/register_activate.html:15
+msgid "Your account may already be activated."
+msgstr "Votre compte est possiblement déjà activé"
+
+#: core/templates/register_complete.html:6
 #: core/templates/register_complete.html:10
-msgid ""
-"Open the link in the Pleio verification email to complete your registration."
-msgstr ""
+msgid "Registration complete"
+msgstr "Inscription complète"
 
-#: core/templates/security_pages/change_password.html:23
-msgid "Current Password"
-msgstr ""
+#: core/templates/register_complete.html:13
+msgid "Verify your email address"
+msgstr "Validez votre adresse courriel"
 
-#: core/templates/security_pages/two_factor_authorization.html:4
-#: core/templates/tf_profile.html:6
-msgid "Two-Factor Authentication"
+#: core/templates/register_complete.html:14
+msgid "Open the link in the verification email to complete your registration."
 msgstr ""
+"Ouvrez le lien dans le courriel de validation pour terminer votre "
+"inscription."
 
-#: core/templates/security_pages/two_factor_authorization.html:12
-#: core/templates/tf_profile.html:12
-msgid "Tokens will be generated by your token generator."
-msgstr ""
+#: core/templates/security_pages.html:6
+msgid "Security settings"
+msgstr "Les paramètres de sécurité"
+
+#: core/templates/security_pages/change_password.html:24
+#, fuzzy
+msgid "Current password"
+msgstr "Mot de passe actuel"
 
 #: core/templates/security_pages/two_factor_authorization.html:13
+#: core/templates/tf_profile.html:12
+msgid "Tokens will be generated by your token generator."
+msgstr "Les jetons seront générés par votre générateur de jetons."
+
+#: core/templates/security_pages/two_factor_authorization.html:14
 msgid ""
 "If you don't have any device with you, you can access\n"
 "                    your account using backup tokens."
 msgstr ""
+"Si vous n’avez aucun appareil avec vous, vous pouvez accéder à votre compte "
+"en utilisant des jetons de sauvegarde."
 
-#: core/templates/security_pages/two_factor_authorization.html:15
-#, python-format
+#: core/templates/security_pages/two_factor_authorization.html:16
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "                    You have only one backup token remaining.\n"
+#| "                    "
+#| msgid_plural ""
+#| "Vous n’avez plus qu’un seul jeton de sauvegarde.\n"
+#| "                    You have %(counter)s backup tokens remaining.\n"
+#| "                    "
 msgid ""
 "\n"
 "                    You have only one backup token remaining.\n"
@@ -513,27 +597,23 @@ msgid_plural ""
 "\n"
 "                    You have %(counter)s backup tokens remaining.\n"
 "                    "
-msgstr[0] ""
+msgstr[0] "Il vous reste %(counter)s jetons de sauvegarde."
 msgstr[1] ""
 
-#: core/templates/security_pages/two_factor_authorization.html:22
-#: core/templates/tf_profile.html:22
-msgid "Show Codes"
-msgstr ""
+#: core/templates/security_pages/two_factor_authorization.html:24
+msgid "Show codes"
+msgstr "Afficher les codes"
 
-#: core/templates/security_pages/two_factor_authorization.html:33
-#: core/templates/setup_complete.html:7 core/templates/tf_setup.html:17
-msgid "Enable Two-factor Authentication"
-msgstr ""
-
-#: core/templates/security_pages/two_factor_authorization.html:35
+#: core/templates/security_pages/two_factor_authorization.html:39
 #: core/templates/tf_setup.html:19
 msgid ""
 "Scan the QR-code below with your token generator and enter the generated "
 "token."
 msgstr ""
+"Numérisez le code QR ci-dessous avec votre générateur de jetons et entrez le "
+"jeton généré."
 
-#: core/templates/security_pages/two_factor_authorization.html:49
+#: core/templates/security_pages/two_factor_authorization.html:53
 #: core/templates/tf_setup.html:33
 msgid ""
 "Don't have a token generator? Try <a href=\"https://support.google.com/"
@@ -541,13 +621,17 @@ msgid ""
 "Authenticator</a> or <a href=\"https://authy.com/download/\" target=\"_blank"
 "\" rel=\"nofollow\">Authy</a>."
 msgstr ""
+"Vous n’avez pas de générateur de jeton? Essayez l’application <a href="
+"\"https://support.google.com/accounts/answer/1066447\" target=\"_blank\" rel="
+"\"nofollow\">Google Authenticator</a> ou <a href=\"https://authy.com/"
+"download/\" target=\"_blank\" rel=\"nofollow\">Authy</a>."
 
-#: core/templates/security_pages/two_factor_authorization.html:53
+#: core/templates/security_pages/two_factor_authorization.html:59
 #: core/templates/tf_setup.html:37
 msgid "Next"
-msgstr ""
+msgstr "Suivant"
 
-#: core/templates/security_pages/two_factor_authorization.html:66
+#: core/templates/security_pages/two_factor_authorization.html:74
 msgid ""
 "Backup tokens can be used when your primary and backup\n"
 "                        phone numbers aren't available. The backup tokens "
@@ -559,45 +643,47 @@ msgid ""
 "                        below will be valid."
 msgstr ""
 
-#: core/templates/security_pages/two_factor_authorization.html:98
-#: core/templates/tf_disable.html:9
-msgid "Disable Two-factor Authentication"
-msgstr ""
+#: core/templates/security_pages/two_factor_authorization.html:107
+#: core/templates/security_pages/two_factor_authorization.html:132
+msgid "Disable two-factor authentication"
+msgstr "Désactiver l’authentification à deux facteurs"
 
-#: core/templates/security_pages/two_factor_authorization.html:100
+#: core/templates/security_pages/two_factor_authorization.html:109
 msgid ""
 "You are about to disable two-factor authentication. This\n"
 "                        compromises your account security, are you sure?"
 msgstr ""
+"Vous êtes sur le point de désactiver l’authentification à deux facteurs. "
+"Cela compromet la sécurité de votre compte, êtes-vous certain de vouloir "
+"continuer?"
 
-#: core/templates/security_pages/two_factor_authorization.html:104
+#: core/templates/security_pages/two_factor_authorization.html:114
 #: core/templates/tf_disable.html:15
 msgid "Yes, I am sure"
-msgstr ""
+msgstr "Oui, je suis certain"
 
-#: core/templates/security_pages/two_factor_authorization.html:108
-#: core/templates/security_pages/two_factor_authorization.html:127
+#: core/templates/security_pages/two_factor_authorization.html:120
+#: core/templates/security_pages/two_factor_authorization.html:142
 #: core/templates/tf_disable.html:19 core/templates/tf_profile.html:37
 msgid "Disable"
-msgstr ""
+msgstr "Désactiver"
 
-#: core/templates/security_pages/two_factor_authorization.html:118
-#: core/templates/tf_profile.html:28
-msgid "Disable Two-Factor Authentication"
-msgstr ""
-
-#: core/templates/security_pages/two_factor_authorization.html:123
+#: core/templates/security_pages/two_factor_authorization.html:137
 msgid ""
 "However we strongly discourage you to do so, you can\n"
 "                    also disable two-factor authentication for your account."
 msgstr ""
+"Cependant, nous vous déconseillons fortement de le faire, vous pouvez "
+"également désactiver l'authentification à deux facteurs pour votre compte."
 
-#: core/templates/security_pages/two_factor_authorization.html:130
+#: core/templates/security_pages/two_factor_authorization.html:146
 #: core/templates/tf_profile.html:40
+#, fuzzy
+#| msgid "Enable two-factor authentication"
 msgid "Enable Two-Factor Authentication"
-msgstr ""
+msgstr "Activer l’authentification à deux facteurs"
 
-#: core/templates/security_pages/two_factor_authorization.html:135
+#: core/templates/security_pages/two_factor_authorization.html:151
 msgid ""
 "Two-factor authentication is not enabled for your\n"
 "                        account. Enable two-factor authentication for "
@@ -605,85 +691,124 @@ msgid ""
 "                        security."
 msgstr ""
 
-#: core/templates/security_pages/two_factor_authorization.html:142
+#: core/templates/security_pages/two_factor_authorization.html:160
 #: core/templates/tf_profile.html:50
 msgid "Enable"
-msgstr ""
+msgstr "Activer"
 
 #: core/templates/security_pages/user_sessions.html:4
 #: core/templates/session_list.html:7
-msgid "Active Sessions"
-msgstr ""
+msgid "Active sessions"
+msgstr "Sessions actives"
 
 #: core/templates/security_pages/user_sessions.html:8
 #: core/templates/session_list.html:11
 msgid "Signed in devices"
-msgstr ""
+msgstr "Appareils connectés"
 
 #: core/templates/security_pages/user_sessions.html:10
 #: core/templates/session_list.html:13
 msgid "unknown on unknown"
-msgstr ""
+msgstr "inconnu, inconnu"
 
 #: core/templates/security_pages/user_sessions.html:11
 #: core/templates/session_list.html:14
 msgid "unknown"
-msgstr ""
+msgstr "inconnu"
 
 #: core/templates/security_pages/user_sessions.html:16
 #: core/templates/session_list.html:19
 msgid "Device"
-msgstr ""
+msgstr "Appareil"
 
 #: core/templates/security_pages/user_sessions.html:17
 #: core/templates/session_list.html:20
 msgid "Location"
-msgstr ""
+msgstr "Emplacement"
 
 #: core/templates/security_pages/user_sessions.html:30
 #: core/templates/session_list.html:33
 msgid "this session"
-msgstr ""
+msgstr "cette séance"
 
 #: core/templates/security_pages/user_sessions.html:32
 #: core/templates/session_list.html:35
 #, python-format
 msgid "%(time)s ago"
-msgstr ""
+msgstr "%(time)s précédentes"
 
 #: core/templates/security_pages/user_sessions.html:54
-#: core/templates/session_list.html:57
 msgid "End All Other Sessions"
-msgstr ""
+msgstr "Fermer toutes les autres séances"
+
+#: core/templates/session_list.html:57
+#, fuzzy
+#| msgid "End All Other Sessions"
+msgid "End all other sessions"
+msgstr "Fermer toutes les autres séances"
+
+#: core/templates/setup_complete.html:7 core/templates/tf_setup.html:17
+#, fuzzy
+#| msgid "Enable two-factor authentication"
+msgid "Enable Two-factor Authentication"
+msgstr "Activer l’authentification à deux facteurs"
 
 #: core/templates/setup_complete.html:8
 msgid ""
 "Congratulations, you've successfully enabled two-factor\n"
 "          authentication."
 msgstr ""
+"Félicitations, vous avez réussi à activer l’authentification à deux facteurs."
 
 #: core/templates/setup_complete.html:11
 msgid "Back to Profile"
-msgstr ""
+msgstr "Retournez au profil"
 
-#: core/templates/terms_of_use.html:6
-msgid "terms of use"
-msgstr ""
+#: core/templates/terms_of_use.html:5 core/templates/terms_of_use.html:10
+#, fuzzy
+#| msgid "terms of use"
+msgid "Terms of use"
+msgstr "conditions d’utilisation"
+
+#: core/templates/tf_disable.html:9
+#, fuzzy
+#| msgid "Disable two-factor authentication"
+msgid "Disable Two-factor Authentication"
+msgstr "Désactiver l’authentification à deux facteurs"
 
 #: core/templates/tf_disable.html:11
 msgid ""
 "You are about to disable two-factor authentication. This\n"
 "                compromises your account security, are you sure?"
 msgstr ""
+"Vous êtes sur le point de désactiver l’authentification à deux facteurs. "
+"Cela compromet la sécurité de votre compte, êtes-vous certain de vouloir "
+"continuer?"
+
+#: core/templates/tf_profile.html:6
+#, fuzzy
+#| msgid "Two-factor authentication"
+msgid "Two-Factor Authentication"
+msgstr "Authentification à deux facteurs"
 
 #: core/templates/tf_profile.html:13
 msgid ""
 "If you don't have any device with you, you can access\n"
 "                your account using backup tokens."
 msgstr ""
+"Si vous n’avez aucun appareil avec vous, vous pouvez accéder à votre compte "
+"en utilisant des jetons de sauvegarde."
 
 #: core/templates/tf_profile.html:15
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "                    You have only one backup token remaining.\n"
+#| "                    "
+#| msgid_plural ""
+#| "Vous n’avez plus qu’un seul jeton de sauvegarde.\n"
+#| "                    You have %(counter)s backup tokens remaining.\n"
+#| "                    "
 msgid ""
 "\n"
 "                You have only one backup token remaining.\n"
@@ -692,8 +817,20 @@ msgid_plural ""
 "\n"
 "                You have %(counter)s backup tokens remaining.\n"
 "                "
-msgstr[0] ""
+msgstr[0] "Il vous reste %(counter)s jetons de sauvegarde."
 msgstr[1] ""
+
+#: core/templates/tf_profile.html:22
+#, fuzzy
+#| msgid "Show codes"
+msgid "Show Codes"
+msgstr "Afficher les codes"
+
+#: core/templates/tf_profile.html:28
+#, fuzzy
+#| msgid "Disable two-factor authentication"
+msgid "Disable Two-Factor Authentication"
+msgstr "Désactiver l’authentification à deux facteurs"
 
 #: core/templates/tf_profile.html:33
 msgid ""
@@ -710,13 +847,15 @@ msgid ""
 "                    security."
 msgstr ""
 
-#: core/views.py:141
+#: core/views.py:143
+#, fuzzy
+#| msgid "The password has been changed successfully."
 msgid "The Password has been changed successfully."
-msgstr ""
+msgstr "Le mot de passe a été modifié avec succès."
 
 #: pleio_account/settings.py:135
 msgid "English"
-msgstr ""
+msgstr "Anglais"
 
 #: pleio_account/settings.py:136
 msgid "Dutch"
@@ -724,4 +863,41 @@ msgstr ""
 
 #: pleio_account/settings.py:137
 msgid "French"
-msgstr ""
+msgstr "Français"
+
+#, fuzzy
+#~| msgid " to your account "
+#~ msgid "to your account"
+#~ msgstr "de votre compte"
+
+#, fuzzy
+#~| msgid "to create a account"
+#~ msgid " to your %(title)s account "
+#~ msgstr "pour créer un compte"
+
+#, fuzzy
+#~ msgid " with your %(title)s account "
+#~ msgstr "de votre compte"
+
+#, fuzzy
+#~| msgid "Active sessions"
+#~ msgid "Active Sessions"
+#~ msgstr "Sessions actives"
+
+#~ msgid "Register account"
+#~ msgstr "S'inscrir"
+
+#~ msgid "Enable two factor authentication"
+#~ msgstr "Activez l’authentification à deux facteurs"
+
+#~ msgid "Cancel"
+#~ msgstr "Annuler"
+
+#~ msgid "Back"
+#~ msgstr "Retournez"
+
+#~ msgid "of your account"
+#~ msgstr "dans votre compte"
+
+#~ msgid "Graphic element"
+#~ msgstr "Élément graphique"

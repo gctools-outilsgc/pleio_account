@@ -6,7 +6,7 @@
  <form method="post">{% csrf_token %}{{ form }}
      <div class="account__cards">
          <div class="card ___nopadding">
-            <h2 class="card__title ___addpadding-side">{% block title %}{% trans "Backup Tokens" %}{% endblock %}</h2>
+            <h2 class="card__title ___addpadding-side">{% block title %}{% trans "Backup tokens" %}{% endblock %}</h2>
             <div class="___addpadding-side">
                 <p>{% blocktrans %}Backup tokens can be used when your primary and backup
                     phone numbers aren't available. The backup tokens below can be used
@@ -28,7 +28,7 @@
                     {% endif %}
                 </div>
                 <div class="card__action ___addpadding-side">
-                    <button class="button ___clear" type="submit">{% trans "Generate Tokens" %}</button>
+                    <button class="button ___clear" type="submit">{% trans "Generate tokens" %}</button>
                 </div>
          </div>
      </div>

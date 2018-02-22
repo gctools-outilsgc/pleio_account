@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load Pleio_templatetags %}
 {% load settings_value %}
+{% load app_customization %}
 
 {% block page_title %}
 {% trans "Register" %}
@@ -15,7 +16,8 @@
 
     <div class="login__step-title">
         <div>
-            <h1 class="ui large header">{% trans "Register" %}<div class="sub header">{% trans "create a Pleio-account" %}</div></h1>
+
+            <h1 class="ui large header">{% trans "Register" %}<div class="sub header">{% trans "to create an account" %}</div></h1>
 
         </div>
         <!--<img src="/static/images/logo-icon.svg" class="login__step-icon"/>
@@ -58,7 +60,7 @@
 	    </div>
         </div>
         <div class="field">
-            <label for="id_password2">{% trans "Password (again)" %}</label>
+            <label for="id_password2">{% trans "Confirm password" %}</label>
             <span id="error_password2">{{ form.errors.password2 }}</span>
 	    <div class="password_field">
             {{ form.password2 }}
@@ -73,12 +75,13 @@
                 {{ form.accepted_terms }}
                 <label for="id_accepted_terms">{% trans "I agree with the "%}<a href="{% url 'terms_of_use' %}">{% trans " general terms"%}</a></label>
             </div>
-            <!--
+            {% comment 'removing for now' %}
             <div class="register__check ui checkbox">
                 {{ form.errors.receives_newsletter }}
                 {{ form.receives_newsletter }}
                 <label for="id_receives_newsletter">{% trans "Please subscribe me to the Pleio newsletter" %}</label>
-            </div>-->
+            </div>
+            {% endcomment %}
         </div>
 
         {% settings_value 'GOOGLE_RECAPTCHA_SITE_KEY' as recaptcha_site_key %}

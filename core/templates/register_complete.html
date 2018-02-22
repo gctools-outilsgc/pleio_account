@@ -3,16 +3,15 @@
 {% load Pleio_templatetags %}
 
 {% block page_title %}
-{% trans "Verify account" %}
+{% trans "Registration complete" %}
 {% endblock %}
 
 {% block content %}
-    <h1 class="ui large header">{% trans "Verify account" %}</h1>
-    <div class="messages correct ui">
-          <i class="icon" aria-hidden="true">{% include_asset "icons/email.svg" %}</i>
+    <h1 class="ui large header">{% trans "Registration complete" %}</h1>
+    <div class="message positive ui">
           <div class="content">
             <div class="textcolor_primary">{% trans "Verify your email address" %}</div>
-            <div class="textcolor_secondary">{% trans "Open the link in the Pleio verification email to complete your registration." %} </div>
+            <div class="textcolor_secondary">{% trans "Open the link in the verification email to complete your registration." %} </div>
           </div>
     </div>
 

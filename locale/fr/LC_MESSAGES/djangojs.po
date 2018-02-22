@@ -20,4 +20,4 @@ msgstr ""
 
 #: assets/js/Web.jsx:19
 msgid "Attention: CAPS LOCK is ON"
-msgstr ""
+msgstr "Attention : La TOUCHE MAJUSCULE est ACTIVÉE"

@@ -4,8 +4,8 @@
 
 {% block content %}
 
-    <h2>{% trans "Active Sessions" %}</h2>
-    
+    <h2>{% trans "Active sessions" %}</h2>
+
     <div class="account__cards">
         <div class="card ___stretch ___nopadding">
             <h2 class="card__title ___addpadding-side">{% trans "Signed in devices" %}</h2>
@@ -47,18 +47,18 @@
                     </tbody>
                 </table>
                 <br />
-        
+
             </fieldset>
-            
+
             {% if object_list.count > 1 %}
             <div class="card__action ___addpadding-side">
                 <form method="post" action="{% url 'user_sessions:session_delete_other' %}">
                     {% csrf_token %}
-                    <button type="submit" class="button ___clear">{% trans "End All Other Sessions" %}</button>
+                    <button type="submit" class="button ___clear">{% trans "End all other sessions" %}</button>
                 </form>
             </div>
             {% endif %}
         </div>
     </div>
-    
+
 {% endblock %}
