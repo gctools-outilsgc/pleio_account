@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-22 07:42-0500\n"
+"POT-Creation-Date: 2018-02-22 11:24-0500\n"
 "PO-Revision-Date: 2017-12-15 16:48+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -459,7 +459,6 @@ msgid "New password"
 msgstr "Nieuw wachtwoord"
 
 #: core/templates/password_reset_confirm.html:38
-#: core/templates/security_pages/change_password.html:45
 #, fuzzy
 #| msgid "Request for a new password"
 msgid "Confirm new password"
@@ -526,6 +525,7 @@ msgid "First and last name"
 msgstr "Voor- en achternaam"
 
 #: core/templates/register.html:63
+#: core/templates/security_pages/change_password.html:45
 #, fuzzy
 #| msgid "Forgot password"
 msgid "Confirm password"
