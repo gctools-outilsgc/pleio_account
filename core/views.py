@@ -74,7 +74,7 @@ def register_activate(request, activation_token=None):
     user = User.activate_user(None, activation_token)
 
     if user:
-        auth.login(request, user)
+        auth.login(request, user, backend='django.contrib.auth.backends.ModelBackend')
         return redirect('profile')
 
     return render(request, 'register_activate.html')
