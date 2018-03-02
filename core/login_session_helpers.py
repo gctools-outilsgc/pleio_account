@@ -61,33 +61,31 @@ def get_device(value):
 def get_city(value):
     try:
         location = geoip() and geoip().city(value)
-        if 'city' in location and location['city']:
-            return '{}'.format(location['city'])
+        city = location.get('city', '')
     except Exception as e:
         warnings.warn(str(e))
-        location = None
+        city = ''
 
-    return location
+    return city
 
 def get_lat_lon(value):
     try:
         location = geoip() and geoip().lat_lon(value)
     except Exception as e:
         warnings.warn(str(e))
-        location = None
+        location = ''
 
     return location
 
 def get_country(value):
     try:
         location = geoip() and geoip().country(value)
-        if location and location['country_name']:
-            return location['country_name']
+        country = location.get('country_name', '')
     except Exception as e:
         warnings.warn(str(e))
-        location = None
+        country = ''
 
-    return None
+    return country
 
 _geoip = None
 
