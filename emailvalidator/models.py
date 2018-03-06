@@ -15,5 +15,7 @@ class EmailRegExValidator(models.Model):
     """
     Regex patterns
     """
-    regex = models.CharField(max_length=100)
+    name = models.CharField("Name", max_length=255)
+    regex = models.CharField("Regex/domain", max_length=100)
+    allow_all = models.BooleanField("Allow all from domain", default=False)
     group = models.ForeignKey(EmailDomainGroup)
