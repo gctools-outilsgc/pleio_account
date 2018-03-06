@@ -11,21 +11,16 @@ class ElggBackend:
 
         elgg_url = settings.ELGG_URL
 
-        # Verify user exists in Elgg database
-        valid_user_request = requests.post(elgg_url + "/services/api/rest/json/", data={'method': 'pleio.userexists', 'user': username})
-        valid_user_json = json.loads(valid_user_request.text)
-        valid_user = valid_user_json["result"] if 'result' in valid_user_json else False
-
         # Verify username/password combination
-        valid_pass_request = requests.post(elgg_url + "/services/api/rest/json/", data={'method': 'pleio.verifyuser', 'user': username, 'password': password})
-        valid_pass_json = json.loads(valid_pass_request.text)
-        valid_pass_result = valid_pass_json["result"] if 'result' in valid_pass_json else []
-        valid_pass = valid_pass_result["valid"] if 'valid' in valid_pass_result else False
-        name = valid_pass_result["name"] if 'name' in valid_pass_result else username
-        admin = valid_pass_result["admin"] if 'admin' in valid_pass_result else False
+        valid_user_request = requests.post(elgg_url + "/services/api/rest/json/", data={'method': 'pleio.verifyuser', 'user': username, 'password': password})
+        valid_user_json = json.loads(valid_user_request.text)
+        valid_user_result = valid_user_json["result"] if 'result' in valid_user_json else []
+        valid_user = valid_user_result["valid"] if 'valid' in valid_user_result else False
+        name = valid_user_result["name"] if 'name' in valid_user_result else username
+        admin = valid_user_result["admin"] if 'admin' in valid_user_result else False
 
         # If valid, create new user with Elgg attributes
-        if valid_user is True and valid_pass is True:
+        if valid_user is True:
             user = User.objects.create_user(
                 name=name,
                 email=username,
