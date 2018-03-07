@@ -3,6 +3,11 @@ import "../less/generic.less"
 
 $(document).ready(function() {
    $(".password__toggle").on('click',function(e) {
+       if($(this).hasClass('show')){
+          $(this).removeClass('show').attr('title', gettext("Show password"));
+       } else {
+          $(this).addClass('show').attr('title', gettext("Hide password"));
+       }
        $(this).parent().find("input").each(function() {
            if ($(this).attr("type") == "password") {
                $(this).attr("type", "text");

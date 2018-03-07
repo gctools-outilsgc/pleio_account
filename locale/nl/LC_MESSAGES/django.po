@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-22 11:24-0500\n"
+"POT-Creation-Date: 2018-03-07 11:10-0500\n"
 "PO-Revision-Date: 2017-12-15 16:48+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -22,15 +22,19 @@ msgstr ""
 msgid "Your email address is not allowed."
 msgstr "Dit e-mailadres is niet geldig."
 
-#: core/forms.py:30 core/forms.py:112
+#: core/forms.py:30 core/forms.py:130
 msgid "The two password fields didn't match."
 msgstr "De twee wachtwoorden komen niet overeen."
 
-#: core/forms.py:98 core/forms.py:102
+#: core/forms.py:32
+msgid "This email is already in use."
+msgstr ""
+
+#: core/forms.py:116 core/forms.py:120
 msgid "Token"
 msgstr "Token"
 
-#: core/forms.py:111
+#: core/forms.py:129
 msgid "The password is invalid."
 msgstr "Het wachtwoord is ongeldig."
 
@@ -335,6 +339,13 @@ msgstr "Let op: beide velden kunnen hoofdlettergevoelig zijn."
 msgid "Email address"
 msgstr "E-mailadres"
 
+#: core/templates/login.html:53 core/templates/register.html:58
+#: core/templates/register.html:68
+#, fuzzy
+#| msgid "New Password"
+msgid "Show password"
+msgstr "Nieuw wachtwoord"
+
 #: core/templates/login.html:55 core/templates/password_reset.html:6
 #: core/templates/password_reset.html:15
 #: core/templates/password_reset_done.html:12
@@ -353,7 +364,7 @@ msgid "Don't have an account?"
 msgstr "Je hebt nog geen backup tokens."
 
 #: core/templates/login.html:69 core/templates/register.html:8
-#: core/templates/register.html:20 core/templates/register.html:94
+#: core/templates/register.html:20 core/templates/register.html:95
 msgid "Register"
 msgstr "Registeren"
 
@@ -385,7 +396,7 @@ msgstr "Gebruik backupcode"
 #: core/templates/login.html:122 core/templates/login.html:145
 #: core/templates/password_reset.html:36
 #: core/templates/password_reset_complete.html:25
-#: core/templates/password_reset_done.html:26 core/templates/register.html:95
+#: core/templates/password_reset_done.html:26 core/templates/register.html:96
 #: core/templates/register_activate.html:18
 #: core/templates/register_complete.html:19
 msgid "Return to sign in"
@@ -524,22 +535,26 @@ msgstr "maak een Pleio-account"
 msgid "First and last name"
 msgstr "Voor- en achternaam"
 
-#: core/templates/register.html:63
+#: core/templates/register.html:60
+msgid "Your password must contain at least 8 characters"
+msgstr ""
+
+#: core/templates/register.html:64
 #: core/templates/security_pages/change_password.html:45
 #, fuzzy
 #| msgid "Forgot password"
 msgid "Confirm password"
 msgstr "Wachtwoord vergeten"
 
-#: core/templates/register.html:76
+#: core/templates/register.html:77
 msgid "I agree with the "
 msgstr "Ik ga akkoord met de "
 
-#: core/templates/register.html:76
-msgid " general terms"
-msgstr " algemene voorwaarden"
+#: core/templates/register.html:77
+msgid " terms and conditions"
+msgstr ""
 
-#: core/templates/register.html:82
+#: core/templates/register.html:83
 msgid "Please subscribe me to the Pleio newsletter"
 msgstr "Schrijf me in voor de Pleio nieuwsbrief"
 
@@ -862,21 +877,24 @@ msgstr ""
 "Twee-factor-authenticatie is niet geactiveerd voor uw account. Activeer twee-"
 "factor-authenticatie voor een betere beveiliging."
 
-#: core/views.py:143
+#: core/views.py:144
 msgid "The Password has been changed successfully."
 msgstr "Je wachtwoord is succesvol veranderd."
 
-#: pleio_account/settings.py:135
+#: pleio_account/settings.py:140
 msgid "English"
 msgstr "Engels"
 
-#: pleio_account/settings.py:136
+#: pleio_account/settings.py:141
 msgid "Dutch"
 msgstr "Nederlands"
 
-#: pleio_account/settings.py:137
+#: pleio_account/settings.py:142
 msgid "French"
 msgstr "Frans"
+
+#~ msgid " general terms"
+#~ msgstr " algemene voorwaarden"
 
 #, fuzzy
 #~| msgid "with your Pleio-account"

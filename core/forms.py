@@ -29,6 +29,7 @@ class RegisterForm(forms.Form):
     error_messages = {
         'password_mismatch': _("The two password fields didn't match."),
         'captcha_mismatch': 'captcha_mismatch',
+        'unique_email': _('This email is already in use.'),
     }
 
     name = forms.CharField(required=True, max_length=100, widget=forms.TextInput(attrs={'aria-labelledby':"error_name"}))
@@ -40,9 +41,26 @@ class RegisterForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(RegisterForm, self).__init__(*args, **kwargs)
-        
+
         if getattr(settings, "GOOGLE_RECAPTCHA_SITE_KEY", None):
             self.fields["g-recaptcha-response"] = forms.CharField()
+
+    def clean_email(self):
+        # Get the emails
+        email = self.cleaned_data.get('email')
+
+        try:
+            match = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return email
+
+        raise forms.ValidationError(self.error_messages['unique_email'], code='unique_email',)
+
+    def clean_password1(self):
+        password1 = self.cleaned_data.get("password1")
+
+        password_validation.validate_password(self.cleaned_data.get('password1'))
+        return password1
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
@@ -54,7 +72,7 @@ class RegisterForm(forms.Form):
                 code='password_mismatch',
             )
 
-        password_validation.validate_password(self.cleaned_data.get('password2'))
+        #password_validation.validate_password(self.cleaned_data.get('password2'))
         return password2
 
     def clean(self):

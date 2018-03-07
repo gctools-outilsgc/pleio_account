@@ -55,8 +55,9 @@
             <span id="error_password1">{{ form.errors.password1 }}</span>
 	    <div class="password_field">
             {{ form.password1 }}
-            <span class="password__toggle">{% include_asset "icons/eye.svg" %}</span>
+            <span class="password__toggle" title="{% trans "Show password" %}">{% include_asset "icons/eye.svg" %}</span>
             <p class="capslock" aria-live="assertive"></p>
+            <p class="password_help">{% trans "Your password must contain at least 8 characters" %}</p>
 	    </div>
         </div>
         <div class="field">
@@ -64,7 +65,7 @@
             <span id="error_password2">{{ form.errors.password2 }}</span>
 	    <div class="password_field">
             {{ form.password2 }}
-            <span class="password__toggle">{% include_asset "icons/eye.svg" %}</span>
+            <span class="password__toggle" title="{% trans "Show password" %}">{% include_asset "icons/eye.svg" %}</span>
             <p class="capslock" aria-live="assertive"></p>
 	    </div>
         </div>
@@ -73,7 +74,7 @@
             <div class="register__check ui checkbox">
                 {{ form.errors.accepted_terms }}
                 {{ form.accepted_terms }}
-                <label for="id_accepted_terms">{% trans "I agree with the "%}<a href="{% url 'terms_of_use' %}">{% trans " general terms"%}</a></label>
+                <label for="id_accepted_terms">{% trans "I agree with the "%}<a href="{% url 'terms_of_use' %}">{% trans " terms and conditions"%}</a></label>
             </div>
             {% comment 'removing for now' %}
             <div class="register__check ui checkbox">

@@ -50,7 +50,7 @@
                 {{ form.errors.password }}
                 <div class="password_field">
                   {{ form.password }}
-                  <span class="password__toggle">{% include_asset "icons/eye.svg" %}</span>
+                  <span class="password__toggle" title="{% trans "Show password" %}">{% include_asset "icons/eye.svg" %}</span>
                 </div>
                 <a href="{% url 'password_reset' %}" class="forgot-password">{% trans "Forgot password" %}?</a>
                 <p class="capslock"></p>

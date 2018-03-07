@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-22 11:24-0500\n"
+"POT-Creation-Date: 2018-03-07 11:10-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,15 +22,19 @@ msgstr ""
 msgid "Your email address is not allowed."
 msgstr ""
 
-#: core/forms.py:30 core/forms.py:112
+#: core/forms.py:30 core/forms.py:130
 msgid "The two password fields didn't match."
 msgstr "Les deux champs de mot de passe ne correspondaient pas."
 
-#: core/forms.py:98 core/forms.py:102
+#: core/forms.py:32
+msgid "This email is already in use."
+msgstr ""
+
+#: core/forms.py:116 core/forms.py:120
 msgid "Token"
 msgstr "Jeton"
 
-#: core/forms.py:111
+#: core/forms.py:129
 msgid "The password is invalid."
 msgstr "Le mot de passe est invalide"
 
@@ -333,6 +337,13 @@ msgstr "Notez que les deux champs sont sensibles à la casse."
 msgid "Email address"
 msgstr "Courriel"
 
+#: core/templates/login.html:53 core/templates/register.html:58
+#: core/templates/register.html:68
+#, fuzzy
+#| msgid "New password"
+msgid "Show password"
+msgstr "Nouveau mot de passe"
+
 #: core/templates/login.html:55 core/templates/password_reset.html:6
 #: core/templates/password_reset.html:15
 #: core/templates/password_reset_done.html:12
@@ -349,7 +360,7 @@ msgid "Don't have an account?"
 msgstr "Vous n’avez pas de compte?"
 
 #: core/templates/login.html:69 core/templates/register.html:8
-#: core/templates/register.html:20 core/templates/register.html:94
+#: core/templates/register.html:20 core/templates/register.html:95
 msgid "Register"
 msgstr "Inscription"
 
@@ -379,7 +390,7 @@ msgstr "Utiliser un jeton de sauvegarde"
 #: core/templates/login.html:122 core/templates/login.html:145
 #: core/templates/password_reset.html:36
 #: core/templates/password_reset_complete.html:25
-#: core/templates/password_reset_done.html:26 core/templates/register.html:95
+#: core/templates/password_reset_done.html:26 core/templates/register.html:96
 #: core/templates/register_activate.html:18
 #: core/templates/register_complete.html:19
 msgid "Return to sign in"
@@ -512,20 +523,26 @@ msgstr "pour créer un compte"
 msgid "First and last name"
 msgstr "Prénom et nom"
 
-#: core/templates/register.html:63
+#: core/templates/register.html:60
+msgid "Your password must contain at least 8 characters"
+msgstr ""
+
+#: core/templates/register.html:64
 #: core/templates/security_pages/change_password.html:45
 msgid "Confirm password"
 msgstr "Confirmez le mot de passe"
 
-#: core/templates/register.html:76
+#: core/templates/register.html:77
 msgid "I agree with the "
 msgstr "J’accepte les"
 
-#: core/templates/register.html:76
-msgid " general terms"
-msgstr "conditions générales"
+#: core/templates/register.html:77
+#, fuzzy
+#| msgid " terms & conditions"
+msgid " terms and conditions"
+msgstr " termes et conditions"
 
-#: core/templates/register.html:82
+#: core/templates/register.html:83
 msgid "Please subscribe me to the Pleio newsletter"
 msgstr ""
 
@@ -846,21 +863,21 @@ msgid ""
 "                    security."
 msgstr ""
 
-#: core/views.py:143
+#: core/views.py:144
 #, fuzzy
 #| msgid "The password has been changed successfully."
 msgid "The Password has been changed successfully."
 msgstr "Le mot de passe a été modifié avec succès."
 
-#: pleio_account/settings.py:135
+#: pleio_account/settings.py:140
 msgid "English"
 msgstr "Anglais"
 
-#: pleio_account/settings.py:136
+#: pleio_account/settings.py:141
 msgid "Dutch"
 msgstr ""
 
-#: pleio_account/settings.py:137
+#: pleio_account/settings.py:142
 msgid "French"
 msgstr "Français"
 
