@@ -34,7 +34,7 @@ class RegisterForm(forms.Form):
 
     name = forms.CharField(required=True, max_length=100, widget=forms.TextInput(attrs={'aria-labelledby':"error_name"}))
     email = EmailField(required=True, widget=forms.TextInput(attrs={'aria-labelledby':"error_email"}))
-    password1 = forms.CharField(strip=False, widget=forms.PasswordInput(attrs={'aria-labelledby':"error_password1"}))
+    password1 = forms.CharField(strip=False, widget=forms.PasswordInput(attrs={'aria-labelledby':"error_password1", "aria-describedby":"password_help"}))
     password2 = forms.CharField(strip=False, widget=forms.PasswordInput(attrs={'aria-labelledby':"error_password2"}))
     accepted_terms = forms.BooleanField(required=True)
     receives_newsletter = forms.BooleanField(required=False)
