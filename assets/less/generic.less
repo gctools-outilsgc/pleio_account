@@ -11,6 +11,11 @@
   z-index:-1;
 }
 
+#base-card {
+  width:95%;
+  max-width:340px;
+}
+
 .base-language-toggle {
   position: absolute;
   top:1.1rem;
@@ -61,18 +66,19 @@
   width:2rem;
   height:2rem;
   fill:#b4b4b4;
-  transtition:fill 0.2s;
+  transition:fill 0.2s;
 }
 .password__toggle svg:hover {
   fill:#757575;
 }
-.password_help {
+#password_help {
   color:#666666;
   font-size:90%;
 }
 .capslock {
   font-weight: bold;
   color:#e00;
+  margin-bottom: 0;
 }
 
 ul.horizontal.list {
@@ -96,6 +102,11 @@ ul.horizontal.list li {
 #active-sessions {
   width:auto;
   max-width:450px;
+}
+
+.register_block {
+  display: block;
+  margin-top:15px;
 }
 
 @media (max-width: 1023px) {
