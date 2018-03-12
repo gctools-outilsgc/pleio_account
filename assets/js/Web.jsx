@@ -52,4 +52,8 @@ $(document).ready(function() {
       $('.page-heading').css('box-shadow', 'none').removeClass('stick-offset');
     }
     });
+
+    $('.dropdown').dropdown({
+        action: 'hide'
+      });
 });
