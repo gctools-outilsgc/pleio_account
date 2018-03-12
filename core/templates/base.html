@@ -6,7 +6,7 @@
 
 {% language request.COOKIES.lang %}
 <!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE }}">
+<html lang="{{ request.COOKIES.lang }}">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -35,7 +35,7 @@
             <div class="account">
                 <div class="account__top-bar">
                     <a href="{% url 'login' %}" style="color:black;">
-                        <img alt ="Graphic Element" src="{% show_customizations_logo %}" class="ui top aligned mini image">
+                        <img alt ="" src="{% show_customizations_logo %}" class="ui top aligned mini image">
                         <span class="ui huge header">
                             {% show_customizations_title %}
                         </span>
@@ -68,7 +68,7 @@
                     </div>
                     <div style="margin-bottom:10px;">
                         <div class="left floated fip__signature" style="height:22px; float:left;">{% include_asset "images/sig-en.svg" %}</div>
-                        <div class="right floated fip__watermark" style="width:139px; float:right;">{% include_asset "images/wmms-alt.svg" %}</div> 
+                        <div class="right floated fip__watermark" style="width:139px; float:right;">{% include_asset "images/wmms-alt.svg" %}</div>
                     </div>
                 </footer>
             </div>
