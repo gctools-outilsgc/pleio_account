@@ -20,6 +20,10 @@
 <link rel="stylesheet" type="text/css" href="/static/semantic/dist/semantic.min.css">
     </head>
     <body>
+        <div id="skip">
+            <a href="#account-main">Skip to main content</a>
+        </div>
+        
         <div class="account-overlay ___profile">
             <div class="account-menu">
               <div class="account-menu-container ui sticky">
@@ -82,6 +86,30 @@
                             </div>
                         </a>
                     </li>
+
+                    <li>
+                        <div class="account-menu__applist">
+                            <div class="account-menu__appinfo">
+                                <i aria-hidden="true">{% include_asset "icons/lock-open.svg" %}</i>
+                                <div>
+                                    <div class="title">Tools</div>
+                                    <div>Access your various collaboration tools here:</div>
+                                </div>        
+                            </div>
+                                
+                            <div class="ui secondary labeled icon menu">
+                                <a class="item" href="#link1">
+                                    <i aria-hidden="true" class="icon" style="padding-right:0;">{% include_asset "icons/app-tray.svg" %}</i>
+                                    GCcollab
+                                </a>
+                                <a class="item" href="#link2">
+                                    <i aria-hidden="true" class="icon" style="padding-right:0;">{% include_asset "icons/app-tray.svg" %}</i>
+                                    GCwiki
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+
                     <li>
                         <a href="{% url 'logout' %}">
                             <i aria-hidden="true">{% include_asset "icons/lock-open.svg" %}</i>
@@ -98,30 +126,16 @@
                 {% if request.COOKIES.partner_site_url %}
                     <a href={{ request.COOKIES.partner_site_url }} class="button ___white ___outline account__close">{{ request.COOKIES.partner_site_name }}</a>
                 {% endif %}
-                <div class="page-heading ui sticky">
-                  <h1 class="ui large header">{% block page_header %}{% endblock %}</h1>
-                  <div class="ui right floating dropdown account__app_tray">
-                    <i aria-hidden="true" style="color:white; display:inline-block; width:30px;">{% include_asset "icons/app-tray.svg" %}</i>
-                    <div class="ui labeled icon menu">
-                        <div class="header">Tools</div>
-                        <a class="item" href="#link1">
-                                <i aria-hidden="true" class="icon">{% include_asset "icons/app-tray.svg" %}</i>
-                            Home
-                        </a>
-                        <a class="item" href="#link2">
-                                <i aria-hidden="true" class="icon">{% include_asset "icons/app-tray.svg" %}</i>
-                            Browse
-                        </a>
-                        <a class="item" href="#link3">
-                                <i aria-hidden="true" class="icon">{% include_asset "icons/app-tray.svg" %}</i>
-                            Search
-                        </a>
-                      </div>
-                  </div>
-                </div>
-                <div class="account-right__content">
-                    {% block content %}{% endblock %}
-                    <footer class="account__fip" style="margin-top:120px; border-top:1px solid rgba(34,36,38,.15);">
+                <main id="account-main">
+                    <div class="page-heading ui sticky">
+                        <h1 class="ui large header">{% block page_header %}{% endblock %}</h1>
+                    </div>
+                    <div class="account-right__content">
+                        {% block content %}{% endblock %}
+                    </div>
+                </main>
+
+                <footer class="account__fip" style="margin-top:100px; border-top:1px solid rgba(34,36,38,.15); padding: 1em 3em 3em;">
                         <div style="margin-bottom:20px">
                             <ul class="u horizontal list">
                                 <li class="item">
@@ -137,7 +151,6 @@
                             <div class="right floated fip__watermark" style="width:139px; float:right;">{% include_asset "images/wmms-alt.svg" %}</div> 
                         </div>
                     </footer>
-                </div>
             </div>
         </div>
 
@@ -293,14 +306,45 @@ float:left;
     opacity: 0.8;
 }
 
-.account__app_tray{
-    float: right;
-    display: inline-block;
+.account-menu__list .account-menu__applist{
+    color: #757575;
+    
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+
+    transition: color 0.2s, background 0.2s;
+    padding-left: 3rem;
+    padding-right: 4rem;
 }
 
-.account__app_tray .menu .item{
-    float:left;
+.account-menu__list .account-menu__applist .account-menu__appinfo{
+    display: flex;
+    justify-content: center;
+    align-content: center;
 }
+
+#skip a{ 
+position:absolute; 
+left:-10000px; 
+top:auto; 
+width:1px; 
+height:1px; 
+overflow:hidden;
+} 
+ 
+#skip a:focus { 
+    position: absolute;
+    width: auto;
+    height: auto;
+    left: 0;
+    top: 0;
+    background: red;
+    padding: 6px;
+    z-index: 16;
+    color: white;
+    transition: top 1s ease-out, background 1s linear; 
+} 
+
 @media (max-width: 1023px) {
 .account-menu {
 flex: 1 0 auto;
