@@ -20,7 +20,7 @@ class EmailField(forms.EmailField):
             )
         try:
             User.objects.get(email=value, is_active=True)
-            raise forms.ValidationError("This e-mail is already registered.")
+            raise forms.ValidationError(_("This email is already registered."))
         except User.DoesNotExist:
             return value
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-07 11:10-0500\n"
+"POT-Creation-Date: 2018-03-13 08:34-0400\n"
 "PO-Revision-Date: 2017-12-15 16:48+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -21,6 +21,10 @@ msgstr ""
 #: core/forms.py:19
 msgid "Your email address is not allowed."
 msgstr "Dit e-mailadres is niet geldig."
+
+#: core/forms.py:23
+msgid "This email is already registered."
+msgstr ""
 
 #: core/forms.py:30 core/forms.py:130
 msgid "The two password fields didn't match."
@@ -173,50 +177,50 @@ msgstr "Je hebt nog geen backup tokens."
 msgid "Generate tokens"
 msgstr "Genereer tokens"
 
-#: core/templates/base.html:42 core/templates/base_account.html:29
+#: core/templates/base.html:44 core/templates/base_account.html:29
 msgid "Back to the homepage"
 msgstr "Terug naar de homepagina"
 
-#: core/templates/base_account.html:46 core/templates/emails/register.html:5
+#: core/templates/base_account.html:48 core/templates/emails/register.html:5
 msgid "Welcome"
 msgstr "Welkom"
 
-#: core/templates/base_account.html:49 core/templates/profile.html:44
+#: core/templates/base_account.html:51
 msgid "Your custom avatar"
 msgstr ""
 
-#: core/templates/base_account.html:65 core/templates/profile.html:10
+#: core/templates/base_account.html:67 core/templates/profile.html:10
 msgid "Profile"
 msgstr "Profiel"
 
-#: core/templates/base_account.html:66 core/templates/profile.html:17
+#: core/templates/base_account.html:68 core/templates/profile.html:17
 msgid "Your details"
 msgstr "Uw gegevens"
 
-#: core/templates/base_account.html:66 core/templates/profile.html:40
+#: core/templates/base_account.html:68
 msgid "Avatar"
 msgstr "Profielfoto"
 
-#: core/templates/base_account.html:78 core/templates/security_pages.html:8
+#: core/templates/base_account.html:80 core/templates/security_pages.html:8
 #: core/templates/security_pages.html:22
 msgid "Security"
 msgstr "Beveiliging"
 
-#: core/templates/base_account.html:79 core/templates/login.html:49
+#: core/templates/base_account.html:81 core/templates/login.html:49
 #: core/templates/register.html:54
 msgid "Password"
 msgstr "Wachtwoord"
 
-#: core/templates/base_account.html:79
+#: core/templates/base_account.html:81
 msgid "Sessions"
 msgstr "Sessies"
 
-#: core/templates/base_account.html:79
+#: core/templates/base_account.html:81
 #: core/templates/security_pages/two_factor_authorization.html:4
 msgid "Two-factor authentication"
 msgstr "Twee-factor authenticatie"
 
-#: core/templates/base_account.html:87
+#: core/templates/base_account.html:89
 #: core/templates/security_pages/user_sessions.html:39
 #: core/templates/session_list.html:42
 msgid "Logout"
@@ -307,11 +311,11 @@ msgid "Change language"
 msgstr ""
 
 #: core/templates/login.html:8 core/templates/login.html:20
-#: core/templates/login.html:96
+#: core/templates/login.html:100
 msgid "Sign in"
 msgstr "Inloggen2"
 
-#: core/templates/login.html:20 core/templates/login.html:96
+#: core/templates/login.html:20 core/templates/login.html:100
 #, fuzzy
 #| msgid "with your Pleio-account"
 msgid "with your account"
@@ -339,8 +343,9 @@ msgstr "Let op: beide velden kunnen hoofdlettergevoelig zijn."
 msgid "Email address"
 msgstr "E-mailadres"
 
-#: core/templates/login.html:53 core/templates/register.html:58
-#: core/templates/register.html:68
+#: core/templates/login.html:53 core/templates/password_reset_confirm.html:33
+#: core/templates/password_reset_confirm.html:42
+#: core/templates/register.html:58 core/templates/register.html:68
 #, fuzzy
 #| msgid "New Password"
 msgid "Show password"
@@ -352,63 +357,63 @@ msgstr "Nieuw wachtwoord"
 msgid "Forgot password"
 msgstr "Wachtwoord vergeten"
 
-#: core/templates/login.html:68 core/templates/login.html:116
-#: core/templates/login.html:144
+#: core/templates/login.html:68 core/templates/login.html:120
+#: core/templates/login.html:148
 msgid "Login"
 msgstr "Login"
 
-#: core/templates/login.html:69
+#: core/templates/login.html:70
 #, fuzzy
 #| msgid "You don't have any backup codes yet."
 msgid "Don't have an account?"
 msgstr "Je hebt nog geen backup tokens."
 
-#: core/templates/login.html:69 core/templates/register.html:8
+#: core/templates/login.html:70 core/templates/register.html:8
 #: core/templates/register.html:20 core/templates/register.html:95
 msgid "Register"
 msgstr "Registeren"
 
-#: core/templates/login.html:78
+#: core/templates/login.html:81
 msgid "Secure your account"
 msgstr "Extra beveiliging voor uw account"
 
-#: core/templates/login.html:79
+#: core/templates/login.html:82
 #: core/templates/security_pages/two_factor_authorization.html:35
 #, fuzzy
 #| msgid "Enable two factor authentication"
 msgid "Enable two-factor authentication"
 msgstr "Schakel twee-factor-authenticatie in"
 
-#: core/templates/login.html:104
+#: core/templates/login.html:108
 msgid "Two factor authentication"
 msgstr "Twee-factor-authenticatie"
 
-#: core/templates/login.html:105
+#: core/templates/login.html:109
 msgid "Fill in a code from your code generator."
 msgstr "Voer de verificatiecode uit uw codegenerator in."
 
-#: core/templates/login.html:119
+#: core/templates/login.html:123
 #, fuzzy
 #| msgid "Use backuptoken"
 msgid "Use backup token"
 msgstr "Gebruik backupcode"
 
-#: core/templates/login.html:122 core/templates/login.html:145
-#: core/templates/password_reset.html:36
+#: core/templates/login.html:126 core/templates/login.html:149
+#: core/templates/password_reset.html:37
 #: core/templates/password_reset_complete.html:25
-#: core/templates/password_reset_done.html:26 core/templates/register.html:96
+#: core/templates/password_reset_done.html:26 core/templates/register.html:97
 #: core/templates/register_activate.html:18
 #: core/templates/register_complete.html:19
 msgid "Return to sign in"
 msgstr ""
 
-#: core/templates/login.html:133
+#: core/templates/login.html:137
 #, fuzzy
 #| msgid "Backup Tokens"
 msgid "Backup token"
 msgstr "Backup tokens"
 
-#: core/templates/login.html:134
+#: core/templates/login.html:138
 msgid ""
 "Use this form for entering backup tokens for logging in.\n"
 "         These tokens have been generated for you to print and keep safe. "
@@ -442,11 +447,11 @@ msgstr ""
 msgid "Reset password"
 msgstr "Herstel wachtwoord"
 
-#: core/templates/password_reset.html:44
+#: core/templates/password_reset.html:46
 msgid "Need help?"
 msgstr "Hulp nodig?"
 
-#: core/templates/password_reset.html:45 core/templates/profile.html:25
+#: core/templates/password_reset.html:47 core/templates/profile.html:25
 #: core/templates/register.html:49
 msgid "Email"
 msgstr "E-mail"
@@ -470,10 +475,12 @@ msgid "New password"
 msgstr "Nieuw wachtwoord"
 
 #: core/templates/password_reset_confirm.html:38
+#: core/templates/register.html:64
+#: core/templates/security_pages/change_password.html:45
 #, fuzzy
-#| msgid "Request for a new password"
-msgid "Confirm new password"
-msgstr "Vraag een nieuw wachtwoord aan"
+#| msgid "Forgot password"
+msgid "Confirm password"
+msgstr "Wachtwoord vergeten"
 
 #: core/templates/password_reset_confirm.html:47
 #: core/templates/security_pages/change_password.html:60
@@ -509,19 +516,29 @@ msgstr "Overheid"
 msgid "Save"
 msgstr "Opslaan"
 
-#: core/templates/profile.html:47
+#: core/templates/profile.html:40
 #, fuzzy
-#| msgid "Choose an avatar"
-msgid "Default avatar"
-msgstr "Kies een avatar"
+#| msgid "Profile"
+msgid "Profile Picture"
+msgstr "Profiel"
+
+#: core/templates/profile.html:44
+#, fuzzy
+#| msgid "Your profile"
+msgid "Your custom profile picture"
+msgstr "Je profiel"
+
+#: core/templates/profile.html:47
+msgid "Default profile picture"
+msgstr ""
 
 #: core/templates/profile.html:53
-msgid "Choose an avatar"
-msgstr "Kies een avatar"
+msgid "Choose a profile picture"
+msgstr ""
 
 #: core/templates/profile.html:58
-msgid "Remove avatar"
-msgstr "Verwijder avatar"
+msgid "Remove profile picture"
+msgstr ""
 
 #: core/templates/register.html:20
 #, fuzzy
@@ -536,15 +553,10 @@ msgid "First and last name"
 msgstr "Voor- en achternaam"
 
 #: core/templates/register.html:60
-msgid "Your password must contain at least 8 characters"
+msgid ""
+"Create a unique password that contains at least 8 characters, including both "
+"letters and numbers."
 msgstr ""
-
-#: core/templates/register.html:64
-#: core/templates/security_pages/change_password.html:45
-#, fuzzy
-#| msgid "Forgot password"
-msgid "Confirm password"
-msgstr "Wachtwoord vergeten"
 
 #: core/templates/register.html:77
 msgid "I agree with the "
@@ -893,6 +905,22 @@ msgstr "Nederlands"
 msgid "French"
 msgstr "Frans"
 
+#, fuzzy
+#~| msgid "Request for a new password"
+#~ msgid "Confirm new password"
+#~ msgstr "Vraag een nieuw wachtwoord aan"
+
+#, fuzzy
+#~| msgid "Choose an avatar"
+#~ msgid "Default avatar"
+#~ msgstr "Kies een avatar"
+
+#~ msgid "Choose an avatar"
+#~ msgstr "Kies een avatar"
+
+#~ msgid "Remove avatar"
+#~ msgstr "Verwijder avatar"
+
 #~ msgid " general terms"
 #~ msgstr " algemene voorwaarden"
 
@@ -1037,6 +1065,3 @@ msgstr "Frans"
 #~ msgstr ""
 #~ "Om de code generator te gebruiken, gebruik je smartphone en scan de QR "
 #~ "code hieronder. Gebruik bijvoorbeeld Google Authenticator."
-
-#~ msgid "Your profile"
-#~ msgstr "Je profiel"

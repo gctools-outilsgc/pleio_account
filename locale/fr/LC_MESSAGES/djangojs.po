@@ -18,6 +18,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: assets/js/Web.jsx:19
+#: assets/js/Web.jsx:24
 msgid "Attention: CAPS LOCK is ON"
 msgstr "Attention : La TOUCHE MAJUSCULE est ACTIVÉE"
+
+#: assets/js/Web.jsx:7
+msgid "Show password"
+msgstr "Montrer le mot de passe"
+
+#: assets/js/Web.jsx:9
+msgid "Hide password"
+msgstr "Cacher le mot de passe"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-07 11:10-0500\n"
+"POT-Creation-Date: 2018-03-13 08:34-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,15 +20,19 @@ msgstr ""
 
 #: core/forms.py:19
 msgid "Your email address is not allowed."
-msgstr ""
+msgstr "Votre adresse e-mail n'est pas autorisée."
+
+#: core/forms.py:23
+msgid "This email is already registered."
+msgstr "Cet e-mail est déjà enregistré."
 
 #: core/forms.py:30 core/forms.py:130
 msgid "The two password fields didn't match."
-msgstr "Les deux champs de mot de passe ne correspondaient pas."
+msgstr "Ces deux champs réservés au mot de passe ne sont pas identiques"
 
 #: core/forms.py:32
 msgid "This email is already in use."
-msgstr ""
+msgstr "La présente adresse courriel est actuellement utilisée."
 
 #: core/forms.py:116 core/forms.py:120
 msgid "Token"
@@ -172,50 +176,50 @@ msgstr "Vous n’avez pas encore de codes de sauvegarde."
 msgid "Generate tokens"
 msgstr "Générer des jetons"
 
-#: core/templates/base.html:42 core/templates/base_account.html:29
+#: core/templates/base.html:44 core/templates/base_account.html:29
 msgid "Back to the homepage"
 msgstr "Retour à la page d’accueil"
 
-#: core/templates/base_account.html:46 core/templates/emails/register.html:5
+#: core/templates/base_account.html:48 core/templates/emails/register.html:5
 msgid "Welcome"
 msgstr "Bienvenue"
 
-#: core/templates/base_account.html:49 core/templates/profile.html:44
+#: core/templates/base_account.html:51
 msgid "Your custom avatar"
 msgstr "Votre avatar personnalisé"
 
-#: core/templates/base_account.html:65 core/templates/profile.html:10
+#: core/templates/base_account.html:67 core/templates/profile.html:10
 msgid "Profile"
 msgstr "Profil"
 
-#: core/templates/base_account.html:66 core/templates/profile.html:17
+#: core/templates/base_account.html:68 core/templates/profile.html:17
 msgid "Your details"
 msgstr "Vos détails"
 
-#: core/templates/base_account.html:66 core/templates/profile.html:40
+#: core/templates/base_account.html:68
 msgid "Avatar"
 msgstr "Avatar"
 
-#: core/templates/base_account.html:78 core/templates/security_pages.html:8
+#: core/templates/base_account.html:80 core/templates/security_pages.html:8
 #: core/templates/security_pages.html:22
 msgid "Security"
 msgstr "Sécurité"
 
-#: core/templates/base_account.html:79 core/templates/login.html:49
+#: core/templates/base_account.html:81 core/templates/login.html:49
 #: core/templates/register.html:54
 msgid "Password"
 msgstr "Mot de passe"
 
-#: core/templates/base_account.html:79
+#: core/templates/base_account.html:81
 msgid "Sessions"
 msgstr "Séances"
 
-#: core/templates/base_account.html:79
+#: core/templates/base_account.html:81
 #: core/templates/security_pages/two_factor_authorization.html:4
 msgid "Two-factor authentication"
 msgstr "Authentification à deux facteurs"
 
-#: core/templates/base_account.html:87
+#: core/templates/base_account.html:89
 #: core/templates/security_pages/user_sessions.html:39
 #: core/templates/session_list.html:42
 msgid "Logout"
@@ -309,11 +313,11 @@ msgid "Change language"
 msgstr "Changer de langue"
 
 #: core/templates/login.html:8 core/templates/login.html:20
-#: core/templates/login.html:96
+#: core/templates/login.html:100
 msgid "Sign in"
 msgstr "Connectez-vous"
 
-#: core/templates/login.html:20 core/templates/login.html:96
+#: core/templates/login.html:20 core/templates/login.html:100
 msgid "with your account"
 msgstr "de votre compte"
 
@@ -337,12 +341,11 @@ msgstr "Notez que les deux champs sont sensibles à la casse."
 msgid "Email address"
 msgstr "Courriel"
 
-#: core/templates/login.html:53 core/templates/register.html:58
-#: core/templates/register.html:68
-#, fuzzy
-#| msgid "New password"
+#: core/templates/login.html:53 core/templates/password_reset_confirm.html:33
+#: core/templates/password_reset_confirm.html:42
+#: core/templates/register.html:58 core/templates/register.html:68
 msgid "Show password"
-msgstr "Nouveau mot de passe"
+msgstr "Montrer le mot de passe"
 
 #: core/templates/login.html:55 core/templates/password_reset.html:6
 #: core/templates/password_reset.html:15
@@ -350,59 +353,59 @@ msgstr "Nouveau mot de passe"
 msgid "Forgot password"
 msgstr "Mot de passe perdu?"
 
-#: core/templates/login.html:68 core/templates/login.html:116
-#: core/templates/login.html:144
+#: core/templates/login.html:68 core/templates/login.html:120
+#: core/templates/login.html:148
 msgid "Login"
 msgstr "Ouvrir uen session"
 
-#: core/templates/login.html:69
+#: core/templates/login.html:70
 msgid "Don't have an account?"
 msgstr "Vous n’avez pas de compte?"
 
-#: core/templates/login.html:69 core/templates/register.html:8
+#: core/templates/login.html:70 core/templates/register.html:8
 #: core/templates/register.html:20 core/templates/register.html:95
 msgid "Register"
 msgstr "Inscription"
 
-#: core/templates/login.html:78
+#: core/templates/login.html:81
 msgid "Secure your account"
 msgstr "Protéger votre compte"
 
-#: core/templates/login.html:79
+#: core/templates/login.html:82
 #: core/templates/security_pages/two_factor_authorization.html:35
 msgid "Enable two-factor authentication"
 msgstr "Activer l’authentification à deux facteurs"
 
-#: core/templates/login.html:104
+#: core/templates/login.html:108
 #, fuzzy
 #| msgid "Two-factor authentication"
 msgid "Two factor authentication"
 msgstr "Authentification à deux facteurs"
 
-#: core/templates/login.html:105
+#: core/templates/login.html:109
 msgid "Fill in a code from your code generator."
 msgstr "Inscrivez un code de votre générateur de codes."
 
-#: core/templates/login.html:119
+#: core/templates/login.html:123
 msgid "Use backup token"
 msgstr "Utiliser un jeton de sauvegarde"
 
-#: core/templates/login.html:122 core/templates/login.html:145
-#: core/templates/password_reset.html:36
+#: core/templates/login.html:126 core/templates/login.html:149
+#: core/templates/password_reset.html:37
 #: core/templates/password_reset_complete.html:25
-#: core/templates/password_reset_done.html:26 core/templates/register.html:96
+#: core/templates/password_reset_done.html:26 core/templates/register.html:97
 #: core/templates/register_activate.html:18
 #: core/templates/register_complete.html:19
 msgid "Return to sign in"
 msgstr "Retournez pour vous connecter"
 
-#: core/templates/login.html:133
+#: core/templates/login.html:137
 #, fuzzy
 #| msgid "Backup tokens"
 msgid "Backup token"
 msgstr "Jetons de sauvegarde"
 
-#: core/templates/login.html:134
+#: core/templates/login.html:138
 msgid ""
 "Use this form for entering backup tokens for logging in.\n"
 "         These tokens have been generated for you to print and keep safe. "
@@ -440,11 +443,11 @@ msgstr "Erreur"
 msgid "Reset password"
 msgstr "Réinitialiser le mot de passe"
 
-#: core/templates/password_reset.html:44
+#: core/templates/password_reset.html:46
 msgid "Need help?"
 msgstr "Besoin d’aide?"
 
-#: core/templates/password_reset.html:45 core/templates/profile.html:25
+#: core/templates/password_reset.html:47 core/templates/profile.html:25
 #: core/templates/register.html:49
 msgid "Email"
 msgstr "Courriel"
@@ -464,9 +467,10 @@ msgid "New password"
 msgstr "Nouveau mot de passe"
 
 #: core/templates/password_reset_confirm.html:38
-#, fuzzy
-msgid "Confirm new password"
-msgstr "Confirmer le nouveau mot de passe."
+#: core/templates/register.html:64
+#: core/templates/security_pages/change_password.html:45
+msgid "Confirm password"
+msgstr "Confirmez le mot de passe"
 
 #: core/templates/password_reset_confirm.html:47
 #: core/templates/security_pages/change_password.html:60
@@ -503,17 +507,29 @@ msgstr "Gouvernement"
 msgid "Save"
 msgstr "Sauvegarder"
 
+#: core/templates/profile.html:40
+#, fuzzy
+#| msgid "Profile"
+msgid "Profile Picture"
+msgstr "Profil"
+
+#: core/templates/profile.html:44
+#, fuzzy
+#| msgid "Your custom avatar"
+msgid "Your custom profile picture"
+msgstr "Votre avatar personnalisé"
+
 #: core/templates/profile.html:47
-msgid "Default avatar"
-msgstr "Avatar par défaut"
+msgid "Default profile picture"
+msgstr ""
 
 #: core/templates/profile.html:53
-msgid "Choose an avatar"
-msgstr "Choisissez un avatar"
+msgid "Choose a profile picture"
+msgstr ""
 
 #: core/templates/profile.html:58
-msgid "Remove avatar"
-msgstr "Enlever l'avatar"
+msgid "Remove profile picture"
+msgstr ""
 
 #: core/templates/register.html:20
 msgid "to create an account"
@@ -524,13 +540,12 @@ msgid "First and last name"
 msgstr "Prénom et nom"
 
 #: core/templates/register.html:60
-msgid "Your password must contain at least 8 characters"
+msgid ""
+"Create a unique password that contains at least 8 characters, including both "
+"letters and numbers."
 msgstr ""
-
-#: core/templates/register.html:64
-#: core/templates/security_pages/change_password.html:45
-msgid "Confirm password"
-msgstr "Confirmez le mot de passe"
+"Créez un mot de passe unique qui compte au moins 8 caractères, y compris des "
+"lettres et des chiffres"
 
 #: core/templates/register.html:77
 msgid "I agree with the "
@@ -880,6 +895,15 @@ msgstr ""
 #: pleio_account/settings.py:142
 msgid "French"
 msgstr "Français"
+
+#~ msgid "Default avatar"
+#~ msgstr "Avatar par défaut"
+
+#~ msgid "Choose an avatar"
+#~ msgstr "Choisissez un avatar"
+
+#~ msgid "Remove avatar"
+#~ msgstr "Enlever l'avatar"
 
 #, fuzzy
 #~| msgid ""
