@@ -43,9 +43,13 @@
                     {% comment 'removing for now' %}
                     <a class="navigation__logo" title="{% trans "Back to the homepage" %}" href="https://www.pleio.nl/">{% include_asset "images/logo.svg" %}</a>
                     {% endcomment %}
-                    <div class="language-toggle">
-                        {% include "language.html" %}
-                    </div>
+
+                    {% show_language_toggle as toggle %}
+                    {% if toggle %}
+                      <div class="language-toggle">
+                          {% include "language.html" %}
+                      </div>
+                    {% endif %}
                 </div>
 
                 <div class="ui grid" style="padding-top:40px">
@@ -58,9 +62,12 @@
                 <footer class="account__fip" style="margin-top:120px; border-top:1px solid rgba(34,36,38,.15);">
                     <div style="margin-bottom:20px">
                         <ul class="u horizontal list">
-                            <li class="item">
-                                <a href="#">Help / Contact Us</a>
-                            </li>
+                          {% custom_helpdesk_link as link %}
+                            {% if link %}
+                              <li class="item">
+                                  <a href="{% custom_helpdesk_link %}">{% trans "Help / Contact Us" %}</a>
+                              </li>
+                            {% endif %}
                             <li class="item">
                                 <a href="#">Terms and Conditions</a>
                             </li>

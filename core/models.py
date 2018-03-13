@@ -298,8 +298,9 @@ class AppCustomization(models.Model):
     app_favicon = models.ImageField(null=True, blank=True)
     app_background_photo = models.ImageField(null=True, blank=True)
     app_background_options = models.CharField(max_length=1, choices=BG_IMAGE_OPTIONS)
+    custom_helpdesk_link = models.CharField(max_length=100, default='', blank=True)
     display_language_toggle = models.BooleanField(default=True)
-    display_logo_title = models.BooleanField("Display Logo and Title together", default=True)    
+    display_logo_title = models.BooleanField("Display Logo and Title together", default=True)
 
 admin.site.register(User)
 admin.site.register(PleioPartnerSite)
