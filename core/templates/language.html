@@ -53,5 +53,14 @@ function setCookie(sName, sValue, oExpires, sPath, sDomain, bSecure) {
         sCookie += "; secure";
     }
     document.cookie = sCookie;
+
+    $.ajax({
+        type: "POST",
+        url: "{% url 'set_language' %}",
+        data: {'language': sValue, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+        success: function(response) {},
+        error: function(rs, e) { console.log(e); }
+    });
+
 }
 </script>
