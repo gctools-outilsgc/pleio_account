@@ -2,6 +2,8 @@
 {% load user_sessions i18n %}{% trans "<em>unknown on unknown</em>" as unknown_on_unknown %}{% trans "<em>unknown</em>" as unknown %}
 
 {% block content %}
+{% language 'en' %}
+{% get_current_language as LANGUAGE_CODE %}
     {% trans "Hello" %} {{ user.name }},<br />
     <br />
     {% trans "You logged in to your account from a new location." %}<br />
@@ -10,4 +12,19 @@
     {{ city }}, {{ country }}<br />
     <br />
     {% trans "If it was you safely ignore this e-mail. Otherwise please change your password as soon as possible." %}
+{% endlanguage %}
+
+<div id="fr_content" style="border-top:1px solid #ddd; margin-top:15px; padding-top:10px;" lang="fr">
+    {% language 'fr' %}
+    {% get_current_language as LANGUAGE_CODE %}
+    {% trans "Hello" %} {{ user.name }},<br />
+    <br />
+    {% trans "You logged in to your account from a new location." %}<br />
+    <br />
+    {{ user_agent|device|default_if_none:unknown_on_unknown|safe }}<br />
+    {{ city }}, {{ country }}<br />
+    <br />
+    {% trans "If it was you safely ignore this e-mail. Otherwise please change your password as soon as possible." %}
+    {% endlanguage %}
+</div>
 {% endblock %}
