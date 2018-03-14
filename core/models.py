@@ -301,6 +301,8 @@ class AppCustomization(models.Model):
     custom_helpdesk_link = models.CharField(max_length=100, default='', blank=True)
     display_language_toggle = models.BooleanField(default=True)
     display_logo_title = models.BooleanField("Display Logo and Title together", default=True)
+    footer_image_left = models.FileField(null=True, blank=True)
+    footer_image_right = models.FileField(null=True, blank=True)
 
 admin.site.register(User)
 admin.site.register(PleioPartnerSite)

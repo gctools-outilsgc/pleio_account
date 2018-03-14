@@ -23,7 +23,7 @@
         <div id="skip">
             <a href="#account-main">Skip to main content</a>
         </div>
-        
+
         <div class="account-overlay ___profile">
             <div class="account-menu">
               <div class="account-menu-container ui sticky">
@@ -33,15 +33,18 @@
                     <a class="navigation__logo" title="{% trans "Back to the homepage" %}" href="https://www.pleio.nl/">{% include_asset "images/logo.svg" %}</a>
                     {% endcomment %}
                     <a href="{% url 'profile' %}" style="color:black;">
-                        <img alt ="Graphic Element" src="{% show_customizations_logo %}" class="ui top aligned mini image">
+                        <img alt ="" src="{% show_customizations_logo %}" class="ui top aligned mini image">
                         <span class="ui huge header">
                             {% show_customizations_title %}
                         </span>
                     </a>
-                    
-                    <div class="base-language-toggle">
-                        {% include "language.html" %}
-                    </div>
+
+                    {% show_language_toggle as toggle %}
+                    {% if toggle %}
+                      <div class="base-language-toggle">
+                          {% include "language.html" %}
+                      </div>
+                    {% endif %}
 
                     <label for="show_menu" class="account-menu__hamburger">{% include_asset "icons/hamburger.svg" %}</label>
                 </div>
@@ -94,9 +97,9 @@
                                 <div>
                                     <div class="title">Tools</div>
                                     <div>Access your various collaboration tools here:</div>
-                                </div>        
+                                </div>
                             </div>
-                                
+
                             <div class="ui secondary labeled icon menu">
                                 <a class="item" href="#link1">
                                     <i aria-hidden="true" class="icon" style="padding-right:0;">{% include_asset "icons/app-tray.svg" %}</i>
@@ -135,21 +138,31 @@
                     </div>
                 </main>
 
-                <footer class="account__fip" style="margin-top:100px; border-top:1px solid rgba(34,36,38,.15); padding: 1em 3em 3em;">
+                    <footer class="account__fip" style="margin:100px 3em 50px 3em; border-top:1px solid rgba(34,36,38,.15); padding-top: 1em;">
                         <div style="margin-bottom:20px">
                             <ul class="u horizontal list">
+                              {% custom_helpdesk_link as link %}
+                                {% if link %}
+                                  <li class="item">
+                                      <a href="{% custom_helpdesk_link %}">{% trans "Help / Contact Us" %}</a>
+                                  </li>
+                                {% endif %}
                                 <li class="item">
-                                    <a href="#">Help / Contact Us</a>
-                                </li>
-                                <li class="item">
-                                    <a href="#">Terms and Conditions</a>
+                                    <a href="{% url 'terms_of_use' %}">Terms and Conditions</a>
                                 </li>
                             </ul>
                         </div>
+                        {% show_footer_images as show_footer %}
+                        {% if show_footer %}
                         <div style="margin-bottom:10px;">
-                            <div class="left floated fip__signature" style="height:22px; float:left;">{% include_asset "images/sig-en.svg" %}</div>
-                            <div class="right floated fip__watermark" style="width:139px; float:right;">{% include_asset "images/wmms-alt.svg" %}</div> 
+                            <div class="left floated fip__signature" style="height:22px; float:left;">
+                              <img alt="" src="{% show_footer_image_left %}">
+                            </div>
+                            <div class="right floated fip__watermark">
+                              <img alt="" src="{% show_footer_image_right %}">
+                            </div>
                         </div>
+                        {% endif %}
                     </footer>
             </div>
         </div>
@@ -159,7 +172,7 @@
 .page-heading {
     min-height:60px;
   background-color: #{% show_customizations_color %};
-  
+
 }
 
 .page-heading h1{
@@ -308,7 +321,7 @@ float:left;
 
 .account-menu__list .account-menu__applist{
     color: #757575;
-    
+
     padding-top: 1rem;
     padding-bottom: 1rem;
 
@@ -323,16 +336,16 @@ float:left;
     align-content: center;
 }
 
-#skip a{ 
-position:absolute; 
-left:-10000px; 
-top:auto; 
-width:1px; 
-height:1px; 
+#skip a{
+position:absolute;
+left:-10000px;
+top:auto;
+width:1px;
+height:1px;
 overflow:hidden;
-} 
- 
-#skip a:focus { 
+}
+
+#skip a:focus {
     position: absolute;
     width: auto;
     height: auto;
@@ -342,8 +355,8 @@ overflow:hidden;
     padding: 6px;
     z-index: 16;
     color: white;
-    transition: top 1s ease-out, background 1s linear; 
-} 
+    transition: top 1s ease-out, background 1s linear;
+}
 
 @media (max-width: 1023px) {
 .account-menu {
