@@ -22,9 +22,9 @@
 <h2>{% trans "Security" %}</h2>
 
 {% if messages %}
-<ul class="message_success">
+<ul class="message_success" style="list-style:none; padding:0;">
     {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+    <li{% if message.tags %} class="ui {{ message.tags }} message"{% endif %}>
         {% if 'safe' in message.tags %}{{ message|safe }}{% else %}{{ message }}{% endif %}
     </li>
     {% endfor %}

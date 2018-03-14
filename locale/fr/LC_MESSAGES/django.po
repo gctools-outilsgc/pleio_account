@@ -511,7 +511,7 @@ msgstr "Sauvegarder"
 #, fuzzy
 #| msgid "Profile"
 msgid "Profile Picture"
-msgstr "Profil"
+msgstr "Photo de Profil"
 
 #: core/templates/profile.html:44
 #, fuzzy
@@ -525,11 +525,11 @@ msgstr ""
 
 #: core/templates/profile.html:53
 msgid "Choose a profile picture"
-msgstr ""
+msgstr "Choisissez une photo de profil"
 
 #: core/templates/profile.html:58
 msgid "Remove profile picture"
-msgstr ""
+msgstr "Supprimer la photo de profil"
 
 #: core/templates/register.html:20
 msgid "to create an account"
