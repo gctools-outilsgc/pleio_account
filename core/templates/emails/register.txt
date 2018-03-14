@@ -15,5 +15,5 @@
     {% trans "Please activate your account by following this link" %}:<br />
 
     {{ protocol }}://{{ domain }}{% url 'register_activate' activation_token %}
-{% endlangauge %}
+{% endlanguage %}
 </div>
