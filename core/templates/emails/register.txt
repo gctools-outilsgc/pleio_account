@@ -4,3 +4,16 @@
 {% trans "Please activate your account by following this link" %}:<br />
 
 {{ protocol }}://{{ domain }}{% url 'register_activate' activation_token %}
+
+<br/>
+<div id="fr_content" style="border-top:1px solid #ddd">
+{% language 'fr' %}
+    {% get_current_language as LANGUAGE_CODE %}
+    {{ LANGUAGE_CODE }}
+    {% trans "Dear" %} {{ user.name }},
+
+    {% trans "Please activate your account by following this link" %}:<br />
+
+    {{ protocol }}://{{ domain }}{% url 'register_activate' activation_token %}
+{% endlangauge %}
+</div>
