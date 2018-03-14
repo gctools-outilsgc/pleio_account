@@ -1,1 +1,1 @@
-{% load i18n %}{% trans "Please activate your account" %}
+{% load i18n %}{% trans "Please activate your account" %}{% language 'fr' %}{% get_current_language as LANGUAGE_CODE %}{% trans "Please activate your account" %}{% endlanguage %}
