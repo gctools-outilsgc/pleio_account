@@ -69,14 +69,21 @@
                               </li>
                             {% endif %}
                             <li class="item">
-                                <a href="#">Terms and Conditions</a>
+                                <a href="{% url 'terms_of_use' %}">Terms and Conditions</a>
                             </li>
                         </ul>
                     </div>
+                    {% show_footer_images as show_footer %}
+                    {% if show_footer %}
                     <div style="margin-bottom:10px;">
-                        <div class="left floated fip__signature" style="height:22px; float:left;">{% include_asset "images/sig-en.svg" %}</div>
-                        <div class="right floated fip__watermark" style="width:139px; float:right;">{% include_asset "images/wmms-alt.svg" %}</div>
+                        <div class="left floated fip__signature" style="height:22px; float:left;">
+                          <img alt="" src="{% show_footer_image_left %}">
+                        </div>
+                        <div class="right floated fip__watermark">
+                          <img alt="" src="{% show_footer_image_right %}">
+                        </div>
                     </div>
+                    {% endif %}
                 </footer>
             </div>
         </div>
