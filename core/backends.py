@@ -11,6 +11,10 @@ class ElggBackend:
 
         elgg_url = settings.ELGG_URL
 
+        # Check if user exists and hasn't activated yet
+        if User.objects.filter(email=username).exists():
+            return None
+
         # Verify username/password combination
         valid_user_request = requests.post(elgg_url + "/services/api/rest/json/", data={'method': 'pleio.verifyuser', 'user': username, 'password': password})
         valid_user_json = json.loads(valid_user_request.text)
