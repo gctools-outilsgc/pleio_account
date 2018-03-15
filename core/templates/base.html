@@ -69,7 +69,8 @@
                               </li>
                             {% endif %}
                             <li class="item">
-                                <a href="{% url 'terms_of_use' %}">{% trans "Terms and Conditions" %}</a>
+                                <a class="terms_link" target="_blank" href="https://gccollab.ca/terms">{% trans "Terms and Conditions" %}
+                                  <span aria-hidden="true">{% include_asset "icons/external.svg" %}</span><span class="invisible">{% trans "Opens in a new tab" %}</span></a>
                             </li>
                         </ul>
                     </div>

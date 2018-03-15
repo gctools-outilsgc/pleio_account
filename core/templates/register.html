@@ -74,7 +74,7 @@
             <div class="register__check ui checkbox">
                 {{ form.errors.accepted_terms }}
                 {{ form.accepted_terms }}
-                <label for="id_accepted_terms">{% trans "I agree with the "%}<a href="{% url 'terms_of_use' %}">{% trans " terms and conditions"%}</a></label>
+                <label for="id_accepted_terms">{% trans "I agree with the "%}<a class="terms_link" target="_blank" href="https://gccollab.ca/terms">{% trans " terms and conditions"%} <span aria-hidden="true">{% include_asset "icons/external.svg" %}</span><span class="invisible">{% trans "Opens in a new tab" %}</span></a></label>
             </div>
             {% comment 'removing for now' %}
             <div class="register__check ui checkbox">
