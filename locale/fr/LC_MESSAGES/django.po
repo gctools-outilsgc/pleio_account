@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-13 08:34-0400\n"
+"POT-Creation-Date: 2018-03-14 12:01-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -176,62 +176,82 @@ msgstr "Vous n’avez pas encore de codes de sauvegarde."
 msgid "Generate tokens"
 msgstr "Générer des jetons"
 
-#: core/templates/base.html:44 core/templates/base_account.html:29
+#: core/templates/base.html:44 core/templates/base_account.html:33
 msgid "Back to the homepage"
 msgstr "Retour à la page d’accueil"
 
-#: core/templates/base_account.html:48 core/templates/emails/register.html:5
+#: core/templates/base.html:68 core/templates/base_account.html:147
+msgid "Help / Contact Us"
+msgstr "Aide / Contactez-nous"
+
+#: core/templates/base.html:72 core/templates/base_account.html:151
+msgid "Terms and Conditions"
+msgstr "Termes et Conditions"
+
+#: core/templates/base_account.html:55 core/templates/emails/register.html:7
+#: core/templates/emails/register.html:17
 msgid "Welcome"
 msgstr "Bienvenue"
 
-#: core/templates/base_account.html:51
+#: core/templates/base_account.html:58
 msgid "Your custom avatar"
 msgstr "Votre avatar personnalisé"
 
-#: core/templates/base_account.html:67 core/templates/profile.html:10
+#: core/templates/base_account.html:74 core/templates/profile.html:10
 msgid "Profile"
 msgstr "Profil"
 
-#: core/templates/base_account.html:68 core/templates/profile.html:17
+#: core/templates/base_account.html:75 core/templates/profile.html:17
 msgid "Your details"
 msgstr "Vos détails"
 
-#: core/templates/base_account.html:68
+#: core/templates/base_account.html:75
 msgid "Avatar"
 msgstr "Avatar"
 
-#: core/templates/base_account.html:80 core/templates/security_pages.html:8
+#: core/templates/base_account.html:87 core/templates/security_pages.html:8
 #: core/templates/security_pages.html:22
 msgid "Security"
 msgstr "Sécurité"
 
-#: core/templates/base_account.html:81 core/templates/login.html:49
+#: core/templates/base_account.html:88 core/templates/login.html:49
 #: core/templates/register.html:54
 msgid "Password"
 msgstr "Mot de passe"
 
-#: core/templates/base_account.html:81
+#: core/templates/base_account.html:88
 msgid "Sessions"
 msgstr "Séances"
 
-#: core/templates/base_account.html:81
+#: core/templates/base_account.html:88
 #: core/templates/security_pages/two_factor_authorization.html:4
 msgid "Two-factor authentication"
 msgstr "Authentification à deux facteurs"
 
-#: core/templates/base_account.html:89
+#: core/templates/base_account.html:98
+msgid "Tools"
+msgstr "Outils"
+
+#: core/templates/base_account.html:99
+msgid "Access your various collaboration tools here:"
+msgstr "Accédez à vos différents outils de collaboration ici:"
+
+#: core/templates/base_account.html:120
 #: core/templates/security_pages/user_sessions.html:39
 #: core/templates/session_list.html:42
 msgid "Logout"
 msgstr "Déconnexion"
 
-#: core/templates/emails/register.html:7 core/templates/emails/register.txt:4
+#: core/templates/emails/register.html:9 core/templates/emails/register.html:19
+#: core/templates/emails/register.txt:7 core/templates/emails/register.txt:17
 msgid "Please activate your account by following this link"
 msgstr "Veuillez activer votre compte en suivant ce lien."
 
-#: core/templates/emails/register.txt:2
-#: core/templates/emails/reset_password.txt:2
-#: core/templates/emails/suspicious_login.txt:3
+#: core/templates/emails/register.txt:5 core/templates/emails/register.txt:15
+#: core/templates/emails/reset_password.txt:5
+#: core/templates/emails/reset_password.txt:17
+#: core/templates/emails/suspicious_login.txt:5
+#: core/templates/emails/suspicious_login.txt:19
 msgid "Dear"
 msgstr ""
 
@@ -239,12 +259,15 @@ msgstr ""
 msgid "Please activate your account"
 msgstr "Veuillez activer votre compte"
 
-#: core/templates/emails/reset_password.html:5
-#: core/templates/emails/suspicious_login.html:5
+#: core/templates/emails/reset_password.html:7
+#: core/templates/emails/reset_password.html:19
+#: core/templates/emails/suspicious_login.html:7
+#: core/templates/emails/suspicious_login.html:20
 msgid "Hello"
 msgstr "Bonjour"
 
-#: core/templates/emails/reset_password.html:7
+#: core/templates/emails/reset_password.html:9
+#: core/templates/emails/reset_password.html:21
 msgid ""
 "You have requested a new password. Please follow this link to set a new "
 "password."
@@ -252,14 +275,17 @@ msgstr ""
 "Vous avez demandé à modifier votre mot de passe. Veuillez suivre ce lien "
 "pour définir un nouveau mot de passe."
 
-#: core/templates/emails/reset_password.html:11
-#: core/templates/emails/reset_password.txt:8
+#: core/templates/emails/reset_password.html:13
+#: core/templates/emails/reset_password.html:25
+#: core/templates/emails/reset_password.txt:11
+#: core/templates/emails/reset_password.txt:23
 msgid "You can ignore this e-mail if you did not request a new password."
 msgstr ""
 "Vous pouvez ignorer ce courriel si vous n’avez pas demandé à modifier votre "
 "mot de passe."
 
-#: core/templates/emails/reset_password.txt:4
+#: core/templates/emails/reset_password.txt:7
+#: core/templates/emails/reset_password.txt:19
 #, fuzzy
 #| msgid ""
 #| "You have requested a new password. Please follow this link to set a new "
@@ -285,13 +311,16 @@ msgstr "<em>inconnu, inconnu</em>"
 msgid "<em>unknown</em>"
 msgstr "<em>inconnu</em>"
 
-#: core/templates/emails/suspicious_login.html:7
+#: core/templates/emails/suspicious_login.html:9
+#: core/templates/emails/suspicious_login.html:22
 msgid "You logged in to your account from a new location."
 msgstr ""
 "Vous vous êtes connecté à votre compte à partir d’un nouvel emplacement."
 
-#: core/templates/emails/suspicious_login.html:12
-#: core/templates/emails/suspicious_login.txt:10
+#: core/templates/emails/suspicious_login.html:14
+#: core/templates/emails/suspicious_login.html:27
+#: core/templates/emails/suspicious_login.txt:12
+#: core/templates/emails/suspicious_login.txt:26
 msgid ""
 "If it was you safely ignore this e-mail. Otherwise please change your "
 "password as soon as possible."
@@ -299,7 +328,8 @@ msgstr ""
 "Si vous vous êtes connecté en toute sécurité, vous pouvez ignorer ce "
 "courriel. Sinon, veuillez changer votre mot de passe dès que possible."
 
-#: core/templates/emails/suspicious_login.txt:5
+#: core/templates/emails/suspicious_login.txt:7
+#: core/templates/emails/suspicious_login.txt:21
 msgid "You logged in to your account from a new location"
 msgstr ""
 "Vous vous êtes connecté à votre compte à partir d’un nouvel emplacement."
@@ -351,7 +381,7 @@ msgstr "Montrer le mot de passe"
 #: core/templates/password_reset.html:15
 #: core/templates/password_reset_done.html:12
 msgid "Forgot password"
-msgstr "Mot de passe perdu?"
+msgstr "Mot de passe perdu"
 
 #: core/templates/login.html:68 core/templates/login.html:120
 #: core/templates/login.html:148
@@ -508,10 +538,8 @@ msgid "Save"
 msgstr "Sauvegarder"
 
 #: core/templates/profile.html:40
-#, fuzzy
-#| msgid "Profile"
-msgid "Profile Picture"
-msgstr "Photo de Profil"
+msgid "Profile picture"
+msgstr "Photo de profil"
 
 #: core/templates/profile.html:44
 #, fuzzy

@@ -95,8 +95,8 @@
                             <div class="account-menu__appinfo">
                                 <i aria-hidden="true">{% include_asset "icons/lock-open.svg" %}</i>
                                 <div>
-                                    <div class="title">Tools</div>
-                                    <div>Access your various collaboration tools here:</div>
+                                    <div class="title">{% trans "Tools" %}</div>
+                                    <div>{% trans "Access your various collaboration tools here:" %}</div>
                                 </div>
                             </div>
 
@@ -148,7 +148,7 @@
                                   </li>
                                 {% endif %}
                                 <li class="item">
-                                    <a href="{% url 'terms_of_use' %}">Terms and Conditions</a>
+                                    <a href="{% url 'terms_of_use' %}">{% trans "Terms and Conditions" %}</a>
                                 </li>
                             </ul>
                         </div>

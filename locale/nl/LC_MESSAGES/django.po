@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-13 08:34-0400\n"
+"POT-Creation-Date: 2018-03-14 12:01-0400\n"
 "PO-Revision-Date: 2017-12-15 16:48+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -177,62 +177,82 @@ msgstr "Je hebt nog geen backup tokens."
 msgid "Generate tokens"
 msgstr "Genereer tokens"
 
-#: core/templates/base.html:44 core/templates/base_account.html:29
+#: core/templates/base.html:44 core/templates/base_account.html:33
 msgid "Back to the homepage"
 msgstr "Terug naar de homepagina"
 
-#: core/templates/base_account.html:48 core/templates/emails/register.html:5
+#: core/templates/base.html:68 core/templates/base_account.html:147
+msgid "Help / Contact Us"
+msgstr ""
+
+#: core/templates/base.html:72 core/templates/base_account.html:151
+msgid "Terms and Conditions"
+msgstr ""
+
+#: core/templates/base_account.html:55 core/templates/emails/register.html:7
+#: core/templates/emails/register.html:17
 msgid "Welcome"
 msgstr "Welkom"
 
-#: core/templates/base_account.html:51
+#: core/templates/base_account.html:58
 msgid "Your custom avatar"
 msgstr ""
 
-#: core/templates/base_account.html:67 core/templates/profile.html:10
+#: core/templates/base_account.html:74 core/templates/profile.html:10
 msgid "Profile"
 msgstr "Profiel"
 
-#: core/templates/base_account.html:68 core/templates/profile.html:17
+#: core/templates/base_account.html:75 core/templates/profile.html:17
 msgid "Your details"
 msgstr "Uw gegevens"
 
-#: core/templates/base_account.html:68
+#: core/templates/base_account.html:75
 msgid "Avatar"
 msgstr "Profielfoto"
 
-#: core/templates/base_account.html:80 core/templates/security_pages.html:8
+#: core/templates/base_account.html:87 core/templates/security_pages.html:8
 #: core/templates/security_pages.html:22
 msgid "Security"
 msgstr "Beveiliging"
 
-#: core/templates/base_account.html:81 core/templates/login.html:49
+#: core/templates/base_account.html:88 core/templates/login.html:49
 #: core/templates/register.html:54
 msgid "Password"
 msgstr "Wachtwoord"
 
-#: core/templates/base_account.html:81
+#: core/templates/base_account.html:88
 msgid "Sessions"
 msgstr "Sessies"
 
-#: core/templates/base_account.html:81
+#: core/templates/base_account.html:88
 #: core/templates/security_pages/two_factor_authorization.html:4
 msgid "Two-factor authentication"
 msgstr "Twee-factor authenticatie"
 
-#: core/templates/base_account.html:89
+#: core/templates/base_account.html:98
+msgid "Tools"
+msgstr ""
+
+#: core/templates/base_account.html:99
+msgid "Access your various collaboration tools here:"
+msgstr ""
+
+#: core/templates/base_account.html:120
 #: core/templates/security_pages/user_sessions.html:39
 #: core/templates/session_list.html:42
 msgid "Logout"
 msgstr "Uitloggen"
 
-#: core/templates/emails/register.html:7 core/templates/emails/register.txt:4
+#: core/templates/emails/register.html:9 core/templates/emails/register.html:19
+#: core/templates/emails/register.txt:7 core/templates/emails/register.txt:17
 msgid "Please activate your account by following this link"
 msgstr "Activeer je account door de volgende link te volgen"
 
-#: core/templates/emails/register.txt:2
-#: core/templates/emails/reset_password.txt:2
-#: core/templates/emails/suspicious_login.txt:3
+#: core/templates/emails/register.txt:5 core/templates/emails/register.txt:15
+#: core/templates/emails/reset_password.txt:5
+#: core/templates/emails/reset_password.txt:17
+#: core/templates/emails/suspicious_login.txt:5
+#: core/templates/emails/suspicious_login.txt:19
 msgid "Dear"
 msgstr "Beste"
 
@@ -240,12 +260,15 @@ msgstr "Beste"
 msgid "Please activate your account"
 msgstr "Activeer je account"
 
-#: core/templates/emails/reset_password.html:5
-#: core/templates/emails/suspicious_login.html:5
+#: core/templates/emails/reset_password.html:7
+#: core/templates/emails/reset_password.html:19
+#: core/templates/emails/suspicious_login.html:7
+#: core/templates/emails/suspicious_login.html:20
 msgid "Hello"
 msgstr ""
 
-#: core/templates/emails/reset_password.html:7
+#: core/templates/emails/reset_password.html:9
+#: core/templates/emails/reset_password.html:21
 #, fuzzy
 #| msgid ""
 #| "You requested a new password for Pleio. Please follow this link to "
@@ -257,13 +280,16 @@ msgstr ""
 "Je hebt een nieuw wachtwoord aangevraagd. Volg de link om een nieuw "
 "wachtwoord in te stellen."
 
-#: core/templates/emails/reset_password.html:11
-#: core/templates/emails/reset_password.txt:8
+#: core/templates/emails/reset_password.html:13
+#: core/templates/emails/reset_password.html:25
+#: core/templates/emails/reset_password.txt:11
+#: core/templates/emails/reset_password.txt:23
 msgid "You can ignore this e-mail if you did not request a new password."
 msgstr ""
 "Je kunt deze e-mail negeren indien je geen nieuw wachtwoord hebt aangevraagd."
 
-#: core/templates/emails/reset_password.txt:4
+#: core/templates/emails/reset_password.txt:7
+#: core/templates/emails/reset_password.txt:19
 msgid ""
 "You requested a new password for Pleio. Please follow this link to configure "
 "a new password."
@@ -285,12 +311,15 @@ msgstr "<em>onbekend op onbekend</em>"
 msgid "<em>unknown</em>"
 msgstr "<em>onbekend</em>"
 
-#: core/templates/emails/suspicious_login.html:7
+#: core/templates/emails/suspicious_login.html:9
+#: core/templates/emails/suspicious_login.html:22
 msgid "You logged in to your account from a new location."
 msgstr "Je bent ingelogd op je account vanaf een nieuwe locatie."
 
-#: core/templates/emails/suspicious_login.html:12
-#: core/templates/emails/suspicious_login.txt:10
+#: core/templates/emails/suspicious_login.html:14
+#: core/templates/emails/suspicious_login.html:27
+#: core/templates/emails/suspicious_login.txt:12
+#: core/templates/emails/suspicious_login.txt:26
 msgid ""
 "If it was you safely ignore this e-mail. Otherwise please change your "
 "password as soon as possible."
@@ -298,7 +327,8 @@ msgstr ""
 "Als jij dit was dan kun je deze e-mail negeren. Anders verander je "
 "wachtwoord zo snel mogelijk."
 
-#: core/templates/emails/suspicious_login.txt:5
+#: core/templates/emails/suspicious_login.txt:7
+#: core/templates/emails/suspicious_login.txt:21
 msgid "You logged in to your account from a new location"
 msgstr "Je hebt ingelogd vanaf een nieuwe locatie"
 
@@ -519,7 +549,7 @@ msgstr "Opslaan"
 #: core/templates/profile.html:40
 #, fuzzy
 #| msgid "Profile"
-msgid "Profile Picture"
+msgid "Profile picture"
 msgstr "Profiel"
 
 #: core/templates/profile.html:44
