@@ -93,7 +93,7 @@
                     <li>
                         <div class="account-menu__applist">
                             <div class="account-menu__appinfo">
-                                <i aria-hidden="true">{% include_asset "icons/lock-open.svg" %}</i>
+                                <i aria-hidden="true">{% include_asset "icons/tools.svg" %}</i>
                                 <div>
                                     <div class="title">{% trans "Tools" %}</div>
                                     <div>{% trans "Access your various collaboration tools here:" %}</div>
@@ -101,13 +101,13 @@
                             </div>
 
                             <div class="ui secondary labeled icon menu">
-                                <a class="item" href="#link1">
-                                    <i aria-hidden="true" class="icon" style="padding-right:0;">{% include_asset "icons/app-tray.svg" %}</i>
-                                    GCcollab
+                                <a class="item" href="https://gccollab.ca/">
+                                    <img alt="GCcollab" aria-hidden="true" src="/static/images/collab_icon.png" class="app_icon" style="margin-bottom: 5px; padding-right:0;"></img>
+                                    Collab
                                 </a>
-                                <a class="item" href="#link2">
-                                    <i aria-hidden="true" class="icon" style="padding-right:0;">{% include_asset "icons/app-tray.svg" %}</i>
-                                    GCwiki
+                                <a class="item" href="https://wiki.gccollab.ca/">
+                                    <img alt="GCcollab" aria-hidden="true" src="/static/images/wiki_icon.png" class="app_icon" style="margin-bottom: 5px; padding-right:0;"></img>
+                                    Wiki
                                 </a>
                             </div>
                         </div>
@@ -329,12 +329,6 @@ float:left;
     transition: color 0.2s, background 0.2s;
     padding-left: 3rem;
     padding-right: 4rem;
-}
-
-.account-menu__list .account-menu__applist .account-menu__appinfo{
-    display: flex;
-    justify-content: center;
-    align-content: center;
 }
 
 #skip a{
