@@ -90,7 +90,8 @@ urls = [
     url(r'^oauth/v2/revoke_token$', oauth2_views.RevokeTokenView.as_view(), name='revoke-token'),
     url(r'^api/users/me$', api_views.me, name='me'),
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.home, name='home')
+    url(r'^$', views.home, name='home'),
+    url(r'^i18n/', include('django.conf.urls.i18n'))
 ]
 
 tf_urls = [

@@ -55,8 +55,9 @@
             <span id="error_password1">{{ form.errors.password1 }}</span>
 	    <div class="password_field">
             {{ form.password1 }}
-            <span class="password__toggle">{% include_asset "icons/eye.svg" %}</span>
-            <p class="capslock" aria-live="assertive"></p>
+            <span class="password__toggle" title="{% trans "Show password" %}">{% include_asset "icons/eye.svg" %}</span>
+            <span class="capslock" aria-live="assertive"></span>
+            <p id="password_help">{% trans "Create a unique password that contains at least 8 characters, including both letters and numbers." %}</p>
 	    </div>
         </div>
         <div class="field">
@@ -64,8 +65,8 @@
             <span id="error_password2">{{ form.errors.password2 }}</span>
 	    <div class="password_field">
             {{ form.password2 }}
-            <span class="password__toggle">{% include_asset "icons/eye.svg" %}</span>
-            <p class="capslock" aria-live="assertive"></p>
+            <span class="password__toggle" title="{% trans "Show password" %}">{% include_asset "icons/eye.svg" %}</span>
+            <span class="capslock" aria-live="assertive"></span>
 	    </div>
         </div>
 
@@ -73,7 +74,7 @@
             <div class="register__check ui checkbox">
                 {{ form.errors.accepted_terms }}
                 {{ form.accepted_terms }}
-                <label for="id_accepted_terms">{% trans "I agree with the "%}<a href="{% url 'terms_of_use' %}">{% trans " general terms"%}</a></label>
+                <label for="id_accepted_terms">{% trans "I agree with the "%}<a class="terms_link" target="_blank" href="https://gccollab.ca/terms">{% trans " terms and conditions"%} <span aria-hidden="true">{% include_asset "icons/external.svg" %}</span><span class="invisible">{% trans "Opens in a new tab" %}</span></a></label>
             </div>
             {% comment 'removing for now' %}
             <div class="register__check ui checkbox">
@@ -92,7 +93,9 @@
 
         <div class="register__buttons">
             <button name="register" class="fluid ui button primary" type="submit">{% trans "Register" %}</button>
-            <a href="{% url 'login' %}" >{% trans "Return to sign in" %}</a>
+            <div class="register_block">
+              <a href="{% url 'login' %}" >{% trans "Return to sign in" %}</a>
+            </div>
         </div>
 
     </fieldset>

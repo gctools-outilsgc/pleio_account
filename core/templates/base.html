@@ -6,7 +6,7 @@
 
 {% language request.COOKIES.lang %}
 <!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE }}">
+<html lang="{{ request.COOKIES.lang }}">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -34,25 +34,58 @@
 
             <div class="account">
                 <div class="account__top-bar">
-                    <img alt ="Graphic Element" src="{% show_customizations_logo %}" class="ui top aligned mini image">
-                    <span class="ui huge header">
-                        {% show_customizations_title %}
-                    </span>
+                    <a href="{% url 'login' %}" style="color:black;">
+                        <img alt ="" src="{% show_customizations_logo %}" class="ui top aligned mini image">
+                        <span class="ui huge header">
+                            {% show_customizations_title %}
+                        </span>
+                    </a>
                     {% comment 'removing for now' %}
                     <a class="navigation__logo" title="{% trans "Back to the homepage" %}" href="https://www.pleio.nl/">{% include_asset "images/logo.svg" %}</a>
                     {% endcomment %}
-                    <div class="language-toggle">
-                        {% include "language.html" %}
-                    </div>
+
+                    {% show_language_toggle as toggle %}
+                    {% if toggle %}
+                      <div class="language-toggle">
+                          {% include "language.html" %}
+                      </div>
+                    {% endif %}
                 </div>
 
                 <div class="ui grid" style="padding-top:40px">
-                    <div class="ui centered raised card">
+                    <div id="base-card" class="ui centered raised card">
                         <div class="content">
                             {% block content %}{% endblock %}
                         </div>
                     </div>
                 </div>
+                <footer class="account__fip" style="margin-top:120px; border-top:1px solid rgba(34,36,38,.15);">
+                    <div style="margin-bottom:20px">
+                        <ul class="u horizontal list">
+                          {% custom_helpdesk_link as link %}
+                            {% if link %}
+                              <li class="item">
+                                  <a href="{% custom_helpdesk_link %}">{% trans "Help / Contact Us" %}</a>
+                              </li>
+                            {% endif %}
+                            <li class="item">
+                                <a class="terms_link" target="_blank" href="https://gccollab.ca/terms">{% trans "Terms and Conditions" %}
+                                  <span aria-hidden="true">{% include_asset "icons/external.svg" %}</span><span class="invisible">{% trans "Opens in a new tab" %}</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                    {% show_footer_images as show_footer %}
+                    {% if show_footer %}
+                    <div style="margin-bottom:10px;">
+                        <div class="left floated fip__signature" style="height:22px; float:left;">
+                          <img alt="" src="{% show_footer_image_left %}">
+                        </div>
+                        <div class="right floated fip__watermark">
+                          <img alt="" src="{% show_footer_image_right %}">
+                        </div>
+                    </div>
+                    {% endif %}
+                </footer>
             </div>
         </div>
 
@@ -81,6 +114,10 @@ padding-bottom:2rem;
 	  }
 .field {
 position:relative;
+}
+
+.show svg {
+    fill: #{% show_customizations_color %};
 }
 
 .ui.primary.button, .ui.primary.button:active{

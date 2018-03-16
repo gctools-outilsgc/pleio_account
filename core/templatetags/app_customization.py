@@ -36,14 +36,14 @@ def show_customizations_bg_image():
     try:
         q = AppCustomization.objects.get(id=1)
         if not q.app_background_photo:
-            return ' none;'   
+            return ' none;'
         else:
             image = q.app_background_photo.url
             option = q.app_background_options
             if option == 'T':
                 return 'url(' +image+ '); background-repeat: repeat;'
-            else:        
-                return 'url(' +image+ '); background-repeat: no-repeat; background-size: cover;'                                     
+            else:
+                return 'url(' +image+ '); background-repeat: no-repeat; background-size: cover;'
     except AppCustomization.DoesNotExist:
         return ' none;'
 
@@ -56,4 +56,57 @@ def show_customizations_favicon():
         else:
             return q.app_favicon.url
     except AppCustomization.DoesNotExist:
-        return ''                
+        return ''
+
+@register.simple_tag()
+def show_language_toggle():
+    try:
+        q = AppCustomization.objects.get(id=1)
+        toggle = q.display_language_toggle
+        if toggle == True:
+            return True
+        else:
+            return ''
+    except AppCustomization.DoesNotExist:
+        return ''
+
+@register.simple_tag()
+def custom_helpdesk_link():
+    try:
+        q = AppCustomization.objects.get(id=1)
+        return q.custom_helpdesk_link
+    except AppCustomization.DoesNotExist:
+        return ''
+
+@register.simple_tag()
+def show_footer_images():
+    try:
+        q = AppCustomization.objects.get(id=1)
+        if q.footer_image_left and q.footer_image_right:
+            return True
+        else:
+            return False
+    except AppCustomization.DoesNotExist:
+        return ''
+
+@register.simple_tag()
+def show_footer_image_left():
+    try:
+        q = AppCustomization.objects.get(id=1)
+        if not q.footer_image_left:
+            return ''
+        else:
+            return q.footer_image_left.url
+    except AppCustomization.DoesNotExist:
+        return ''
+
+@register.simple_tag()
+def show_footer_image_right():
+    try:
+        q = AppCustomization.objects.get(id=1)
+        if not q.footer_image_right:
+            return ''
+        else:
+            return q.footer_image_right.url
+    except AppCustomization.DoesNotExist:
+        return ''

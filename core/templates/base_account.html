@@ -7,7 +7,7 @@
 
 {% language request.COOKIES.lang %}
 <!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE }}">
+<html lang="{{ request.COOKIES.lang }}">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,6 +20,10 @@
 <link rel="stylesheet" type="text/css" href="/static/semantic/dist/semantic.min.css">
     </head>
     <body>
+        <div id="skip">
+            <a href="#account-main">Skip to main content</a>
+        </div>
+
         <div class="account-overlay ___profile">
             <div class="account-menu">
               <div class="account-menu-container ui sticky">
@@ -28,14 +32,19 @@
                     {% comment 'removing for now' %}
                     <a class="navigation__logo" title="{% trans "Back to the homepage" %}" href="https://www.pleio.nl/">{% include_asset "images/logo.svg" %}</a>
                     {% endcomment %}
-                    <img alt ="Graphic Element" src="{% show_customizations_logo %}" class="ui top aligned mini image">
-                    <span class="ui huge header">
-                        {% show_customizations_title %}
-                    </span>
+                    <a href="{% url 'profile' %}" style="color:black;">
+                        <img alt ="" src="{% show_customizations_logo %}" class="ui top aligned mini image">
+                        <span class="ui huge header">
+                            {% show_customizations_title %}
+                        </span>
+                    </a>
 
-                    <div class="base-language-toggle">
-                        {% include "language.html" %}
-                    </div>
+                    {% show_language_toggle as toggle %}
+                    {% if toggle %}
+                      <div class="base-language-toggle">
+                          {% include "language.html" %}
+                      </div>
+                    {% endif %}
 
                     <label for="show_menu" class="account-menu__hamburger">{% include_asset "icons/hamburger.svg" %}</label>
                 </div>
@@ -80,6 +89,30 @@
                             </div>
                         </a>
                     </li>
+
+                    <li>
+                        <div class="account-menu__applist">
+                            <div class="account-menu__appinfo">
+                                <i aria-hidden="true">{% include_asset "icons/tools.svg" %}</i>
+                                <div>
+                                    <div class="title">{% trans "Tools" %}</div>
+                                    <div>{% trans "Access your various collaboration tools here:" %}</div>
+                                </div>
+                            </div>
+
+                            <div class="ui secondary labeled icon menu">
+                                <a class="item" href="https://gccollab.ca/">
+                                    <img alt="GCcollab" aria-hidden="true" src="/static/images/collab_icon.png" class="app_icon" style="margin-bottom: 5px; padding-right:0;"></img>
+                                    Collab
+                                </a>
+                                <a class="item" href="https://wiki.gccollab.ca/">
+                                    <img alt="GCcollab" aria-hidden="true" src="/static/images/wiki_icon.png" class="app_icon" style="margin-bottom: 5px; padding-right:0;"></img>
+                                    Wiki
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+
                     <li>
                         <a href="{% url 'logout' %}">
                             <i aria-hidden="true">{% include_asset "icons/lock-open.svg" %}</i>
@@ -96,21 +129,56 @@
                 {% if request.COOKIES.partner_site_url %}
                     <a href={{ request.COOKIES.partner_site_url }} class="button ___white ___outline account__close">{{ request.COOKIES.partner_site_name }}</a>
                 {% endif %}
-                <div class="page-heading ui sticky">
-                  <h1 class="ui large header">{% block page_header %}{% endblock %}</h1>
-                </div>
-                <div class="account-right__content">
-                    {% block content %}{% endblock %}
-                </div>
+                <main id="account-main">
+                    <div class="page-heading ui sticky">
+                        <h1 class="ui large header">{% block page_header %}{% endblock %}</h1>
+                    </div>
+                    <div class="account-right__content">
+                        {% block content %}{% endblock %}
+                    </div>
+                </main>
+
+                    <footer class="account__fip" style="margin:100px 3em 50px 3em; border-top:1px solid rgba(34,36,38,.15); padding-top: 1em;">
+                        <div style="margin-bottom:20px">
+                            <ul class="u horizontal list">
+                              {% custom_helpdesk_link as link %}
+                                {% if link %}
+                                  <li class="item">
+                                      <a href="{% custom_helpdesk_link %}">{% trans "Help / Contact Us" %}</a>
+                                  </li>
+                                {% endif %}
+                                <li class="item">
+                                    <a class="terms_link" target="_blank" href="https://gccollab.ca/terms">{% trans "Terms and Conditions" %}
+                                      <span aria-hidden="true">{% include_asset "icons/external.svg" %}</span><span class="invisible">{% trans "Opens in a new tab" %}</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                        {% show_footer_images as show_footer %}
+                        {% if show_footer %}
+                        <div style="margin-bottom:10px;">
+                            <div class="left floated fip__signature" style="height:22px; float:left;">
+                              <img alt="" src="{% show_footer_image_left %}">
+                            </div>
+                            <div class="right floated fip__watermark">
+                              <img alt="" src="{% show_footer_image_right %}">
+                            </div>
+                        </div>
+                        {% endif %}
+                    </footer>
             </div>
         </div>
 
 	<style>
 
 .page-heading {
+    min-height:60px;
   background-color: #{% show_customizations_color %};
+
 }
 
+.page-heading h1{
+    float:left;
+}
 #show_menu {
 display:none;
 }
@@ -189,6 +257,9 @@ font-size:1.2rem;
 color:#212121;
 transition: color 0.2s;
 }
+.show svg {
+    fill: #{% show_customizations_color %};
+}
 .account-menu__list li a {
 color: #757575;
 display:flex;
@@ -248,6 +319,40 @@ float:left;
     background-color: #{% show_customizations_color %};
     opacity: 0.8;
 }
+
+.account-menu__list .account-menu__applist{
+    color: #757575;
+
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+
+    transition: color 0.2s, background 0.2s;
+    padding-left: 3rem;
+    padding-right: 4rem;
+}
+
+#skip a{
+position:absolute;
+left:-10000px;
+top:auto;
+width:1px;
+height:1px;
+overflow:hidden;
+}
+
+#skip a:focus {
+    position: absolute;
+    width: auto;
+    height: auto;
+    left: 0;
+    top: 0;
+    background: red;
+    padding: 6px;
+    z-index: 16;
+    color: white;
+    transition: top 1s ease-out, background 1s linear;
+}
+
 @media (max-width: 1023px) {
 .account-menu {
 flex: 1 0 auto;
@@ -258,6 +363,9 @@ box-shadow: none;
 }
 .account-menu__hamburger {
 display:block;
+}
+.account__app_tray{
+display:none;
 }
 .account-menu__header {
 display:none;

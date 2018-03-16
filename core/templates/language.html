@@ -13,6 +13,7 @@
 
 <script>
 function getCookie(cname) {
+    var lang = "";
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
     var ca = decodedCookie.split(';');
@@ -22,17 +23,18 @@ function getCookie(cname) {
             c = c.substring(1);
         }
         if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
+            //return c.substring(name.length, c.length);
+            lang = c.substring(name.length, c.length);
         }
     }
-    return "";
+    return lang;
 }
 
 function changeLanguage() {
     if (getCookie('lang') == 'en') {
-        setCookie("lang", 'fr');
+        setCookie("lang", 'fr', '', '/');
     } else {
-        setCookie("lang", 'en');
+        setCookie("lang", 'en', '', '/');
     }
 }
 
@@ -51,5 +53,14 @@ function setCookie(sName, sValue, oExpires, sPath, sDomain, bSecure) {
         sCookie += "; secure";
     }
     document.cookie = sCookie;
+
+    $.ajax({
+        type: "POST",
+        url: "{% url 'set_language' %}",
+        data: {'language': sValue, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+        success: function(response) {},
+        error: function(rs, e) { console.log(e); }
+    });
+
 }
 </script>

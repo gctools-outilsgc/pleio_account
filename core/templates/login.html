@@ -50,7 +50,7 @@
                 {{ form.errors.password }}
                 <div class="password_field">
                   {{ form.password }}
-                  <span class="password__toggle">{% include_asset "icons/eye.svg" %}</span>
+                  <span class="password__toggle" title="{% trans "Show password" %}">{% include_asset "icons/eye.svg" %}</span>
                 </div>
                 <a href="{% url 'password_reset' %}" class="forgot-password">{% trans "Forgot password" %}?</a>
                 <p class="capslock"></p>
@@ -66,11 +66,14 @@
 
             <div class="login__buttons">
                 <button name="login" class="fluid ui button primary" type="submit">{% trans "Login" %}</button>
-                <div><span style="margin-right:5px">{% trans "Don't have an account?" %}</span><a class="item" href="{% url 'register' %}">{% trans "Register" %}</a></div>
+                <div class="register_block">
+                  <span style="margin-right:5px">{% trans "Don't have an account?" %}</span><a class="item" href="{% url 'register' %}">{% trans "Register" %}</a>
+                </div>
             </div>
         </fieldset>
         <input type="hidden" name="next" value="{{next}}" />
 
+  {% comment 'Removing for now based on usability report. Will decide if we are adding this back later' %}
 	<a href="{% url 'security_pages' page_action='2fa-setup' %}">
         <div class="messages info ui icon message">
 		        <i class="icon" aria-hidden="true">{% include_asset "icons/lock-plus.svg" %}</i>
@@ -80,6 +83,7 @@
 		          </div>
         </div>
 	</a>
+  {% endcomment %}
     {% elif wizard.steps.current == 'token' %}
 
     <script type="text/javascript">
