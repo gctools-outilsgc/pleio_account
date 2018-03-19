@@ -1,3 +1,4 @@
+from django.contrib.admin import ModelAdmin
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.utils import timezone
 from django.utils.text import slugify
@@ -206,6 +207,10 @@ class User(AbstractBaseUser):
     def is_staff(self):
         return self.is_admin
 
+class UserAdmin(ModelAdmin):
+    search_fields = ModelAdmin.search_fields = ('username', 'name', 'email',)
+    list_filter = ModelAdmin.list_filter + ('is_active', 'is_admin',)
+
 class PreviousLogins(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE, db_index=True, related_name='previous_logins')
     device_id = models.CharField(max_length=40, editable=False, null=True, db_index=True)
@@ -304,6 +309,6 @@ class AppCustomization(models.Model):
     footer_image_left = models.FileField(null=True, blank=True)
     footer_image_right = models.FileField(null=True, blank=True)
 
-admin.site.register(User)
+admin.site.register(User, UserAdmin)
 admin.site.register(PleioPartnerSite)
 admin.site.register(AppCustomization)
