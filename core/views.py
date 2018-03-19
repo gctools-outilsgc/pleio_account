@@ -94,7 +94,7 @@ def profile(request):
 
 
 def avatar(request):
-    DEFAULT_AVATAR = '/static/images/gebruiker.svg'
+    DEFAULT_AVATAR = '/static/images/user.svg'
 
     user = User.objects.get(id=request.GET['guid'])
 
