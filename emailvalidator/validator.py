@@ -25,7 +25,7 @@ def is_email_valid(email):
     stored in the database.
     """
     validators = EmailRegExValidator.objects.all().filter(allow_all=False)
-    regexes = [re.compile(r.regex) for r in validators]
+    regexes = [re.compile(r.regex, re.IGNORECASE) for r in validators]
     domains = EmailRegExValidator.objects.all().filter(allow_all=True)
-    regexes += [re.compile("^.*@[\w.]*?" + r.regex + "$/i") for r in domains]
+    regexes += [re.compile("^.*@[\w.]*?" + r.regex + "$", re.IGNORECASE) for r in domains]
     return any(regex.match(email) for regex in regexes)
