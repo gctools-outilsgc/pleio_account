@@ -13,7 +13,7 @@ class ElggBackend:
 
         elgg_url = settings.ELGG_URL
 
-        # Check if user exists and hasn't activated yet
+        # Check if user exists (case-insensitive)
         try:
             user = User.objects.get(email__iexact=username)
             if user.check_password(password):
