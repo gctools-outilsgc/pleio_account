@@ -4,7 +4,6 @@ from django.conf import settings
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate
-from django.contrib.auth.forms import AuthenticationForm
 from two_factor.forms import AuthenticationTokenForm, TOTPDeviceForm
 from two_factor.utils import totp_digits
 from emailvalidator.validator import is_email_valid
