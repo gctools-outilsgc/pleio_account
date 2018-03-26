@@ -18,7 +18,7 @@ class EmailField(forms.EmailField):
                 _("Your email address is not allowed.")
             )
         try:
-            User.objects.get(email=value, is_active=True)
+            User.objects.filter(email__iexact=value, is_active=True)
             raise forms.ValidationError(_("This email is already registered."))
         except User.DoesNotExist:
             return value
