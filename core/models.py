@@ -212,6 +212,7 @@ class UserAdmin(UserAdmin):
     list_filter = ModelAdmin.list_filter + ('is_active', 'is_admin',)
     list_display = ModelAdmin.list_display + ('is_active',)
     filter_horizontal = ()
+    ordering = ('-id', )
     fieldsets = add_fieldsets = (
         (None, {'fields': ('last_login', 'name', 'email', 'password', 'avatar',)}),
         ('Settings', {'fields': ('accepted_terms', 'receives_newsletter', 'is_active', 'is_admin',)}),
