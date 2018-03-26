@@ -17,10 +17,11 @@ class EmailField(forms.EmailField):
             raise forms.ValidationError(
                 _("Your email address is not allowed.")
             )
-        try:
-            User.objects.get(email=value, is_active=True)
+
+        found_user = User.objects.filter(email__iexact=value, is_active=True)
+        if found_user.exists():
             raise forms.ValidationError(_("This email is already registered."))
-        except User.DoesNotExist:
+        else:
             return value
 
 
