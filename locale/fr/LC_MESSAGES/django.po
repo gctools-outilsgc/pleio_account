@@ -589,8 +589,8 @@ msgid " terms and conditions"
 msgstr " termes et conditions"
 
 #: core/templates/register.html:83
-msgid "Please subscribe me to the Pleio newsletter"
-msgstr ""
+msgid "Receive Suspicious Sign In Emails"
+msgstr "Recevoir des e-mails de connexion suspects"
 
 #: core/templates/register_activate.html:6
 #: core/templates/register_activate.html:10

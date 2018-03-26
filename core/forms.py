@@ -85,7 +85,7 @@ class RegisterForm(forms.Form):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('name', 'email', 'avatar')
+        fields = ('name', 'email', 'avatar', 'receives_newsletter',)
 
 class LabelledLoginForm(AuthenticationForm):
         username = forms.CharField(required=True, max_length=254, widget=forms.TextInput(attrs={'id':"id_auth-username", 'aria-labelledby':"error_login"}))

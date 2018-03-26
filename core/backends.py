@@ -35,7 +35,7 @@ class ElggBackend:
                     email=username,
                     password=password,
                     accepted_terms=True,
-                    receives_newsletter=False
+                    receives_newsletter=True
                 )
                 user.is_active = True
                 user.is_admin = admin

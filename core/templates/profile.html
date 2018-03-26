@@ -27,6 +27,11 @@
                         {{ form.email }}
                         <!--<span class="badge green __uppercase ui label"><i class="icon">{% include_asset "icons/check.svg" %}</i>{% trans "Government" %}</span>-->
                     </div>
+                    <div class="field">
+                        <label for="id_receives_newsletter">{% trans "Receive Suspicious Sign In Emails" %}</label>
+                        {{ form.errors.receives_newsletter }}
+                        {{ form.receives_newsletter }}
+                    </div>
                 </fieldset>
 		</div>
                 <div class="card__action ___addpadding-side extra content">
