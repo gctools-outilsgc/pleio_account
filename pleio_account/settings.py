@@ -33,6 +33,7 @@ WEBPACK_LOADER = {
 INSTALLED_APPS = [
     'core',
     'emailvalidator',
+    'requestmembership',
     'api',
     'oauth2_provider',
     'rest_framework',
