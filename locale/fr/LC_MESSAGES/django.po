@@ -186,7 +186,7 @@ msgstr "Aide / Contactez-nous"
 
 #: core/templates/base.html:72 core/templates/base_account.html:151
 msgid "Terms and Conditions"
-msgstr "Termes et Conditions"
+msgstr "Conditions D'Utilisation"
 
 #: core/templates/base.html:73 core/templates/base_account.html:152
 #: core/templates/register.html:77
@@ -586,7 +586,7 @@ msgstr "J’accepte les"
 
 #: core/templates/register.html:77
 msgid " terms and conditions"
-msgstr " termes et conditions"
+msgstr " conditions d'utilisation"
 
 #: core/templates/register.html:83
 msgid "Receive Suspicious Sign In Emails"
