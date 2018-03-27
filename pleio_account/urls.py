@@ -91,7 +91,8 @@ urls = [
     url(r'^api/users/me$', api_views.me, name='me'),
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.home, name='home'),
-    url(r'^i18n/', include('django.conf.urls.i18n'))
+    url(r'^i18n/', include('django.conf.urls.i18n')),
+    url(r'^request/', include('requestmembership.urls'))
 ]
 
 tf_urls = [
