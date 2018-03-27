@@ -602,8 +602,8 @@ msgid " terms and conditions"
 msgstr ""
 
 #: core/templates/register.html:83
-msgid "Please subscribe me to the Pleio newsletter"
-msgstr "Schrijf me in voor de Pleio nieuwsbrief"
+msgid "Receive Suspicious Sign In Emails"
+msgstr "Ontvang verdachte e-mails met inloggen"
 
 #: core/templates/register_activate.html:6
 #: core/templates/register_activate.html:10

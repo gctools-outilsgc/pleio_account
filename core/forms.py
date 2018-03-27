@@ -4,7 +4,6 @@ from django.conf import settings
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate
-from django.contrib.auth.forms import AuthenticationForm
 from two_factor.forms import AuthenticationTokenForm, TOTPDeviceForm
 from two_factor.utils import totp_digits
 from emailvalidator.validator import is_email_valid
@@ -18,10 +17,11 @@ class EmailField(forms.EmailField):
             raise forms.ValidationError(
                 _("Your email address is not allowed.")
             )
-        try:
-            User.objects.get(email=value, is_active=True)
+
+        found_user = User.objects.filter(email__iexact=value, is_active=True)
+        if found_user.exists():
             raise forms.ValidationError(_("This email is already registered."))
-        except User.DoesNotExist:
+        else:
             return value
 
 
@@ -86,7 +86,7 @@ class RegisterForm(forms.Form):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('name', 'email', 'avatar')
+        fields = ('name', 'email', 'receives_newsletter',)
 
 class LabelledLoginForm(AuthenticationForm):
         username = forms.CharField(required=True, max_length=254, widget=forms.TextInput(attrs={'id':"id_auth-username", 'aria-labelledby':"error_login"}))

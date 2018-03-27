@@ -1,3 +1,4 @@
+from django.contrib.admin import ModelAdmin
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.utils import timezone
 from django.utils.text import slugify
@@ -12,7 +13,7 @@ from .helpers import unique_filepath
 from .login_session_helpers import get_city, get_country, get_device, get_lat_lon
 
 class Manager(BaseUserManager):
-    def create_user(self, email, name, password=None, accepted_terms=False, receives_newsletter=False):
+    def create_user(self, email, name, password=None, accepted_terms=False, receives_newsletter=True):
         if not email:
             raise ValueError('Users must have an email address')
 
@@ -49,7 +50,7 @@ class User(AbstractBaseUser):
     name = models.CharField(max_length=100)
     email = models.EmailField(max_length=255, unique=True)
     accepted_terms = models.BooleanField(default=False)
-    receives_newsletter = models.BooleanField(default=False)
+    receives_newsletter = models.BooleanField(default=True)
     avatar = models.ImageField(upload_to=unique_filepath, null=True, blank=True)
 
     is_active = models.BooleanField(default=False)
@@ -135,8 +136,7 @@ class User(AbstractBaseUser):
             return None
 
     def check_users_previous_logins(self, request):
-        send_suspicious_behavior_warnings = settings.SEND_SUSPICIOUS_BEHAVIOR_WARNINGS
-
+        send_suspicious_behavior_warnings = self.receives_newsletter
         result = True
 
         try:
@@ -205,6 +205,18 @@ class User(AbstractBaseUser):
     @property
     def is_staff(self):
         return self.is_admin
+
+from django.contrib.auth.admin import UserAdmin
+class UserAdmin(UserAdmin):
+    search_fields = ModelAdmin.search_fields = ('username', 'name', 'email',)
+    list_filter = ModelAdmin.list_filter + ('is_active', 'is_admin',)
+    list_display = ModelAdmin.list_display + ('is_active',)
+    filter_horizontal = ()
+    ordering = ('-id', )
+    fieldsets = add_fieldsets = (
+        (None, {'fields': ('last_login', 'name', 'email', 'password', 'avatar',)}),
+        ('Settings', {'fields': ('accepted_terms', 'receives_newsletter', 'is_active', 'is_admin',)}),
+    )
 
 class PreviousLogins(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE, db_index=True, related_name='previous_logins')
@@ -304,6 +316,6 @@ class AppCustomization(models.Model):
     footer_image_left = models.FileField(null=True, blank=True)
     footer_image_right = models.FileField(null=True, blank=True)
 
-admin.site.register(User)
+admin.site.register(User, UserAdmin)
 admin.site.register(PleioPartnerSite)
 admin.site.register(AppCustomization)

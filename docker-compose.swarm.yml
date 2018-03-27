@@ -1,0 +1,54 @@
+version: '3.3'
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - type: volume
+        source: postgres-data
+        target: /var/lib/postgresql/data
+    networks:
+      - concierge
+    deploy:
+      replicas: 1
+      resources:
+          limits:
+            cpus: '1'
+          reservations:
+            cpus: '0.2'
+            memory: 500M
+  web:
+    image: concierge
+    environment:
+      - DEBUG=True
+      - ALLOWED_HOST=*
+      - SECRET_KEY=qWxPJrZCLeHZraNTWjEKHdJJxJyho8
+      - SEND_SUSPICIOUS_BEHAVIOR_WARNINGS=True
+      - DB_HOST=db
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+    ports:
+      - "8000:8000"
+    volumes:
+      - type: volume
+        source: media
+        target: /app/media
+    networks:
+      - concierge
+    deploy:
+      replicas: 1
+      resources:
+          limits:
+            cpus: '1'
+          reservations:
+            cpus: '0.2'
+            memory: 250M
+
+volumes:
+  postgres-data:
+  media:
+
+networks:
+  concierge:
+    driver: overlay
+    internal: true

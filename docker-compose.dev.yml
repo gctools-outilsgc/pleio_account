@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+  web:
+    build: .
+    environment:
+      - DEBUG=True
+      - ALLOWED_HOST=*
+      - SECRET_KEY=qWxPJrZCLeHZraNTWjEKHdJJxJyho8
+      - SEND_SUSPICIOUS_BEHAVIOR_WARNINGS=True
+      - DB_HOST=db
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    volumes:
+      - ./media:/app/media
+      - ./api:/app/api
+      - ./core:/app/core
+      - ./emailvalidator:/app/emailvalidator
+      - ./locale:/app/locale
