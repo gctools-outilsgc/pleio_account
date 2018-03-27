@@ -39,31 +39,6 @@
                 </div>
 
             </div>
-
-            <div class="card ___nopadding ui card">
-		<div class="content">
-                <h3 class="card__title ___addpadding-side header">{% trans "Profile picture" %}</h3>
-                <div class="account-user__pickavatar ___addpadding-side">
-                    <div class="input-field">
-                        {% if request.user.avatar %}
-                            <img src="/media/{{ request.user.avatar }}" border=0 class="account-user__avatar" alt="{% trans "Your custom profile picture" %}">
-                            <input id="avatar-clear_id" name="avatar-clear" type="checkbox">
-                        {% else %}
-                            <img src="/static/icons/person.svg" border=0 class="account-user__avatar" alt="{% trans "Default profile picture" %}">
-                        {% endif %}
-
-                        {{ form.errors.avatar }}
-                        <input id="id_avatar" name="avatar" type="file" accept=".jpg, .jpeg, .png" onchange="this.form.submit()">
-                     </div>
-                    <button class="button ui primary right floated" onClick="javascript:document.getElementById('id_avatar').click(); return false;">{% trans "Choose a profile picture" %}</button>
-                </div>
-		</div>
-		{% if request.user.avatar %}
-                <div class="card__action ___addpadding-side extra content">
-                    <button name="update" class="button ___clear ui button basic negative right floated" onClick="if(window.confirm('Are you sure you want to remove your avatar')){javascript:document.getElementById('avatar-clear_id').checked='true'; this.form.submit(); return false;}">{% trans "Remove profile picture" %}</button>
-                </div>
-		{% endif %}
-		        </div>
         </div>
 
 
