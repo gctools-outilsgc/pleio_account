@@ -70,9 +70,9 @@ class CustomScopeClaims(ScopeClaims):
         _('Access to your name'),
     )
 
-    info_read_profile = (
-        _('User profile'),
-        _('Access to your name, email, avatar'),
+    info_detailed_profile = (
+        _('Detailed User profile'),
+        _('Access to your name, email, avatar, address, and organization information'),
     )
 
     def scope_read_profile(self):
