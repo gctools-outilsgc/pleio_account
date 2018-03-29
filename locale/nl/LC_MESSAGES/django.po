@@ -600,7 +600,7 @@ msgid "Contain at least 1 lowercase and 1 uppercase letter"
 msgstr ""
 
 #: core/templates/register.html:54
-msgid "Contain at least 1 special character (!@#$%^&*)"
+msgid "Contain at least 1 special character (!@#$%^*)"
 msgstr ""
 
 #: core/templates/register.html:54
