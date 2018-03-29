@@ -60,7 +60,7 @@ class CustomScopeClaims(ScopeClaims):
         # self.client - Client requesting this claims.
         dic = {
             'modify_profile': 'True',
-            'read_profile': 'True'
+            'detailed_profile': 'True'
         }
 
         return dic
@@ -75,9 +75,9 @@ class CustomScopeClaims(ScopeClaims):
         _('Access to your name, email, avatar, address, and organization information'),
     )
 
-    def scope_read_profile(self):
+    def scope_detailed_profile(self):
         dic = {
-            'read_profile': 'True',
+            'detailed_profile': 'True',
         }
 
         return dic
