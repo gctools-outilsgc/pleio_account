@@ -11,6 +11,8 @@ from django.conf import settings
 from django.template.loader import render_to_string
 from .helpers import unique_filepath
 from .login_session_helpers import get_city, get_country, get_device, get_lat_lon
+import requests
+
 
 class Manager(BaseUserManager):
     def create_user(self, email, name, password=None, accepted_terms=False, receives_newsletter=True):
@@ -27,6 +29,17 @@ class Manager(BaseUserManager):
         user.receives_newsletter = receives_newsletter
 
         user.save(using=self._db)
+
+        # ToDo replace this with messages over Kafka system for notification
+        query = {'query': 'mutation{createProfile(gcID: "' + user.id + '", name: "' + user.name + '", email:"' +
+                 user.email + '"){gcID, name, email}]'}
+
+        response = requests.get(settings.GRAPHQL_ENDPOINT, headers={'Authorization': 'Token ' + settings.GRAPHQL_TOKEN},
+                                data=query)
+        if not response.status_code == requests.codes.ok:
+            # Write this to log eventually
+            raise Exception('Error setting user data / Server Response ' + str(response.status_code))
+
         return user
 
     def create_superuser(self, email, name, password):
