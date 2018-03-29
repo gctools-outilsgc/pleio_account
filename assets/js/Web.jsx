@@ -54,6 +54,8 @@ $(document).ready(function() {
     });
 
     $('.dropdown').dropdown({
-        action: 'hide'
-      });
+      action: 'hide'
+    });
+
+    $('.popup-html').popup();
 });
