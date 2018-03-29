@@ -925,6 +925,14 @@ msgstr ""
 msgid "French"
 msgstr "Français"
 
+#: pleio_account/oidc_provider_settings.py:22
+msgid "Basic profile"
+msgstr "Profil de base"
+
+#: pleio_account/oidc_provider_settings.py:23
+msgid "Access to your name"
+msgstr "Accès à votre nom"
+
 #~ msgid "Default avatar"
 #~ msgstr "Avatar par défaut"
 
