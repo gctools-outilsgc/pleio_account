@@ -40,3 +40,7 @@ CORS_ORIGIN_WHITELIST = os.getenv('CORS_ORIGIN_WHITELIST', '').split(',')
 SESSION_COOKIE_SECURE = str_to_bool(os.getenv('SECURE_SESSION', True))
 SESSION_COOKIE_HTTPONLY = True
 
+
+GRAPHQL_TRIGGERS = True
+GRAPHQL_ENDPOINT = 'http://tools-dev.canadaeast.cloudapp.azure.com:8080/protected/'
+GRAPHQL_TOKEN = '343eaab7a7782ee97f5d20ad9dad9299df95e258'

@@ -31,14 +31,15 @@ class Manager(BaseUserManager):
         user.save(using=self._db)
 
         # ToDo replace this with messages over Kafka system for notification
-        query = {'query': 'mutation{createProfile(gcID: "' + user.id + '", name: "' + user.name + '", email:"' +
-                 user.email + '"){gcID, name, email}]'}
+        if settings.GRAPHQL_TRIGGERS is True:
+            query = {'query': 'mutation{createProfile(gcID: "' + user.id + '", name: "' + user.name + '", email:"' +
+                     user.email + '"){gcID, name, email}]'}
 
-        response = requests.get(settings.GRAPHQL_ENDPOINT, headers={'Authorization': 'Token ' + settings.GRAPHQL_TOKEN},
-                                data=query)
-        if not response.status_code == requests.codes.ok:
-            # Write this to log eventually
-            raise Exception('Error setting user data / Server Response ' + str(response.status_code))
+            response = requests.get(settings.GRAPHQL_ENDPOINT, headers={'Authorization': 'Token ' + settings.GRAPHQL_TOKEN},
+                                    data=query)
+            if not response.status_code == requests.codes.ok:
+                # Write this to log eventually
+                raise Exception('Error setting user data / Server Response ' + str(response.status_code))
 
         return user
 
