@@ -160,6 +160,11 @@ msgstr ""
 "gebruikt, kunt u nieuwe codes genereren. Alleen onderstaande codes zijn "
 "geldig."
 
+#: core/templates/404.html:6
+#: core/templates/404.html:10
+msgid "Page not found"
+msgstr "Pagina niet gevonden"
+
 #: core/templates/backup_tokens.html:25
 #: core/templates/security_pages/two_factor_authorization.html:87
 msgid "Print these tokens and keep them somewhere safe."

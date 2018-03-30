@@ -161,6 +161,11 @@ msgstr ""
 "vous pouvez générer un nouveau jeu de jetons de sauvegarde. Seuls les jetons "
 "de sauvegarde indiqués ci-dessous seront valides."
 
+#: core/templates/404.html:6
+#: core/templates/404.html:10
+msgid "Page not found"
+msgstr "Page non trouvée"
+
 #: core/templates/backup_tokens.html:25
 #: core/templates/security_pages/two_factor_authorization.html:87
 msgid "Print these tokens and keep them somewhere safe."
