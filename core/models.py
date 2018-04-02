@@ -30,17 +30,6 @@ class Manager(BaseUserManager):
 
         user.save(using=self._db)
 
-        # ToDo replace this with messages over Kafka system for notification
-        if settings.GRAPHQL_TRIGGERS is True:
-            query = {'query': 'mutation{createProfile(gcID: "' + user.id + '", name: "' + user.name + '", email:"' +
-                     user.email + '"){gcID, name, email}]'}
-
-            response = requests.get(settings.GRAPHQL_ENDPOINT, headers={'Authorization': 'Token ' + settings.GRAPHQL_TOKEN},
-                                    data=query)
-            if not response.status_code == requests.codes.ok:
-                # Write this to log eventually
-                raise Exception('Error setting user data / Server Response ' + str(response.status_code))
-
         return user
 
     def create_superuser(self, email, name, password):
@@ -109,6 +98,19 @@ class User(AbstractBaseUser):
     def email_user(self, subject, message, **kwargs):
         send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [self.email], **kwargs)
 
+    def notify_graphql(self):
+        # ToDo replace this with messages over Kafka system for notification
+        if settings.GRAPHQL_TRIGGERS is True:
+            query = {'query': 'mutation{createProfile(gcID: "' + self.id + '", name: "' + user.name + '", email:"' +
+                              user.email + '"){gcID, name, email}]'}
+
+            response = requests.get(settings.GRAPHQL_ENDPOINT,
+                                    headers={'Authorization': 'Token ' + settings.GRAPHQL_TOKEN},
+                                    data=query)
+            if not response.status_code == requests.codes.ok:
+                # Write this to log eventually
+                raise Exception('Error setting user data / Server Response ' + str(response.status_code))
+
     def send_activation_token(self, request):
         current_site = get_current_site(request)
 
@@ -125,6 +127,8 @@ class User(AbstractBaseUser):
             html_message = (render_to_string('emails/register.html', template_context)),
             fail_silently = True
         )
+        self.notify_grpahql(self)
+
 
     def activate_user(self, activation_token):
         try:
