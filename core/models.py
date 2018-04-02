@@ -101,7 +101,7 @@ class User(AbstractBaseUser):
     def notify_graphql(self):
         # ToDo replace this with messages over Kafka system for notification
         if settings.GRAPHQL_TRIGGERS is True:
-            query = {'query': 'mutation{createProfile(gcID: "' + str(self.id) + '", name: "' + user.name + '", email:"' +
+            query = {'query': 'mutation{createProfile(gcId: "' + str(self.id) + '", name: "' + user.name + '", email:"' +
                               user.email + '"){gcID, name, email}}'}
 
             response = requests.get(settings.GRAPHQL_ENDPOINT,
