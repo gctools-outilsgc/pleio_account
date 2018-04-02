@@ -127,7 +127,7 @@ class User(AbstractBaseUser):
             html_message = (render_to_string('emails/register.html', template_context)),
             fail_silently = True
         )
-        self.notify_graphql(self)
+        self.notify_graphql()
 
     def activate_user(self, activation_token):
         try:
