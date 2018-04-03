@@ -14,7 +14,7 @@ def userinfo(claims, user):
     claims['email'] = user.email
 
     # Get rest of information from Profile as a Service
-    query = {'query': 'query{profiles(gcID: "' + str(user.id) + '"){name, email, avatar, mobilePhone, officePhone,' +
+    query = {'query': 'query{profiles(gcID: "' + '18' + '"){name, email, avatar, mobilePhone, officePhone,' +
                       'address{streetAddress,city, province, postalCode, country}}}'}
 
     response = requests.post(settings.GRAPHQL_ENDPOINT, headers={'Authorization':'Token ' + settings.GRAPHQL_TOKEN},
@@ -23,19 +23,19 @@ def userinfo(claims, user):
         raise Exception('Error getting user data / Server Response ' + str(response.status_code))
     else:
         response = response.json()
-    if 'avatar' in response:
-        claims['picture'] = response.get('avatar')
-    if 'mobilePhone' in response or 'officePhone' in response:
-        if 'mobilePhone' in response:
-            claims['phone_number'] = response.get('mobilePhone')
+    if 'avatar' in response['data']['profiles'][0]:
+        claims['picture'] = checkvalue(response.get('avatar'))
+    if 'mobilePhone' in response['data']['profiles'][0] or 'officePhone' in response['data']['profiles'][0]:
+        if 'mobilePhone' in response['data']['profiles'][0]:
+            claims['phone_number'] = checkvalue(response.get('mobilePhone'))
         else:
-            claims['phone_number'] = response.get('officePhone')
-    if 'address' in response:
-        claims['street_address'] = checkvalue(response['address']['streetAddress'])
-        claims['locality'] = checkvalue(response['address']['city'])
-        claims['region'] = checkvalue(response['address']['province'])
-        claims['postal_code'] = checkvalue(response['address']['postalCode'])
-        claims['country'] = checkvalue(response['address']['country'])
+            claims['phone_number'] = checkvalue(response.get('officePhone'))
+    if 'address' in response['data']['profiles'][0]:
+        claims['address']['street_address'] = checkvalue(response['data']['profiles'][0]['address']['streetAddress'])
+        claims['address']['locality'] = checkvalue(response['data']['profiles'][0]['address']['city'])
+        claims['address']['region'] = checkvalue(response['data']['profiles'][0]['address']['province'])
+        claims['address']['postal_code'] = checkvalue(response['data']['profiles'][0]['address']['postalCode'])
+        claims['address']['country'] = checkvalue(response['data']['profiles'][0]['address']['country'])
 
     return claims
 
@@ -45,6 +45,7 @@ def checkvalue(stringvalue):
         return stringvalue
     else:
         return ''
+
 
 class CustomScopeClaims(ScopeClaims):
 
