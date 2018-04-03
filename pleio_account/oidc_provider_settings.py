@@ -14,13 +14,13 @@ def userinfo(claims, user):
     claims['email'] = user.email
 
     # Get rest of information from Profile as a Service
-    query = {'query': 'query{profiles(gcID: ' + str(user.id) + '){name, email, avatar, mobilePhone, officePhone,' +
+    query = {'query': 'query{profiles(gcID: "' + str(user.id) + '"){name, email, avatar, mobilePhone, officePhone,' +
                       'address{streetAddress,city, province, postalCode, country}}}'}
 
     response = requests.post(settings.GRAPHQL_ENDPOINT, headers={'Authorization':'Token ' + settings.GRAPHQL_TOKEN},
                             data=query)
     if not response.status_code == requests.codes.ok:
-        raise Exception('Error getting user data / Server Response ' + str(response.status_code))
+        raise Exception('Error getting user data / Server Response ' + str(response.status_code) + str(query) + ' ' + str(response))
     else:
         response = response.json()
     if 'avatar' in response:
