@@ -18,9 +18,9 @@ def userinfo(claims, user):
                       'address{streetAddress,city, province, postalCode, country}}}'}
 
     response = requests.post(settings.GRAPHQL_ENDPOINT, headers={'Authorization':'Token ' + settings.GRAPHQL_TOKEN},
-                            data=query)
+                             data=query)
     if not response.status_code == requests.codes.ok:
-        raise Exception('Error getting user data / Server Response ' + str(response.status_code) + str(query) + ' ' + str(response))
+        raise Exception('Error getting user data / Server Response ' + str(response.status_code))
     else:
         response = response.json()
     if 'avatar' in response:
