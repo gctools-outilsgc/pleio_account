@@ -7,6 +7,26 @@
 {% block content %}
   <h1 class="ui large header">{% trans "Request membership" %} <div class="sub header">{% trans "step 1" %}</div></h1>
 
+  <form method="post" action="{% url 'request_two' %}" class="ui form">
+    {% csrf_token %}
+    <fieldset>
+      <div class="field">
+            <label for="id_name">{% trans "First and last name" %}</label>
+            {{ form.errors.name }}
+            {{ form.name }}
+        </div>
+        <div class="field">
+            <label for="id_email">{% trans "Email" %}</label>
+            <span id="error_email">{{ form.errors.email }}</span>
+            {{ form.email }}
+        </div>
+    </fieldset>
+
+    <div class="register__buttons">
+          <button name="continue" class="fluid ui button primary" type="submit">{% trans "Continue" %}</button>
+      </div>
+  </form>
+
   <style>
     #base-card {
       max-width: 500px;

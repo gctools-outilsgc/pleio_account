@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load Pleio_templatetags %}
+{% load settings_value %}
+{% load app_customization %}
+
 {% block page_title %}
 {% trans "Request membership step 2" %}
 {% endblock %}
@@ -7,6 +11,56 @@
 {% block content %}
   <h1 class="ui large header">{% trans "Request membership" %} <div class="sub header">{% trans "step 2" %}</div></h1>
 
+  <form method="post" action="{% url 'request_two' %}" class="ui form">
+    <fieldset>
+      {% for attr, value in data.items %}
+        <input type="hidden" name="{{ attr }}" value="{{ value }}">
+      {% endfor %}
+
+      <div class="field">
+          <label for="id_reason">{% trans "How did you hear about GCcollab?" %}</label>
+          {{ form.reason }}
+      </div>
+      <div class="field">
+          <label for="id_reason">{% trans "Website URL of Institution" %}</label>
+          {{ form.website }}
+      </div>
+
+      <div class="field">
+        <label for="id_password1">{% trans "Password" %}</label>
+        <span id="error_password1">{{ form.errors.password1 }}</span>
+  	    <div class="password_field">
+              {{ form.password1 }}
+              <span class="password__toggle" title="{% trans "Show password" %}">{% include_asset "icons/eye.svg" %}</span>
+              <span class="capslock" aria-live="assertive"></span>
+              <p id="password_help">{% trans "Create a unique password that contains at least 8 characters, including both letters and numbers." %}</p>
+  	    </div>
+      </div>
+      <div class="field">
+          <label for="id_password2">{% trans "Confirm password" %}</label>
+          <span id="error_password2">{{ form.errors.password2 }}</span>
+	        <div class="password_field">
+              {{ form.password2 }}
+              <span class="password__toggle" title="{% trans "Show password" %}">{% include_asset "icons/eye.svg" %}</span>
+              <span class="capslock" aria-live="assertive"></span>
+	         </div>
+      </div>
+
+      <div class="register__checks field">
+            <div class="register__check ui checkbox">
+                {{ form.errors.accepted_terms }}
+                {{ form.accepted_terms }}
+                <label for="id_accepted_terms">{% trans "I agree with the "%}<a class="terms_link" target="_blank" href="https://gccollab.ca/terms">{% trans " terms and conditions"%} <span aria-hidden="true">{% include_asset "icons/external.svg" %}</span><span class="invisible">{% trans "Opens in a new tab" %}</span></a></label>
+            </div>
+      </div>
+
+      <div class="register__buttons">
+            <a id="back" href="">{% trans "Back" %}</a>
+            <button name="submit" class="ui button primary" type="submit">{% trans "Submit" %}</button>
+        </div>
+
+    </fieldset>
+  </form>
   <style>
     #base-card {
       max-width: 500px;
