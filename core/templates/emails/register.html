@@ -3,29 +3,6 @@
 
 {% block content %}
 
-{% comment %}
-    {% language 'en' %}
-    {% get_current_language as LANGUAGE_CODE %}
-    {% trans "Welcome" %} {{ user.name }},<br />
-    <br />
-    {% trans "Please activate your account by following this link" %}:<br />
-    <br />
-    <a href="{{ protocol }}://{{ domain }}{% url 'register_activate' activation_token %}">{{ protocol }}://{{ domain }}{% url 'register_activate' activation_token %}</a><br />
-    {% endlanguage %}
-    
-    <div id="fr_content" style="border-top:1px solid #ddd; margin-top:15px; padding-top:10px;" lang="fr">
-    {% language 'fr' %}
-        {% get_current_language as LANGUAGE_CODE %}
-        {% trans "Welcome" %} {{ user.name }},<br />
-        <br />
-        {% trans "Please activate your account by following this link" %}:<br />
-        
-        <a href="{{ protocol }}://{{ domain }}{% url 'register_activate' activation_token %}">{{ protocol }}://{{ domain }}{% url 'register_activate' activation_token %}</a><br />
-    {% endlanguage %}
-    </div>
-{% endcomment %}
-
-
 {% get_available_languages as LANGUAGES %}
 {% for langs in LANGUAGES %}
 {% language langs.0 %}
