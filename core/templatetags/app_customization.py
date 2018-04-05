@@ -69,6 +69,18 @@ def show_language_toggle():
             return ''
     except AppCustomization.DoesNotExist:
         return ''
+        
+@register.simple_tag()
+def email_language_toggle():
+    try:
+        q = AppCustomization.objects.get(id=1)
+        toggle = q.email_language_toggle
+        if toggle == True:
+            return True
+        else:
+            return ''
+    except AppCustomization.DoesNotExist:
+        return ''
 
 @register.simple_tag()
 def custom_helpdesk_link():
