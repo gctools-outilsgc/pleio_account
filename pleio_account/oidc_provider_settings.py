@@ -31,16 +31,18 @@ def userinfo(claims, user):
         else:
             claims['phone_number'] = checkvalue(response.get('officePhone'))
     if 'address' in response['data']['profiles'][0]:
-        if 'street_address' in response['data']['profiles'][0]['address']:
-            claims['address']['street_address'] = checkvalue(response.get(['data']['profiles'][0]['address']['streetAddress']))
-        if 'city' in response['data']['profiles'][0]['address']:
-            claims['address']['locality'] = checkvalue(response.get(['data']['profiles'][0]['address']['city']))
-        if 'province' in response['data']['profiles'][0]['address']:
-            claims['address']['region'] = checkvalue(response.get(['data']['profiles'][0]['address']['province']))
-        if 'postalCode' in response['data']['profiles'][0]['address']:
-            claims['address']['postal_code'] = checkvalue(response.get(['data']['profiles'][0]['address']['postalCode']))
-        if 'country' in response['data']['profiles'][0]['address']:
-            claims['address']['country'] = checkvalue(response.get(['data']['profiles'][0]['address']['country']))
+        response_address = response.get(['data']['profiles'][0]['address'])
+        if response_address is not None:
+            if 'street_address' in response_address:
+                claims['address']['street_address'] = checkvalue(response_address.get(['street_address']))
+            if 'city' in response_address:
+                claims['address']['locality'] = checkvalue(response_address.get(['city']))
+            if 'province' in response_address:
+                claims['address']['region'] = checkvalue(response_address.get(['province']))
+            if 'postalCode' in response_address:
+                claims['address']['postal_code'] = checkvalue(response_address.get(['postalCode']))
+            if 'country' in response_address:
+                claims['address']['country'] = checkvalue(response_address.get(['country']))
 
     return claims
 
