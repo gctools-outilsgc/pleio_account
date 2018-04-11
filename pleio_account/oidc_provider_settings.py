@@ -31,11 +31,16 @@ def userinfo(claims, user):
         else:
             claims['phone_number'] = checkvalue(response.get('officePhone'))
     if 'address' in response['data']['profiles'][0]:
-        claims['address']['street_address'] = checkvalue(response['data']['profiles'][0]['address']['streetAddress'])
-        claims['address']['locality'] = checkvalue(response['data']['profiles'][0]['address']['city'])
-        claims['address']['region'] = checkvalue(response['data']['profiles'][0]['address']['province'])
-        claims['address']['postal_code'] = checkvalue(response['data']['profiles'][0]['address']['postalCode'])
-        claims['address']['country'] = checkvalue(response['data']['profiles'][0]['address']['country'])
+        if 'street_address' in response['data']['profiles'][0]['address']:
+            claims['address']['street_address'] = checkvalue(response['data']['profiles'][0]['address']['streetAddress'])
+        if 'city' in response['data']['profiles'][0]['address']:
+            claims['address']['locality'] = checkvalue(response['data']['profiles'][0]['address']['city'])
+        if 'province' in response['data']['profiles'][0]['address']:
+            claims['address']['region'] = checkvalue(response['data']['profiles'][0]['address']['province'])
+        if 'postalCode' in response['data']['profiles'][0]['address']:
+            claims['address']['postal_code'] = checkvalue(response['data']['profiles'][0]['address']['postalCode'])
+        if 'country' in response['data']['profiles'][0]['address']:
+            claims['address']['country'] = checkvalue(response['data']['profiles'][0]['address']['country'])
 
     return claims
 
@@ -68,7 +73,7 @@ class CustomScopeClaims(ScopeClaims):
 
     info_profile = (
         _('Basic profile'),
-        _('Access to your name'),
+        _('Access to your name, email, avatar, and address'),
     )
 
     info_detailed_profile = (
