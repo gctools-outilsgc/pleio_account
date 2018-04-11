@@ -31,7 +31,7 @@ def userinfo(claims, user):
         else:
             claims['phone_number'] = checkvalue(response.get('officePhone'))
     if 'address' in response['data']['profiles'][0]:
-        response_address = response.get(['data']['profiles'][0]['address'])
+        response_address = response['data']['profiles'][0]['address']
         if response_address is not None:
             if 'street_address' in response_address:
                 claims['address']['street_address'] = checkvalue(response_address.get(['street_address']))
