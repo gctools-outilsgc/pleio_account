@@ -55,11 +55,11 @@ class ResetPasswordRequestView(FormView):
                     }
 
                     subject_template_name = 'emails/reset_password_subject.txt'
-                    email_template_name = 'emails/reset_password.html'
+                    email_template_name = 'emails/reset_password.txt'
                     html_email_template_name = 'emails/reset_password.html'
                     subject = loader.render_to_string(subject_template_name)
                     subject = ''.join(subject.splitlines())
-                    email = loader.render_to_string(email_template_name, c)
+                    email = loader.render_to_string(html_email_template_name, c)
                     send_mail(subject, email, settings.DEFAULT_FROM_EMAIL, [user.email], fail_silently=False)
 
                 return self.form_valid(form)
@@ -92,10 +92,11 @@ class ResetPasswordRequestView(FormView):
                         'protocol': request.is_secure() and "https" or "http"
                     }
                     subject_template_name = 'emails/reset_password_subject.txt'
-                    email_template_name = 'emails/reset_password.html'
+                    email_template_name = 'emails/reset_password.txt'
+                    html_email_template_name = 'emails/reset_password.html'
                     subject = loader.render_to_string(subject_template_name, c)
                     subject = ''.join(subject.splitlines())
-                    email = loader.render_to_string(email_template_name, c)
+                    email = loader.render_to_string(html_email_template_name, c)
                     send_mail(subject, email, settings.DEFAULT_FROM_EMAIL, [user.email], fail_silently=False)
 
                     return self.form_valid(form)
