@@ -95,7 +95,7 @@ class ResetPasswordRequestView(FormView):
                     subject = loader.render_to_string(subject_template_name, c)
                     subject = ''.join(subject.splitlines())
                     email = loader.render_to_string(email_template_name, c)
-                    send_mail(subject, , settings.DEFAULT_FROM_EMAIL, [user.email], fail_silently=False)
+                    send_mail(subject, email, settings.DEFAULT_FROM_EMAIL, [user.email], fail_silently=False)
 
                     return self.form_valid(form)
 
