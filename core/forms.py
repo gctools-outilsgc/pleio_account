@@ -59,8 +59,9 @@ class ResetPasswordRequestView(FormView):
                     html_email_template_name = 'emails/reset_password.html'
                     subject = loader.render_to_string(subject_template_name)
                     subject = ''.join(subject.splitlines())
-                    email = loader.render_to_string(html_email_template_name, c)
-                    send_mail(subject, email, settings.DEFAULT_FROM_EMAIL, [user.email], fail_silently=False)
+                    email = loader.render_to_string(email_template_name, c)
+                    html_email = loader.render_to_string(html_email_template_name, c)
+                    send_mail(subject, email, settings.DEFAULT_FROM_EMAIL, [user.email], fail_silently=False, html_message=html_email)
 
                 return self.form_valid(form)
 
@@ -96,8 +97,9 @@ class ResetPasswordRequestView(FormView):
                     html_email_template_name = 'emails/reset_password.html'
                     subject = loader.render_to_string(subject_template_name, c)
                     subject = ''.join(subject.splitlines())
-                    email = loader.render_to_string(html_email_template_name, c)
-                    send_mail(subject, email, settings.DEFAULT_FROM_EMAIL, [user.email], fail_silently=False)
+                    email = loader.render_to_string(email_template_name, c)
+                    html_email = loader.render_to_string(html_email_template_name, c)
+                    send_mail(subject, email, settings.DEFAULT_FROM_EMAIL, [user.email], fail_silently=False, html_message=html_email)
 
                     return self.form_valid(form)
 
