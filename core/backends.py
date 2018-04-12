@@ -26,7 +26,6 @@ class ElggBackend:
             valid_user = valid_user_result["valid"] if 'valid' in valid_user_result else False
             name = valid_user_result["name"] if 'name' in valid_user_result else username
             admin = valid_user_result["admin"] if 'admin' in valid_user_result else False
-            avatar = valid_user_result["avatar"] if 'avatar' in valid_user_result else False
 
             # If valid, create new user with Elgg attributes
             if valid_user is True:
@@ -38,10 +37,7 @@ class ElggBackend:
                     receives_newsletter=True
                 )
                 user.is_active = True
-                user.is_admin = admin
-                if avatar:
-                    image = urlopen(avatar)
-                    user.avatar.save(user.username + '-avatar.jpg', ContentFile(image.read()))              
+                user.is_admin = admin             
                 user.save()
                 return user
             else:
