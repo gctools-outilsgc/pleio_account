@@ -18,23 +18,31 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.4\n"
 
-#: core/forms.py:19
+#: core/forms.py:107 core/forms.py:111
+msgid "No user is associated with this email address."
+msgstr "Aan dit e-mailadres is geen gebruiker gekoppeld."
+
+#: core/forms.py:115
+msgid "Please provide a valid email address."
+msgstr "Geef alstublieft een geldig email adres."
+
+#: core/forms.py:123
 msgid "Your email address is not allowed."
 msgstr "Dit e-mailadres is niet geldig."
 
-#: core/forms.py:23
+#: core/forms.py:128
 msgid "This email is already registered."
-msgstr ""
+msgstr "Deze e-mail is al geregistreerd."
 
-#: core/forms.py:30 core/forms.py:130
+#: core/forms.py:135 core/forms.py:235
 msgid "The two password fields didn't match."
 msgstr "De twee wachtwoorden komen niet overeen."
 
-#: core/forms.py:32
+#: core/forms.py:137
 msgid "This email is already in use."
-msgstr ""
+msgstr "Deze email is al in gebruik."
 
-#: core/forms.py:116 core/forms.py:120
+#: core/forms.py:221 core/forms.py:225
 msgid "Token"
 msgstr "Token"
 

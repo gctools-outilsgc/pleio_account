@@ -22,7 +22,7 @@ from django.views.decorators.clickjacking import xframe_options_exempt
 from oauth2_provider import views as oauth2_views
 from api import views as api_views
 from django.contrib import admin
-from core import views
+from core import views, forms
 from core.class_views import PleioLoginView, PleioSessionDeleteView, PleioSessionDeleteOtherView
 from django.views.i18n import JavaScriptCatalog
 
@@ -75,7 +75,8 @@ urls = [
     url(r'^termsofuse/$', views.terms_of_use, name='terms_of_use'),
     url(r'^securitypages/(?P<page_action>[\w-]+)/$', views.security_pages, name='security_pages'),
     url(r'^securitypages/$', views.security_pages, name='security_pages'),
-    url(r'^password_reset/$', auth_views.password_reset, { 'template_name': 'password_reset.html', 'subject_template_name': 'emails/reset_password_subject.txt', 'email_template_name': 'emails/reset_password.txt', 'html_email_template_name': 'emails/reset_password.html' }, name='password_reset'),
+    url(r'^password_reset/$', forms.ResetPasswordRequestView.as_view(), name='password_reset'),
+    # url(r'^password_reset/$', auth_views.password_reset, { 'template_name': 'password_reset.html', 'subject_template_name': 'emails/reset_password_subject.txt', 'email_template_name': 'emails/reset_password.txt', 'html_email_template_name': 'emails/reset_password.html' }, name='password_reset'),
     url(r'^password_reset/done/$', auth_views.password_reset_done, { 'template_name': 'password_reset_done.html' }, name='password_reset_done'),
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', auth_views.password_reset_confirm, { 'template_name': 'password_reset_confirm.html' }, name='password_reset_confirm'),
     url(r'^reset/done/$', auth_views.password_reset_complete, { 'template_name': 'password_reset_complete.html' }, name='password_reset_complete'),
