@@ -104,15 +104,15 @@ class ResetPasswordRequestView(FormView):
                     return self.form_valid(form)
 
                 else:
-                    form.add_error(None, 'No user is associated with this email address.')
+                    form.add_error(None, _("No user is associated with this email address."))
                     return self.form_invalid(form)
 
             else:
-                form.add_error(None, 'No user is associated with this email address.')
+                form.add_error(None, _("No user is associated with this email address."))
                 return self.form_invalid(form)
 
         else:
-            form.add_error(None, 'Please provide a valid email address.')
+            form.add_error(None, _("Please provide a valid email address."))
             return self.form_invalid(form)
 
 class EmailField(forms.EmailField):
