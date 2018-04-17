@@ -48,7 +48,7 @@ def register(request):
                     email=data['email'],
                     password=data['password2'],
                     accepted_terms=data['accepted_terms'],
-                    receives_newsletter=data['receives_newsletter']
+                    receives_newsletter=True
                 )
             except:
                 user = User.objects.get(email=data['email'])
