@@ -14,7 +14,7 @@ def userinfo(claims, user):
     claims['email'] = user.email
 
     # Get rest of information from Profile as a Service
-    query = {'query': 'query{profiles(gcID: "' + '18' + '"){name, email, avatar, mobilePhone, officePhone,' +
+    query = {'query': 'query{profiles(gcID: "' + user.id + '"){name, email, avatar, mobilePhone, officePhone,' +
                       'address{streetAddress,city, province, postalCode, country}}}'}
 
     response = requests.post(settings.GRAPHQL_ENDPOINT, headers={'Authorization': 'Token ' + settings.GRAPHQL_TOKEN},
