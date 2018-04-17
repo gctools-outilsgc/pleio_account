@@ -286,6 +286,9 @@ class PleioPartnerSite(models.Model):
     partner_site_name = models.CharField(null=False, max_length=200)
     partner_site_logo_url = models.URLField(null=False)
 
+    def __str__(self):
+        return self.partner_site_name
+
 class AppCustomization(models.Model):
     BG_IMAGE_OPTIONS = (
         ('C', 'Cover'),
