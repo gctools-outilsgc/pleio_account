@@ -7,7 +7,7 @@
 {% block content %}
   <h1 class="ui large header">{% trans "Request membership" %} <div class="sub header">{% trans "step 1" %}</div></h1>
 
-  <form method="post" action="{% url 'request_two' %}" class="ui form">
+  <form method="post" action="{% url 'request_one' %}" class="ui form">
     {% csrf_token %}
     <fieldset>
       <div class="field">
@@ -22,8 +22,50 @@
         </div>
     </fieldset>
 
+    <fieldset>
+      <legend>{% trans "Address of residence" %}</legend>
+      <div class="field">
+        <label for="id_streetnumber">{% trans "Number" %}</label>
+        <span id="error_streetnumber">{{ form.errors.streetnumber }}</span>
+        {{ form.streetnumber }}
+      </div>
+      <div class="field">
+        <label for="id_aptnumber">{% trans "Apt. #" %}</label>
+        <span id="error_aptnumber">{{ form.errors.aptnumber }}</span>
+        {{ form.aptnumber }}
+      </div>
+      <div class="field">
+        <label for="id_street">{% trans "Street" %}</label>
+        <span id="error_email">{{ form.errors.street }}</span>
+        {{ form.street }}
+      </div>
+      <div class="field">
+        <label for="id_city">{% trans "City" %}</label>
+        <span id="error_city">{{ form.errors.city }}</span>
+        {{ form.city }}
+      </div>
+      <div class="field">
+        <label for="id_province">{% trans "Province/State" %}</label>
+        <span id="error_province">{{ form.errors.province }}</span>
+        {{ form.province }}
+      </div>
+      <div class="field">
+        <label for="id_country">{% trans "Country" %}</label>
+        <span id="error_country">{{ form.errors.country }}</span>
+        {{ form.country }}
+      </div>
+      <div class="field">
+        <label for="id_postal">{% trans "Postal" %}</label>
+        <span id="error_postal">{{ form.errors.postal }}</span>
+        {{ form.postal }}
+      </div>
+    </fieldset>
+
     <div class="register__buttons">
           <button name="continue" class="fluid ui button primary" type="submit">{% trans "Continue" %}</button>
+          <div class="register_block">
+            <a href="{% url 'register' %}" >{% trans "Return to registration" %}</a>
+          </div>
       </div>
   </form>
 

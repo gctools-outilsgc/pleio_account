@@ -12,14 +12,20 @@
   <h1 class="ui large header">{% trans "Request membership" %} <div class="sub header">{% trans "step 2" %}</div></h1>
 
   <form method="post" action="{% url 'request_two' %}" class="ui form">
+    {% csrf_token %}
     <fieldset>
-      {% for attr, value in data.items %}
-        <input type="hidden" name="{{ attr }}" value="{{ value }}">
-      {% endfor %}
+
+        <input type="hidden" name="name" value="{{ data.name }}">
+        <input type="hidden" name="email" value="{{ data.email }}">
+        <input type="hidden" name="address" value="{{ data.address }}">
 
       <div class="field">
           <label for="id_reason">{% trans "How did you hear about GCcollab?" %}</label>
           {{ form.reason }}
+      </div>
+      <div class="field">
+          <label for="id_morereason">{% trans "Please provide additional information" %}</label>
+          {{ form.morereason }}
       </div>
       <div class="field">
           <label for="id_reason">{% trans "Website URL of Institution" %}</label>
@@ -55,7 +61,7 @@
       </div>
 
       <div class="register__buttons">
-            <a id="back" href="">{% trans "Back" %}</a>
+            <a id="back" href="{% url 'request_one' %}">{% trans "Back" %}</a>
             <button name="submit" class="ui button primary" type="submit">{% trans "Submit" %}</button>
         </div>
 

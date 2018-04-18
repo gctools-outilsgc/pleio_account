@@ -3,6 +3,7 @@
 {% load Pleio_templatetags %}
 {% load app_customization %}
 {% get_current_language as LANGUAGE_CODE %}
+{% load requestmembership_tags %}
 
 {% language request.COOKIES.lang %}
 <!DOCTYPE html>
@@ -131,6 +132,25 @@ position:relative;
     background-color: #{% show_customizations_color %};
     opacity: 0.8;
 }
+.valid_email svg {
+  width:25px;
+  height:25px;
+  fill:#2cbe4e;
+}
+.invalid_email svg {
+  width:25px;
+  height:25px;
+  fill:#b60205;
+}
+.email_validation {
+  position:absolute;
+  right:0;
+  top:0;
+  padding: 0.4rem 0.4rem 0.6rem;
+}
+.email_field {
+  position: relative;
+}
 	</style>
 
         <script src="https://www.google.com/recaptcha/api.js"></script>
@@ -144,6 +164,35 @@ position:relative;
 	  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
 	  crossorigin="anonymous"></script>
 	<script src="/static/semantic/dist/semantic.min.js"></script>
+  {% show_request_membership as toggle_request %}
+  {% if toggle_request %}
+      <script>
+        $('#id_email').on('focusout', function(){
+          var email = $(this).val();
+          if(email != ''){
+            $.ajax({
+              url: '{{ request.scheme }}://{{ request.get_host }}/request/ajax/validate_email',
+              data: {
+                'email': email
+              },
+              dataType: 'json',
+              success: function (data) {
+                console.log(data.valid);
+                if(data.valid == true){
+                  $('.email_validation').html('<span class="valid_email">{% include_asset "icons/circle-check.svg" %}</span>');
+                  $('.email_validation_error_msg').html('');
+                  $('.email_validation_alert').html('');
+                } else {
+                  $('.email_validation').html('<span class="invalid_email">{% include_asset "icons/circle-x.svg" %}</span>');
+                  $('.email_validation_error_msg').html('<p>Request membership now!</p><a href="{% url "request_one" %}">Go Here!</a>');
+                  $('.email_validation_alert').html('Invalid email');
+                }
+              }
+            })
+          }
+        });
+      </script>
+  {% endif %}
     </body>
 </html>
 

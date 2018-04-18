@@ -7,11 +7,14 @@ register = template.Library()
 @register.simple_tag()
 def show_request_membership():
     try:
-        q = RequestMembership.objects.get(id=1)
+        q = RequestMembership.objects.all()[:1].get()
         toggle = q.display_request
         if toggle == True:
             return True
         else:
-            return ''
+            return False
     except RequestMembership.DoesNotExist:
-        return ''
+        return 'shit'
+
+def show_something():
+    return True

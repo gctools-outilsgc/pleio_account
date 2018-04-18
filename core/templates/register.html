@@ -48,7 +48,12 @@
         <div class="field">
             <label for="id_email">{% trans "Email" %}</label>
             <span id="error_email">{{ form.errors.email }}</span>
-            {{ form.email }}
+            <div class="email_field">
+              {{ form.email }}
+              <span style="display:none;" aria-live="assertive" class="email_validation_alert"></span>
+              <span class="email_validation"></span>
+              <span class="email_validation_error_msg"></span>
+            </div>
         </div>
         <div class="field">
             <label for="id_password1">{% trans "Password" %}</label>
