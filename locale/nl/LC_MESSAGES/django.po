@@ -535,6 +535,14 @@ msgstr "Wachtwoord vergeten"
 msgid "Confirm"
 msgstr "Bevestigen"
 
+#: core/templates/password_reset_confirm.html:56
+msgid "Your password reset link has expired. Request a new password reset to receive a new link by email."
+msgstr ""
+
+#: core/templates/password_reset_confirm.html:59
+msgid "Reset my password"
+msgstr ""
+
 #: core/templates/password_reset_done.html:6
 #: core/templates/password_reset_done.html:20
 msgid "Email sent"
