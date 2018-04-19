@@ -525,6 +525,14 @@ msgstr "Confirmez le mot de passe"
 msgid "Confirm"
 msgstr "Confirmer"
 
+#: core/templates/password_reset_confirm.html:56
+msgid "Your password reset link has expired. Request a new password reset to receive a new link by email."
+msgstr "Votre lien de réinitialisation du mot de passe a expiré. Demander une nouvelle réinitialisation de mot de passe pour recevoir un nouveau lien par courriel."
+
+#: core/templates/password_reset_confirm.html:59
+msgid "Reset my password"
+msgstr "Réinitialiser mon mot de passe"
+
 #: core/templates/password_reset_done.html:6
 #: core/templates/password_reset_done.html:20
 msgid "Email sent"

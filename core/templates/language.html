@@ -31,10 +31,13 @@ function getCookie(cname) {
 }
 
 function changeLanguage() {
+    var hostname = location.hostname;
+    var length = hostname.split(".").length - 1;
+    var domain = (length >= 2) ? '.' + hostname.split('.').slice(-2).join('.') : hostname;
     if (getCookie('lang') == 'en') {
-        setCookie("lang", 'fr', '', '/');
+        setCookie("lang", 'fr', '', '/', domain);
     } else {
-        setCookie("lang", 'en', '', '/');
+        setCookie("lang", 'en', '', '/', domain);
     }
 }
 
