@@ -195,6 +195,7 @@ class UserProfileForm(forms.ModelForm):
 
 class LabelledLoginForm(AuthenticationForm):
         username = forms.CharField(required=True, max_length=254, widget=forms.TextInput(attrs={'id':"id_auth-username", 'aria-labelledby':"error_login"}))
+        password = forms.CharField(required=True, strip=False, widget=forms.PasswordInput(attrs={'autocomplete':"off"}))
 
 class PleioAuthenticationForm(AuthenticationForm):
     error_messages = {
