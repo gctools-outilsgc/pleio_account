@@ -933,6 +933,9 @@ msgstr "Profil de base"
 msgid "Access to your name"
 msgstr "Accès à votre nom"
 
+msgid "%(app_title)s Account"
+msgstr "Compte %(app_title)s"
+
 #~ msgid "Default avatar"
 #~ msgstr "Avatar par défaut"
 
