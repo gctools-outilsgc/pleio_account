@@ -9,6 +9,111 @@ from two_factor.utils import totp_digits
 from emailvalidator.validator import is_email_valid
 from .models import User
 from .helpers import verify_captcha_response
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.template import loader
+from django.views.generic.edit import FormView
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+from django.core.mail import send_mail
+import requests
+import json
+
+class PasswordResetRequestForm(forms.Form):
+    email = forms.CharField(label=("Email address"), max_length=254)
+
+class ResetPasswordRequestView(FormView):
+    template_name = "password_reset.html"
+    success_url = '/password_reset/done/'
+    form_class = PasswordResetRequestForm
+
+    @staticmethod
+    def validate_email_address(email):
+        try:
+            validate_email(email)
+            return True
+        except ValidationError:
+            return False
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+            email = form.cleaned_data["email"]
+
+        if self.validate_email_address(email):
+            found_user = User.objects.filter(email__iexact=email)
+            if found_user.exists():
+                for user in found_user:
+                    c = {
+                        'domain': request.META['HTTP_HOST'],
+                        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                        'user': user,
+                        'token': default_token_generator.make_token(user),
+                        'protocol': request.is_secure() and "https" or "http"
+                    }
+
+                    subject_template_name = 'emails/reset_password_subject.txt'
+                    email_template_name = 'emails/reset_password.txt'
+                    html_email_template_name = 'emails/reset_password.html'
+                    subject = loader.render_to_string(subject_template_name)
+                    subject = ''.join(subject.splitlines())
+                    email = loader.render_to_string(email_template_name, c)
+                    html_email = loader.render_to_string(html_email_template_name, c)
+                    send_mail(subject, email, settings.DEFAULT_FROM_EMAIL, [user.email], fail_silently=False, html_message=html_email)
+
+                return self.form_valid(form)
+
+            elif hasattr(settings, 'ELGG_URL'):
+                elgg_url = settings.ELGG_URL
+
+                # Verify user exists in Elgg
+                valid_user_request = requests.post(elgg_url + "/services/api/rest/json/", data={'method': 'pleio.userexists', 'user': email})
+                valid_user_json = json.loads(valid_user_request.text)
+                valid_user_result = valid_user_json["result"] if 'result' in valid_user_json else []
+                valid_user = valid_user_result["valid"] if 'valid' in valid_user_result else False
+                name = valid_user_result["name"] if 'name' in valid_user_result else email
+
+                # If exists in Elgg, create local user
+                if valid_user is True:
+                    user = User.objects.create_user(
+                        name=name,
+                        email=email,
+                        accepted_terms=True,
+                        receives_newsletter=True
+                    )
+                    user.is_active = True
+                    user.save()
+                    c = {
+                        'domain': request.META['HTTP_HOST'],
+                        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                        'user': user,
+                        'token': default_token_generator.make_token(user),
+                        'protocol': request.is_secure() and "https" or "http"
+                    }
+                    subject_template_name = 'emails/reset_password_subject.txt'
+                    email_template_name = 'emails/reset_password.txt'
+                    html_email_template_name = 'emails/reset_password.html'
+                    subject = loader.render_to_string(subject_template_name, c)
+                    subject = ''.join(subject.splitlines())
+                    email = loader.render_to_string(email_template_name, c)
+                    html_email = loader.render_to_string(html_email_template_name, c)
+                    send_mail(subject, email, settings.DEFAULT_FROM_EMAIL, [user.email], fail_silently=False, html_message=html_email)
+
+                    return self.form_valid(form)
+
+                else:
+                    form.add_error(None, _("No user is associated with this email address."))
+                    return self.form_invalid(form)
+
+            else:
+                form.add_error(None, _("No user is associated with this email address."))
+                return self.form_invalid(form)
+
+        else:
+            form.add_error(None, _("Please provide a valid email address."))
+            return self.form_invalid(form)
 
 class EmailField(forms.EmailField):
     def clean(self, value):
@@ -34,7 +139,7 @@ class RegisterForm(forms.Form):
 
     name = forms.CharField(required=True, max_length=100, widget=forms.TextInput(attrs={'aria-labelledby':"error_name"}))
     email = EmailField(required=True, widget=forms.TextInput(attrs={'aria-labelledby':"error_email"}))
-    password1 = forms.CharField(strip=False, widget=forms.PasswordInput(attrs={'aria-labelledby':"error_password1", "aria-describedby":"password_help"}))
+    password1 = forms.CharField(strip=False, widget=forms.PasswordInput(attrs={'aria-labelledby':"error_password1"}))
     password2 = forms.CharField(strip=False, widget=forms.PasswordInput(attrs={'aria-labelledby':"error_password2"}))
     accepted_terms = forms.BooleanField(required=True)
     receives_newsletter = forms.BooleanField(required=False)
@@ -90,6 +195,7 @@ class UserProfileForm(forms.ModelForm):
 
 class LabelledLoginForm(AuthenticationForm):
         username = forms.CharField(required=True, max_length=254, widget=forms.TextInput(attrs={'id':"id_auth-username", 'aria-labelledby':"error_login"}))
+        password = forms.CharField(required=True, strip=False, widget=forms.PasswordInput(attrs={'autocomplete':"off"}))
 
 class PleioAuthenticationForm(AuthenticationForm):
     error_messages = {

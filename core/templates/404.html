@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load Pleio_templatetags %}
+
+{% block page_title %}
+{% trans "Page not found" %}
+{% endblock %}
+
+{% block content %}
+    <h1 class="ui large header">{% trans "Page not found" %}</h1>
+
+    <div class="register_block">
+        <a href="{% url 'login' %}" >{% trans "Return to sign in" %}</a>
+    </div>
+{% endblock %}

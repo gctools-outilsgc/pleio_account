@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-27 10:42-0400\n"
+"POT-Creation-Date: 2018-04-27 14:37-0400\n"
 "PO-Revision-Date: 2017-12-15 16:48+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -18,27 +18,35 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.4\n"
 
-#: core/forms.py:18
+#: core/forms.py:107 core/forms.py:111
+msgid "No user is associated with this email address."
+msgstr "Aan dit e-mailadres is geen gebruiker gekoppeld."
+
+#: core/forms.py:115
+msgid "Please provide a valid email address."
+msgstr "Geef alstublieft een geldig email adres."
+
+#: core/forms.py:123
 msgid "Your email address is not allowed."
 msgstr "Dit e-mailadres is niet geldig."
 
-#: core/forms.py:23
+#: core/forms.py:128
 msgid "This email is already registered."
-msgstr ""
+msgstr "Deze e-mail is al geregistreerd."
 
-#: core/forms.py:30 core/forms.py:130
+#: core/forms.py:135 core/forms.py:236
 msgid "The two password fields didn't match."
 msgstr "De twee wachtwoorden komen niet overeen."
 
-#: core/forms.py:32
+#: core/forms.py:137
 msgid "This email is already in use."
-msgstr ""
+msgstr "Deze email is al in gebruik."
 
-#: core/forms.py:116 core/forms.py:120
+#: core/forms.py:222 core/forms.py:226
 msgid "Token"
 msgstr "Token"
 
-#: core/forms.py:129
+#: core/forms.py:235
 msgid "The password is invalid."
 msgstr "Het wachtwoord is ongeldig."
 
@@ -131,6 +139,19 @@ msgstr "Windows"
 msgid "%(browser)s on %(device)s"
 msgstr "%(browser)s op %(device)s"
 
+#: core/templates/404.html:6 core/templates/404.html:10
+msgid "Page not found"
+msgstr "Pagina niet gevonden"
+
+#: core/templates/404.html:13 core/templates/login.html:126
+#: core/templates/login.html:149 core/templates/password_reset.html:41
+#: core/templates/password_reset_complete.html:25
+#: core/templates/password_reset_done.html:26 core/templates/register.html:96
+#: core/templates/register_activate.html:18
+#: core/templates/register_complete.html:19
+msgid "Return to sign in"
+msgstr ""
+
 #: core/templates/backup_tokens.html:5 core/templates/tf_profile.html:10
 msgid "Backup Tokens"
 msgstr "Backup tokens"
@@ -196,7 +217,7 @@ msgid "Terms and Conditions"
 msgstr ""
 
 #: core/templates/base.html:77 core/templates/base_account.html:158
-#: core/templates/register.html:77
+#: core/templates/register.html:76
 msgid "Opens in a new tab"
 msgstr ""
 
@@ -363,7 +384,7 @@ msgstr "Je hebt ingelogd vanaf een nieuwe locatie"
 msgid "Logged in from a new location"
 msgstr "Ingelogd vanaf een nieuwe locatie"
 
-#: core/templates/language.html:25
+#: core/templates/language.html:26 core/templates/language.html:37
 msgid "Change language"
 msgstr ""
 
@@ -396,13 +417,13 @@ msgstr "Voer een correct e-mailadres en wachtwoord in."
 msgid "Note that both fields may be case-sensitive."
 msgstr "Let op: beide velden kunnen hoofdlettergevoelig zijn."
 
-#: core/templates/login.html:44 core/templates/password_reset.html:29
+#: core/templates/login.html:44 core/templates/password_reset.html:33
 msgid "Email address"
 msgstr "E-mailadres"
 
-#: core/templates/login.html:53 core/templates/password_reset_confirm.html:33
-#: core/templates/password_reset_confirm.html:42
-#: core/templates/register.html:58 core/templates/register.html:68
+#: core/templates/login.html:53 core/templates/password_reset_confirm.html:35
+#: core/templates/password_reset_confirm.html:44
+#: core/templates/register.html:58 core/templates/register.html:67
 #, fuzzy
 #| msgid "New Password"
 msgid "Show password"
@@ -426,7 +447,7 @@ msgid "Don't have an account?"
 msgstr "Je hebt nog geen backup tokens."
 
 #: core/templates/login.html:70 core/templates/register.html:8
-#: core/templates/register.html:20 core/templates/register.html:95
+#: core/templates/register.html:20 core/templates/register.html:94
 msgid "Register"
 msgstr "Registeren"
 
@@ -454,15 +475,6 @@ msgstr "Voer de verificatiecode uit uw codegenerator in."
 #| msgid "Use backuptoken"
 msgid "Use backup token"
 msgstr "Gebruik backupcode"
-
-#: core/templates/login.html:126 core/templates/login.html:149
-#: core/templates/password_reset.html:37
-#: core/templates/password_reset_complete.html:25
-#: core/templates/password_reset_done.html:26 core/templates/register.html:97
-#: core/templates/register_activate.html:18
-#: core/templates/register_complete.html:19
-msgid "Return to sign in"
-msgstr ""
 
 #: core/templates/login.html:137
 #, fuzzy
@@ -496,7 +508,7 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#: core/templates/password_reset.html:35
+#: core/templates/password_reset.html:39
 #: core/templates/password_reset_complete.html:12
 #: core/templates/password_reset_confirm.html:6
 #: core/templates/password_reset_confirm.html:15
@@ -504,11 +516,11 @@ msgstr ""
 msgid "Reset password"
 msgstr "Herstel wachtwoord"
 
-#: core/templates/password_reset.html:46
+#: core/templates/password_reset.html:50
 msgid "Need help?"
 msgstr "Hulp nodig?"
 
-#: core/templates/password_reset.html:47 core/templates/profile.html:25
+#: core/templates/password_reset.html:51 core/templates/profile.html:25
 #: core/templates/register.html:49
 msgid "Email"
 msgstr "E-mail"
@@ -524,25 +536,35 @@ msgstr "Wachtwoord gewijzigd"
 msgid "You can now login with your new password."
 msgstr "U kunt nu inloggen met uw nieuwe wachtwoord."
 
-#: core/templates/password_reset_confirm.html:29
+#: core/templates/password_reset_confirm.html:31
 #: core/templates/security_pages/change_password.html:35
 #, fuzzy
 #| msgid "New Password"
 msgid "New password"
 msgstr "Nieuw wachtwoord"
 
-#: core/templates/password_reset_confirm.html:38
-#: core/templates/register.html:64
+#: core/templates/password_reset_confirm.html:40
+#: core/templates/register.html:63
 #: core/templates/security_pages/change_password.html:45
 #, fuzzy
 #| msgid "Forgot password"
 msgid "Confirm password"
 msgstr "Wachtwoord vergeten"
 
-#: core/templates/password_reset_confirm.html:47
+#: core/templates/password_reset_confirm.html:49
 #: core/templates/security_pages/change_password.html:60
 msgid "Confirm"
 msgstr "Bevestigen"
+
+#: core/templates/password_reset_confirm.html:56
+msgid ""
+"Your password reset link has expired. Request a new password reset to "
+"receive a new link by email."
+msgstr ""
+
+#: core/templates/password_reset_confirm.html:59
+msgid "Reset my password"
+msgstr ""
 
 #: core/templates/password_reset_done.html:6
 #: core/templates/password_reset_done.html:20
@@ -569,7 +591,7 @@ msgstr "Naam"
 msgid "Government"
 msgstr "Overheid"
 
-#: core/templates/profile.html:31 core/templates/register.html:83
+#: core/templates/profile.html:31 core/templates/register.html:82
 msgid "Receive Suspicious Sign In Emails"
 msgstr "Ontvang verdachte e-mails met inloggen"
 
@@ -589,17 +611,49 @@ msgstr "maak een Pleio-account"
 msgid "First and last name"
 msgstr "Voor- en achternaam"
 
-#: core/templates/register.html:60
-msgid ""
-"Create a unique password that contains at least 8 characters, including both "
-"letters and numbers."
+#: core/templates/register.html:54
+msgid "Your password must:"
 msgstr ""
 
-#: core/templates/register.html:77
+#: core/templates/register.html:54
+msgid "Be at least 8 characters in length"
+msgstr ""
+
+#: core/templates/register.html:54
+msgid "Contain at least 1 lowercase and 1 uppercase letter"
+msgstr ""
+
+#: core/templates/register.html:54
+msgid "Contain at least 1 special character (!@#$^&*)"
+msgstr ""
+
+#: core/templates/register.html:54
+msgid "Contain at least 1 number (0-9)"
+msgstr ""
+
+#: core/templates/register.html:54
+msgid "Your password should:"
+msgstr ""
+
+#: core/templates/register.html:54
+msgid ""
+"Be adequately complex and not contain simple patterns like <strong>abc123</"
+"strong>"
+msgstr ""
+
+#: core/templates/register.html:54
+msgid "Not contain words from the dictionary"
+msgstr ""
+
+#: core/templates/register.html:54
+msgid "Not contain personal data (like your Social Security number or address)"
+msgstr ""
+
+#: core/templates/register.html:76
 msgid "I agree with the "
 msgstr "Ik ga akkoord met de "
 
-#: core/templates/register.html:77
+#: core/templates/register.html:76
 msgid " terms and conditions"
 msgstr ""
 
@@ -936,15 +990,38 @@ msgstr "Terug naar profiel"
 msgid "Access to your name"
 msgstr ""
 
-#: pleio_account/settings.py:140
+#: pleio_account/password_validation.py:18
+#, python-format
+msgid "Password must contain at least %(min_numbers)d digit."
+msgstr ""
+
+#: pleio_account/password_validation.py:20
+#, python-format
+msgid ""
+"Password must contain at least %(min_lowercase_letters)d lowercase letter."
+msgstr ""
+
+#: pleio_account/password_validation.py:22
+#, python-format
+msgid ""
+"Password must contain at least %(min_uppercase_letters)d uppercase letter."
+msgstr ""
+
+#: pleio_account/password_validation.py:24
+#, python-format
+msgid ""
+"Password must contain at least %(min_special_characters)d special character."
+msgstr ""
+
+#: pleio_account/settings.py:145
 msgid "English"
 msgstr "Engels"
 
-#: pleio_account/settings.py:141
+#: pleio_account/settings.py:146
 msgid "Dutch"
 msgstr "Nederlands"
 
-#: pleio_account/settings.py:142
+#: pleio_account/settings.py:147
 msgid "French"
 msgstr "Frans"
 
