@@ -931,6 +931,9 @@ msgstr "Français"
 #~ msgid "Remove profile picture"
 #~ msgstr "Supprimer la photo de profil"
 
+msgid "%(app_title)s Account"
+msgstr "Compte %(app_title)s"
+
 #~ msgid "Default avatar"
 #~ msgstr "Avatar par défaut"
 
