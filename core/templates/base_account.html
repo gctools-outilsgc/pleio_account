@@ -37,16 +37,14 @@
                     <a href="{% url 'profile' %}" style="color:black;">
                         <img alt ="" src="{% show_customizations_logo %}" class="ui top aligned mini image">
                         <span class="ui huge header">
-                            {% show_customizations_title %}
+                            {% show_customizations_title as app_title %}
+                            {% blocktrans %}
+                            {{app_title}} Account
+                            {% endblocktrans %}
                         </span>
                     </a>
 
-                    {% show_language_toggle as toggle %}
-                    {% if toggle %}
-                      <div class="base-language-toggle">
-                          {% include "language.html" %}
-                      </div>
-                    {% endif %}
+
 
                     <label for="show_menu" class="account-menu__hamburger">{% include_asset "icons/hamburger.svg" %}</label>
                 </div>
@@ -134,6 +132,12 @@
                 <main id="account-main">
                     <div class="page-heading ui sticky">
                         <h1 class="ui large header">{% block page_header %}{% endblock %}</h1>
+                        {% show_language_toggle as toggle %}
+                        {% if toggle %}
+                          <div class="base-language-toggle">
+                              {% include "language.html" %}
+                          </div>
+                        {% endif %}
                     </div>
                     <div class="account-right__content">
                         {% block content %}{% endblock %}
@@ -181,6 +185,7 @@
 .page-heading h1{
     float:left;
 }
+
 #show_menu {
 display:none;
 }
