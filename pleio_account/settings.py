@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'django_otp.plugins.otp_totp',
     'two_factor',
     'oidc_provider',
-    'corsheaders'
+    'corsheaders',
+    'defender',
 ]
 
 REST_FRAMEWORK = {
@@ -68,19 +69,22 @@ REST_FRAMEWORK = {
 MIDDLEWARE = [
     'core.middleware.XRealIPMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'user_sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'core.middleware.FailedLoginMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django_otp.middleware.OTPMiddleware',
     'core.middleware.PartnerSiteMiddleware',
-    'core.middleware.DeviceIdMiddleware'
+    'core.middleware.DeviceIdMiddleware',
+
 ]
+
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',

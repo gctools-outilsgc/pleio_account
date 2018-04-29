@@ -2,6 +2,10 @@ import string
 from django.conf import settings
 from django.utils.crypto import get_random_string
 from django.utils.deprecation import MiddlewareMixin
+from django.contrib.auth import views as auth_views
+from django.utils.decorators import method_decorator
+from defender.decorators import watch_login
+
 
 VALID_KEY_CHARS = string.ascii_lowercase + string.digits
 
@@ -64,3 +68,23 @@ class XRealIPMiddleware(object):
         else:
             request.META['REMOTE_ADDR'] = real_ip
         return self.get_response(request)
+
+
+class FailedLoginMiddleware(MiddlewareMixin):
+    """ Failed login middleware """
+    patched = False
+    # Monkey-patch only once - otherwise we would be recording
+    # failed attempts multiple times!
+
+    def process_response(self, request, response):
+        if not FailedLoginMiddleware.patched:
+            try:
+                from core.class_views import PleioLoginView
+                our_decorator = watch_login()
+                watch_login_method = method_decorator(our_decorator)
+                PleioLoginView.dispatch = watch_login_method(PleioLoginView.dispatch)
+            except ImportError:
+                auth_views.login = watch_login()(auth_views.login)
+
+        FailedLoginMiddleware.patched = True
+        return response
