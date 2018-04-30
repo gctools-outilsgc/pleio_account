@@ -11,3 +11,4 @@ media/
 postgres-data/
 .idea/
 pleio_account/config.py
+venv/
