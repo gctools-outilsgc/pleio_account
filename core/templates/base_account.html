@@ -3,6 +3,7 @@
 {% load Pleio_templatetags %}
 {% load app_customization %}
 {% get_current_language as LANGUAGE_CODE %}
+{% load partner_links %}
 
 {% language request.COOKIES.lang %}
 <!DOCTYPE html>
@@ -99,17 +100,7 @@
                                     <div>{% trans "Access your various collaboration tools here:" %}</div>
                                 </div>
                             </div>
-
-                            <div class="ui secondary labeled icon menu">
-                                <a class="item" href="https://gccollab.ca/">
-                                    <img alt="GCcollab" aria-hidden="true" src="/static/images/collab_icon.png" class="app_icon" style="margin-bottom: 5px; padding-right:0;"></img>
-                                    Collab
-                                </a>
-                                <a class="item" href="https://wiki.gccollab.ca/">
-                                    <img alt="GCcollab" aria-hidden="true" src="/static/images/wiki_icon.png" class="app_icon" style="margin-bottom: 5px; padding-right:0;"></img>
-                                    Wiki
-                                </a>
-                            </div>
+                            {% partner_links %}
                         </div>
                     </li>
 
