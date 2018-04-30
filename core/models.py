@@ -298,6 +298,9 @@ class PleioPartnerSite(models.Model):
     partner_site_name = models.CharField(null=False, max_length=200)
     partner_site_logo_url = models.URLField(null=False)
 
+    def __str__(self):
+        return self.partner_site_name
+
 class AppCustomization(models.Model):
     BG_IMAGE_OPTIONS = (
         ('C', 'Cover'),
@@ -312,6 +315,7 @@ class AppCustomization(models.Model):
     app_background_options = models.CharField(max_length=1, choices=BG_IMAGE_OPTIONS)
     custom_helpdesk_link = models.CharField(max_length=100, default='', blank=True)
     display_language_toggle = models.BooleanField(default=True)
+    email_language_toggle = models.BooleanField("Display all system languages in emails", default=True)
     display_logo_title = models.BooleanField("Display Logo and Title together", default=True)
     footer_image_left = models.FileField(null=True, blank=True)
     footer_image_right = models.FileField(null=True, blank=True)

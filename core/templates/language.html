@@ -1,7 +1,13 @@
 
 {% load i18n %}
 
+{% comment %}
 <a href="{{ current_path }}" class="ui primary button compact" onclick="changeLanguage();" id='btn' title="{% trans "Change language" %}">
+        {% get_current_language as LANGUAGE_CODE %}
+        {% get_available_languages as LANGUAGES %}
+        {% for langs in LANGUAGES %}
+            <span>{{ langs.0 }}</span> </br>
+        {% endfor %}
       {% if request.COOKIES.lang == 'en'%}
         <span aria-hidden="true">FR</span>
         <span class="invisible" lang="fr">Français</span>
@@ -10,8 +16,48 @@
         <span class="invisible" lang="en">English</span>
       {% endif %}
     </a>
+{% endcomment %}
+    <div class="">
+        {% get_current_language as LANGUAGE_CODE %}
+        {% get_available_languages as LANGUAGES %}
+        {% if LANGUAGES|length < 3 %}
+            {% for langs in LANGUAGES %}
+                {% if langs.0 != LANGUAGE_CODE %}
+                    <a href="{{ current_path }}" class="ui primary button compact" onclick="changeLanguage('{{ langs.0 }}');" id='btn' title="{% trans "Change language" %}">
+                        <span>{{ langs.0|upper }}</span>
+                    </a> 
+                {% endif %}
+                
+            {% endfor %}
+        
+        {% else %}
+        <div class="ui dropdown item">
+                {{ LANGUAGE_CODE|language_name_translated }}
+              <i class="dropdown icon"></i>
+                <div class="menu" title="{% trans "Change language" %}">
+                  
+                  {% for langs in LANGUAGES %}
+                  <a href="{{ current_path }}" class="item" onclick="changeLanguage('{{ langs.0 }}');">   
+                      {{ langs.0|language_name_local }}
+                  </a>
+                  {% endfor %}
+                </div>
+          </div>
+        {% endif %}
+
+    </div>
 
 <script>
+
+function changeLanguage(lang) {
+    $.ajax({
+        type: "POST",
+        url: "{% url 'set_language' %}",
+        data: {'language': lang, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+        success: function(response) {},
+        error: function(rs, e) { console.log(e); }
+    });    
+}    
 function getCookie(cname) {
     var lang = "";
     var name = cname + "=";
@@ -30,6 +76,7 @@ function getCookie(cname) {
     return lang;
 }
 
+/*
 function changeLanguage() {
     var hostname = location.hostname;
     var length = hostname.split(".").length - 1;
@@ -40,7 +87,7 @@ function changeLanguage() {
         setCookie("lang", 'en', '', '/', domain);
     }
 }
-
+*/
 function setCookie(sName, sValue, oExpires, sPath, sDomain, bSecure) {
     var sCookie = sName + "=" + encodeURIComponent(sValue);
     if (oExpires) {
