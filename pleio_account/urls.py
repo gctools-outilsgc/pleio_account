@@ -25,7 +25,7 @@ from django.contrib import admin
 from core import views, forms
 from core.class_views import PleioLoginView, PleioSessionDeleteView, PleioSessionDeleteOtherView
 from django.views.i18n import JavaScriptCatalog
-import defender.urls
+
 
 
 
@@ -93,7 +93,6 @@ urls = [
     url(r'^oauth/v2/revoke_token$', oauth2_views.RevokeTokenView.as_view(), name='revoke-token'),
     url(r'^api/users/me$', api_views.me, name='me'),
     url(r'^admin/', admin.site.urls),
-    url(r'^admin/defender/', include('defender.urls')),
     url(r'^$', views.home, name='home'),
     url(r'^i18n/', include('django.conf.urls.i18n')),
 ]
@@ -115,7 +114,11 @@ oidc_urls = [
     ))
 ]
 
-urlpatterns = legacy_urls + urls + tf_urls + us_urls + django_urls + oidc_urls
+defender_urls = [
+    url(r'^admin/defender/', include('defender.urls')),
+]
+
+urlpatterns = legacy_urls + urls + tf_urls + us_urls + django_urls + oidc_urls + defender_urls
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

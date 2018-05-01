@@ -86,5 +86,7 @@ class FailedLoginMiddleware(MiddlewareMixin):
             except ImportError:
                 auth_views.login = watch_login()(auth_views.login)
 
-        FailedLoginMiddleware.patched = True
+            FailedLoginMiddleware.patched = True
+            return response
+
         return response

@@ -13,10 +13,6 @@ do
 done
 echo
 
-# Check for DB migrations
-echo "Checking for DB migrations"
-python manage.py makemigrations
-
 # Apply database migrations
 echo "Apply database migrations"
 python manage.py migrate
