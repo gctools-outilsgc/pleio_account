@@ -136,7 +136,7 @@ class User(AbstractBaseUser):
             return None
 
     def check_users_previous_logins(self, request):
-        send_suspicious_behavior_warnings = self.receives_newsletter
+        send_suspicious_behavior_warnings = settings.SEND_SUSPICIOUS_BEHAVIOR_WARNINGS
         result = True
 
         try:
