@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
             name='EmailRegExValidator',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('regex', models.CharField(max_length=100)),
+                ('regex', models.CharField(max_length=100, verbose_name='Regex/domain')),
                 ('group', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='emailvalidator.EmailDomainGroup')),
             ],
         ),
