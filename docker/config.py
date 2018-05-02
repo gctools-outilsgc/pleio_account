@@ -46,3 +46,6 @@ DEFENDER_COOLOFF_TIME = 600
 DEFENDER_LOCKOUT_URL = 'https://i1.wp.com/idrathertalk.com/wp-content/uploads/2016/08/Blocked-Out-Locked-Out-with-eviction-notice-2017-logo.jpg'
 DEFENDER_ACCESS_ATTEMPT_EXPIRATION =24
 DEFENDER_USERNAME_FORM_FIELD = 'auth-username'
+
+SESSION_COOKIE_SECURE = os.getenv('SECURE_SESSION', 'True')
+SESSION_COOKIE_HTTPONLY = True
