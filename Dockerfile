@@ -115,7 +115,8 @@ RUN apk --no-cache add \
       pcre \
       postgresql \
       python3 \
-      zlib
+      zlib \
+      gettext
 
 RUN addgroup -S redis && adduser -S -G redis redis
 RUN mkdir /data && chown redis:redis /data
