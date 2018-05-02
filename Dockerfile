@@ -56,7 +56,8 @@ RUN apk --no-cache add \
       pcre \
       postgresql \
       python3 \
-      zlib
+      zlib \
+      gettext
 
 COPY --from=0 /stage /
 COPY --from=1 /app/env /app/env
