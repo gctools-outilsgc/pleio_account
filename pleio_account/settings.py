@@ -110,7 +110,7 @@ WSGI_APPLICATION = 'pleio_account.wsgi.application'
 
 
 SESSION_ENGINE = 'user_sessions.backends.db'
-SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = os.getenv('SECURE_SESSION', 'True')
 SESSION_COOKIE_HTTPONLY = True
 
 # Password validation

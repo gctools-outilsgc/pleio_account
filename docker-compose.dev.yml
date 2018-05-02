@@ -9,6 +9,7 @@ services:
     build: .
     environment:
       - DEBUG=True
+      - SECURE_SESSION=False
       - ALLOWED_HOST=*
       - SECRET_KEY=qWxPJrZCLeHZraNTWjEKHdJJxJyho8
       - SEND_SUSPICIOUS_BEHAVIOR_WARNINGS=True
