@@ -24,8 +24,6 @@ TIME_ZONE = 'America/Toronto'
 
 STATIC_ROOT = '/app/static'
 
-SEND_SUSPICIOUS_BEHAVIOR_WARNINGS = os.getenv('SEND_SUSPICIOUS_BEHAVIOR_WARNINGS')
-
 DEFAULT_FROM_EMAIL = os.getenv('FROM_EMAIL')
 
 EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
