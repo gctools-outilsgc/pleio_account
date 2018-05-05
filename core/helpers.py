@@ -30,3 +30,16 @@ def verify_captcha_response(response):
     except:
         print('False')
         return False
+
+
+def str_to_bool(s):
+    if s == 'True':
+        return True
+    elif s == 'False':
+        return False
+    elif s:
+        return True
+    elif not s:
+        return False
+    else:
+        return None
