@@ -391,7 +391,7 @@ msgstr ""
 #: core/templates/login.html:8 core/templates/login.html:20
 #: core/templates/login.html:100
 msgid "Sign in"
-msgstr "Inloggen2"
+msgstr "Inloggen"
 
 #: core/templates/login.html:20 core/templates/login.html:100
 #, fuzzy
