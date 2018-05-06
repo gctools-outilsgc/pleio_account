@@ -38,10 +38,8 @@
                     <a href="{% url 'profile' %}" style="color:black;">
                         <img alt ="" src="{% show_customizations_logo %}" class="ui top aligned mini image">
                         <span class="ui huge header">
-                            {% show_customizations_title as app_title %}
-                            {% blocktrans %}
-                            {{app_title}} Account
-                            {% endblocktrans %}
+                            {% show_customizations_title as app_title2 %}
+                            {% blocktrans with app_title=app_title2 %}{{ app_title }} Account{% endblocktrans %}
                         </span>
                     </a>
 

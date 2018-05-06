@@ -54,7 +54,9 @@ function changeLanguage(lang) {
         type: "POST",
         url: "{% url 'set_language' %}",
         data: {'language': lang, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
-        success: function(response) {},
+        success: function(response) {
+            setLangCookie(lang);
+        },
         error: function(rs, e) { console.log(e); }
     });    
 }    
@@ -76,18 +78,13 @@ function getCookie(cname) {
     return lang;
 }
 
-/*
-function changeLanguage() {
+function setLangCookie(lang) {
     var hostname = location.hostname;
     var length = hostname.split(".").length - 1;
     var domain = (length >= 2) ? '.' + hostname.split('.').slice(-2).join('.') : hostname;
-    if (getCookie('lang') == 'en') {
-        setCookie("lang", 'fr', '', '/', domain);
-    } else {
-        setCookie("lang", 'en', '', '/', domain);
-    }
+    setCookie("lang", lang, '', '/', domain);
 }
-*/
+
 function setCookie(sName, sValue, oExpires, sPath, sDomain, bSecure) {
     var sCookie = sName + "=" + encodeURIComponent(sValue);
     if (oExpires) {
