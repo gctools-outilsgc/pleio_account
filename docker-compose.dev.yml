@@ -26,3 +26,5 @@ services:
       - ./core:/app/core
       - ./emailvalidator:/app/emailvalidator
       - ./locale:/app/locale
+  cache:
+    image: redis:alpine

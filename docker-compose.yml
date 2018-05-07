@@ -21,3 +21,6 @@ services:
       - db
     volumes:
       - ./media:/app/media
+  cache:
+    image: redis:alpine
+
