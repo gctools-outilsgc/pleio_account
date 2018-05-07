@@ -15,11 +15,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='EmailRegExValidator',
             name='name',
-            field=models.CharField(max_length=255, verbose_name='Name'),
+            field=models.CharField(blank=True, null=True, max_length=255),
         ),
         migrations.AddField(
             model_name='EmailRegExValidator',
             name='allow_all',
-            field=models.BooleanField(default=False, verbose_name='Allow all from domain'),
+            field=models.BooleanField(blank=True, null=True, default=False),
         ),
     ]
