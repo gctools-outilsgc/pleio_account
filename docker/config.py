@@ -2,7 +2,7 @@ import os
 from core.helpers import str_to_bool
 
 SECRET_KEY = os.getenv('SECRET_KEY')
-DEBUG = os.getenv('DEBUG')
+DEBUG = str_to_bool(os.getenv('DEBUG'))
 
 ALLOWED_HOSTS = [os.getenv('ALLOWED_HOST')]
 
