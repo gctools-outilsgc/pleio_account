@@ -27,6 +27,8 @@ from core.class_views import PleioLoginView, PleioSessionDeleteView, PleioSessio
 from django.views.i18n import JavaScriptCatalog
 
 
+
+
 class DecoratedURLPattern(RegexURLPattern):
     def resolve(self, *args, **kwargs):
         result = super(DecoratedURLPattern, self).resolve(*args, **kwargs)
@@ -92,7 +94,7 @@ urls = [
     url(r'^api/users/me$', api_views.me, name='me'),
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.home, name='home'),
-    url(r'^i18n/', include('django.conf.urls.i18n'))
+    url(r'^i18n/', include('django.conf.urls.i18n')),
 ]
 
 tf_urls = [
@@ -112,7 +114,11 @@ oidc_urls = [
     ))
 ]
 
-urlpatterns = legacy_urls + urls + tf_urls + us_urls + django_urls + oidc_urls
+defender_urls = [
+    url(r'^admin/defender/', include('defender.urls')),
+]
+
+urlpatterns = legacy_urls + urls + tf_urls + us_urls + django_urls + oidc_urls + defender_urls
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
