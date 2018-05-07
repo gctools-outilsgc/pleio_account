@@ -26,7 +26,5 @@ echo "Starting Redis Cache Server"
 redis-server --daemonize yes
 
 # Start server
-echo "Starting web server"
-uwsgi --http :8000 --module pleio_account.wsgi --workers 5 --static-map /static=/app/static --static-map /media=/app/media
-
-
+echo "Starting server"
+uwsgi --http :8000 --module pleio_account.wsgi --static-map /static=/app/static --static-map /media=/app/media

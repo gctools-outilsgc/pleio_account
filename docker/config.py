@@ -43,6 +43,7 @@ DEFENDER_BEHIND_REVERSE_PROXY = False
 DEFENDER_DISABLE_IP_LOCKOUT = True
 DEFENDER_COOLOFF_TIME = 600
 DEFENDER_LOCKOUT_URL = 'https://i1.wp.com/idrathertalk.com/wp-content/uploads/2016/08/Blocked-Out-Locked-Out-with-eviction-notice-2017-logo.jpg'
+DEFENDER_REDIS_URL = 'redis://cache:6379/0'
 DEFENDER_ACCESS_ATTEMPT_EXPIRATION =24
 DEFENDER_USERNAME_FORM_FIELD = 'auth-username'
 
