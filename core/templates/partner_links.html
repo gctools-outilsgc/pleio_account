@@ -1,0 +1,8 @@
+<div class="ui secondary labeled icon menu" style="flex-wrap:wrap;">
+    {% for partner in partners %}
+    <a class="item" href="{{partner.partner_site_url}}">
+        <img alt="{{partner.partner_site_name}}" aria-hidden="true" src="{{partner.partner_site_logo_url}}" class="app_icon" style="margin-bottom: 5px; padding-right:0;"></img>
+        {{partner.partner_site_name}}
+    </a>
+    {% endfor %}
+</div>

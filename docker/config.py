@@ -1,7 +1,8 @@
 import os
+from core.helpers import str_to_bool
 
 SECRET_KEY = os.getenv('SECRET_KEY')
-DEBUG = os.getenv('DEBUG')
+DEBUG = str_to_bool(os.getenv('DEBUG'))
 
 ALLOWED_HOSTS = [os.getenv('ALLOWED_HOST')]
 
@@ -23,11 +24,9 @@ TIME_ZONE = 'America/Toronto'
 
 STATIC_ROOT = '/app/static'
 
-SEND_SUSPICIOUS_BEHAVIOR_WARNINGS = os.getenv('SEND_SUSPICIOUS_BEHAVIOR_WARNINGS')
-
 DEFAULT_FROM_EMAIL = os.getenv('FROM_EMAIL')
 
-#EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 EMAIL_HOST = os.getenv('EMAIL_HOST')
 EMAIL_PORT = os.getenv('EMAIL_PORT')
 EMAIL_HOST_USER = os.getenv('EMAIL_USER')
@@ -37,3 +36,7 @@ EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL')
 
 SITE_URL = os.getenv('SITE_URL', None)
 CORS_ORIGIN_WHITELIST = os.getenv('CORS_ORIGIN_WHITELIST', '').split(',')
+
+SESSION_COOKIE_SECURE = str_to_bool(os.getenv('SECURE_SESSION', True))
+SESSION_COOKIE_HTTPONLY = True
+

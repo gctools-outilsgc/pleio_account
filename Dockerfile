@@ -39,9 +39,9 @@ RUN /app/env/bin/pip install -r requirements.txt
 # Stage 3 - Create new layer from multiple steps
 FROM alpine:3.7
 RUN mkdir /stage
+COPY . /stage/app
 COPY ./docker/config.py /stage/app/pleio_account/config.py
 COPY ./docker/start.sh /stage/start.sh
-COPY . /stage/app
 RUN rm -rf /stage/app/assets
 RUN chmod +x /stage/start.sh
 
@@ -56,7 +56,8 @@ RUN apk --no-cache add \
       pcre \
       postgresql \
       python3 \
-      zlib
+      zlib \
+      gettext
 
 COPY --from=0 /stage /
 COPY --from=1 /app/env /app/env
