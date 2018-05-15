@@ -188,6 +188,10 @@ class RegisterForm(forms.Form):
                 code='captcha_mismatch',
             )
 
+    class Meta:
+        model = User
+        fields = ('name', 'email', 'password1', 'password2', 'accepted_terms', 'recieves_newsletter')
+
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = User

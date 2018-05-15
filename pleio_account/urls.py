@@ -112,7 +112,12 @@ oidc_urls = [
     ))
 ]
 
+
 urlpatterns = legacy_urls + urls + tf_urls + us_urls + django_urls + oidc_urls
+
+if 'occupationfields' in settings.INSTALLED_APPS:
+    gc_urls = [ url('', include('occupationfields.urls')) ]
+    urlpatterns = gc_urls + urlpatterns
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,84 @@
+{% extends "custom_register.html" %}
+{% load i18n %}
+{% load occupationfields_tags %}
+{% get_current_language as LANGUAGE_CODE %}
+
+{% block additional_fields %}
+
+  {% get_user_types as user_types %}
+  <div class="field">
+      <label for="id_occupation">{% trans "Occupation" %}</label>
+      <select name="occupation" id="id_occupation">
+        {% for key, value in user_types %}
+          <option value="{{ key }}">{{ value }}</option>
+        {% endfor %}
+      </select>
+  </div>
+
+  <div class="field">
+    <label for="academic-institution">{% trans "Institution" %}</label>
+    <select name="academic-institution" id="academic-institution">
+      <option value="None">...</option>
+      <option value="university">{% trans "University" %}</option>
+      <option value="college">{% trans "College" %}</option>
+    </select>
+
+    <label for="student-institution">{% trans "Institution" %}</label>
+    <select name="student-institution" id="student-institution">
+      <option value="None">...</option>
+      <option value="university">{% trans "University" %}</option>
+      <option value="college">{% trans "College" %}</option>
+      <option value="high school">{% trans "High School" %}</option>
+    </select>
+
+    {% get_provinces as provinces %}
+    <label for="id_province">{% trans "Province/Territory" %}</label>
+    <select name="province" id="id_province">
+      {% for key, value in provinces %}
+        <option value="{{ key }}">{{ value }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="field">
+      <label for="university">{% trans "University" %}</label>
+      <select name="university" id="university">
+        <option value="None">...</option>
+      </select>
+
+      <label for="college">{% trans "College" %}</label>
+      <select name="college" id="college">
+        <option value="None">...</option>
+      </select>
+      {{lang}}
+      <label for="department">{% trans "Organization" %}</label>
+      <select name="department" id="department">
+        <option value="None">...</option>
+        {% for k, v in fields.items %}
+          <option value="{{ k }}">{{ v }}</option>
+        {% endfor %}
+      </select>
+
+      <label for="ministry">{% trans "Ministry" %}</label>
+      <select name="ministry" id="ministry">
+        <option value="None">...</option>
+      </select>
+
+      <label for="id_highschool">{% trans "High School" %}</label>
+      <input type="text" name="highschool" id="id_highschool">
+
+      <label for="id_organization">{% trans "Organization" %}</label>
+      <input type="text" name="organization" id="id_organization">
+
+      <label for="other">{% trans "Organization" %}</label>
+      <select name="other" id="other">
+        <option value="None">...</option>
+      </select>
+  </div>
+  {% for k, v in fields.items %}
+    {{k}}{{v}}<br>
+  {% endfor %}
+  {{ fields }}
+  <script>console.log('{{ fields }}')</script>
+
+{% endblock %}
