@@ -4,6 +4,8 @@ import sys
 SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG')
 
+SESSION_COOKIE_SECURE = os.getenv('SESSION_COOKIE_SECURE')
+
 ALLOWED_HOSTS = [os.getenv('ALLOWED_HOST')]
 
 DATABASES = {
