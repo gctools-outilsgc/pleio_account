@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 from django.utils.translation import ugettext_lazy as _
 import os
+from concierge.config import INSTALLED_APPS_PREFIX
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,16 +21,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
-WEBPACK_LOADER = {
-    'DEFAULT': {
-        'BUNDLE_DIR_NAME': 'bundles/',
-        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
-    }
-}
-
 # Application definition
 
-INSTALLED_APPS = [
+INSTALLED_APPS = INSTALLED_APPS_PREFIX + [
     'core',
     'emailvalidator',
     'api',
@@ -158,12 +152,7 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'assets/'),
-]
-
-GEOIP_PATH = os.path.join(BASE_DIR, 'assets/geopip2/')
-#GEOS_LIBRARY_PATH = os.path.join(BASE_DIR, 'bin/geos')
+GEOIP_PATH = os.path.join(BASE_DIR, 'core/static/geopip2/')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')

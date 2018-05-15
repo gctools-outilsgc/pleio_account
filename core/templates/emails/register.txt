@@ -1,8 +1,0 @@
-{% load i18n %}
-{% load absolute_url %}
-{% trans "Dear" %} {{ user.name }},
-
-{% trans "Please activate your account by following this link" %}:<br />
-
-{% url 'register_activate' activation_token as activation_token_url %}
-{% absolute_url activation_token_url %}

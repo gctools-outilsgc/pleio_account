@@ -79,7 +79,6 @@ class PleioLoginView(TemplateView):
             response = self.post_backuptoken(request, *args, **kwargs)
         else:
             response = self.post_login(request, *args, **kwargs)
-
         return response
 
     def post_login(self, request, *args, **kwargs):

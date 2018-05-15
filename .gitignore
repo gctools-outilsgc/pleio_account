@@ -4,9 +4,6 @@ __pycache__
 db.sqlite3
 node_modules
 npm-debug.log
-assets/bundles
-webpack-stats.json
-webpack-stats-prod.json
 media/
 .idea/
 concierge/config.py
