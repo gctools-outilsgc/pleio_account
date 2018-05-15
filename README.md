@@ -48,8 +48,7 @@ Set your database config like:
 Install a theme and follow any instructions provided by the theme to complete
 the installation.
 
-    - [Pleio](https://github.com/Pleio/concierge-theme-pleio)
-
+- [Pleio](https://github.com/Pleio/concierge-theme-pleio)
 
 Create a database using
 
