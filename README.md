@@ -49,6 +49,7 @@ Install a theme and follow any instructions provided by the theme to complete
 the installation.
 
 - [Pleio](https://github.com/Pleio/concierge-theme-pleio)
+- [Government of Canada](https://github.com/gctools-outilsgc/concierge-theme-gc)
 
 Create a database using
 
