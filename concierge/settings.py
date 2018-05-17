@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 from django.utils.translation import ugettext_lazy as _
 import os
-from concierge.config import INSTALLED_APPS_PREFIX
+from concierge.config import INSTALLED_APPS_PREFIX, AUTH_PASSWORD_VALIDATORS_POSTFIX
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -120,7 +120,9 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
-]
+] + AUTH_PASSWORD_VALIDATORS_POSTFIX
+
+
 
 AUTH_USER_MODEL = 'core.User'
 

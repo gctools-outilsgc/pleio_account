@@ -17,6 +17,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Include apps required before any other apps, like themes.
 INSTALLED_APPS_PREFIX = [
+    # 'concierge_theme_gc'
+    # 'concierge_theme_pleio'
 ]
 
 # Quick-start development settings - unsuitable for production
@@ -71,3 +73,23 @@ RECAPTCHA_NUMBER_INVALID_LOGINS = 10
 # With the following test keys, you will always get No CAPTCHA and all verification requests will pass.
 GOOGLE_RECAPTCHA_SITE_KEY = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
 GOOGLE_RECAPTCHA_SECRET_KEY = '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe'
+
+# If you would like to limit the languages available on the system, please adjust these settings accordingly.
+# from django.utils.translation import ugettext_lazy as _
+#
+# LANGUAGES = [
+#     ('en', _('English')),
+#     ('nl', _('Dutch')),
+#     ('fr', _('French'))
+# ]
+
+AUTH_PASSWORD_VALIDATORS_POSTFIX = []
+
+# Depending on your password regime you would maybe like to strengthen your password requirements.
+# This configuration requires 1 number, 1 lowercase letter, 1 uppercase letter and 1 special character
+#
+# AUTH_PASSWORD_VALIDATORS_POSTFIX = [
+#    {
+#        'NAME': 'concierge.password_validation.PasswordValidator',
+#    },
+# ]

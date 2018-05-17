@@ -1,10 +1,13 @@
 import os
 import sys
+from core.helpers import str_to_bool
 
 SECRET_KEY = os.getenv('SECRET_KEY')
-DEBUG = os.getenv('DEBUG')
+DEBUG = str_to_bool(os.getenv('DEBUG'))
 
-SESSION_COOKIE_SECURE = os.getenv('SESSION_COOKIE_SECURE')
+SESSION_COOKIE_SECURE = str_to_bool(os.getenv('SESSION_COOKIE_SECURE'))
+
+INSTALLED_APPS_PREFIX = os.getenv('INSTALLED_APPS_PREFIX', '').split(',')
 
 ALLOWED_HOSTS = [os.getenv('ALLOWED_HOST')]
 
@@ -54,3 +57,5 @@ CORS_ORIGIN_WHITELIST = os.getenv('CORS_ORIGIN_WHITELIST', '').split(',')
 
 GOOGLE_RECAPTCHA_SITE_KEY = os.getenv('GOOGLE_RECAPTCHA_SITE_KEY')
 GOOGLE_RECAPTCHA_SECRET_KEY = os.getenv('GOOGLE_RECAPTCHA_SECRET_KEY')
+
+AUTH_PASSWORD_VALIDATORS_POSTFIX = []

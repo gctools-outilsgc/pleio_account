@@ -6,4 +6,4 @@ docker-compose.yml
 kubernetes
 concierge/config.py
 .git
-
+postgres-data/

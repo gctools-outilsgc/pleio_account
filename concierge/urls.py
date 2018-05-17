@@ -109,6 +109,7 @@ oidc_urls = [
 ]
 django_urls = [
     url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+    url(r'^i18n/', include('django.conf.urls.i18n'))
 ]
 
 urlpatterns = legacy_urls + urls + tf_urls + us_urls + oidc_urls + django_urls

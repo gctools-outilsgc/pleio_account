@@ -8,3 +8,4 @@ media/
 .idea/
 concierge/config.py
 .vscode/
+postgres-data/

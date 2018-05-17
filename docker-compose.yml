@@ -11,6 +11,7 @@ services:
       - DEBUG=True
       - ALLOWED_HOST=*
       - SECRET_KEY=qWxPJrZCLeHZraNTWjEKHdJJxJyho8
+      - INSTALLED_APPS_PREFIX=generic-theme
       - DB_HOST=db
       - DB_USER=postgres
       - DB_PASSWORD=postgres

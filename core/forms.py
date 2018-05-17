@@ -3,16 +3,19 @@ from django.contrib.auth import password_validation
 from django.conf import settings
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import authenticate 
+from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from two_factor.forms import AuthenticationTokenForm, TOTPDeviceForm
 from two_factor.utils import totp_digits, default_device
 from emailvalidator.validator import is_email_valid
+from .helpers import verify_captcha_response
 from .models import User, EventLog
 from django_otp.forms import OTPTokenForm
 from django.forms import Form
 from django.conf import settings
-import requests
+from urllib.parse import urlencode
+from urllib.request import urlopen
+from django.conf import settings
 
 class EmailField(forms.EmailField):
     def clean(self, value):
@@ -21,17 +24,18 @@ class EmailField(forms.EmailField):
             raise forms.ValidationError(
                 _("Your email address is not allowed.")
             )
-        try:
-            User.objects.get(email=value, is_active=True)
-            raise forms.ValidationError("This e-mail is already registered.")
-        except User.DoesNotExist:
-            return value
 
+        found_user = User.objects.filter(email__iexact=value)
+        if found_user.exists():
+            raise forms.ValidationError("This e-mail is already registered.")
+
+        return value
 
 class RegisterForm(forms.Form):
     error_messages = {
         'password_mismatch': _("The two password fields didn't match."),
         'captcha_mismatch': 'captcha_mismatch',
+        'unique_email': _('This email is already in use.')
     }
 
     name = forms.CharField(required=True, max_length=100, widget=forms.TextInput(attrs={'autofocus': 'autofocus'}))
@@ -62,7 +66,7 @@ class RegisterForm(forms.Form):
 
     def clean(self):
         super(RegisterForm, self).clean()
-        if not PleioAuthenticationForm.verify_captcha_response(None, self.cleaned_data.get('g-recaptcha-response')):
+        if not verify_captcha_response(self.cleaned_data.get('g-recaptcha-response')):
             raise forms.ValidationError(
                 self.error_messages['captcha_mismatch'],
                 code='captcha_mismatch',
@@ -72,7 +76,7 @@ class RegisterForm(forms.Form):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('name', 'email', 'avatar')
+        fields = ('name', 'email', 'avatar', 'receives_newsletter')
 
     error_messages = {
         'duplicate_email': _("This email is already registered."),
@@ -134,7 +138,7 @@ class PleioAuthenticationForm(AuthenticationForm):
         if self.fields.get('g-recaptcha-response'):
             g_recaptcha_response = self.cleaned_data.get('g-recaptcha-response')
 
-            if not self.verify_captcha_response(g_recaptcha_response):
+            if not verify_captcha_response(g_recaptcha_response):
                 raise forms.ValidationError(
                     self.error_messages['captcha_mismatch'],
                     code='captcha_mismatch',
@@ -163,26 +167,6 @@ class PleioAuthenticationForm(AuthenticationForm):
                 self.confirm_login_allowed(self.user_cache)
 
         return self.cleaned_data
-
-
-    def verify_captcha_response(self, response):
-        try:
-            data = {
-                'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
-                'response': response
-            }
-        except AttributeError:
-            return True
-
-        if not response:
-            return False
-
-        try:
-            result = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data).json()
-            return result['success']
-
-        except:
-            return False
 
 class PleioAuthenticationTokenForm(OTPTokenForm):
     otp_token = forms.IntegerField(label=_("Token"), widget=forms.TextInput)
