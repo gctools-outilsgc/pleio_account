@@ -10,41 +10,75 @@ def userinfo(claims, user):
     """
     Populate claims dict.
     """
+    retrys = 3
+
     claims['name'] = user.name
     claims['email'] = user.email
 
-    # Get rest of information from Profile as a Service
-    query = {'query': 'query{profiles(gcID: "' + str(user.id) + '"){name, email, avatar, mobilePhone, officePhone,' +
-                      'address{streetAddress,city, province, postalCode, country}}}'}
-
-    response = requests.post(settings.GRAPHQL_ENDPOINT, headers={'Authorization': 'Token ' + settings.GRAPHQL_TOKEN},
-                             data=query)
-    if not response.status_code == requests.codes.ok:
-        raise Exception('Error getting user data / Server Response ' + str(response.status_code))
+    if settings.GRAPHQL_TRIGGERS:
+        claimsfromprofiles(retrys, claims)
     else:
-        response = response.json()
+        return claims
+
+
+def queryprofile(retry):
+    success = False
+    attempt = 0
+
+    # Get rest of information from Profile as a Service
+    query = {
+        'query': 'query{profiles(gcID: "' + str(user.id) + '"){name, email, avatar, mobilePhone, officePhone,' +
+                 'address{streetAddress,city, province, postalCode, country}}}'}
+
+    while not success and attempt < retry:
+        response = requests.post(settings.GRAPHQL_ENDPOINT,
+                                 headers={'Authorization': 'Token ' + settings.GRAPHQL_TOKEN}, data=query)
+
+        if not response.status_code == requests.codes.ok:
+            attempt = attempt + 1
+        else:
+            success = True
+
+    if not success:
+        return None
+
+    response = response.json()
+
+    return response
+
+
+def claimsfromprofiles(retry, claims):
+    response = queryprofile(retry)
+
+    if response is None:
+        return claims
+
+    try:
+        profileclaims = claims
         response_address = response['data']['profiles'][0].get('address')
 
-        claims['picture'] = checkvalue(response['data']['profiles'][0].get('avatar'))
+        profileclaims['picture'] = checkvalue(response['data']['profiles'][0].get('avatar'))
         if response['data']['profiles'][0].get('mobilePhone') is not None:
-            claims['phone_number'] = checkvalue(response['data']['profiles'][0].get('mobilePhone'))
+            profileclaims['phone_number'] = checkvalue(response['data']['profiles'][0].get('mobilePhone'))
         else:
-            claims['phone_number'] = checkvalue(response['data']['profiles'][0].get('officePhone'))
+            profileclaims['phone_number'] = checkvalue(response['data']['profiles'][0].get('officePhone'))
 
         if response_address is not None:
 
             if 'streetAddress' in response_address:
-                claims['address']['street_address'] = checkvalue(response_address.get('streetAddress'))
+                profileclaims['address']['street_address'] = checkvalue(response_address.get('streetAddress'))
             if 'city' in response_address:
-                claims['address']['locality'] = checkvalue(response_address.get('city'))
+                profileclaims['address']['locality'] = checkvalue(response_address.get('city'))
             if 'province' in response_address:
-                claims['address']['region'] = checkvalue(response_address.get('province'))
+                profileclaims['address']['region'] = checkvalue(response_address.get('province'))
             if 'postalCode' in response_address:
-                claims['address']['postal_code'] = checkvalue(response_address.get('postalCode'))
+                profileclaims['address']['postal_code'] = checkvalue(response_address.get('postalCode'))
             if 'country' in response_address:
-                claims['address']['country'] = checkvalue(response_address.get('country'))
+                profileclaims['address']['country'] = checkvalue(response_address.get('country'))
+    except Exception:
+        return claims
 
-    return claims
+    return profileclaims
 
 
 def checkvalue(stringvalue):
@@ -55,7 +89,6 @@ def checkvalue(stringvalue):
 
 
 class CustomScopeClaims(ScopeClaims):
-
     info_modify_profile = (
         _('Profile Modification'),
         _('Ability to view and modify your profile information'),
@@ -89,4 +122,3 @@ class CustomScopeClaims(ScopeClaims):
         }
 
         return dic
-
