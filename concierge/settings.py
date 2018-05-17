@@ -22,7 +22,8 @@ INSTALLED_APPS = LOCAL_INSTALLED_APPS + [
     'django_otp.plugins.otp_totp',
     'two_factor',
     'oidc_provider',
-    'corsheaders'
+    'corsheaders',
+    'saml'
 ]
 
 REST_FRAMEWORK = {

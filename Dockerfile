@@ -5,11 +5,18 @@ RUN apk --no-cache add \
     jpeg-dev \
     musl-dev \
     pcre-dev \
+    libxml2-dev \
+    xmlsec-dev \
+    libxslt-dev \
+    pkgconfig \
     linux-headers \
     postgresql-dev \
     python3 \
     python3-dev \
-    zlib-dev && \
+    mariadb-client \
+    mariadb-dev \
+    zlib-dev \
+    libffi-dev && \
   pip3 install virtualenv && \
   virtualenv /app/env
 
@@ -33,9 +40,14 @@ RUN apk --no-cache add \
       mailcap \
       jpeg \
       musl \
+      libxml2 \
+      libxslt \
+      xmlsec \
       pcre \
       postgresql \
       python3 \
+      mariadb-client \
+      mariadb-client-libs \
       zlib
 
 COPY --from=0 /app/env /app/env
