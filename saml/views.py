@@ -4,8 +4,7 @@ from django.core import signing
 from django.contrib.auth import authenticate, update_session_auth_hash
 from django.contrib import messages
 from django.db import IntegrityError
-from django.http import (HttpResponse, HttpResponseRedirect,
-                         HttpResponseServerError, HttpRequest)
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseServerError, HttpRequest, JsonResponse
 from django.utils.http import is_safe_url
 from django.template import RequestContext
 from django.utils.translation import gettext, gettext_lazy as _

@@ -3,7 +3,6 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from .forms import RegisterForm, UserProfileForm, PleioTOTPDeviceForm, ChangePasswordForm, DeleteAccountForm, LegalTextForm
 from .models import User, ResizedAvatars, PreviousLogins, PleioLegalText
-from django.http import JsonResponse
 from django.urls import reverse
 from base64 import b32encode
 from binascii import unhexlify
