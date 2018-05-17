@@ -1,9 +1,7 @@
-node_modules
-assets/bundles
+.git
+concierge/config.py
 db.sqlite3
 Dockerfile
 docker-compose.yml
-kubernetes
-concierge/config.py
-.git
-postgres-data/
+static/*
+media/*
