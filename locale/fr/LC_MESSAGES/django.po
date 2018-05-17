@@ -50,6 +50,14 @@ msgstr "Jeton"
 msgid "The password is invalid."
 msgstr "Le mot de passe est invalide"
 
+#: core/forms.py:210
+msgid "Please enter your OTP token."
+msgstr ""
+
+#: core/forms.py:231
+msgid "The password is invalid."
+msgstr ""
+
 #: core/login_session_helpers.py:9
 msgid "Chrome"
 msgstr ""
@@ -899,13 +907,14 @@ msgstr ""
 "Cela compromet la sécurité de votre compte, êtes-vous certain de vouloir "
 "continuer?"
 
+#: core/templates/security_pages/two_factor_authorization.html:4
 #: core/templates/tf_profile.html:6
 #, fuzzy
 #| msgid "Two-factor authentication"
 msgid "Two-Factor Authentication"
 msgstr "Authentification à deux facteurs"
 
-#: core/templates/tf_profile.html:13
+#: core/templates/security_pages/two_factor_authorization.html:13
 msgid ""
 "If you don't have any device with you, you can access\n"
 "                your account using backup tokens."
@@ -934,6 +943,7 @@ msgid_plural ""
 msgstr[0] "Il vous reste %(counter)s jetons de sauvegarde."
 msgstr[1] ""
 
+#: core/templates/security_pages/two_factor_authorization.html:22
 #: core/templates/tf_profile.html:22
 #, fuzzy
 #| msgid "Show codes"

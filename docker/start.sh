@@ -23,4 +23,4 @@ django-admin compilemessages
 
 # Start server
 echo "Starting server"
-uwsgi --http :8000 --module pleio_account.wsgi --static-map /static=/app/static --static-map /media=/app/media
+uwsgi --http :8000 --module concierge.wsgi --static-map /static=/app/static --static-map /media=/app/media

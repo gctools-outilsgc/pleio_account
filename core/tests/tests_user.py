@@ -12,6 +12,7 @@ from core.middleware import DeviceIdMiddleware
 class UserTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(name="John", email="john@user.com", password="GkCyKt6iWJVi")
+
         self.superuser = User.objects.create_superuser(name="John", email="john@superuser.com", password="LZwHZucJj9JD")
 
         self.factory = RequestFactory()
@@ -19,7 +20,7 @@ class UserTestCase(TestCase):
     def test_generated_username(self):
         """ Make sure a correct unique username is generated for each user """
         self.assertEqual(self.user.username, "john")
-        self.assertEqual(self.superuser.username, "john-1")
+        self.assertEqual(self.superuser.username, "john1")
 
     def test_normal_user_is_inactive_when_created(self):
         """ Make sure a (normal) user is in inactive state when being created """
@@ -36,6 +37,25 @@ class UserTestCase(TestCase):
         self.assertEqual(invalid_login, None)
         self.assertEqual(valid_login, self.superuser)
 
+    def test_send_activation_token(self):
+        """ Test sending an email after user has registered"""
+        self.user.send_activation_token()
+        self.assertEqual(len(mail.outbox), 1)# An email has been sent
+        mail.outbox = []# Empty the test outbox
+
+    def test_send_change_email_activation_token(self):
+        """ Test sending an email after user has changed his email address"""
+        self.user.new_email="newjohn@user.com"
+        self.user.send_change_email_activation_token()
+        self.assertEqual(len(mail.outbox), 1)# An email has been sent
+        mail.outbox = []# Empty the test outbox
+
+    def test_send_set_password_activation_token(self):
+        """ Test sending an email after user has required a password"""
+        self.user.send_set_password_activation_token()
+        self.assertEqual(len(mail.outbox), 1)# An email has been sent
+        mail.outbox = []# Empty the test outbox
+
     def test_account_activation(self):
         """ Test an account can be activated and login by using the activation token """
         request = self.factory.get("/")
@@ -51,4 +71,3 @@ class UserTestCase(TestCase):
 
         self.assertIs(self.user.is_active, True)
         self.assertEqual(request.user, self.user)
-

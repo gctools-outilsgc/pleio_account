@@ -1,6 +1,7 @@
 from django.urls import reverse_lazy
-from .forms import PleioAuthenticationTokenForm, PleioAuthenticationForm, LabelledLoginForm
-from .models import User, PleioPartnerSite
+from .forms import PleioAuthenticationTokenForm, PleioAuthenticationForm, PleioBackupTokenForm
+from .models import User, PleioPartnerSite, EventLog
+from saml.models import IdentityProvider
 from two_factor.forms import TOTPDeviceForm, BackupTokenForm
 from two_factor.views.core import LoginView, SetupView, BackupTokensView
 from two_factor.views.profile import ProfileView
@@ -8,33 +9,210 @@ from user_sessions.views import SessionListView, SessionDeleteOtherView, Session
 from django_otp.plugins.otp_static.models import StaticToken
 from django.template.response import TemplateResponse
 from django_otp import devices_for_user
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 from django.utils.timezone import now
-from django.contrib.auth.forms import AuthenticationForm
+from django.utils.http import is_safe_url, urlsafe_base64_decode
+from django.conf import settings
+from django.contrib.auth.forms import AuthenticationForm, UsernameField
+from django.contrib import messages
+from django.core.exceptions import ValidationError
+from django.views.generic import TemplateView
+from django.contrib.auth import login as auth_login
+from django.utils.translation import gettext, gettext_lazy as _
+from two_factor.utils import default_device
+import django_otp
+from urllib.parse import urlparse, parse_qs
+from saml import views as saml_views
 
-class PleioLoginView(LoginView):
-
-    template_name = 'login.html'
-
-    form_list = (
-        #('auth', PleioAuthenticationForm),
-        #('auth', AuthenticationForm),
-        ('auth', LabelledLoginForm),
-        ('token', PleioAuthenticationTokenForm),
-        ('backup', BackupTokenForm),
-    )
+class PleioLoginView(TemplateView):
 
     def get_context_data(self, **kwargs):
-
         context = super(PleioLoginView, self).get_context_data(**kwargs)
         next = self.request.GET.get('next')
         if next:
             context['next'] = next
-
+            self.request.session['next'] = next
+        
         self.set_partner_site_info()
 
         return context
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        next = request.GET.get('next')
+        if not is_safe_url(next):
+            next = ''
+
+        #is it an OAuth2/SAML login?
+        if urlparse(next).path == '/oauth/v2/authorize':
+            idp = parse_qs(next).get('idp')
+            if idp and type(idp) == list:
+                idp = idp[0]
+            if idp:
+                #prevent capping 'next' string at '&'
+                next_saml = next.replace("&", "%26")
+                request.session['next_saml'] = next_saml
+                return saml_views.sso(request, idp)
+
+        login_step = kwargs.get('login_step')
+        if login_step:
+            request.session['login_step'] = login_step
+        else:
+            login_step = request.session.get('login_step')
+
+        if not login_step:
+            login_step = 'login'
+            request.session['login_step'] = login_step
+
+        idps = {}
+        if login_step == 'login':
+            idps = IdentityProvider.objects.order_by('shortname')
+            form = PleioAuthenticationForm(request=request)
+        elif login_step == 'token':
+            user = User.objects.get(email=request.session.get('username'))
+            form = PleioAuthenticationTokenForm(user, request)
+        elif login_step == 'backup':
+            user = User.objects.get(email=request.session.get('username'))
+            form = PleioBackupTokenForm(user, request)
+
+        return render(request, 'login.html', { 
+                    'form' : form, 
+                    'login_step' : login_step,
+                    'reCAPTCHA' : EventLog.reCAPTCHA_needed(request),
+                    'idps' : idps,
+                    'next' : next 
+                    })
+
+    def post(self, request, *args, **kwargs):
+        login_step = kwargs.get('login_step')
+        if login_step:
+            request.session['login_step'] = login_step
+        else:
+            login_step = request.session.get('login_step')
+
+        if login_step == 'token':
+            response = self.post_token(request, *args, **kwargs)
+        elif login_step == 'backup':
+            response = self.post_backuptoken(request, *args, **kwargs)
+        else:
+            response = self.post_login(request, *args, **kwargs)
+        return response
+
+    def post_login(self, request, *args, **kwargs):
+        next = request.POST.get('next')
+        if not is_safe_url(next):
+            next = settings.LOGIN_REDIRECT_URL
+        form = PleioAuthenticationForm(request=request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            user = User.objects.get(email=username)
+            return self.post_login_process(request, user, next)
+            EventLog.add_event(request, 'invalid login')
+
+        return render(request, 'login.html', {
+            'form' : form,
+            'login_step' : request.session.get('login_step'),
+            'reCAPTCHA' : EventLog.reCAPTCHA_needed(request),
+            'next' : next
+            }
+        )
+
+    def post_login_process(self, request, user, next=None, extid=None):
+        if self.check_is_banned(request, user):
+            if next and is_safe_url(next):
+                goto = settings.LOGIN_URL + '?next=' + next
+            else:
+                goto = settings.LOGIN_URL
+
+            return redirect(goto)
+
+        if not self.check_is_active(request, user):
+            if next and is_safe_url(next):
+                goto = settings.LOGIN_URL + '?next=' + next
+            else:
+                goto = settings.LOGIN_URL
+
+            return redirect(goto)
+
+        request.session['username'] = user.email
+        device = default_device(user)
+        if not device:
+            return self.post_login_user(request, user, next, extid)
+        else:
+            request.session['login_step'] = 'token'
+            form = PleioAuthenticationTokenForm(user, request)
+
+            return render(request, 'login.html', {
+                'form' : form,
+                'login_step' : request.session.get('login_step'),
+                'reCAPTCHA' : EventLog.reCAPTCHA_needed(request),
+                'next' : next
+                }
+            )
+
+    def post_token(self, request, *args, **kwargs):
+        next = request.POST.get('next')
+        if not is_safe_url(next):
+            next = settings.LOGIN_REDIRECT_URL
+        user = User.objects.get(email=request.session.get('username'))
+        form = PleioAuthenticationTokenForm(user, request, data=request.POST)
+        if form.is_valid():
+            return self.post_login_user(request, user, next)
+        else:
+            EventLog.add_event(request, 'invalid login')
+
+        return render(request, 'login.html', {'form' : form, 'login_step' : request.session.get('login_step') })
+
+    def post_backuptoken(self, request, *args, **kwargs):
+        next = request.POST.get('next')
+        if not is_safe_url(next):
+            next = settings.LOGIN_REDIRECT_URL
+        user = User.objects.get(email=request.session.get('username'))
+        form = PleioBackupTokenForm(user, request, data=request.POST)
+        if form.is_valid():
+            return self.post_login_user(request, user, next)
+        else:
+            EventLog.add_event(request, 'invalid login')
+
+        return render(request, 'login.html', {'form' : form, 'login_step' : request.session.get('login_step') })
+
+    def post_login_user(self, request, user, next=None, extid=None):
+        if not is_safe_url(next):
+            next = settings.LOGIN_REDIRECT_URL
+
+        auth_login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+        user.check_users_previous_logins(request)
+
+        if request.session.get('samlConnect'):
+            request.session.pop('samlConnect')
+            request.session['samlLogin'] = True
+            if not extid:
+                extid = saml_views.connect(request, user.email)
+
+        return redirect(next)
+
+    def check_is_active(self, request, user=None):
+        if not user:
+            username = request.POST.get('username')
+            try:
+                user = User.objects.get(email=username)
+            except User.DoesNotExist:
+                return False
+
+        if not user.is_active:
+            user.send_activation_token()
+            messages.info(request, _("This account is inactive." ), extra_tags="inactive")
+            return False
+
+        return True
+
+    def check_is_banned(self, request, user):
+        if user.is_banned:
+            messages.error(request, _("This account is suspended." ), extra_tags="banned")
+            return True
+
+        return False
 
     def set_partner_site_info(self):
         try:
@@ -61,7 +239,7 @@ class PleioLoginView(LoginView):
             except:
                 try:
                     #no matching partnersite data found: default background image will be used
-                    partnersite = PleioPartnerSite.objects.get(partner_site_url='http://localhost')
+                    partnersite = PleioPartnerSite.objects.get(partner_site_url=settings.EXTERNAL_HOST)
                     self.request.COOKIES['partner_site_url'] = clean_url
                     self.request.COOKIES['partner_site_name'] = http_referer.netloc
                     self.request.COOKIES['partner_site_logo_url'] = partnersite.partner_site_logo_url
@@ -71,14 +249,6 @@ class PleioLoginView(LoginView):
             return False
 
         return True
-
-    def done(self, form_list, **kwargs):
-        self.request.session.set_expiry(30 * 24 * 60 * 60)
-
-        user = self.get_user()
-        user.check_users_previous_logins(self.request)
-
-        return LoginView.done(self, form_list, **kwargs)
 
 
 class PleioProfileView(ProfileView):
@@ -166,7 +336,7 @@ class PleioBackupTokensView(BackupTokensView):
         device.token_set.all().delete()
         for n in range(self.number_of_tokens):
             device.token_set.create(token=StaticToken.random_token())
-
+   
         return TemplateResponse(self.request, 'security_pages.html', {
                 'form': form,
                 'tokens': device.token_set.all()

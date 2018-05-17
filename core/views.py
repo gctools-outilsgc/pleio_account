@@ -1,15 +1,16 @@
 from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-from .forms import RegisterForm, UserProfileForm, PleioTOTPDeviceForm, ChangePasswordForm
-from .models import User, PreviousLogins
+from .forms import RegisterForm, UserProfileForm, PleioTOTPDeviceForm, ChangePasswordForm, DeleteAccountForm, LegalTextForm
+from .models import User, ResizedAvatars, PreviousLogins, PleioLegalText
 from django.urls import reverse
 from base64 import b32encode
 from binascii import unhexlify
 from django_otp.util import random_hex
 import django_otp
 from django.conf import settings
-
+from saml.models import IdentityProvider, IdpEmailDomain
+from urllib.parse import urljoin
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import authenticate, update_session_auth_hash
 from two_factor.views import ProfileView
@@ -30,6 +31,27 @@ def home(request):
 
 
 def logout(request):
+    #If user has logged in via SAML IDP verification, the user has to log out at SAML IDP first if the IDP supports / allows that
+    # IdentityProvider.sloId either contains url for single logout or is empty
+    if request.session.pop('samlLogin', None):
+        idp = request.session.get('idp', None)
+        if idp:
+            idp_row = IdentityProvider.objects.get(shortname=idp)
+            if idp_row.perform_slo:
+                try:
+                    slo = idp_row.sloId
+                except IdentityProvider.DoesNotExist:
+                    slo = None
+            else:
+                slo = None
+        if slo:
+            request.session['slo'] = 'slo'
+            return redirect('saml_slo')
+
+    #If needed the account can be deleted now that user has been logged out at SAML IDP
+    if request.session.pop('DeleteAccountPending', None):
+        request.user.delete()
+
     auth.logout(request)
     return redirect('login')
 
@@ -37,6 +59,8 @@ def logout(request):
 def register(request):
     if request.user.is_authenticated():
         return redirect('profile')
+
+    legal_text = PleioLegalText.get_legal_text(request, page_name='terms')
 
     if request.method == "POST":
         form = RegisterForm(request.POST)
@@ -48,19 +72,19 @@ def register(request):
                     email=data['email'],
                     password=data['password2'],
                     accepted_terms=data['accepted_terms'],
-                    receives_newsletter=True
+                    receives_newsletter=data['receives_newsletter']
                 )
             except:
                 user = User.objects.get(email=data['email'])
 
             if not user.is_active:
-                user.send_activation_token(request)
+                user.send_activation_token()
 
             return redirect('register_complete')
     else:
         form = RegisterForm()
 
-    return render(request, 'register.html', {'form': form})
+    return render(request, 'register.html', {'form': form, 'legal_text': legal_text})
 
 
 def register_complete(request):
@@ -80,47 +104,82 @@ def register_activate(request, activation_token=None):
     return render(request, 'register_activate.html')
 
 
+def change_email(request):
+    user = request.user
+    user.send_change_email_activation_token()
+
+    return redirect('profile')
+
+def change_email_activate(request, activation_token=None):
+    user = User.change_email(None, activation_token)
+
+    if user:
+        messages.success(request, _('Email address changed'), extra_tags='email')
+
+    return redirect('profile')
+
 @login_required
 def profile(request):
     if request.method == 'POST':
+        new_email_save = request.user.new_email
         form = UserProfileForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
+            data = form.cleaned_data
+            new_email = data['new_email']
             user = form.save()
-
+            user.new_email = new_email
+            user.save()
+            if new_email and (new_email != new_email_save):
+                change_email(request)
+            form = UserProfileForm(instance=request.user)
+            messages.success(request, _('Profile changed'), extra_tags='profile')
     else:
         form = UserProfileForm(instance=request.user)
 
-    return render(request, 'profile.html', {'form': form})
+    if request.user.new_email:
+        text_change_pending = _('There is a pending change of your email to ')
+    else:
+        text_change_pending = None
 
+    return render(request, 'profile.html', {'form': form, 'text_change_pending': text_change_pending, 'text_email': request.user.new_email})
 
 def avatar(request):
-    DEFAULT_AVATAR = '/static/images/user.svg'
+    avatar_size = request.GET.get('size')
+    DEFAULT_AVATAR = urljoin('https://www.pleio.nl/_graphics/icons/user/', str('default' +avatar_size + '.gif'))
 
-    user = User.objects.get(id=request.GET['guid'])
+    user = User.objects.get(id=request.GET.get('guid'))
 
     try:
         user = User.objects.get(id=int(request.GET['guid']))
         if user.avatar:
-            return redirect('/media/' + str(user.avatar))
+            try:
+                resized_avatars = ResizedAvatars.objects.get(user=user)
+                if avatar_size == 'large':
+                    avatar = resized_avatars.large
+                elif avatar_size == 'small':
+                    avatar = resized_avatars.small
+                elif avatar_size == 'tiny':
+                    avatar = resized_avatars.tiny
+                elif avatar_size == 'topbar':
+                    avatar = resized_avatars.topbar
+                else: #when no size is requested, medium will be served
+                    avatar = resized_avatars.medium
+
+                return redirect('/media/' + str(avatar))
+            except ResizedAvatars.DoesNotExist:
+                pass
     except User.DoesNotExist:
         pass
 
     return redirect(DEFAULT_AVATAR)
 
+def legal_pages(request, page_name=None, language_code=None):
+    legal_text = PleioLegalText.get_legal_text(request, page_name=page_name, language_code=language_code)
 
-def accept_previous_login(request, acceptation_token=None):
-    try:
-        PreviousLogins.accept_previous_logins(request, acceptation_token)
-    except:
-        pass
-
-    return redirect('profile')
-
-
-def terms_of_use(request):
-
-    return render(request, 'terms_of_use.html')
-
+    if request.user.is_authenticated:
+        return render(request, 'legal_text_account.html', {'legal_text': legal_text})
+    else:
+        return render(request, 'legal_text.html', {'legal_text': legal_text})
 
 @login_required
 def security_pages(request, page_action=None):
@@ -137,11 +196,10 @@ def change_password_form(request, page_action):
         form = ChangePasswordForm(request.POST, user=user)
         if form.is_valid():
             data = form.cleaned_data
-            new_password2 = data['new_password2']
             user.set_password(data['new_password2'])
             user.save()
             update_session_auth_hash(request, user)
-            messages.success(request, _('The Password has been changed successfully.'))
+            messages.success(request, _('Password has been changed successfully.'), extra_tags='password')
     else:
         form = ChangePasswordForm()
 
@@ -208,3 +266,17 @@ def user_sessions_form(request):
     user_sessions = PleioSessionListView.as_view(template_name='security_pages.html')(request).context_data
 
     return user_sessions['object_list']
+
+@login_required
+def delete_account(request):
+    if request.method == 'POST':
+        form = DeleteAccountForm(request.POST, request.FILES, user=request.user)
+        if form.is_valid():
+            #delay actual deleting of the account to preserve the session needed to log out at SAML IDP
+            request.session['DeleteAccountPending'] = True
+            messages.success(request, _('Account deleted'), extra_tags='account_deleted')
+            return redirect(settings.LOGOUT_REDIRECT_URL)
+    else:
+        form = DeleteAccountForm(user=request.user)
+
+    return render(request, 'delete_account.html', { 'form': form })

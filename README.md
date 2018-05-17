@@ -1,5 +1,7 @@
-# Pleio account
-This is the Pleio microservice used for handling user registration, login and SAML2 SSO. It is based on [Django project](https://www.djangoproject.com/) and handles login througout the Pleio ecosystem using OAuth2.
+# Concierge
+[![Build Status](https://jenkins.pleio.nl/buildStatus/icon?job=concierge-docker)](https://jenkins.pleio.nl/job/concierge-docker/)
+
+This is the microservice used for handling user registration, login and SAML2 SSO. It is based on the [Django project](https://www.djangoproject.com/).
 
 ## Setup development (through Docker)
 Make sure [Docker](https://www.docker.com/) and [yarn](https://yarnpkg.com/lang/en/) is installed. Then run the following commands within the repository:
@@ -9,6 +11,7 @@ Make sure [Docker](https://www.docker.com/) and [yarn](https://yarnpkg.com/lang/
     yarn run watch
 
 Then create a superuser account using:
+
     docker-compose exec web python manage.py createsuperuser
 
 Now login with your new (superuser) account on http://localhost:8000
@@ -16,17 +19,17 @@ Now login with your new (superuser) account on http://localhost:8000
 ## Setup development (manually)
 To setup the development environment, make sure Python3 and yarn is installed on your development machine. Then run the following commands:
 
-    mkvirtualenv pleio_account --python=/usr/bin/python3
+    mkvirtualenv concierge --python=/usr/bin/python3
     pip install -r requirements.txt
     yarn install
 
-Send up and configure a mail server (ex: sendmail)
+Set up and configure a mail server (ex: sendmail)
 
 Make sure postgres is installed and configured and a database is created for your app.
 
 Create your configuration file
 
-    sudo cp pleio_account/config.example.py pleio_account/config.py
+    sudo cp concierge/config.example.py concierge/config.py
 
 In your new config file set secret key, allowed hosts, and debug variables. 
 Set your database config like:
@@ -41,6 +44,12 @@ Set your database config like:
             'PORT': '',
         }
     }
+
+Install a theme and follow any instructions provided by the theme to complete
+the installation.
+
+- [Pleio](https://github.com/Pleio/concierge-theme-pleio)
+- [Government of Canada](https://github.com/gctools-outilsgc/concierge-theme-gc)
 
 Create a database using
 
@@ -59,8 +68,8 @@ Now login with your new (superuser) account on http://localhost:8000
 
 ## Deploy to Kubernetes
 
-  kubectl create namespace gctoolsv2
-  kubectl create -f https://raw.githubusercontent.com/gctools-outilsgc/pleio_account/master/kubernetes/deployment.yaml
+    kubectl create namespace concierge
+    kubectl create -f ./kubernetes/deployment.yaml
 
 ## Generate new translations
 We use the standard [i18n toolset of Django](https://docs.djangoproject.com/en/1.10/topics/i18n/). To add new translations to the source files use:
@@ -77,6 +86,6 @@ On OSX first make sure gettext (> 0.14) is installed and linked using:
     brew link --force gettext
 
 ## Run tests
-To run the accompanied test suite use:
+To run the accompanied test suite use the following command:
 
     python manage.py test

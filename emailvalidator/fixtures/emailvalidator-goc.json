@@ -8,7 +8,7 @@
     },
     {
         "model": "emailvalidator.emailregexvalidator",
-        "pk": 5,
+        "pk": 1,
         "fields": {
             "regex": "^.*@.*\\.gc\\.ca$",
             "group_id": 3
@@ -16,7 +16,7 @@
     },
     {
         "model": "emailvalidator.emailregexvalidator",
-        "pk": 6,
+        "pk": 2,
         "fields": {
             "regex": "^.*@canada.ca$",
             "group_id": 3

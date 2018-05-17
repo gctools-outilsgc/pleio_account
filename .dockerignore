@@ -1,8 +1,10 @@
-node_modules
-assets/bundles
+.git
+concierge/config.py
 db.sqlite3
 Dockerfile
 docker-compose.yml
 kubernetes
 pleio_account/config.py
 .git
+static/*
+media/*

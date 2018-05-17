@@ -7,7 +7,7 @@ import threading
 threading.stack_size(2*1024*1024)
 
 if __name__ == "__main__":
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pleio_account.settings")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "concierge.settings")
     try:
         from django.core.management import execute_from_command_line
     except ImportError:

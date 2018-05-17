@@ -1,0 +1,52 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: concierge
+  namespace: concierge
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: concierge
+    spec:
+      containers:
+      - name: concierge
+        image: concierge:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: "DEBUG"
+          value: "True"
+        - name: "ALLOWED_HOST"
+          value: "*"
+        - name: "SECRET_KEY"
+          value: "qWxPJrZCLeHZraNTWjEKHdJJxJyho8"
+        - name: "DB_HOST"
+          value: "localhost"
+        - name: "DB_USER"
+          value: "postgres"
+        - name: "DB_PASSWORD"
+          value: "postgres"
+      - name: concierge-database
+        image: postgres
+        ports:
+        - containerPort: 5432
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: concierge
+  namespace: concierge
+  labels:
+    name: concierge
+  annotations:
+    VIRTUAL_HOST: "gcidentity.lpss.me"
+    VIRTUAL_PORT: "8000"
+spec:
+  ports:
+  - port: 8000
+    targetPort: 8000
+  selector:
+    name: concierge
