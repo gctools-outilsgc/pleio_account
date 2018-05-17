@@ -21,11 +21,11 @@ from django.core.urlresolvers import RegexURLPattern, RegexURLResolver
 from django.views.decorators.clickjacking import xframe_options_exempt
 from oauth2_provider import views as oauth2_views
 from api import views as api_views
+from saml import views as saml_views
 from django.contrib import admin
 from core import views
 from core.class_views import PleioLoginView, PleioSessionDeleteView, PleioSessionDeleteOtherView
 from django.views.i18n import JavaScriptCatalog
-
 
 class DecoratedURLPattern(RegexURLPattern):
     def resolve(self, *args, **kwargs):
@@ -98,21 +98,36 @@ urls = [
 tf_urls = [
     url(r'', include('two_factor.urls', 'two_factor'))
 ]
+
 us_urls = [
     url(r'', include('user_sessions.urls', 'user_sessions'))
 ]
+
 oidc_urls = [
     url(r'^openid/', decorated_includes(
       xframe_options_exempt,
       include('oidc_provider.urls', namespace='oidc_provider')
     ))
 ]
+
 django_urls = [
     url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
     url(r'^i18n/', include('django.conf.urls.i18n'))
 ]
 
-urlpatterns = legacy_urls + urls + tf_urls + us_urls + oidc_urls + django_urls
+saml_urls = [
+    url(r'^saml/sso/(?P<idp_shortname>[\w-]+)/$', saml_views.sso, name='saml_sso'),
+    url(r'^saml/acs/$', saml_views.acs, name='saml_acs'),
+    url(r'^saml/slo/$', saml_views.slo, name='saml_slo'),
+    url(r'^saml/attrs/$', saml_views.attrs, name='saml-attrs'),
+    url(r'^saml/metadata/$', saml_views.metadata, name='saml-metadata'),
+    url(r'^saml/connect/$', saml_views.connect_and_login, name='saml-connect'),
+    url(r'^saml/set_new_password/(?P<activation_token>[-:\w]+)/$', saml_views.set_new_password, name='set_new_password'),
+    url(r'^saml/connections/$', saml_views.show_connections, name='saml_connections'),
+    url(r'^saml/connection_delete/(?P<pk>\w+)/$', saml_views.delete_connection, name='saml_connection_delete'),
+]
+
+urlpatterns = legacy_urls + urls + tf_urls + us_urls + oidc_urls + django_urls + saml_urls
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

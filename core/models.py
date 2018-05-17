@@ -342,6 +342,3 @@ class EventLog(models.Model):
         )
 
         return (events.count() > settings.RECAPTCHA_NUMBER_INVALID_LOGINS)
-
-admin.site.register(User)
-admin.site.register(PleioPartnerSite)

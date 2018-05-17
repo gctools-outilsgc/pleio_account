@@ -8,6 +8,7 @@ INSTALLED_APPS = LOCAL_INSTALLED_APPS + [
     'core',
     'emailvalidator',
     'api',
+    'saml',
     'oauth2_provider',
     'rest_framework',
     'webpack_loader',
@@ -15,6 +16,7 @@ INSTALLED_APPS = LOCAL_INSTALLED_APPS + [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'user_sessions',
+    'django_celery_beat',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_otp',
@@ -23,7 +25,6 @@ INSTALLED_APPS = LOCAL_INSTALLED_APPS + [
     'two_factor',
     'oidc_provider',
     'corsheaders',
-    'saml'
 ]
 
 REST_FRAMEWORK = {
@@ -146,6 +147,12 @@ LOGGING = {
             'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
         },
     },
+}
+
+SAML_IDP_BINDING = "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+SAML_IDP_NAMESPACE = {
+    'md': 'urn:oasis:names:tc:SAML:2.0:metadata',
+    'ds': 'http://www.w3.org/2000/09/xmldsig#'
 }
 
 from .config import *

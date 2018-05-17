@@ -76,4 +76,3 @@ class SamlTestCase(TestCase):
 
         self.assertEqual(len(mail.outbox), 0)# No email to request a new password has been sent
         mail.outbox = []# Empty the test outbox
-        
