@@ -14,12 +14,12 @@ EXTERNAL_HOST = 'http://127.0.0.1:8000/'
 
 # Include apps required before any other apps, like themes.
 LOCAL_INSTALLED_APPS = [
-    # 'concierge_theme_gc'
-    # 'concierge_theme_pleio'
+    # 'concierge_theme_gc',
+    # 'concierge_theme_pleio',
 ]
 
 LOCAL_AUTHENTICATION_BACKENDS = [
-    # 'extensions.backends.ElggBackend'
+    # 'elgg.backends.ElggBackend'
 ]
 
 LOCAL_AUTH_PASSWORD_VALIDATORS = []
