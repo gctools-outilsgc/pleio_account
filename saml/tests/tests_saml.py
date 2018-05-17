@@ -1,4 +1,5 @@
 from django.contrib.auth.models import AnonymousUser
+from django.contrib.messages.storage.base import BaseStorage, Message
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.test import TestCase
 from django.contrib import auth
@@ -10,6 +11,13 @@ from core.middleware import DeviceIdMiddleware
 from saml.models import IdentityProvider, ExternalId
 from saml.views import check_externalid, connect
 
+class TestMessagesBackend(BaseStorage):
+    def __init__(self, request, *args, **kwargs):
+        self._loaded_data = []
+        super(TestMessagesBackend, self).__init__(request, *args, **kwargs)
+
+    def add(self, level, message, extra_tags=''):
+        self._loaded_data.append(Message(level, message, extra_tags=extra_tags))
 
 class SamlTestCase(TestCase):
     def setUp(self):
@@ -28,9 +36,10 @@ class SamlTestCase(TestCase):
         Saml user who is logging in first time does not have a connected concierge user
         '''
         request = self.factory.get("/")
+        request._messages = TestMessagesBackend(request)
         request.session = {}
         request.session["idp"] = "idp1"
-        request.session["samlUserdata"] =  {'uid': ["1"], 'email': ["johnsaml@user.com"]}
+        request.session["samlUserdata"] =  {'uid': ["1"], 'emailaddress': ["johnsaml@user.com"]}
 
         extid = check_externalid(request, shortname=self.idp.shortname, externalid="johnsaml@user.com")
         self.assertIs(extid, None)# No externalid exists atm
@@ -41,9 +50,10 @@ class SamlTestCase(TestCase):
         A concierge user will be created based on saml user data and connected with saml user
         '''
         request = self.factory.get("/")
+        request._messages = TestMessagesBackend(request)
         request.session = {}
         request.session["idp"] = "idp1"
-        request.session["samlUserdata"] =  {'uid': ["1"], 'email': ["johnsaml@user.com"]}
+        request.session["samlUserdata"] =  {'uid': ["1"], 'emailaddress': ["johnsaml@user.com"]}
 
         result = check_externalid(request, shortname=self.idp.shortname, externalid="johnsaml@user.com")
         self.assertIs(result, None)# No externalid exists atm
@@ -63,9 +73,10 @@ class SamlTestCase(TestCase):
         An existing concierge user will be connected with saml user
         '''
         request = self.factory.get("/")
+        request._messages = TestMessagesBackend(request)
         request.session = {}
         request.session["idp"] = "idp1"
-        request.session["samlUserdata"] =  {'uid': ["1"], 'email': ["johnsaml@user.com"]}
+        request.session["samlUserdata"] =  {'uid': ["1"], 'emailaddress': ["johnsaml@user.com"]}
 
         result = check_externalid(request, shortname=self.idp.shortname, externalid="johnsaml@user.com")
         self.assertIs(result, None)# No externalid exists atm

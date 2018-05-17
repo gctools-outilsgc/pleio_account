@@ -98,21 +98,34 @@ class User(AbstractBaseUser):
             email = kwargs.pop('email')
         except:
             email = self.email
-            
+
         send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [email], **kwargs)
-        
 
     def send_activation_token(self):
         template_context = {
             'user': self,
             'activation_token': signing.dumps(obj=self.email),
         }
- 
+
         self.email_user(
             render_to_string('emails/register_subject.txt', template_context),
             render_to_string('emails/register.txt', template_context),
             html_message = (render_to_string('emails/register.html', template_context)),
             fail_silently = True
+        )
+
+    def send_set_password_activation_token(self):
+        template_context = {
+            'user': self,
+            'activation_token': signing.dumps(obj=self.email),
+        }
+
+        self.email_user(
+            render_to_string('emails/set_new_password_subject.txt', template_context),
+            render_to_string('emails/set_new_password.txt', template_context),
+            html_message = (render_to_string('emails/set_new_password.html', template_context)),
+            fail_silently = True,
+            email=self.email
         )
 
     def send_change_email_activation_token(self):
