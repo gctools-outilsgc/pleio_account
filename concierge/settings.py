@@ -58,7 +58,7 @@ MIDDLEWARE = [
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-]
+] + LOCAL_AUTHENTICATION_BACKENDS
 
 ROOT_URLCONF = 'concierge.urls'
 

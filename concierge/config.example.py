@@ -19,7 +19,7 @@ LOCAL_INSTALLED_APPS = [
 ]
 
 LOCAL_AUTHENTICATION_BACKENDS = [
-    # 'core.backends.ElggBackend'
+    # 'extensions.backends.ElggBackend'
 ]
 
 LOCAL_AUTH_PASSWORD_VALIDATORS = []

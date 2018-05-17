@@ -1,6 +1,6 @@
 import requests
 import json
-from .models import User
+from core.models import User
 from django.conf import settings
 
 class ElggBackend:
