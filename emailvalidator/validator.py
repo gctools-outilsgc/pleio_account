@@ -2,8 +2,10 @@
 Initialize the emailvalidator django application, and configure
 """
 import re
-from .models import EmailRegExValidator, EmailDomainGroup
-
+import requests
+import json
+from django.conf import settings
+from .models import EmailRegExValidator
 
 def is_email_valid(email):
     # Verify email address is in user invitation list
