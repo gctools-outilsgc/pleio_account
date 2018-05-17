@@ -65,37 +65,17 @@ SHOW_GOVERNMENT_BADGE = True
 # Send users a warning message when suspicious behaviour on their account occurs, e.g. a login on the account from a new (unknown) location.
 SEND_SUSPICIOUS_BEHAVIOR_WARNINGS = True
 
-# Google reCAPTCHA Will be present on login page when from that IP adress more than RECAPTCHA_NUMBER_INVALID_LOGINS during the last RECAPTCHA_MINUTES_THRESHOLD have occurred.
-# Request an API key at https://developers.google.com/recaptcha/ for reCAPTCHA validation.
-RECAPTCHA_MINUTES_THRESHOLD = 30
-RECAPTCHA_NUMBER_INVALID_LOGINS = 10
-
 PASSWORD_RESET_TIMEOUT_DAYS = 1
 ACCOUNT_ACTIVATION_DAYS = 7
 
 # For use with mod_pleio Elgg plugin
 ELGG_URL = ''
 
+# Google reCAPTCHA Will be present on login page when from that IP adress more than RECAPTCHA_NUMBER_INVALID_LOGINS during the last RECAPTCHA_MINUTES_THRESHOLD have occurred.
+# Request an API key at https://developers.google.com/recaptcha/ for reCAPTCHA validation.
+RECAPTCHA_MINUTES_THRESHOLD = 30
+RECAPTCHA_NUMBER_INVALID_LOGINS = 10
+
 # With the following test keys, you will always get No CAPTCHA and all verification requests will pass.
 GOOGLE_RECAPTCHA_SITE_KEY = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
 GOOGLE_RECAPTCHA_SECRET_KEY = '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe'
-
-# If you would like to limit the languages available on the system, please adjust these settings accordingly.
-# from django.utils.translation import ugettext_lazy as _
-#
-# LANGUAGES = [
-#     ('en', _('English')),
-#     ('nl', _('Dutch')),
-#     ('fr', _('French'))
-# ]
-
-AUTH_PASSWORD_VALIDATORS_POSTFIX = []
-
-# Depending on your password regime you would maybe like to strengthen your password requirements.
-# This configuration requires 1 number, 1 lowercase letter, 1 uppercase letter and 1 special character
-#
-# AUTH_PASSWORD_VALIDATORS_POSTFIX = [
-#    {
-#        'NAME': 'concierge.password_validation.PasswordValidator',
-#    },
-# ]
