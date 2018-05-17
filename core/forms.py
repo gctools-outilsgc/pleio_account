@@ -9,7 +9,7 @@ from two_factor.forms import AuthenticationTokenForm, TOTPDeviceForm
 from two_factor.utils import totp_digits, default_device
 from emailvalidator.validator import is_email_valid
 from .helpers import verify_captcha_response
-from .models import User, EventLog
+from .models import User, EventLog, PleioLegalText
 from django_otp.forms import OTPTokenForm
 from django.forms import Form
 from django.conf import settings
@@ -76,7 +76,7 @@ class RegisterForm(forms.Form):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('name', 'email', 'avatar', 'receives_newsletter')
+        fields = ('name', 'email', 'receives_newsletter', 'avatar')
 
     error_messages = {
         'duplicate_email': _("This email is already registered."),
@@ -151,13 +151,7 @@ class PleioAuthenticationForm(AuthenticationForm):
             self.user_cache = authenticate(self.request, username=username, password=password)
             if self.user_cache is None:
                 user = User.objects.filter(email=username, is_active=False)
-                if user:
-                    raise forms.ValidationError(
-                        self.error_messages['inactive'],
-                        code='inactive',
-                        params={'username': self.username_field.verbose_name},
-                    )
-                else:
+                if not user:
                     raise forms.ValidationError(
                         self.error_messages['invalid_login'],
                         code='invalid_login',
@@ -169,7 +163,7 @@ class PleioAuthenticationForm(AuthenticationForm):
         return self.cleaned_data
 
 class PleioAuthenticationTokenForm(OTPTokenForm):
-    otp_token = forms.IntegerField(label=_("Token"), widget=forms.TextInput)
+    otp_token = forms.IntegerField(label=_("Token"), widget=forms.TextInput(attrs={'autofocus': True}))
     otp_device = forms.ChoiceField(choices=[], required=False)
 
     def clean(self):
@@ -198,12 +192,12 @@ class PleioAuthenticationTokenForm(OTPTokenForm):
 
 
 class PleioBackupTokenForm(OTPTokenForm):
-    otp_token = forms.CharField(label=_("Token"))
+    otp_token = forms.CharField(label=_("Token"), widget=forms.TextInput(attrs={'autofocus': True}))
     otp_device = forms.ChoiceField(choices=[], required=False)
 
 
 class PleioTOTPDeviceForm(TOTPDeviceForm):
-    token = forms.IntegerField(label=_("Token"), widget=forms.TextInput)
+    token = forms.IntegerField(label=_("Token"), widget=forms.TextInput(attrs={'autofocus': True}))
 
 
 class ChangePasswordForm(forms.Form):
@@ -216,7 +210,7 @@ class ChangePasswordForm(forms.Form):
         'password_mismatch': _("The two password fields didn't match."),
     }
 
-    old_password = forms.CharField(strip=False, widget=forms.PasswordInput)
+    old_password = forms.CharField(strip=False, widget=forms.PasswordInput(attrs={'autofocus': True}))
     new_password1 = forms.CharField(strip=False, widget=forms.PasswordInput)
     new_password2 = forms.CharField(strip=False, widget=forms.PasswordInput)
 
@@ -244,3 +238,32 @@ class ChangePasswordForm(forms.Form):
 
         password_validation.validate_password(self.cleaned_data.get('new_password2'))
         return new_password2
+
+class DeleteAccountForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super(DeleteAccountForm, self).__init__(*args, **kwargs)
+
+    error_messages = {
+        'invalid_password': _("The password is invalid."),
+    }
+
+    old_password = forms.CharField(strip=False, widget=forms.PasswordInput(attrs={'autofocus': True}))
+
+    def clean_old_password(self):
+        old_password = self.cleaned_data.get("old_password")
+        user = authenticate(username=self.user.email, password=old_password)
+
+        if user is None:
+            raise forms.ValidationError(
+                self.error_messages['invalid_password'],
+                code='invalid_password',
+            )
+
+        return old_password
+
+
+class LegalTextForm(forms.ModelForm):
+    class Meta:
+        model = PleioLegalText
+        fields = ('legal_text',)

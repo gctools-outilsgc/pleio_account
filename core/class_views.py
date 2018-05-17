@@ -1,6 +1,7 @@
 from django.urls import reverse_lazy
 from .forms import PleioAuthenticationTokenForm, PleioAuthenticationForm, PleioBackupTokenForm
 from .models import User, PleioPartnerSite, EventLog
+from saml.models import IdentityProvider
 from two_factor.forms import TOTPDeviceForm, BackupTokenForm
 from two_factor.views.core import LoginView, SetupView, BackupTokensView
 from two_factor.views.profile import ProfileView
@@ -18,9 +19,11 @@ from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.views.generic import TemplateView
 from django.contrib.auth import login as auth_login
+from django.utils.translation import gettext, gettext_lazy as _
 from two_factor.utils import default_device
 import django_otp
-from urllib.parse import urlparse
+from urllib.parse import urlparse, parse_qs
+from saml import views as saml_views
 
 class PleioLoginView(TemplateView):
 
@@ -37,9 +40,21 @@ class PleioLoginView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
-        next = request.session.get('next')
+        next = request.GET.get('next')
         if not is_safe_url(next):
             next = ''
+
+        #is it an OAuth2/SAML login?
+        if urlparse(next).path == '/oauth/v2/authorize':
+            idp = parse_qs(next).get('idp')
+            if idp and type(idp) == list:
+                idp = idp[0]
+            if idp:
+                #prevent capping 'next' string at '&'
+                next_saml = next.replace("&", "%26")
+                request.session['next_saml'] = next_saml
+                return saml_views.sso(request, idp)
+
         login_step = kwargs.get('login_step')
         if login_step:
             request.session['login_step'] = login_step
@@ -50,7 +65,9 @@ class PleioLoginView(TemplateView):
             login_step = 'login'
             request.session['login_step'] = login_step
 
+        idps = {}
         if login_step == 'login':
+            idps = IdentityProvider.objects.order_by('shortname')
             form = PleioAuthenticationForm(request=request)
         elif login_step == 'token':
             user = User.objects.get(email=request.session.get('username'))
@@ -63,6 +80,7 @@ class PleioLoginView(TemplateView):
                     'form' : form, 
                     'login_step' : login_step,
                     'reCAPTCHA' : EventLog.reCAPTCHA_needed(request),
+                    'idps' : idps,
                     'next' : next 
                     })
 
@@ -89,33 +107,49 @@ class PleioLoginView(TemplateView):
         if form.is_valid():
             username = form.cleaned_data.get('username')
             user = User.objects.get(email=username)
-            request.session['username'] = username
-            device = default_device(user)
-            if not device:
-                auth_login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-                return redirect(next)
-            else:
-                request.session['login_step'] = 'token'
-                form = PleioAuthenticationTokenForm(user, request)
-        else:
-            for key, value in form.errors.items():
-                if value[0] == 'inactive':
-                    try:
-                        username = request.POST.get('username')
-                        user = User.objects.get(email=username)
-                        user.send_activation_token()
-                        return redirect('register_complete')
-                    except:
-                        pass
+            return self.post_login_process(request, user, next)
             EventLog.add_event(request, 'invalid login')
 
         return render(request, 'login.html', {
-            'form' : form, 
+            'form' : form,
             'login_step' : request.session.get('login_step'),
-            'reCAPTCHA' : EventLog.reCAPTCHA_needed(request), 
-            'next' : next 
+            'reCAPTCHA' : EventLog.reCAPTCHA_needed(request),
+            'next' : next
             }
         )
+
+    def post_login_process(self, request, user, next=None, extid=None):
+        if self.check_is_banned(request, user):
+            if next and is_safe_url(next):
+                goto = settings.LOGIN_URL + '?next=' + next
+            else:
+                goto = settings.LOGIN_URL
+
+            return redirect(goto)
+
+        if not self.check_is_active(request, user):
+            if next and is_safe_url(next):
+                goto = settings.LOGIN_URL + '?next=' + next
+            else:
+                goto = settings.LOGIN_URL
+
+            return redirect(goto)
+
+        request.session['username'] = user.email
+        device = default_device(user)
+        if not device:
+            return self.post_login_user(request, user, next, extid)
+        else:
+            request.session['login_step'] = 'token'
+            form = PleioAuthenticationTokenForm(user, request)
+
+            return render(request, 'login.html', {
+                'form' : form,
+                'login_step' : request.session.get('login_step'),
+                'reCAPTCHA' : EventLog.reCAPTCHA_needed(request),
+                'next' : next
+                }
+            )
 
     def post_token(self, request, *args, **kwargs):
         next = request.POST.get('next')
@@ -124,8 +158,7 @@ class PleioLoginView(TemplateView):
         user = User.objects.get(email=request.session.get('username'))
         form = PleioAuthenticationTokenForm(user, request, data=request.POST)
         if form.is_valid():
-            auth_login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-            return redirect(next)
+            return self.post_login_user(request, user, next)
         else:
             EventLog.add_event(request, 'invalid login')
 
@@ -138,13 +171,49 @@ class PleioLoginView(TemplateView):
         user = User.objects.get(email=request.session.get('username'))
         form = PleioBackupTokenForm(user, request, data=request.POST)
         if form.is_valid():
-            auth_login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-            return redirect(next)
+            return self.post_login_user(request, user, next)
         else:
             EventLog.add_event(request, 'invalid login')
 
         return render(request, 'login.html', {'form' : form, 'login_step' : request.session.get('login_step') })
-    
+
+    def post_login_user(self, request, user, next=None, extid=None):
+        if not is_safe_url(next):
+            next = settings.LOGIN_REDIRECT_URL
+
+        auth_login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+        user.check_users_previous_logins(request)
+
+        if request.session.get('samlConnect'):
+            request.session.pop('samlConnect')
+            request.session['samlLogin'] = True
+            if not extid:
+                extid = saml_views.connect(request, user.email)
+
+        return redirect(next)
+
+    def check_is_active(self, request, user=None):
+        if not user:
+            username = request.POST.get('username')
+            try:
+                user = User.objects.get(email=username)
+            except User.DoesNotExist:
+                return False
+
+        if not user.is_active:
+            user.send_activation_token()
+            messages.info(request, _("This account is inactive." ), extra_tags="inactive")
+            return False
+
+        return True
+
+    def check_is_banned(self, request, user):
+        if user.is_banned:
+            messages.error(request, _("This account is suspended." ), extra_tags="banned")
+            return True
+
+        return False
+
     def set_partner_site_info(self):
         try:
             http_referer = urlparse(self.request.META['HTTP_REFERER'])
@@ -154,13 +223,13 @@ class PleioLoginView(TemplateView):
             self.request.COOKIES['partner_site_name'] = None
             self.request.COOKIES['partner_site_logo_url'] = None
             return False
-        
+
         try:
             clean_url = http_referer.scheme+"://"+http_referer.netloc+"/"
             if http_referer.netloc == self.request.META['HTTP_HOST']:
                 #referer is this site: no action to be taken
                 return False
-            
+
             try:
                 #search for matching partnersite data
                 partnersite = PleioPartnerSite.objects.get(partner_site_url=clean_url)
@@ -170,7 +239,7 @@ class PleioLoginView(TemplateView):
             except:
                 try:
                     #no matching partnersite data found: default background image will be used
-                    partnersite = PleioPartnerSite.objects.get(partner_site_url='http://localhost')
+                    partnersite = PleioPartnerSite.objects.get(partner_site_url=settings.EXTERNAL_HOST)
                     self.request.COOKIES['partner_site_url'] = clean_url
                     self.request.COOKIES['partner_site_name'] = http_referer.netloc
                     self.request.COOKIES['partner_site_logo_url'] = partnersite.partner_site_logo_url

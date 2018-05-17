@@ -9,7 +9,7 @@ from django.http import (HttpResponse, HttpResponseRedirect,
 from django.utils.http import is_safe_url
 from django.template import RequestContext
 from django.utils.translation import gettext, gettext_lazy as _
-from saml.models import IdentityProvider, ExternalId
+from saml.models import IdentityProvider, IdpEmailDomain, ExternalId
 from saml.forms import SetPasswordForm, ShowConnectionsForm
 from core.models import User, EventLog
 from core.class_views import PleioLoginView
@@ -416,3 +416,26 @@ def delete_connection(request, pk=None):
 
     return redirect('saml_connections')
 
+def get_user_and_idp(request):
+    email = request.POST.get('email')
+
+    try:
+        user = User.objects.get(email=email)
+    except User.DoesNotExist:
+        user = None
+
+    idp = None
+
+    try:
+        email_domain = email.split('@')[1]
+        try:
+            idp = IdpEmailDomain.objects.get(email_domain=email_domain).identityprovider.shortname
+        except IdpEmailDomain.DoesNotExist:
+            pass
+    except IndexError:
+        pass
+
+    return JsonResponse({
+        "user_exists": user != None,
+        "idp": idp
+    })

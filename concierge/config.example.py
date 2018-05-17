@@ -55,7 +55,7 @@ FROM_EMAIL = 'concierge@hil.ton'
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 25
 
-SITE_TITLE = 'Pleio account'
+SITE_TITLE = 'Concierge'
 SITE_LOGO = 'images/logo.svg'
 SITE_FAVICON = 'images/favicon.png'
 EMAIL_LOGO = 'images/email-logo.png'
@@ -81,3 +81,23 @@ RECAPTCHA_NUMBER_INVALID_LOGINS = 10
 # With the following test keys, you will always get No CAPTCHA and all verification requests will pass.
 GOOGLE_RECAPTCHA_SITE_KEY = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
 GOOGLE_RECAPTCHA_SECRET_KEY = '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe'
+
+SAML2_SP = {
+    "entityId": "http://172.17.0.1:8000/saml/metadata/",
+    "assertionConsumerService": {
+        "url": "http://172.17.0.1:8000/saml/acs/",
+        "binding": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+    },
+    "singleLogoutService": {
+        "url": "http://172.17.0.1:8000/saml/slo/",
+        "binding": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+    },
+    "NameIDFormat": "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress",
+    "x509cert": "MIICUjCCAbugAwIBAgIBADANBgkqhkiG9w0BAQ0FADBGMQswCQYDVQQGEwJubDEQMA4GA1UECAwHVXRyZWNodDEOMAwGA1UECgwFUGxlaW8xFTATBgNVBAMMDHd3dy5wbGVpby5ubDAeFw0xODAxMzAxMzU0MzdaFw0xOTAxMzAxMzU0MzdaMEYxCzAJBgNVBAYTAm5sMRAwDgYDVQQIDAdVdHJlY2h0MQ4wDAYDVQQKDAVQbGVpbzEVMBMGA1UEAwwMd3d3LnBsZWlvLm5sMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCy2HWJ7r9rED7Femo32cgmcV1vSzkJarE5oS1HKkTwPRoXJK3TFU9CeF45GOOvpEcxcCZkz+e0JeU3+8lir+fhu2aZsNSqdPc56qrHsQk0/EkzPLIfUe0pVI0OSnAm82X43RWw0Jl/46U8ZUcpzuM2ltswkRBIr1o3eRyuyR83HwIDAQABo1AwTjAdBgNVHQ4EFgQUYOL49JvyZjjaomA4RnsVjKGAKOEwHwYDVR0jBBgwFoAUYOL49JvyZjjaomA4RnsVjKGAKOEwDAYDVR0TBAUwAwEB/zANBgkqhkiG9w0BAQ0FAAOBgQAfn+7GQQ1Lq2ZhGMc219U1/kbOIZuaTwCw0IVluoxLy5kzqY2huV/gl8UUFr3Inp/VoX1eUmOK5WFtbHRj79AP6NX7A1B9OBcQDMFI2kJDhZQc1+5JFuwLPElrdZYyuSoB5Ey/CMbAkicZjxPWwutn34on3erPDYkmAvn74kl9og==",
+    "privateKey": ""
+}
+
+# Setting CELERY_ALWAYS_EAGER to "True"  will make task being executed locally in the client, not by a worker.
+# Always use "False" in production environment.
+CELERY_ALWAYS_EAGER = True
+CELERY_BROKER_URL = "amqp://localhost"

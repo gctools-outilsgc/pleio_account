@@ -74,7 +74,8 @@ urls = [
     url(r'^register/activate/(?P<activation_token>[-:\w]+)/$', views.register_activate, name='register_activate'),
     url(r'^change-email/$', views.change_email, name='change_email'),
     url(r'^change-email/activate/(?P<activation_token>[-:\w]+)/$', views.change_email_activate, name='change_email_activate'),
-    url(r'^termsofuse/$', views.terms_of_use, name='terms_of_use'),
+    url(r'^legal-pages/(?P<page_name>[\w-]+)/$', views.legal_pages, name='legal_pages'),
+    url(r'^legal-pages/(?P<page_name>[\w-]+)/(?P<language_code>[\w-]+)/$', views.legal_pages, name='legal_pages'),
     url(r'^securitypages/(?P<page_action>[\w-]+)/$', views.security_pages, name='security_pages'),
     url(r'^securitypages/$', views.security_pages, name='security_pages'),
     url(r'^password_reset/$', auth_views.password_reset, { 'template_name': 'password_reset.html', 'subject_template_name': 'emails/reset_password_subject.txt', 'email_template_name': 'emails/reset_password.txt', 'html_email_template_name': 'emails/reset_password.html' }, name='password_reset'),
@@ -84,6 +85,7 @@ urls = [
     url(r'^login/(?P<login_step>[\w-]+)/$', PleioLoginView.as_view(), name='login'),
     url(r'^login/$', PleioLoginView.as_view(), name='login'),
     url(r'^logout/$', views.logout, name='logout'),
+    url(r'^delete-account/$', views.delete_account, name='delete_account'),
     url(r'^profile/$', views.profile, name='profile'),
     url(r'^account/sessions/other/delete/$', view=PleioSessionDeleteOtherView.as_view(), name='session_delete_other'),
     url(r'^account/sessions/(?P<pk>\w+)/delete/$', view=PleioSessionDeleteView.as_view(), name='session_delete'),
@@ -116,6 +118,7 @@ django_urls = [
 ]
 
 saml_urls = [
+    url(r'^get_user_and_idp/$', saml_views.get_user_and_idp, name='get_user_and_idp'),
     url(r'^saml/sso/(?P<idp_shortname>[\w-]+)/$', saml_views.sso, name='saml_sso'),
     url(r'^saml/acs/$', saml_views.acs, name='saml_acs'),
     url(r'^saml/slo/$', saml_views.slo, name='saml_slo'),

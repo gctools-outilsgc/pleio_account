@@ -9,3 +9,4 @@ media/
 concierge/config.py
 .vscode/
 postgres-data/
+celerybeat-schedule
