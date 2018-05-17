@@ -16,6 +16,7 @@ EXTERNAL_HOST = 'http://127.0.0.1:8000/'
 LOCAL_INSTALLED_APPS = [
     # 'concierge_theme_gc',
     # 'concierge_theme_pleio',
+    # 'elgg',
 ]
 
 LOCAL_AUTHENTICATION_BACKENDS = [
@@ -70,6 +71,7 @@ ACCOUNT_ACTIVATION_DAYS = 7
 
 # For use with mod_pleio Elgg plugin
 ELGG_URL = ''
+ELGG_DB_URL = ''
 
 # Google reCAPTCHA Will be present on login page when from that IP adress more than RECAPTCHA_NUMBER_INVALID_LOGINS during the last RECAPTCHA_MINUTES_THRESHOLD have occurred.
 # Request an API key at https://developers.google.com/recaptcha/ for reCAPTCHA validation.
