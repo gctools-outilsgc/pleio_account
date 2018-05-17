@@ -102,5 +102,3 @@ SAML2_SP = {
 # Always use "False" in production environment.
 CELERY_ALWAYS_EAGER = True
 CELERY_BROKER_URL = "amqp://localhost"
-
-OIDC_EXTRA_SCOPE_CLAIMS = 'concierge.oidc_provider_settings.CustomScopeClaims'

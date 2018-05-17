@@ -132,6 +132,7 @@ LOGIN_REDIRECT_URL = '/profile/'
 LOGOUT_REDIRECT_URL = '/logout/'
 
 OIDC_USERINFO = 'concierge.oidc_provider_settings.userinfo'
+OIDC_EXTRA_SCOPE_CLAIMS = 'concierge.oidc_provider_settings.CustomScopeClaims'
 
 LOGGING = {
     'version': 1,
