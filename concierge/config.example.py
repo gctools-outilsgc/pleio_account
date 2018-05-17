@@ -51,7 +51,8 @@ LANGUAGES = [
     ('fr', _('French'))
 ]
 
-FROM_EMAIL = 'concierge@hil.ton'
+DEFAULT_FROM_EMAIL = 'concierge@hil.ton'
+
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 25
 
