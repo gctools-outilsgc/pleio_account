@@ -23,12 +23,10 @@ from two_factor.views.profile import DisableView
 
 from django.http import Http404, HttpResponseRedirect
 from django.views.decorators.cache import never_cache
-from django.utils.encoding import iri_to_uri
 from django.utils.http import urlquote
-from django.core.exceptions import ImproperlyConfigured
+from datetime import datetime
 import hashlib
 import hmac
-from datetime import datetime
 
 def home(request):
     if request.user.is_authenticated():
@@ -230,6 +228,6 @@ def freshdesk_sso(request):
 
     data = '{0}{1}{2}{3}'.format(name, settings.FRESHDESK_SECRET_KEY, email, dt)
     generated_hash = hmac.new(settings.FRESHDESK_SECRET_KEY.encode(), data.encode(), hashlib.md5).hexdigest()
-    url = settings.FRESHDESK_URL+'login/sso/?name='+urlquote(name)+'&email='+urlquote(email)+'&'+u'timestamp='+str(dt)+'&hash='+generated_hash+'&debug=1'
+    url = settings.FRESHDESK_URL+'login/sso/?name='+urlquote(name)+'&email='+urlquote(email)+'&'+u'timestamp='+str(dt)+'&hash='+generated_hash
 
     return HttpResponseRedirect(url)

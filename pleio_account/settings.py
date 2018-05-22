@@ -182,7 +182,7 @@ OIDC_USERINFO = 'pleio_account.oidc_provider_settings.userinfo'
 OIDC_EXTRA_SCOPE_CLAIMS = 'pleio_account.oidc_provider_settings.CustomScopeClaims'
 
 FRESHDESK_URL = 'https://gccollab.gctools-outilsgc.ca/'
-FRESHDESK_SECRET_KEY = ''
+FRESHDESK_SECRET_KEY = os.getenv('FRESHDESK_SECRET_KEY', '')
 
 ELGG_URL = 'https://gccollab.ca'
 
