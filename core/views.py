@@ -21,6 +21,12 @@ from django.contrib.auth import password_validation
 from core.class_views import PleioBackupTokensView, PleioSessionListView, PleioProfileView
 from two_factor.views.profile import DisableView
 
+from django.http import Http404, HttpResponseRedirect
+from django.views.decorators.cache import never_cache
+from django.utils.http import urlquote
+from datetime import datetime
+import hashlib
+import hmac
 
 def home(request):
     if request.user.is_authenticated():
@@ -208,3 +214,20 @@ def user_sessions_form(request):
     user_sessions = PleioSessionListView.as_view(template_name='security_pages.html')(request).context_data
 
     return user_sessions['object_list']
+
+@never_cache
+@login_required
+def freshdesk_sso(request):
+   
+    if not request.user:
+        raise Http404()
+
+    name = request.user.name
+    email = request.user.email
+    dt = int(datetime.utcnow().strftime("%s")) - 148
+
+    data = '{0}{1}{2}{3}'.format(name, settings.FRESHDESK_SECRET_KEY, email, dt)
+    generated_hash = hmac.new(settings.FRESHDESK_SECRET_KEY.encode(), data.encode(), hashlib.md5).hexdigest()
+    url = settings.FRESHDESK_URL+'login/sso/?name='+urlquote(name)+'&email='+urlquote(email)+'&'+u'timestamp='+str(dt)+'&hash='+generated_hash
+
+    return HttpResponseRedirect(url)
