@@ -40,6 +40,7 @@ def get_provinces():
         ('Manitoba', _('Manitoba')),
         ('New Brunswick', _('New Brunswick')),
         ('Newfoundland and Labrador', _('Newfoundland and Labrador')),
+        ('Northwest Territories', _('Northwest Territories')),
         ('Nova Scotia', _('Nova Scotia')),
         ('Nunavut', _('Nunavut')),
         ('Ontario', _('Ontario')),

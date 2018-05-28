@@ -2,83 +2,230 @@
 {% load i18n %}
 {% load occupationfields_tags %}
 {% get_current_language as LANGUAGE_CODE %}
+{% load static %}
 
 {% block additional_fields %}
 
   {% get_user_types as user_types %}
   <div class="field">
       <label for="id_occupation">{% trans "Occupation" %}</label>
-      <select name="occupation" id="id_occupation">
+      <select name="occupation" id="id_occupation" onchange="selectOccupation(this)">
         {% for key, value in user_types %}
           <option value="{{ key }}">{{ value }}</option>
         {% endfor %}
       </select>
   </div>
 
-  <div class="field">
+  <div class="field occupation-input" id="academic">
     <label for="academic-institution">{% trans "Institution" %}</label>
-    <select name="academic-institution" id="academic-institution">
+    <select name="academic-institution" id="academic-institution" onchange="selectSchool(this)">
       <option value="None">...</option>
       <option value="university">{% trans "University" %}</option>
       <option value="college">{% trans "College" %}</option>
     </select>
+  </div>
 
+  <div class="field occupation-input" id="student">
     <label for="student-institution">{% trans "Institution" %}</label>
-    <select name="student-institution" id="student-institution">
+    <select name="student-institution" id="student-institution" onchange="selectSchool(this)">
       <option value="None">...</option>
       <option value="university">{% trans "University" %}</option>
       <option value="college">{% trans "College" %}</option>
       <option value="high school">{% trans "High School" %}</option>
     </select>
+  </div>
 
+  <div class="field occupation-input" id="provincial">
     {% get_provinces as provinces %}
     <label for="id_province">{% trans "Province/Territory" %}</label>
-    <select name="province" id="id_province">
+    <select name="province" id="id_province"  onchange="selectMinistry(this)">
       {% for key, value in provinces %}
         <option value="{{ key }}">{{ value }}</option>
       {% endfor %}
     </select>
   </div>
 
-  <div class="field">
+  <div class="field occupation-input school">
       <label for="university">{% trans "University" %}</label>
       <select name="university" id="university">
         <option value="None">...</option>
-      </select>
-
-      <label for="college">{% trans "College" %}</label>
-      <select name="college" id="college">
-        <option value="None">...</option>
-      </select>
-      {{lang}}
-      <label for="department">{% trans "Organization" %}</label>
-      <select name="department" id="department">
-        <option value="None">...</option>
-        {% for k, v in fields.items %}
+        {% for k, v in fields.university.items %}
           <option value="{{ k }}">{{ v }}</option>
         {% endfor %}
       </select>
+  </div>
 
-      <label for="ministry">{% trans "Ministry" %}</label>
-      <select name="ministry" id="ministry">
+  <div class="field occupation-input school">
+      <label for="college">{% trans "College" %}</label>
+      <select name="college" id="college">
         <option value="None">...</option>
-      </select>
-
-      <label for="id_highschool">{% trans "High School" %}</label>
-      <input type="text" name="highschool" id="id_highschool">
-
-      <label for="id_organization">{% trans "Organization" %}</label>
-      <input type="text" name="organization" id="id_organization">
-
-      <label for="other">{% trans "Organization" %}</label>
-      <select name="other" id="other">
-        <option value="None">...</option>
+        {% for k, v in fields.college.items %}
+          <option value="{{ k }}">{{ v }}</option>
+        {% endfor %}
       </select>
   </div>
-  {% for k, v in fields.items %}
-    {{k}}{{v}}<br>
-  {% endfor %}
-  {{ fields }}
-  <script>console.log('{{ fields }}')</script>
 
+  <div class="field occupation-input" id="federal">
+      <label for="department">{% trans "Organization" %}</label>
+      <select name="department" id="department">
+        <option value="None">...</option>
+        {% for k, v in fields.federal.items %}
+          <option value="{{ k }}">{{ v }}</option>
+        {% endfor %}
+      </select>
+  </div>
+
+  <div class="field occupation-input ministry">
+      <label for="alberta-ministry">{% trans "Ministry" %}</label>
+      <select name="alberta-ministry" id="alberta-ministry">
+        <option value="None">...</option>
+        {% for k, v in fields.ministry.alberta.items %}
+          <option value="{{ k }}">{{ v }}</option>
+        {% endfor %}
+      </select>
+  </div>
+
+  <div class="field occupation-input ministry">
+      <label for="britishcolumbia-ministry">{% trans "Ministry" %}</label>
+      <select name="britishcolumbia-ministry" id="britishcolumbia-ministry">
+        <option value="None">...</option>
+        {% for k, v in fields.ministry.britishcolumbia.items %}
+          <option value="{{ k }}">{{ v }}</option>
+        {% endfor %}
+      </select>
+  </div>
+
+  <div class="field occupation-input ministry">
+      <label for="manitoba-ministry">{% trans "Ministry" %}</label>
+      <select name="manitoba-ministry" id="manitoba-ministry">
+        <option value="None">...</option>
+        {% for k, v in fields.ministry.manitoba.items %}
+          <option value="{{ k }}">{{ v }}</option>
+        {% endfor %}
+      </select>
+  </div>
+
+  <div class="field occupation-input ministry">
+      <label for="newbrunswick-ministry">{% trans "Ministry" %}</label>
+      <select name="newbrunswick-ministry" id="newbrunswick-ministry">
+        <option value="None">...</option>
+        {% for k, v in fields.ministry.newbrunswick.items %}
+          <option value="{{ k }}">{{ v }}</option>
+        {% endfor %}
+      </select>
+  </div>
+
+  <div class="field occupation-input ministry">
+      <label for="newfoundlandandlabrador-ministry">{% trans "Ministry" %}</label>
+      <select name="newfoundlandandlabrador-ministry" id="newfoundlandandlabrador-ministry">
+        <option value="None">...</option>
+        {% for k, v in fields.ministry.newfoundlandandlabrador.items %}
+          <option value="{{ k }}">{{ v }}</option>
+        {% endfor %}
+      </select>
+  </div>
+
+  <div class="field occupation-input ministry">
+      <label for="northwestterritories-ministry">{% trans "Ministry" %}</label>
+      <select name="northwestterritories-ministry" id="northwestterritories-ministry">
+        <option value="None">...</option>
+        {% for k, v in fields.ministry.northwestterritories.items %}
+          <option value="{{ k }}">{{ v }}</option>
+        {% endfor %}
+      </select>
+  </div>
+
+  <div class="field occupation-input ministry">
+      <label for="novascotia-ministry">{% trans "Ministry" %}</label>
+      <select name="novascotia-ministry" id="novascotia-ministry">
+        <option value="None">...</option>
+        {% for k, v in fields.ministry.novascotia.items %}
+          <option value="{{ k }}">{{ v }}</option>
+        {% endfor %}
+      </select>
+  </div>
+
+  <div class="field occupation-input ministry">
+      <label for="nunavut-ministry">{% trans "Ministry" %}</label>
+      <select name="nunavut-ministry" id="nunavut-ministry">
+        <option value="None">...</option>
+        {% for k, v in fields.ministry.nunavut.items %}
+          <option value="{{ k }}">{{ v }}</option>
+        {% endfor %}
+      </select>
+  </div>
+
+  <div class="field occupation-input ministry">
+      <label for="ontario-ministry">{% trans "Ministry" %}</label>
+      <select name="ontario-ministry" id="ontario-ministry">
+        <option value="None">...</option>
+        {% for k, v in fields.ministry.ontario.items %}
+          <option value="{{ k }}">{{ v }}</option>
+        {% endfor %}
+      </select>
+  </div>
+
+  <div class="field occupation-input ministry">
+      <label for="princeedwardisland-ministry">{% trans "Ministry" %}</label>
+      <select name="princeedwardisland-ministry" id="princeedwardisland-ministry">
+        <option value="None">...</option>
+        {% for k, v in fields.ministry.princeedwardisland.items %}
+          <option value="{{ k }}">{{ v }}</option>
+        {% endfor %}
+      </select>
+  </div>
+
+  <div class="field occupation-input ministry">
+      <label for="quebec-ministry">{% trans "Ministry" %}</label>
+      <select name="quebec-ministry" id="quebec-ministry">
+        <option value="None">...</option>
+        {% for k, v in fields.ministry.quebec.items %}
+          <option value="{{ k }}">{{ v }}</option>
+        {% endfor %}
+      </select>
+  </div>
+
+  <div class="field occupation-input ministry">
+      <label for="saskatchewan-ministry">{% trans "Ministry" %}</label>
+      <select name="saskatchewan-ministry" id="saskatchewan-ministry">
+        <option value="None">...</option>
+        {% for k, v in fields.ministry.saskatchewan.items %}
+          <option value="{{ k }}">{{ v }}</option>
+        {% endfor %}
+      </select>
+  </div>
+
+  <div class="field occupation-input ministry">
+      <label for="yukon-ministry">{% trans "Ministry" %}</label>
+      <select name="yukon-ministry" id="yukon-ministry">
+        <option value="None">...</option>
+        {% for k, v in fields.ministry.yukon.items %}
+          <option value="{{ k }}">{{ v }}</option>
+        {% endfor %}
+      </select>
+  </div>
+
+  <div class="field occupation-input">
+      <label for="highschool">{% trans "High School" %}</label>
+      <input type="text" name="highschool" id="highschool">
+  </div>
+
+  <div class="field occupation-input">
+      <label for="id_organization">{% trans "Organization" %}</label>
+      <input type="text" name="organization" id="id_organization">
+  </div>
+
+  <div class="field occupation-input" id="other">
+    <label for="id_other">{% trans "Organization" %}</label>
+    <select name="other" id="id_other">
+      <option value="None">...</option>
+      {% for k, v in fields.other.items %}
+        <option value="{{ k }}">{{ v }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+<link rel="stylesheet" type="text/css" href="{% static 'occupationfields/style.css' %}" />
+<script>var check = '{% static "occupationfields/icons/circle-check.svg" %}'; var ex = '{% static "occupationfields/icons/circle-x.svg" %}';</script>
+<script src="{% static 'occupationfields/field.js' %}"></script>
 {% endblock %}

@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
+from emailvalidator.validator import is_email_valid
 from occupationfields.forms import OccupationRegisterForm
 from django.utils import translation
+from django.http import JsonResponse
+from collections import OrderedDict
 import requests
 import json
 
@@ -34,9 +37,20 @@ def registerOccupation(request):
     field_data = json.loads(result.text)
 
     lang = translation.get_language()
+    data = {
+        'federal': json.loads(field_data['result']['federal'][lang], object_pairs_hook=OrderedDict),
+        'university': json.loads(field_data['result']['academic']['university'][lang], object_pairs_hook=OrderedDict),
+        'college': json.loads(field_data['result']['academic']['college'][lang], object_pairs_hook=OrderedDict),
+        'ministry': json.loads(field_data['result']['provincial']['ministry'][lang], object_pairs_hook=OrderedDict),
+        'other': json.loads(field_data['result']['other'][lang], object_pairs_hook=OrderedDict)
+    }
 
-    return render(request, 'occupation_fields.html', {'form': form, 'fields': json.loads(field_data['result']['federal'][lang])})
+    return render(request, 'occupation_fields.html', {'form': form, 'fields': data })
 
-def verifyEmail(request):
-
-    return True
+def validateEmail(request):
+    email = request.GET.get('email', None);
+    if not is_email_valid(email):
+        data = { 'valid': False }
+    else:
+        data = { 'valid': True }
+    return JsonResponse(data)

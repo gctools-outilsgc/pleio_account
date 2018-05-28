@@ -1,0 +1,16 @@
+.occupation-input {
+   display: none;
+ }
+.valid-icon {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 0.4rem 0.4rem 0.6rem;
+}
+.valid-icon img {
+  width: 2rem;
+  height: 2rem;
+}
+#base-card {
+  max-width: 450px;
+}
