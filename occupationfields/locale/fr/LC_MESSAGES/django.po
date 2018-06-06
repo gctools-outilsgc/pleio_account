@@ -1,0 +1,223 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-06-06 08:48-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: templates/custom_register.html:8 templates/custom_register.html.py:20
+#: templates/custom_register.html:101
+msgid "Register"
+msgstr ""
+
+#: templates/custom_register.html:20
+msgid "to create an account"
+msgstr ""
+
+#: templates/custom_register.html:32
+msgid "Login failed."
+msgstr ""
+
+#: templates/custom_register.html:33
+msgid "Please check Google captcha."
+msgstr ""
+
+#: templates/custom_register.html:43
+msgid "First and last name"
+msgstr ""
+
+#: templates/custom_register.html:48
+msgid "Email"
+msgstr ""
+
+#: templates/custom_register.html:60
+msgid "Password"
+msgstr ""
+
+#: templates/custom_register.html:64 templates/custom_register.html.py:74
+msgid "Show password"
+msgstr ""
+
+#: templates/custom_register.html:66
+msgid ""
+"Create a unique password that contains at least 8 characters, including both "
+"letters and numbers."
+msgstr ""
+
+#: templates/custom_register.html:70
+msgid "Confirm password"
+msgstr ""
+
+#: templates/custom_register.html:83
+msgid "I agree with the "
+msgstr ""
+
+#: templates/custom_register.html:83
+msgid " terms and conditions"
+msgstr ""
+
+#: templates/custom_register.html:83
+msgid "Opens in a new tab"
+msgstr ""
+
+#: templates/custom_register.html:89
+msgid "Receive Suspicious Sign In Emails"
+msgstr ""
+
+#: templates/custom_register.html:103
+msgid "Return to sign in"
+msgstr ""
+
+#: templates/occupation_fields.html:11
+msgid "Occupation"
+msgstr "Occupation"
+
+#: templates/occupation_fields.html:20 templates/occupation_fields.html:29
+msgid "Institution"
+msgstr "Institution"
+
+#: templates/occupation_fields.html:23 templates/occupation_fields.html:32
+#: templates/occupation_fields.html:49
+msgid "University"
+msgstr "Université"
+
+#: templates/occupation_fields.html:24 templates/occupation_fields.html:33
+#: templates/occupation_fields.html:59
+msgid "College"
+msgstr "Collège"
+
+#: templates/occupation_fields.html:34 templates/occupation_fields.html:209
+msgid "High School"
+msgstr "École secondaire"
+
+#: templates/occupation_fields.html:40
+msgid "Province/Territory"
+msgstr "Province / territoire"
+
+#: templates/occupation_fields.html:69 templates/occupation_fields.html:214
+#: templates/occupation_fields.html:219
+msgid "Organization"
+msgstr "Organisation"
+
+#: templates/occupation_fields.html:79 templates/occupation_fields.html:89
+#: templates/occupation_fields.html:99 templates/occupation_fields.html:109
+#: templates/occupation_fields.html:119 templates/occupation_fields.html:129
+#: templates/occupation_fields.html:139 templates/occupation_fields.html:149
+#: templates/occupation_fields.html:159 templates/occupation_fields.html:169
+#: templates/occupation_fields.html:179 templates/occupation_fields.html:189
+#: templates/occupation_fields.html:199
+msgid "Ministry"
+msgstr "Ministère"
+
+#: templatetags/occupationfields_tags.py:18
+msgid "Academic"
+msgstr "Milieu universitaire"
+
+#: templatetags/occupationfields_tags.py:19
+msgid "Student"
+msgstr "Étudiant"
+
+#: templatetags/occupationfields_tags.py:20
+msgid "Federal Government"
+msgstr "Gouvernement fédéral"
+
+#: templatetags/occupationfields_tags.py:21
+msgid "Provincial/Territorial Government"
+msgstr "Gouvernement provincial / territorial"
+
+#: templatetags/occupationfields_tags.py:22
+msgid "Municipal Government"
+msgstr "Administration municipale"
+
+#: templatetags/occupationfields_tags.py:23
+msgid "International/Foreign Government"
+msgstr "International / Gouvernement étranger"
+
+#: templatetags/occupationfields_tags.py:24
+msgid "Non-Governmental Organization"
+msgstr "Organismes non gouvernementaux"
+
+#: templatetags/occupationfields_tags.py:25
+msgid "Community/Non-profit"
+msgstr "Collectivité / Sans but lucratif"
+
+#: templatetags/occupationfields_tags.py:26
+msgid "Business"
+msgstr "Entreprise"
+
+#: templatetags/occupationfields_tags.py:27
+msgid "Media"
+msgstr "Média"
+
+#: templatetags/occupationfields_tags.py:28
+msgid "Retired Public Servant"
+msgstr "Fonctionnaire à la retraité(e)"
+
+#: templatetags/occupationfields_tags.py:29
+msgid "Other"
+msgstr "Autres renseignements"
+
+#: templatetags/occupationfields_tags.py:38
+msgid "Alberta"
+msgstr "Alberta"
+
+#: templatetags/occupationfields_tags.py:39
+msgid "British Columbia"
+msgstr "Colombie-Britannique"
+
+#: templatetags/occupationfields_tags.py:40
+msgid "Manitoba"
+msgstr "Manitoba"
+
+#: templatetags/occupationfields_tags.py:41
+msgid "New Brunswick"
+msgstr "Nouveau-Brunswick"
+
+#: templatetags/occupationfields_tags.py:42
+msgid "Newfoundland and Labrador"
+msgstr "Terre-Neuve-et-Labrador"
+
+#: templatetags/occupationfields_tags.py:43
+msgid "Northwest Territories"
+msgstr "Territoires du Nord-Ouest"
+
+#: templatetags/occupationfields_tags.py:44
+msgid "Nova Scotia"
+msgstr "Nouvelle-Écosse"
+
+#: templatetags/occupationfields_tags.py:45
+msgid "Nunavut"
+msgstr "Nunavut"
+
+#: templatetags/occupationfields_tags.py:46
+msgid "Ontario"
+msgstr "Ontario"
+
+#: templatetags/occupationfields_tags.py:47
+msgid "Prince Edward Island"
+msgstr "Île-du-Prince-Édouard"
+
+#: templatetags/occupationfields_tags.py:48
+msgid "Quebec"
+msgstr "Québec"
+
+#: templatetags/occupationfields_tags.py:49
+msgid "Saskatchewan"
+msgstr "Saskatchewan"
+
+#: templatetags/occupationfields_tags.py:50
+msgid "Yukon"
+msgstr "Yukon"

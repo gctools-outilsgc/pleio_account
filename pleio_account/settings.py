@@ -147,6 +147,7 @@ LANGUAGES = [
 
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
+    os.path.join(BASE_DIR, 'occupationfields/locale'),
 )
 
 TIME_ZONE = 'America/Toronto'

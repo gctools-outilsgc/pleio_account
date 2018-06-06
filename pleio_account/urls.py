@@ -69,6 +69,7 @@ legacy_urls = [
 ]
 
 urls = [
+    url('', include('occupationfields.urls')),
     url(r'^register/$', views.register, name='register'),
     url(r'^register/complete/$', views.register_complete, name='register_complete'),
     url(r'^register/activate/(?P<activation_token>[-:\w]+)/$', views.register_activate, name='register_activate'),
@@ -112,12 +113,7 @@ oidc_urls = [
     ))
 ]
 
-
 urlpatterns = legacy_urls + urls + tf_urls + us_urls + django_urls + oidc_urls
-
-if 'occupationfields' in settings.INSTALLED_APPS:
-    gc_urls = [ url('', include('occupationfields.urls')) ]
-    urlpatterns = gc_urls + urlpatterns
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

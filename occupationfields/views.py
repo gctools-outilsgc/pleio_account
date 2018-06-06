@@ -32,7 +32,7 @@ def registerOccupation(request):
     else:
         form = OccupationRegisterForm()
 
-    result = requests.get('https://dev.gccollab.ca/services/api/rest/json/?method=get.fields&id=0')
+    result = requests.get('https://gccollab.ca/services/api/rest/json/?method=get.fields&id=0')
 
     field_data = json.loads(result.text)
 
