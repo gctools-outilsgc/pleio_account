@@ -36,7 +36,7 @@
                     <a class="navigation__logo" title="{% trans "Back to the homepage" %}" href="https://www.pleio.nl/">{% include_asset "images/logo.svg" %}</a>
                     {% endcomment %}
                     <a href="{% url 'profile' %}" style="color:black;">
-                        <img alt ="" src="{% show_customizations_logo %}" class="ui top aligned mini image">
+                        <img alt ="" src="{% show_customizations_logo %}" class="ui top aligned mini image header-logo">
                         <span class="ui huge header">
                             {% show_customizations_title as app_title2 %}
                             {% blocktrans with app_title=app_title2 %}{{ app_title }} Account{% endblocktrans %}
@@ -212,7 +212,7 @@ position:relative;
 }
 .account-overlay {
 display: flex;
-min-height:100%;
+height:100%;
 }
 .account-menu {
 background: #FEFEFE;
