@@ -99,3 +99,5 @@ SAML2_SP = {
 # Always use "False" in production environment.
 CELERY_ALWAYS_EAGER = True
 CELERY_BROKER_URL = "amqp://localhost"
+
+# Dummy commit to force rebuild in GitHub
