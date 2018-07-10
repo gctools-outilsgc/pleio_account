@@ -101,11 +101,21 @@ class User(AbstractBaseUser):
     def notify_graphql(self):
         # ToDo replace this with messages over Kafka system for notification
         if settings.GRAPHQL_TRIGGERS is True:
+            attempt = 0
+            retrys = 3
+            success = False
+
             query = {'query': 'mutation{createProfile(gcId: "' + str(self.id) + '", name: "' + self.name + '", email:"' +
-                         self.email + '"){gcID, name, email}}'}
-            response = requests.post(settings.GRAPHQL_ENDPOINT, headers={'Authorization': 'Token ' + settings.GRAPHQL_TOKEN},
-                         data=query)
-            if not response.status_code == requests.codes.ok:
+                              self.email + '"){gcID, name, email}}'}
+
+            while not success and attempt < retrys:
+                response = requests.post(settings.GRAPHQL_ENDPOINT, headers={'Authorization': 'Token ' + settings.GRAPHQL_TOKEN},
+                                    data=query)
+                if not response.status_code == requests.codes.ok:
+                    attempt = attempt + 1
+                else:
+                    success = True
+            if not success:
                 # Write this to log eventually
                 raise Exception('Error setting user data / Server Response ' + str(response.status_code))
 
@@ -125,7 +135,6 @@ class User(AbstractBaseUser):
             html_message = (render_to_string('emails/register.html', template_context)),
             fail_silently = True
         )
-        self.notify_graphql()
 
     def activate_user(self, activation_token):
         try:
@@ -144,7 +153,7 @@ class User(AbstractBaseUser):
 
             self.is_active = True
             self.save()
-
+            self.notify_graphql()
             return self
 
         except (signing.BadSignature, User.DoesNotExist):
