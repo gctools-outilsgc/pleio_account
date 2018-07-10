@@ -17,32 +17,32 @@ def userinfo(claims, user):
     query = {'query': 'query{profiles(gcID: "' + '18' + '"){name, email, avatar, mobilePhone, officePhone,' +
                       'address{streetAddress,city, province, postalCode, country}}}'}
 
-    response = requests.post(settings.GRAPHQL_ENDPOINT, headers={'Authorization':'Token ' + settings.GRAPHQL_TOKEN},
+    response = requests.post(settings.GRAPHQL_ENDPOINT, headers={'Authorization': 'Token ' + settings.GRAPHQL_TOKEN},
                              data=query)
     if not response.status_code == requests.codes.ok:
         raise Exception('Error getting user data / Server Response ' + str(response.status_code))
     else:
         response = response.json()
-    if 'avatar' in response['data']['profiles'][0]:
-        claims['picture'] = checkvalue(response.get('avatar'))
-    if 'mobilePhone' in response['data']['profiles'][0] or 'officePhone' in response['data']['profiles'][0]:
-        if 'mobilePhone' in response['data']['profiles'][0]:
-            claims['phone_number'] = checkvalue(response.get('mobilePhone'))
+        response_address = response['data']['profiles'][0].get('address')
+
+        claims['picture'] = checkvalue(response['data']['profiles'][0].get('avatar'))
+        if response['data']['profiles'][0].get('mobilePhone') is not None:
+            claims['phone_number'] = checkvalue(response['data']['profiles'][0].get('mobilePhone'))
         else:
-            claims['phone_number'] = checkvalue(response.get('officePhone'))
-    if 'address' in response['data']['profiles'][0]:
-        response_address = response['data']['profiles'][0]['address']
+            claims['phone_number'] = checkvalue(response['data']['profiles'][0].get('officePhone'))
+
         if response_address is not None:
-            if 'street_address' in response_address:
-                claims['address']['street_address'] = checkvalue(response_address.get(['street_address']))
+
+            if 'streetAddress' in response_address:
+                claims['address']['street_address'] = checkvalue(response_address.get('streetAddress'))
             if 'city' in response_address:
-                claims['address']['locality'] = checkvalue(response_address.get(['city']))
+                claims['address']['locality'] = checkvalue(response_address.get('city'))
             if 'province' in response_address:
-                claims['address']['region'] = checkvalue(response_address.get(['province']))
+                claims['address']['region'] = checkvalue(response_address.get('province'))
             if 'postalCode' in response_address:
-                claims['address']['postal_code'] = checkvalue(response_address.get(['postalCode']))
+                claims['address']['postal_code'] = checkvalue(response_address.get('postalCode'))
             if 'country' in response_address:
-                claims['address']['country'] = checkvalue(response_address.get(['country']))
+                claims['address']['country'] = checkvalue(response_address.get('country'))
 
     return claims
 

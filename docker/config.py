@@ -42,5 +42,5 @@ SESSION_COOKIE_HTTPONLY = True
 
 
 GRAPHQL_TRIGGERS = True
-GRAPHQL_ENDPOINT = 'http://tools-dev.canadaeast.cloudapp.azure.com:8080/protected/'
-GRAPHQL_TOKEN = '343eaab7a7782ee97f5d20ad9dad9299df95e258'
+GRAPHQL_ENDPOINT = 'https://graphql.gccollab.ca/protected'
+GRAPHQL_TOKEN = 'aeb69b36cc2d332be878887971a61bf16411c3c0'
