@@ -16,7 +16,7 @@ def userinfo(claims, user):
     claims['email'] = user.email
 
     if settings.GRAPHQL_TRIGGERS:
-        claimsfromprofiles(retrys, claims)
+        return claimsfromprofiles(retrys, claims)
     else:
         return claims
 
