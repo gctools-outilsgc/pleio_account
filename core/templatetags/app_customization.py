@@ -122,3 +122,19 @@ def show_footer_image_right():
             return q.footer_image_right.url
     except AppCustomization.DoesNotExist:
         return ''
+
+@register.simple_tag()
+def show_customizations_department():
+    try:
+        q = AppCustomization.objects.get(id=1)
+        return q.product_department
+    except AppCustomization.DoesNotExist:
+        return ''
+
+@register.simple_tag()
+def show_customizations_do_not_reply():
+    try:
+        q = AppCustomization.objects.get(id=1)
+        return q.do_not_reply_email
+    except AppCustomization.DoesNotExist:
+        return ''

@@ -298,23 +298,26 @@ msgstr "Veuillez activer votre compte"
 msgid "Hello"
 msgstr "Bonjour"
 
+#: core/templates/emails/reset_password.html:23
+#: core/templates/emails/reset_password.html:36
+msgid "If you are still having password or account issues after the reset link, you can contact the <a href='https://gccollab.ca/help/knowledgebase' alt='help desk'>help desk</a> and an agent will help you change your password."
+msgstr "Si vous avez toujours des problèmes avec votre mot de passe ou votre compte après avoir utilisé le lien "
+"de réinitialisation, vous pouvez communiquer avec le bureau d’aide <a href='https://gccollab.ca/help/knowledgebase' alt='help desk'>bureau d'aide</a> et un agent vous aidera à "
+"modifier votre mot de passe."
+
 #: core/templates/emails/reset_password.html:17
 #: core/templates/emails/reset_password.html:30
-msgid ""
-"You have requested a new password. Please follow this link to set a new "
-"password."
-msgstr ""
-"Vous avez demandé à modifier votre mot de passe. Veuillez suivre ce lien "
-"pour définir un nouveau mot de passe."
+msgid "We received a request to change your password. You can click on the link below to reset your password:"
+msgstr "Nous avons reçu une demande pour modifier votre mot de passe. Vous pouvez cliquer sur le lien "
+"ci-dessous pour réinitialiser votre mot de passe :"
 
 #: core/templates/emails/reset_password.html:21
 #: core/templates/emails/reset_password.html:34
 #: core/templates/emails/reset_password.txt:11
 #: core/templates/emails/reset_password.txt:23
-msgid "You can ignore this e-mail if you did not request a new password."
-msgstr ""
-"Vous pouvez ignorer ce courriel si vous n’avez pas demandé à modifier votre "
-"mot de passe."
+msgid "If you didn’t request a password reset, you can safely ignore this email. Your password will not change."
+msgstr "Si vous n’avez pas demandé la réinitialisation de votre mot de passe, vous pouvez ignorer ce courriel. "
+"Votre mot de passe ne sera pas modifié. "
 
 #: core/templates/emails/reset_password.txt:7
 #: core/templates/emails/reset_password.txt:19
@@ -322,12 +325,9 @@ msgstr ""
 #| msgid ""
 #| "You have requested a new password. Please follow this link to set a new "
 #| "password."
-msgid ""
-"You requested a new password for Pleio. Please follow this link to configure "
-"a new password."
-msgstr ""
-"Vous avez demandé à modifier votre mot de passe. Veuillez suivre ce lien "
-"pour définir un nouveau mot de passe."
+msgid  "You have requested a new password. Please follow this link to set a new password."
+msgstr "Nous avons reçu une demande pour modifier votre mot de passe. Vous pouvez cliquer sur le lien "
+"ci-dessous pour réinitialiser votre mot de passe :"
 
 #: core/templates/emails/reset_password_subject.txt:1
 msgid "Request for a new password"
@@ -367,6 +367,10 @@ msgstr ""
 #: core/templates/emails/suspicious_login_subject.txt:1
 msgid "Logged in from a new location"
 msgstr "Connecté à partir d'un nouvel emplacement"
+
+#: core/templates/emails/base.html:267
+msgid "Support"
+msgstr "Soutien"
 
 #: core/templates/language.html:26 core/templates/language.html:37
 msgid "Change language"

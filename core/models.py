@@ -319,6 +319,8 @@ class AppCustomization(models.Model):
     display_logo_title = models.BooleanField("Display Logo and Title together", default=True)
     footer_image_left = models.FileField(null=True, blank=True)
     footer_image_right = models.FileField(null=True, blank=True)
+    product_department = models.CharField(max_length=150, blank=True)
+    do_not_reply_email = models.CharField(max_length=150, blank=True)
 
 admin.site.register(User, UserAdmin)
 admin.site.register(PleioPartnerSite)
