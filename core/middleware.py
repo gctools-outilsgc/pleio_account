@@ -4,8 +4,7 @@ from django.utils.crypto import get_random_string
 from django.utils.deprecation import MiddlewareMixin
 from django.contrib.auth import views as auth_views
 from django.utils.decorators import method_decorator
-from defender.decorators import watch_login
-
+from pleio_account.decorators import watch_login
 
 VALID_KEY_CHARS = string.ascii_lowercase + string.digits
 
@@ -83,10 +82,11 @@ class FailedLoginMiddleware(MiddlewareMixin):
                 our_decorator = watch_login()
                 watch_login_method = method_decorator(our_decorator)
                 PleioLoginView.dispatch = watch_login_method(PleioLoginView.dispatch)
+
             except ImportError:
                 auth_views.login = watch_login()(auth_views.login)
 
             FailedLoginMiddleware.patched = True
             return response
-
+            
         return response

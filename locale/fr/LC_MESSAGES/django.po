@@ -333,6 +333,26 @@ msgstr "Nous avons reçu une demande pour modifier votre mot de passe. Vous pouv
 msgid "Request for a new password"
 msgstr "Demande d’un nouveau mot de passe"
 
+#: core/templates/emails/reset_password_lockout.html:17
+#: core/templates/emails/reset_password_lockout.html:32
+msgid "Your account has been locked as the incorrect password had been entered too many times. You will need to reset your password, which you can do by clicking the link below."
+msgstr "Votre compte a été verrouillé puisque le mauvais mot de passe a été entré trop souvent. Vous devrez "
+"réinitialiser votre mot de passe en cliquant sur le lien ci-dessous."
+
+#: core/templates/emails/reset_password_lockout.html:21
+#: core/templates/emails/reset_password_lockout.html:36
+msgid "Your account will be unlocked after resetting your password, and you should be able to log in normally."
+msgstr "Votre compte sera déverrouillé après la réinitialisation de votre mot de passe, et vous devriez pouvoir "
+"vous connecter comme vous le feriez d’habitude."
+
+#: core/templates/emails/reset_password_lockout.html:23
+#: core/templates/emails/reset_password_lockout.html:38
+msgid "If you are still having password issues after using the reset link, you can contact the <a href='https://gccollab.ca/help/knowledgebase' alt='help desk'>help desk</a> and an agent will help you " "change your password and get back into your account."
+msgstr "Si vous avez encore des problèmes avec votre mot de passe après avoir utilisé le lien de réinitialisation, "
+"vous pouvez communiquer avec le <a href='https://gccollab.ca/help/knowledgebase' alt='help desk'>bureau d'aide</a> et un agent vous aidera à changer votre mot de "
+"passe et à vous connecter à nouveau à votre compte."
+
+
 #: core/templates/emails/suspicious_login.html:2
 #: core/templates/emails/suspicious_login.txt:1
 msgid "<em>unknown on unknown</em>"
@@ -383,16 +403,32 @@ msgid "Security Alert"
 msgstr "Sécurité"
 
 #: core/templates/locked_out.html:18
-msgid "or more failed login attempts"
-msgstr "ou plus tentatives de connexion échouées"
+msgid "Your account has been temporarily locked for "
+msgstr "Votre compte a été temporairement verrouillé pendant "
+
+#: core/templates/locked_out.html:18
+msgid "minutes as the incorrect password has been entered"
+msgstr "minutes puisque le mauvais mot de passe a été entré"
+
+#: core/templates/locked_out.html:18
+msgid " times."
+msgstr " fois."
 
 #: core/templates/locked_out.html:19
-msgid "Account locked for"
-msgstr "Compte verouillé pour"
+msgid "An email has been sent to "
+msgstr "Un courriel a été envoyé à"
 
 #: core/templates/locked_out.html:19
-msgid "minutes"
-msgstr "minutes"
+msgid "to reset your password and unlock your account."
+msgstr "pour réinitialiser votre mot de passe et déverrouiller votre compte."
+
+#: core/templates/locked_out.html:20
+msgid "If you no longer have access to"
+msgstr "Si vous n’avez plus accès à"
+
+#: core/templates/locked_out.html:20
+msgid "you can contact <a href='https://gccollab.ca/help/knowledgebase' alt='help desk'>help desk</a> and an agent will help you get back into your account."
+msgstr "vous pouvez communiquer avec le <a href='https://gccollab.ca/help/knowledgebase' alt='help desk'>bureau d'aide</a> et un agent vous aidera à vous connecter à nouveau à votre compte."
 
 #: core/templates/login.html:8 core/templates/login.html:20
 #: core/templates/login.html:100
