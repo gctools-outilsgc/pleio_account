@@ -16,8 +16,8 @@
 
     <div class="ui large negative message" id="error_login">
         <div class="textcolor_primary">{% trans "Your account has been temporarily locked for "%} {{ cooloff_time_minutes }} {% trans "minutes as the incorrect password has been entered" %} {{ failure_limit }} {% trans " times." %}</div><br>
-        <div class="textcolor_primary">{% trans "An email has been sent to "%} {{ email_lockout }} {% trans "to reset your password and unlock your account." %}</div><br>
-        <div class="textcolor_primary">{% trans "If you no longer have access to"%} {{ email_lockout }} {% trans "you can contact <a href='https://gccollab.ca/help/knowledgebase' alt='help desk'>help desk</a> and an agent will help you get back into your account." %}</div><br>
+        <div class="textcolor_primary">{% trans "An email has been sent to "%} <strong>{{ email_lockout }}</strong> {% trans "to reset your password and unlock your account." %}</div><br>
+        <div class="textcolor_primary">{% trans "If you no longer have access to"%} <strong>{{ email_lockout }}</strong> {% trans "you can contact <a href='https://gccollab.ca/help/knowledgebase' alt='help desk'>help desk</a> and an agent will help you get back into your account." %}</div><br>
 
     </div>
 <div><a class="button ___stretch ___active fluid ui button primary" href="{% url 'login' %}">{% trans "Return to sign in" %}</a></div>

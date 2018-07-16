@@ -326,8 +326,9 @@ def lockout_response(request):
             'cooloff_time_seconds': config.COOLOFF_TIME,
             'cooloff_time_minutes': int(config.COOLOFF_TIME / 60),
             'failure_limit': config.FAILURE_LIMIT,
-            'test': get_user_attempts(request),
+            'email_lockout': get_username_from_request(request),
         }
+        print(get_username_from_request(request))
         return render(request, config.LOCKOUT_TEMPLATE, context)
 
     if config.LOCKOUT_URL:
