@@ -26,13 +26,16 @@
             {% for error in form.non_field_errors %}
         	<div class="ui negative message" id="error_login">
                 <div class="content">
-
                     {% if error == 'captcha_mismatch' %}
                         <div class="textcolor_primary">{% trans "Login failed." %}</div>
                         <div class="textcolor_secondary">{% trans "Please check Google captcha." %}</div>
                     {% else %}
-                        <div class="textcolor_primary">{% trans "Please enter a correct email and password." %}</div>
-                        <div class="textcolor_secondary">{% trans "Note that both fields may be case-sensitive." %}</div>
+                        <div class="textcolor_primary">{% trans "The password you entered does not match the email’s set password." %}</div></br>
+                        {% if attemps >= 2 %}
+                            <div class="textcolor_primary">{% trans "You have " %} {{ attemps }} {% trans " attempts left before your account will be locked for "%} {{ time }} {% trans " minutes." %}</div></br>
+                        {% endif %}
+                        <div class="textcolor_secondary">{% trans "If you have forgotten your password " %} <a href="{% url 'password_reset' %}" class="forgot-password">{% trans "click here" %}</a>  {% trans " to reset it." %}</div></br>
+                        <div class="textcolor_secondary">{% trans "If you no longer have access to " %} <strong>{{ username }} </strong> {% trans " you can contact <a href='https://gccollab.ca/help/knowledgebase' alt='help desk'>help desk</a> and an agent will help you regain access to your account." %}</div>
                     {% endif %}
                 </div>
         	</div>

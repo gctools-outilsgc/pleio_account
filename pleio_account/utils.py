@@ -1,5 +1,4 @@
 import logging
-
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -21,7 +20,6 @@ from django.core.validators import validate_email
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
-from core.models import User
 REDIS_SERVER = get_redis_connection()
 
 LOG = logging.getLogger(__name__)
@@ -155,10 +153,9 @@ get_username_from_request = import_string(
 def get_user_attempts(request, get_username=get_username_from_request, username=None):
     """ Returns number of access attempts for this ip, username
     """
+   
     ip_address = get_ip(request)
-
     username = lower_username(username or get_username(request))
-
     # get by IP
     ip_count = REDIS_SERVER.get(get_ip_attempt_cache_key(ip_address))
     if not ip_count:
@@ -170,7 +167,6 @@ def get_user_attempts(request, get_username=get_username_from_request, username=
     if not username_count:
         username_count = 0
     username_count = int(username_count)
-
     # return the larger of the two.
     return max(ip_count, username_count)
 
@@ -328,7 +324,7 @@ def lockout_response(request):
             'failure_limit': config.FAILURE_LIMIT,
             'email_lockout': get_username_from_request(request),
         }
-        print(get_username_from_request(request))
+        print(config.LOCKOUT_TEMPLATE)
         return render(request, config.LOCKOUT_TEMPLATE, context)
 
     if config.LOCKOUT_URL:
@@ -386,14 +382,15 @@ def check_request(request, login_unsuccessful,
         return True
     else:
         # add a failed attempt for this user
-        alert_attemp(request)
+        # alert_attemp(request)
         return record_failed_attempt(request,ip_address, username)
 
 
 def alert_attemp(request):
 
     print('test')
-    return render(request, 'login.html',{'message': 'now'})
+    #return render(request, 'login.html',{'message': 'now'})
+    return login(request, 'login.html', {'message':'now'})
 
 def add_login_attempt_to_db(request, login_valid,
                             get_username=get_username_from_request,

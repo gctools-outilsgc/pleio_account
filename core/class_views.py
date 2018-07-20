@@ -12,6 +12,8 @@ from django.shortcuts import redirect
 from django.views.generic.list import ListView
 from django.utils.timezone import now
 from django.contrib.auth.forms import AuthenticationForm
+from pleio_account import utils
+from defender import config
 
 class PleioLoginView(LoginView):
 
@@ -26,6 +28,11 @@ class PleioLoginView(LoginView):
     )
 
     def get_context_data(self, **kwargs):
+        attemps = utils.get_user_attempts(self.request)
+        get_username = utils.get_username_from_request(self.request)
+        time = int(config.COOLOFF_TIME / 60)
+        print(time)
+        kwargs = dict(kwargs,attemps=attemps,username=get_username, time=time)
 
         context = super(PleioLoginView, self).get_context_data(**kwargs)
         next = self.request.GET.get('next')

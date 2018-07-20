@@ -447,13 +447,43 @@ msgstr "Échec de la connexion"
 msgid "Please check Google captcha."
 msgstr "Veuillez vérifier le captcha de Google"
 
-#: core/templates/login.html:34
-msgid "Please enter a correct email and password."
-msgstr "Veuillez entrer un courriel et un mot de passe valides."
+#: core/templates/login.html:33
+msgid "The password you entered does not match the email’s set password."
+msgstr "Le mot de passe que vous avez entré ne correspond pas au mot de passe défini pour l’adresse de courriel."
 
 #: core/templates/login.html:35
-msgid "Note that both fields may be case-sensitive."
-msgstr "Notez que les deux champs sont sensibles à la casse."
+msgid "You have "
+msgstr "Il vous reste "
+
+#: core/templates/login.html:35
+msgid " attempts left before your account will be locked for "
+msgstr " tentatives avant que votre compte soit verrouillé pendant "
+
+#: core/templates/login.html:35
+msgid " minutes."
+msgstr " minutes."
+
+#: core/templates/login.html:35
+msgid "If you have forgotten your password "
+msgstr "Si vous avez oublié votre mot de passe, "
+
+#: core/templates/login.html:35
+msgid "click here"
+msgstr "cliquez ici"
+
+#: core/templates/login.html:35
+msgid " to reset it."
+msgstr " pour le réinitialiser."
+
+#: core/templates/login.html:35
+msgid "If you no longer have access to "
+msgstr "Si vous n’avez plus accès à "
+
+#: core/templates/login.html:35
+msgid " you can contact <a href='https://gccollab.ca/help/knowledgebase' alt='help desk'>help desk</a> and an agent will "
+"help you regain access to your account."
+msgstr " vous pouvez communiquer avec le <a href='https://gccollab.ca/help/knowledgebase' alt='help desk'>bureau d’aide</a>"
+" et un agent vous aidera à vous connecter de nouveau à votre compte."
 
 #: core/templates/login.html:44 core/templates/password_reset.html:33
 #: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1683
