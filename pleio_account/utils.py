@@ -20,6 +20,7 @@ from django.core.validators import validate_email
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
+from core.models import User
 REDIS_SERVER = get_redis_connection()
 
 LOG = logging.getLogger(__name__)
@@ -215,33 +216,37 @@ def record_failed_attempt(request,ip_address, username):
     if not over limit return True """
     # increment the failed count, and get current number
     ip_block = False
+
     if not config.DISABLE_IP_LOCKOUT:
         # we only want to increment the IP if this is disabled.
         ip_count = increment_key(get_ip_attempt_cache_key(ip_address))
         # if over the limit, add to block
         if ip_count > config.IP_FAILURE_LIMIT:
             block_ip(ip_address)
+        
+            if validate_email_address(username):
+                found_user = User.objects.filter(email__iexact=username)
+                if found_user.exists():
+                    for user in found_user:
 
-        if validate_email_address(username):
-            found_user = User.objects.filter(email__iexact=username)
-            if found_user.exists():
-                for user in found_user:
-                    c = {
-                        'domain': request.META['HTTP_HOST'],
-                        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                        'user': user,
-                        'token': default_token_generator.make_token(user),
-                        'protocol': request.is_secure() and "https" or "http"
-                    }
+                        c = {
+                            'domain': request.META['HTTP_HOST'],
+                            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                            'user': user,
+                            'token': default_token_generator.make_token(user),
+                            'protocol': request.is_secure() and "https" or "http",
+                            'attemps': config.IP_FAILURE_LIMIT,
+                            'time': int(config.COOLOFF_TIME /60)
+                        }
 
-                    subject_template_name = 'emails/reset_password_subject.txt'
-                    email_template_name = 'emails/reset_password.txt'
-                    html_email_template_name = 'emails/reset_password_lockout.html'
-                    subject = loader.render_to_string(subject_template_name)
-                    subject = ''.join(subject.splitlines())
-                    email = loader.render_to_string(email_template_name, c)
-                    html_email = loader.render_to_string(html_email_template_name, c)
-                    send_mail(subject, email, settings.DEFAULT_FROM_EMAIL, [user.email], fail_silently=False, html_message=html_email)
+                        subject_template_name = 'emails/reset_password_subject.txt'
+                        email_template_name = 'emails/reset_password.txt'
+                        html_email_template_name = 'emails/reset_password_lockout.html'
+                        subject = loader.render_to_string(subject_template_name)
+                        subject = ''.join(subject.splitlines())
+                        email = loader.render_to_string(email_template_name, c)
+                        html_email = loader.render_to_string(html_email_template_name, c)
+                        send_mail(subject, email, settings.DEFAULT_FROM_EMAIL, [user.email], fail_silently=False, html_message=html_email)
 
             ip_block = True
 

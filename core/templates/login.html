@@ -30,12 +30,12 @@
                         <div class="textcolor_primary">{% trans "Login failed." %}</div>
                         <div class="textcolor_secondary">{% trans "Please check Google captcha." %}</div>
                     {% else %}
-                        <div class="textcolor_primary">{% trans "The password you entered does not match the email’s set password." %}</div></br>
+                        <div class="textcolor_primary">{% trans "The password you entered doesn’t match the one used for this email." %}</div></br>
                         {% if attemps >= 2 %}
-                            <div class="textcolor_primary">{% trans "You have " %} {{ attemps }} {% trans " attempts left before your account will be locked for "%} {{ time }} {% trans " minutes." %}</div></br>
+                            <div class="textcolor_primary">{% trans "You can try " %} {{ attemps }} {% trans " more times. After that, your account will be locked for"%} {{ time }} {% trans " minutes." %}</div></br>
                         {% endif %}
-                        <div class="textcolor_secondary">{% trans "If you have forgotten your password " %} <a href="{% url 'password_reset' %}" class="forgot-password">{% trans "click here" %}</a>  {% trans " to reset it." %}</div></br>
-                        <div class="textcolor_secondary">{% trans "If you no longer have access to " %} <strong>{{ username }} </strong> {% trans " you can contact <a href='https://gccollab.ca/help/knowledgebase' alt='help desk'>help desk</a> and an agent will help you regain access to your account." %}</div>
+                        <div class="textcolor_secondary">{% trans "If you forgot your password, don’t worry! You can reset your password by " %} <a href="{% url 'password_reset' %}" class="forgot-password">{% trans "clicking here" %}</a></div></br>
+                        <div class="textcolor_secondary">{% trans "If you don’t have access to the email: " %} <strong>{{ username }} </strong> {% trans " , contact our <a href='https://gccollab.ca/help/knowledgebase' alt='help desk'>help desk</a> and we’ll help you regain access to your account." %}</div>
                     {% endif %}
                 </div>
         	</div>
@@ -57,6 +57,11 @@
                 </div>
                 <a href="{% url 'password_reset' %}" class="forgot-password">{% trans "Forgot password" %}?</a>
                 <p class="capslock"></p>
+                {% for error in form.non_field_errors %}
+                    {% if error %}
+                        <span style="color:grey">{% trans "Remember: Your password contains at least 8 characters: 1 lowercase letter, 1 uppercase letter, 1 special character and 1 number." %}</span>
+                    {% endif%}
+                {% endfor %}
             </div>
 
 
