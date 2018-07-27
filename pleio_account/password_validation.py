@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
+from pleio_account import utils
 
 class CustomPasswordValidator(object):
 
@@ -9,7 +10,7 @@ class CustomPasswordValidator(object):
         self.min_uppercase_letters = uppercase_letters
         self.min_special_characters = special_characters
 
-    def validate(self, password, user=None):
+    def validate(self, password, user):
         print(password)
         special_characters = "[~\!@#\$%\^&\*\(\)_\+{}\":;'\[\]]"
         errors = []
@@ -25,6 +26,10 @@ class CustomPasswordValidator(object):
 
         if errors:
             raise ValidationError(errors)
+        else:
+            if utils.is_user_already_locked(user):
+                utils.unblock_username(user)
+
 
     def get_help_text(self):
         return "Test"

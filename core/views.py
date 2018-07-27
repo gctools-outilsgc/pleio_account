@@ -144,7 +144,7 @@ def change_password_form(request, page_action):
             messages.success(request, _('The Password has been changed successfully.'))
     else:
         form = ChangePasswordForm()
-
+        
     return form
 
 def two_factor_form(request, page_action):
