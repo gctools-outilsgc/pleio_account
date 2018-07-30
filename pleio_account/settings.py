@@ -31,6 +31,7 @@ WEBPACK_LOADER = {
 # Application definition
 
 INSTALLED_APPS = [
+    'solo',
     'core',
     'emailvalidator',
     'api',
@@ -185,6 +186,8 @@ FRESHDESK_URL = 'https://gccollab.gctools-outilsgc.ca/'
 FRESHDESK_SECRET_KEY = os.getenv('FRESHDESK_SECRET_KEY', '')
 
 ELGG_URL = 'https://gccollab.ca'
+
+EMAIL_BACKEND = 'core.backends.SiteConfigEmailBackend'
 
 PASSWORD_RESET_TIMEOUT_DAYS = 1
 ACCOUNT_ACTIVATION_DAYS = 7
