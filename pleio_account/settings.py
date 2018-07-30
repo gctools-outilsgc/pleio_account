@@ -31,6 +31,7 @@ WEBPACK_LOADER = {
 # Application definition
 
 INSTALLED_APPS = [
+    'solo',
     'core',
     'emailvalidator',
     'api',
@@ -48,9 +49,7 @@ INSTALLED_APPS = [
     'django_otp.plugins.otp_totp',
     'two_factor',
     'oidc_provider',
-    'corsheaders',
-    'solo',
-    'siteconfig'
+    'corsheaders'
 ]
 
 REST_FRAMEWORK = {
@@ -183,7 +182,7 @@ LOGOUT_REDIRECT_URL = '/logout/'
 OIDC_USERINFO = 'pleio_account.oidc_provider_settings.userinfo'
 OIDC_EXTRA_SCOPE_CLAIMS = 'pleio_account.oidc_provider_settings.CustomScopeClaims'
 
-EMAIL_BACKEND = "siteconfig.backends.SiteConfigEmailBackend"
+EMAIL_BACKEND = "core.backends.SiteConfigEmailBackend"
 
 FRESHDESK_URL = 'https://gccollab.gctools-outilsgc.ca/'
 FRESHDESK_SECRET_KEY = os.getenv('FRESHDESK_SECRET_KEY', '')
