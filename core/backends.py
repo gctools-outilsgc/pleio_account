@@ -69,9 +69,9 @@ class SiteConfigEmailBackend(EmailBackend):
              username = configuration.email_user if username is None else username,
              password = configuration.email_password if password is None else password,
              use_tls = configuration.email_use_tls if use_tls is None else use_tls,
-             fail_silently = fail_silently,
-             use_ssl = use_ssl,
-             timeout = timeout,
+             fail_silently = configuration.email_fail_silently if fail_silently is None else fail_silently,
+             use_ssl = configuration.email_use_ssl if use_ssl is None else use_ssl,
+             timeout = configuration.email_timeout if timeout is None else timeout,
              ssl_keyfile = ssl_keyfile,
              ssl_certfile = ssl_certfile,
              **kwargs)

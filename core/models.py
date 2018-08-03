@@ -2,8 +2,10 @@ from django.contrib.admin import ModelAdmin
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.utils import timezone
 from django.utils.text import slugify
+from django.utils.translation import ugettext as _
 from django.core import signing
 from django.core.mail import send_mail
+from django.core.exceptions import ValidationError
 from django.contrib import admin
 from django.contrib.sites.shortcuts import get_current_site
 from django.db import models
@@ -27,7 +29,10 @@ class SiteConfiguration(SingletonModel):
     email_port = models.IntegerField(blank=True, null=True)
     email_user = models.CharField(max_length=255, blank=True, null=True)
     email_password = models.CharField(max_length=255, blank=True, null=True)
-    email_use_tls = models.BooleanField(default=True)
+    email_use_tls = models.BooleanField(default=False, verbose_name = _("Use TSL"))
+    email_use_ssl =  models.BooleanField(default=False, verbose_name = _("Use SSL"))
+    email_fail_silently = models.BooleanField(default=False, verbose_name = _("Fail Silently"))
+    email_timeout = models.SmallIntegerField(blank=True, null=True, verbose_name = _("Email send timeout (seconds)"))
 
     cors_origin_whitelist = models.CharField(max_length=255, blank=True, null=True)
 
@@ -71,6 +76,11 @@ class SiteConfiguration(SingletonModel):
             values['freshdesk_key'] = settings.FRESHDESK_SECRET_KEY
 
         return values
+
+    def clean(self):
+        if self.email_use_tls and self.email_use_ssl:
+            raise ValidationError(
+            _("Both \"Use TSL\" and \"Use SSL\" cannot be selected at the same time"))
 
     def __unicode__(self):
         return u"Site Configuration"

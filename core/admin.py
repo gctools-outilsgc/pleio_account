@@ -9,7 +9,7 @@ class OrganizeFields(SingletonModelAdmin):
                 'fields': ('activate_site_configuration', )
             }),
             ('Email configuration', {
-                'fields': ('from_email', 'email_host', 'email_port', 'email_user', 'email_password', 'email_use_tls', 'send_suspicious_behaviour_warnings'),
+                'fields': ('from_email', 'email_host', 'email_port', 'email_user', 'email_password', 'email_use_tls', 'email_use_ssl', 'email_fail_silently', 'email_timeout', 'send_suspicious_behaviour_warnings'),
             }),
             ('Timeout values', {
                 'fields': ('password_reset_timeout_days', 'account_activation_days')
