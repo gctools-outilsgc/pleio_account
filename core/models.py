@@ -199,7 +199,7 @@ class User(AbstractBaseUser):
         try:
             email = signing.loads(
                 activation_token,
-                max_age=site_config['activate_days'] * 86400
+                max_age=config_data['activate_days'] * 86400
             )
 
             if email is None:
@@ -359,7 +359,7 @@ class PreviousLogins(models.Model):
         try:
             signed_value = signing.loads(
                 acceptation_token,
-                max_age=site_config['activate_days'] * 86400
+                max_age=config_data['activate_days'] * 86400
             )
             device_id = signed_value[0]
             email = signed_value[1]
