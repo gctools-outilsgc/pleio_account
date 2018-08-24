@@ -154,8 +154,7 @@ get_username_from_request = import_string(
 
 def get_user_attempts(request, get_username=get_username_from_request, username=None):
     """ Returns number of access attempts for this ip, username
-    """
-   
+    """   
     ip_address = get_ip(request)
     username = lower_username(username or get_username(request))
     # get by IP
@@ -351,7 +350,6 @@ def is_user_already_locked(username):
     if config.DISABLE_USERNAME_LOCKOUT:
         return False  
     return REDIS_SERVER.get(get_username_blocked_cache_key(username))
-
 
 def is_source_ip_already_locked(ip_address):
     """Is this IP already locked?"""
