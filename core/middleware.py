@@ -87,6 +87,5 @@ class FailedLoginMiddleware(MiddlewareMixin):
                 auth_views.login = watch_login()(auth_views.login)
 
             FailedLoginMiddleware.patched = True
-            return response
-            
+            return response            
         return response
