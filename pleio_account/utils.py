@@ -9,7 +9,6 @@ from django.utils.module_loading import import_string
 from defender.connection import get_redis_connection
 from defender import config
 from django.core.mail import send_mail
-from django.core import signing
 # from defender.config import config
 from defender.data import store_login_attempt
 from defender.signals import send_username_block_signal, send_ip_block_signal
