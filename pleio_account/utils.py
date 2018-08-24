@@ -13,7 +13,6 @@ from django.core.mail import send_mail
 from defender.data import store_login_attempt
 from defender.signals import send_username_block_signal, send_ip_block_signal
 from django.template import loader
-from django.template.loader import render_to_string
 from django.conf import settings
 from django.core.validators import validate_email
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -154,7 +153,7 @@ get_username_from_request = import_string(
 
 def get_user_attempts(request, get_username=get_username_from_request, username=None):
     """ Returns number of access attempts for this ip, username
-    """   
+    """
     ip_address = get_ip(request)
     username = lower_username(username or get_username(request))
     # get by IP
@@ -222,8 +221,7 @@ def record_failed_attempt(request,ip_address, username):
     ip_count = increment_key(get_ip_attempt_cache_key(ip_address))
         # if over the limit, add to block
     if ip_count > config.IP_FAILURE_LIMIT:
-        block_ip(ip_address)
-        
+        block_ip(ip_address)        
         if validate_email_address(username):
             found_user = User.objects.filter(email__iexact=username)
             if found_user.exists():
@@ -348,7 +346,7 @@ def is_user_already_locked(username):
     if username is None:
         return False
     if config.DISABLE_USERNAME_LOCKOUT:
-        return False  
+        return False
     return REDIS_SERVER.get(get_username_blocked_cache_key(username))
 
 def is_source_ip_already_locked(ip_address):
