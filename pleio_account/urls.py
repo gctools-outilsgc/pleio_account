@@ -95,6 +95,7 @@ urls = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.home, name='home'),
     url(r'^i18n/', include('django.conf.urls.i18n')),
+    url(r'^freshdesk/', views.freshdesk_sso, name='freshdesk_sso')
 ]
 
 tf_urls = [
