@@ -31,9 +31,13 @@
 </ul>
 {% endif %}
 
-<!-- Password reset -->
-{% include 'security_pages/change_password.html' %}
+<div class="ui cards">
+  <!-- Password reset -->
+  {% include 'security_pages/change_password.html' %}
 
+  <!-- Security questions -->
+  {% include 'security_pages/security_questions.html' %}
+</div>
 <!-- Two factor authorization -->
 {% include 'security_pages/two_factor_authorization.html' %}
 

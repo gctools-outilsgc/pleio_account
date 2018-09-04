@@ -264,3 +264,36 @@ class ChangePasswordForm(forms.Form):
 
         password_validation.validate_password(self.cleaned_data.get('new_password2'))
         return new_password2
+
+class ChooseSecurityQuestion(forms.Form):
+    QUESTIONS = [
+        ('', 'Please select one of the questions'),
+        (1, 'Question 1'),
+        (2, 'Question 2'),
+        (3, 'Question 3')
+    ]
+
+    question_one = forms.ChoiceField(choices=QUESTIONS)
+    answer_one = forms.CharField(max_length=100)
+    question_two = forms.ChoiceField(choices=QUESTIONS)
+    answer_two = forms.CharField(max_length=100)
+    question_three = forms.ChoiceField(choices=QUESTIONS)
+    answer_three = forms.CharField(max_length=100)
+
+    def clean(self):
+        cleaned_data = super(ChooseSecurityQuestion, self).clean()
+        question_one = cleaned_data.get('question_one')
+        question_two = cleaned_data.get('question_two')
+        question_three = cleaned_data.get('question_three')
+
+        if question_one == question_two or question_one == question_three or question_two == question_three:
+            raise forms.ValidationError(
+                _("The same question can not be used more than once")
+            )
+
+class SecurityQuestions(forms.Form):
+        answer_one = forms.CharField(max_length=100)
+        answer_two = forms.CharField(max_length=100)
+
+        def __init__(self, *args, **kwargs):
+            super(SecurityQuestions, self).__init__(*args, **kwargs)

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-from .forms import RegisterForm, UserProfileForm, PleioTOTPDeviceForm, ChangePasswordForm
+from .forms import RegisterForm, UserProfileForm, PleioTOTPDeviceForm, ChangePasswordForm, ChooseSecurityQuestion, SecurityQuestions
 from .models import User, PreviousLogins
 from django.urls import reverse
 from base64 import b32encode
@@ -133,6 +133,7 @@ def security_pages(request, page_action=None):
 
     return render(request, 'security_pages.html', {
         'pass_reset_form': change_password_form(request, page_action),
+        'security_questions': set_security_question(request, page_action),
         '2FA': two_factor_form(request, page_action),
         'user_session_form': user_sessions_form(request)
     })
@@ -152,6 +153,23 @@ def change_password_form(request, page_action):
         form = ChangePasswordForm()
 
     return form
+
+def set_security_question(request, page_action):
+    security_questions = {}
+    if page_action == 'set-questions':
+        security_questions['form'] = ChooseSecurityQuestion()
+        security_questions['state'] = 'view'
+    elif page_action == 'save-questions':
+        security_questions['form'] = ChooseSecurityQuestion(request.POST)
+        security_questions['state'] = 'validate'
+        form = security_questions['form']
+        if form.is_valid():
+            messages.success(request, _('Questions set'))
+            security_questions['state'] = 'hidden'
+    else:
+        security_questions['state'] = 'hidden'
+
+    return security_questions
 
 def two_factor_form(request, page_action):
     two_factor_authorization =  {}
@@ -215,10 +233,13 @@ def user_sessions_form(request):
 
     return user_sessions['object_list']
 
+def security_questions(request):
+    form = SecurityQuestions()
+    return render(request, 'password_reset_questions.html', {'form': form})
+
 @never_cache
 @login_required
 def freshdesk_sso(request):
-   
     if not request.user:
         raise Http404()
 

@@ -1,0 +1,75 @@
+{% load i18n %}
+{% load Pleio_templatetags %}
+
+{% if security_questions.state == 'view' or security_questions.state == 'validate' %}
+<form method="post" action="/securitypages/save-questions/" class="ui form card" style="width:auto; max-width: 450px;">
+  <div class="account__cards content">
+    <h3 class="card__title ___addpadding-side header">{% trans "Security questions" %}</h3>
+
+    <div class="___addpadding-side">
+                  {% csrf_token %}
+                  <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+
+                  <fieldset>
+                      <ul class="messages error">
+                          {% for error in security_questions.form.non_field_errors %}
+                          <li>{{ error }}</li>
+                          {% endfor %}
+                      </ul>
+
+                      <div class="field">
+                        <label for="id_question_one">{% trans "Question 1" %}</label>
+                        {{ security_questions.form.question_one }}
+                      </div>
+
+                      <div class="field">
+                        <label for="id_answer_one">{% trans "Answer 1" %}</label>
+                        {{ security_questions.form.answer_one }}
+                      </div>
+
+                      <div class="field">
+                        <label for="id_question_two">{% trans "Question 2" %}</label>
+                        {{ security_questions.form.question_two }}
+                      </div>
+
+                      <div class="field">
+                        <label for="id_answer_two">{% trans "Answer 2" %}</label>
+                        {{ security_questions.form.answer_two }}
+                      </div>
+
+                      <div class="field">
+                        <label for="id_question_three">{% trans "Question 3" %}</label>
+                        {{ security_questions.form.question_three }}
+                      </div>
+
+                      <div class="field">
+                        <label for="id_answer_three">{% trans "Answer 3" %}</label>
+                        {{ security_questions.form.answer_three }}
+                      </div>
+
+                  </fieldset>
+    </div>
+  </div>
+  <div class="card__action ___addpadding-side extra content">
+      <button name="submit-questions" type="submit" class="ui button right floated primary" value="submit">{% trans "Set questions" %}</button>
+  </div>
+</form>
+{% endif %}
+
+{% if security_questions.state == 'hidden' %}
+<div class="ui card">
+  <div class="account__cards content">
+    <h3 class="card__title ___addpadding-side header">{% trans "Security questions" %}</h3>
+
+    <div class="___addpadding-side">
+      <p>{% trans "Wow look at that" %}</p>
+    </div>
+  </div>
+  <form method="post" action="/securitypages/set-questions/" class="ui form card" style="width:auto; max-width: 450px;">
+    {% csrf_token %}
+    <div class="card__action ___addpadding-side extra content">
+        <button name="submit-questions" type="submit" class="ui button right floated primary" value="submit">{% trans "View questions" %}</button>
+    </div>
+  </form>
+</div>
+{% endif %}
