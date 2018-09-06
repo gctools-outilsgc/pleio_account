@@ -31,6 +31,7 @@ WEBPACK_LOADER = {
 # Application definition
 
 INSTALLED_APPS = [
+    'solo',
     'core',
     'emailvalidator',
     'api',
@@ -180,6 +181,8 @@ LOGOUT_REDIRECT_URL = '/logout/'
 
 OIDC_USERINFO = 'pleio_account.oidc_provider_settings.userinfo'
 OIDC_EXTRA_SCOPE_CLAIMS = 'pleio_account.oidc_provider_settings.CustomScopeClaims'
+
+EMAIL_BACKEND = "core.backends.SiteConfigEmailBackend"
 
 FRESHDESK_URL = 'https://gccollab.gctools-outilsgc.ca/'
 FRESHDESK_SECRET_KEY = os.getenv('FRESHDESK_SECRET_KEY', '')
