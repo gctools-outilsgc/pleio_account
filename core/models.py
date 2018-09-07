@@ -140,7 +140,7 @@ class User(AbstractBaseUser):
         result = True
 
         try:
-            device_id = request.COOKIES['device_id']
+            device_id = request.session['device_id']
             login = self.previous_logins.get(device_id=device_id)
             previous_login_present = login.confirmed_login
         except:
@@ -183,7 +183,7 @@ class User(AbstractBaseUser):
 
     def send_suspicious_login_message(self, request):
         session = request.session
-        device_id = request.COOKIES['device_id']
+        device_id = request.session['device_id']
         current_site = get_current_site(request)
 
         template_context = {
@@ -232,7 +232,7 @@ class PreviousLogins(models.Model):
 
     def add_known_login(request, user):
         session = request.session
-        device_id = request.COOKIES['device_id']
+        device_id = request.session['device_id']
 
         lat_lon = get_lat_lon(session.ip)
         try:
