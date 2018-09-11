@@ -25,6 +25,7 @@ from django.contrib import admin
 from core import views, forms
 from core.class_views import PleioLoginView, PleioSessionDeleteView, PleioSessionDeleteOtherView
 from django.views.i18n import JavaScriptCatalog
+from freshdesk import views as freshdesk_views
 
 
 class DecoratedURLPattern(RegexURLPattern):
@@ -93,7 +94,7 @@ urls = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.home, name='home'),
     url(r'^i18n/', include('django.conf.urls.i18n')),
-    url(r'^freshdesk/', views.freshdesk_sso, name='freshdesk_sso')
+    url(r'^freshdesk/', freshdesk_views.sso, name='freshdesk_sso')
 ]
 
 tf_urls = [
