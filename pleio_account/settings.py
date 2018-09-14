@@ -31,7 +31,6 @@ WEBPACK_LOADER = {
 # Application definition
 
 INSTALLED_APPS = [
-    'solo',
     'core',
     'emailvalidator',
     'api',
@@ -49,6 +48,7 @@ INSTALLED_APPS = [
     'django_otp.plugins.otp_totp',
     'two_factor',
     'oidc_provider',
+    'solo',
     'corsheaders'
 ]
 
