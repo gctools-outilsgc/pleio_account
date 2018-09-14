@@ -170,7 +170,7 @@ class User(AbstractBaseUser):
 
     def email_user(self, subject, message, **kwargs):
         #load site configuration
-        site_config = SiteConfiguration.objects.get()
+        site_config = SiteConfiguration.get_solo()
         config_data = site_config.get_values()
         send_mail(subject, message, config_data['from_email'], [self.email], **kwargs)
 
@@ -193,7 +193,7 @@ class User(AbstractBaseUser):
 
     def activate_user(self, activation_token):
         #load site configuration
-        site_config = SiteConfiguration.objects.get()
+        site_config = SiteConfiguration.get_solo()
         config_data = site_config.get_values()
 
         try:
@@ -353,7 +353,7 @@ class PreviousLogins(models.Model):
 
     def accept_previous_logins(request, acceptation_token):
         #load site configuration
-        site_config = SiteConfiguration.objects.get()
+        site_config = SiteConfiguration.get_solo()
         config_data = site_config.get_values()
 
         try:

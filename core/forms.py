@@ -40,7 +40,7 @@ class ResetPasswordRequestView(FormView):
         form = self.form_class(request.POST)
 
         #load site configuration
-        site_config = SiteConfiguration.objects.get()
+        site_config = SiteConfiguration.get_solo()
         config_data = site_config.get_values()
 
         if form.is_valid():

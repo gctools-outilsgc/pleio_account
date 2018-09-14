@@ -226,7 +226,7 @@ def freshdesk_sso(request):
     dt = int(datetime.utcnow().strftime("%s")) - 148
 
     #load site configuration
-    site_config = SiteConfiguration.objects.get()
+    site_config = SiteConfiguration.get_solo()
     config_data = site_config.get_values()
 
     data = '{0}{1}{2}{3}'.format(name, config_data['freshdesk_key'], email, dt)
