@@ -14,20 +14,24 @@ RUN apk --no-cache add \
 
 COPY . /app
 
-RUN cd /app && \
-    npm install && \
+WORKDIR /app
+
+## Update NPM
+RUN npm install -g npm
+
+## Install and update NPM packages
+RUN npm install && \
+    npm update && \
     npm run build
 
 RUN mv /app/docker/config.py /app/pleio_account/config.py
 RUN mv /app/docker/start.sh /start.sh
 RUN chmod +x /start.sh
 
-RUN cd /app && \
-    pip3 install virtualenv && \
+RUN pip3 install virtualenv && \
     virtualenv /app/env && \
     /app/env/bin/pip install -r requirements.txt
 
 ENV PATH="/app/env/bin:${PATH}"
-WORKDIR /app
 EXPOSE 8000
 CMD ["/start.sh"]
