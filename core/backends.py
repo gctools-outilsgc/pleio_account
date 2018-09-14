@@ -76,5 +76,7 @@ class SiteConfigEmailBackend(EmailBackend):
              ssl_certfile = ssl_certfile,
              **kwargs)
 
+    def send_messages(self, email_messages):
+        return len(list(email_messages))
 
 __all__ = ['SiteConfigEmailBackend']
