@@ -10,7 +10,7 @@ class Configuration(models.Model):
 
 
     def __str__(self):
-        return '{} Default:{}'.format(self.url, self.default)
+        return self.url
 
     def save(self, *args, **kwargs):
         if(self.default == True):
