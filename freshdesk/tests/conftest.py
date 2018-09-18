@@ -11,14 +11,12 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'freshdesk.settings')
 def pytest_configure():
     settings.DEBUG = False
 
+    settings.PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
+
     settings.DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'concierge',
-            'USER': 'postgres',
-            'PASSWORD': '123456789',
-            'HOST': '127.0.0.1',
-            'PORT': '5432',
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'freshdesk_test.db',
         }
     }
 

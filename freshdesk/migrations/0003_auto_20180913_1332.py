@@ -16,6 +16,5 @@ class Migration(migrations.Migration):
             model_name='configuration',
             name='url',
             field=models.URLField(default=''),
-        ),
-        migrations.RunSQL([('INSERT INTO freshdesk_configuration (url, secret_key) values (%s, %s)', ['https://gccollab.gctools-outilsgc.ca/'], [''])])
+        )
     ]

@@ -15,3 +15,5 @@ pleio_account/config.py
 freshdesk/\.pytest_cache/
 
 \.pytest_cache/
+
+\.coverage

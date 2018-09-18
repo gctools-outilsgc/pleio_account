@@ -18,8 +18,8 @@ def sso(request):
     email = request.user.email
     dt = int(datetime.utcnow().strftime("%s")) - 148
 
-    freshdesk_url = Configuration.objects.all()[0].url
-    freshdesk_secret_key = Configuration.objects.all()[0].secret_key
+    freshdesk_url = Configuration.objects.get(default=True).url
+    freshdesk_secret_key = Configuration.objects.get(default=True).secret_key
 
 
     data = '{0}{1}{2}{3}'.format(name, freshdesk_url, email, dt)
