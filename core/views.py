@@ -1,36 +1,44 @@
+import time
+import hmac
+import hashlib
+import urllib.parse
+from base64 import b32encode
+from binascii import unhexlify
+
+import django_otp
 from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-from .forms import RegisterForm, UserProfileForm, PleioTOTPDeviceForm, ChangePasswordForm
-from .models import User, PreviousLogins, SiteConfiguration
 from django.urls import reverse
-from base64 import b32encode
-from binascii import unhexlify
 from django_otp.util import random_hex
-import django_otp
 
-from django.contrib.auth import views as auth_views
-from django.contrib.auth import authenticate, update_session_auth_hash
-from two_factor.views import ProfileView
-from user_sessions.views import SessionListView
-from django.utils.translation import gettext, gettext_lazy as _
+from django.contrib.auth import update_session_auth_hash
+from django.utils.translation import gettext_lazy as _
 from django.contrib import messages
-from django.template.response import TemplateResponse
-from django.contrib.auth import password_validation
-from core.class_views import PleioBackupTokensView, PleioSessionListView, PleioProfileView
-from two_factor.views.profile import DisableView
-
 from django.http import Http404, HttpResponseRedirect
 from django.views.decorators.cache import never_cache
-from django.utils.http import urlquote
-from datetime import datetime
-import hashlib
-import hmac
+
+from core.class_views import (
+    PleioBackupTokensView,
+    PleioSessionListView,
+    PleioProfileView
+)
+from two_factor.views.profile import DisableView
+
+from .forms import (
+    RegisterForm,
+    UserProfileForm,
+    PleioTOTPDeviceForm,
+    ChangePasswordForm
+)
+from .models import User, PreviousLogins, SiteConfiguration
+
+DEFAULT_AVATAR = '/static/images/user.svg'
+
 
 def home(request):
     if request.user.is_authenticated():
         return redirect('profile')
-
     return redirect('login')
 
 
@@ -55,7 +63,7 @@ def register(request):
                     accepted_terms=data['accepted_terms'],
                     receives_newsletter=True
                 )
-            except:
+            except Exception:
                 user = User.objects.get(email=data['email'])
 
             if not user.is_active:
@@ -79,7 +87,11 @@ def register_activate(request, activation_token=None):
     user = User.activate_user(None, activation_token)
 
     if user:
-        auth.login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+        auth.login(
+            request,
+            user,
+            backend='django.contrib.auth.backends.ModelBackend'
+        )
         return redirect('profile')
 
     return render(request, 'register_activate.html')
@@ -88,10 +100,13 @@ def register_activate(request, activation_token=None):
 @login_required
 def profile(request):
     if request.method == 'POST':
-        form = UserProfileForm(request.POST, request.FILES, instance=request.user)
+        form = UserProfileForm(
+            request.POST,
+            request.FILES,
+            instance=request.user
+        )
         if form.is_valid():
-            user = form.save()
-
+            form.save()
     else:
         form = UserProfileForm(instance=request.user)
 
@@ -99,10 +114,6 @@ def profile(request):
 
 
 def avatar(request):
-    DEFAULT_AVATAR = '/static/images/user.svg'
-
-    user = User.objects.get(id=request.GET['guid'])
-
     try:
         user = User.objects.get(id=int(request.GET['guid']))
         if user.avatar:
@@ -116,9 +127,8 @@ def avatar(request):
 def accept_previous_login(request, acceptation_token=None):
     try:
         PreviousLogins.accept_previous_logins(request, acceptation_token)
-    except:
+    except Exception:
         pass
-
     return redirect('profile')
 
 
@@ -129,12 +139,12 @@ def terms_of_use(request):
 
 @login_required
 def security_pages(request, page_action=None):
-
     return render(request, 'security_pages.html', {
         'pass_reset_form': change_password_form(request, page_action),
         '2FA': two_factor_form(request, page_action),
         'user_session_form': user_sessions_form(request)
     })
+
 
 def change_password_form(request, page_action):
     if page_action == 'change-password':
@@ -142,18 +152,21 @@ def change_password_form(request, page_action):
         form = ChangePasswordForm(request.POST, user=user)
         if form.is_valid():
             data = form.cleaned_data
-            new_password2 = data['new_password2']
             user.set_password(data['new_password2'])
             user.save()
             update_session_auth_hash(request, user)
-            messages.success(request, _('The Password has been changed successfully.'))
+            messages.success(
+                request,
+                _('The Password has been changed successfully.')
+            )
     else:
         form = ChangePasswordForm()
 
     return form
 
+
 def two_factor_form(request, page_action):
-    two_factor_authorization =  {}
+    two_factor_authorization = {}
     if page_action == '2fa-setup':
         key = random_hex(20).decode('ascii')
         rawkey = unhexlify(key.encode('ascii'))
@@ -167,10 +180,13 @@ def two_factor_form(request, page_action):
             'QR_URL': reverse('two_factor:qr')
         })
         two_factor_authorization['state'] = 'setup'
-
     elif page_action == '2fa-setupnext':
         key = request.session.get('tf_key')
-        form = PleioTOTPDeviceForm(data=request.POST, key=key, user=request.user)
+        form = PleioTOTPDeviceForm(
+            data=request.POST,
+            key=key,
+            user=request.user
+        )
         if form.is_valid():
             device = form.save()
             django_otp.login(request, device)
@@ -180,57 +196,75 @@ def two_factor_form(request, page_action):
             two_factor_authorization['form'] = form
             two_factor_authorization['QR_URL'] = reverse('two_factor:qr')
             two_factor_authorization['state'] = 'setup'
-
     elif page_action == '2fa-disable':
-        two_factor_authorization = DisableView.as_view(template_name='security_pages.html')(request).context_data
+        two_factor_authorization = DisableView.as_view(
+            template_name='security_pages.html'
+        )(request).context_data
         two_factor_authorization['state'] = 'disable'
-
     elif page_action == '2fa-disableconfirm':
-        two_factor_authorization = DisableView.as_view(template_name='security_pages.html')(request)
+        two_factor_authorization = DisableView.as_view(
+            template_name='security_pages.html'
+        )(request)
         two_factor_authorization['state'] = 'default'
         two_factor_authorization['show_state'] = 'true'
-
     elif page_action == '2fa-showcodes':
-        two_factor_authorization = PleioBackupTokensView.as_view(template_name='backup_tokens.html')(request).context_data
+        two_factor_authorization = PleioBackupTokensView.as_view(
+            template_name='backup_tokens.html'
+        )(request).context_data
         two_factor_authorization['default_device'] = 'true'
         two_factor_authorization['state'] = 'codes'
         two_factor_authorization['show_state'] = 'true'
-
     elif page_action == '2fa-generatecodes':
-        two_factor_authorization = PleioBackupTokensView.as_view(template_name='security_pages.html')(request).context_data
+        two_factor_authorization = PleioBackupTokensView.as_view(
+            template_name='security_pages.html'
+        )(request).context_data
         two_factor_authorization['default_device'] = 'true'
         two_factor_authorization['show_state'] = 'true'
         two_factor_authorization['state'] = 'codes'
-
     else:
-        two_factor_authorization = PleioProfileView.as_view(template_name='security_pages.html')(request).context_data
+        two_factor_authorization = PleioProfileView.as_view(
+            template_name='security_pages.html'
+        )(request).context_data
         two_factor_authorization['state'] = 'default'
         two_factor_authorization['show_state'] = 'true'
 
     return two_factor_authorization
 
-def user_sessions_form(request):
-    user_sessions = PleioSessionListView.as_view(template_name='security_pages.html')(request).context_data
 
+def user_sessions_form(request):
+    user_sessions = PleioSessionListView.as_view(
+        template_name='security_pages.html'
+    )(request).context_data
     return user_sessions['object_list']
+
 
 @never_cache
 @login_required
 def freshdesk_sso(request):
-
     if not request.user:
         raise Http404()
 
     name = request.user.name
     email = request.user.email
-    dt = int(datetime.utcnow().strftime("%s")) - 148
+    dt = int(time.time()) - 148
 
-    #load site configuration
     site_config = SiteConfiguration.objects.get()
     config_data = site_config.get_values()
 
     data = '{0}{1}{2}{3}'.format(name, config_data['freshdesk_key'], email, dt)
-    generated_hash = hmac.new(config_data['freshdesk_key'].encode(), data.encode(), hashlib.md5).hexdigest()
-    url = config_data['freshdesk_url']+'login/sso/?name='+urlquote(name)+'&email='+urlquote(email)+'&'+u'timestamp='+str(dt)+'&hash='+generated_hash
+    generated_hash = hmac.new(
+        config_data['freshdesk_key'].encode(),
+        data.encode(),
+        hashlib.md5
+    ).hexdigest()
 
-    return HttpResponseRedirect(url)
+    return HttpResponseRedirect('{url}login/sso/?{args}'.format(
+        url=config_data['freshdesk_url'],
+        args=urllib.parse.urlencode({
+            'name': name,
+            'email': email,
+            'timestamp': str(dt),
+            'hash': generated_hash
+        })
+    ))
+
