@@ -10,7 +10,6 @@ class CustomPasswordValidator(object):
         self.min_special_characters = special_characters
 
     def validate(self, password, user=None):
-        print(password)
         special_characters = "[~\!@#\$%\^&\*\(\)_\+{}\":;'\[\]]"
         errors = []
         
