@@ -25,7 +25,6 @@ from django.contrib import admin
 from core import views, forms
 from core.class_views import PleioLoginView, PleioSessionDeleteView, PleioSessionDeleteOtherView
 from django.views.i18n import JavaScriptCatalog
-from . import config
 
 class DecoratedURLPattern(RegexURLPattern):
     def resolve(self, *args, **kwargs):

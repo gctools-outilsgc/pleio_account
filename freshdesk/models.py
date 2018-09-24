@@ -12,7 +12,8 @@ class Configuration(models.Model):
     def __str__(self):
         return self.url
 
-    def save(self):
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
         if(self.default == True):
             self.__class__.objects.filter(~Q(id=self.id)).update(default=False)
-        super(Configuration, self).save()
+        super(Configuration, self).save(force_insert, force_update, using,update_fields)
