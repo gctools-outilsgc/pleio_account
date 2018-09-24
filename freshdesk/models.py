@@ -12,7 +12,7 @@ class Configuration(models.Model):
     def __str__(self):
         return self.url
 
-    def save(self, *args, **kwargs):
+    def save(self):
         if(self.default == True):
             self.__class__.objects.filter(~Q(id=self.id)).update(default=False)
-        super(Configuration, self).save(*args, **kwargs)
+        super(Configuration, self).save()

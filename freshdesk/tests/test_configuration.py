@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.test import TransactionTestCase
 from freshdesk.models import Configuration
 
@@ -19,6 +18,7 @@ class test_freshdesk_config(TransactionTestCase):
         defaultConfig = self.FindConfigByUrl(self.defaultUrl)
         self.assertFalse(defaultConfig.default)
 
+    @classmethod
     def GivenConfig(self, url):
         config = Configuration(url=url)
         config.secret_key = "123"
@@ -26,5 +26,6 @@ class test_freshdesk_config(TransactionTestCase):
         config.save()
         return config
 
+    @classmethod
     def FindConfigByUrl(self, urlToFind):
         return Configuration.objects.get(url=urlToFind)
