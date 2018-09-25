@@ -11,8 +11,8 @@ from django.conf import settings
 from django.template.loader import render_to_string
 from .helpers import unique_filepath
 from .login_session_helpers import get_city, get_country, get_device, get_lat_lon
-import requests
-
+if('concierge_paas_plugin' in settings.INSTALLED_APPS):
+    from concierge_paas_plugin import api as paas_api
 
 class Manager(BaseUserManager):
     def create_user(self, email, name, password=None, accepted_terms=False, receives_newsletter=True):
@@ -98,27 +98,6 @@ class User(AbstractBaseUser):
     def email_user(self, subject, message, **kwargs):
         send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [self.email], **kwargs)
 
-    def notify_graphql(self):
-        # ToDo replace this with messages over Kafka system for notification
-        if settings.GRAPHQL_TRIGGERS is True:
-            attempt = 0
-            retrys = 3
-            success = False
-
-            query = {'query': 'mutation{createProfile(gcId: "' + str(self.id) + '", name: "' + self.name + '", email:"' +
-                              self.email + '"){gcID, name, email}}'}
-
-            while not success and attempt < retrys:
-                response = requests.post(settings.GRAPHQL_ENDPOINT, headers={'Authorization': 'Token ' + settings.GRAPHQL_TOKEN},
-                                    data=query)
-                if not response.status_code == requests.codes.ok:
-                    attempt = attempt + 1
-                else:
-                    success = True
-            if not success:
-                # Write this to log eventually
-                raise Exception('Error setting user data / Server Response ' + str(response.status_code))
-
     def send_activation_token(self, request):
         current_site = get_current_site(request)
 
@@ -153,7 +132,8 @@ class User(AbstractBaseUser):
 
             self.is_active = True
             self.save()
-            self.notify_graphql()
+            if('concierge_paas_plugin' in settings.INSTALLED_APPS):
+                paas_api.create_profile(self.id, self.name, self.email)
             return self
 
         except (signing.BadSignature, User.DoesNotExist):

@@ -39,8 +39,3 @@ CORS_ORIGIN_WHITELIST = os.getenv('CORS_ORIGIN_WHITELIST', '').split(',')
 
 SESSION_COOKIE_SECURE = str_to_bool(os.getenv('SECURE_SESSION', True))
 SESSION_COOKIE_HTTPONLY = True
-
-
-GRAPHQL_TRIGGERS = True
-GRAPHQL_ENDPOINT = 'https://graphql.gccollab.ca/protected'
-GRAPHQL_TOKEN = 'aeb69b36cc2d332be878887971a61bf16411c3c0'

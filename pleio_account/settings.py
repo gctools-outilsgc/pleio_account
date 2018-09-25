@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'django_otp.plugins.otp_totp',
     'two_factor',
     'oidc_provider',
-    'corsheaders'
+    'corsheaders',
+    #'concierge_paas_plugin'
 ]
 
 REST_FRAMEWORK = {
