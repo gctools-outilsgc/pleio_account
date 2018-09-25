@@ -179,8 +179,9 @@ LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/profile/'
 LOGOUT_REDIRECT_URL = '/logout/'
 
-OIDC_USERINFO = 'pleio_account.oidc_provider_settings.userinfo'
-OIDC_EXTRA_SCOPE_CLAIMS = 'pleio_account.oidc_provider_settings.CustomScopeClaims'
+if('concierge_paas_plugin' in INSTALLED_APPS):
+    OIDC_USERINFO = 'concierge_paas_plugin.api.userinfo'
+    OIDC_EXTRA_SCOPE_CLAIMS = 'concierge_paas_plugin.api.CustomScopeClaims'
 
 ELGG_URL = 'https://gccollab.ca'
 
