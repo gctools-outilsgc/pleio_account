@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'two_factor',
     'oidc_provider',
     'corsheaders',
-    #'concierge_paas_plugin'
+    'concierge_paas_plugin'
 ]
 
 REST_FRAMEWORK = {
