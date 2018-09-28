@@ -301,6 +301,15 @@ class PleioPartnerSite(models.Model):
     def __str__(self):
         return self.partner_site_name
 
+class SecurityQuestions(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    question_1 =  models.CharField(max_length=255)
+    question_2 =  models.CharField(max_length=255)
+    question_3 =  models.CharField(max_length=255)
+    answer_1 =  models.CharField(max_length=255)
+    answer_2 =  models.CharField(max_length=255)
+    answer_3 =  models.CharField(max_length=255)
+
 class AppCustomization(models.Model):
     BG_IMAGE_OPTIONS = (
         ('C', 'Cover'),

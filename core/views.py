@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-from .forms import RegisterForm, UserProfileForm, PleioTOTPDeviceForm, ChangePasswordForm, ChooseSecurityQuestion, SecurityQuestions
-from .models import User, PreviousLogins
+from .forms import RegisterForm, UserProfileForm, PleioTOTPDeviceForm, ChangePasswordForm, ChooseSecurityQuestion, AnswerSecurityQuestions
+from .models import User, PreviousLogins, SecurityQuestions
 from django.urls import reverse
 from base64 import b32encode
 from binascii import unhexlify
@@ -154,8 +154,19 @@ def change_password_form(request, page_action):
 
     return form
 
+def security_questions(request):
+    form = AnswerSecurityQuestions()
+    return render(request, 'password_reset_questions.html', {'form': form})
+
 def set_security_question(request, page_action):
     security_questions = {}
+    #check to see if user already set questions
+    try:
+        questions = SecurityQuestions.objects.get(user=request.user)
+    except SecurityQuestions.DoesNotExist:
+        questions = None
+
+    #load correct page based on action
     if page_action == 'set-questions':
         security_questions['form'] = ChooseSecurityQuestion()
         security_questions['state'] = 'view'
@@ -164,6 +175,27 @@ def set_security_question(request, page_action):
         security_questions['state'] = 'validate'
         form = security_questions['form']
         if form.is_valid():
+            data = form.cleaned_data
+            if questions == None:
+                new_question = SecurityQuestions.objects.create(
+                    user=request.user,
+                    question_1=data['question_one'],
+                    answer_1=data['answer_one'],
+                    question_2=data['question_two'],
+                    answer_2=data['answer_two'],
+                    question_3=data['question_three'],
+                    answer_3=data['answer_three']
+                )
+                new_question.save()
+            else:
+                questions.question_1=data['question_one']
+                questions.answer_1=data['answer_one']
+                questions.question_2=data['question_two']
+                questions.answer_2=data['answer_two']
+                questions.question_3=data['question_three']
+                questions.answer_3=data['answer_three']
+                questions.save()
+
             messages.success(request, _('Questions set'))
             security_questions['state'] = 'hidden'
     else:
@@ -232,10 +264,6 @@ def user_sessions_form(request):
     user_sessions = PleioSessionListView.as_view(template_name='security_pages.html')(request).context_data
 
     return user_sessions['object_list']
-
-def security_questions(request):
-    form = SecurityQuestions()
-    return render(request, 'password_reset_questions.html', {'form': form})
 
 @never_cache
 @login_required

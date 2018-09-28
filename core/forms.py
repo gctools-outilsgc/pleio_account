@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate
 from two_factor.forms import AuthenticationTokenForm, TOTPDeviceForm
 from two_factor.utils import totp_digits
 from emailvalidator.validator import is_email_valid
-from .models import User
+from .models import User, SecurityQuestions
 from .helpers import verify_captcha_response
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
@@ -267,18 +267,25 @@ class ChangePasswordForm(forms.Form):
 
 class ChooseSecurityQuestion(forms.Form):
     QUESTIONS = [
-        ('', 'Please select one of the questions'),
-        (1, 'Question 1'),
-        (2, 'Question 2'),
-        (3, 'Question 3')
+        ('', _('Please select one of the questions')),
+        (1, _('What is your favourite board game?')),
+        (2, _('Who is your favourite fictional character?')),
+        (3, _('What is your least favourite chore?')),
+        (4, _('What type of music do you dislike most?')),
+        (5, _('What was your favourite TV show when you were a child?')),
+        (6, _('Who was your best friend in kindergarten?')),
+        (7, _('If you won the lottery, what would be your first big purchase?')),
+        (8, _('What is the first movie you saw in theatres?')),
+        (9, _('What was your first cell phone?')),
+        (10, _('What movie do you know the most quotes from?'))
     ]
 
-    question_one = forms.ChoiceField(choices=QUESTIONS)
-    answer_one = forms.CharField(max_length=100)
-    question_two = forms.ChoiceField(choices=QUESTIONS)
-    answer_two = forms.CharField(max_length=100)
-    question_three = forms.ChoiceField(choices=QUESTIONS)
-    answer_three = forms.CharField(max_length=100)
+    question_one = forms.ChoiceField(choices=QUESTIONS, initial=0)
+    answer_one = forms.CharField(min_length=3, max_length=100)
+    question_two = forms.ChoiceField(choices=QUESTIONS, initial=0)
+    answer_two = forms.CharField(min_length=3, max_length=100)
+    question_three = forms.ChoiceField(choices=QUESTIONS, initial=0)
+    answer_three = forms.CharField(min_length=3, max_length=100)
 
     def clean(self):
         cleaned_data = super(ChooseSecurityQuestion, self).clean()
@@ -291,9 +298,9 @@ class ChooseSecurityQuestion(forms.Form):
                 _("The same question can not be used more than once")
             )
 
-class SecurityQuestions(forms.Form):
+class AnswerSecurityQuestions(forms.Form):
         answer_one = forms.CharField(max_length=100)
         answer_two = forms.CharField(max_length=100)
 
         def __init__(self, *args, **kwargs):
-            super(SecurityQuestions, self).__init__(*args, **kwargs)
+            super(AnswerSecurityQuestions, self).__init__(*args, **kwargs)
