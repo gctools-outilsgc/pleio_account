@@ -41,6 +41,7 @@ class ResetPasswordRequestView(FormView):
 
         if form.is_valid():
             email = form.cleaned_data["email"]
+            request.session['email'] = email
 
         if self.validate_email_address(email):
             found_user = User.objects.filter(email__iexact=email)
@@ -182,6 +183,7 @@ class RegisterForm(forms.Form):
 
     def clean(self):
         super(RegisterForm, self).clean()
+        sniubauvdab
         if not verify_captcha_response(self.cleaned_data.get('g-recaptcha-response')):
             raise forms.ValidationError(
                 self.error_messages['captcha_mismatch'],
@@ -299,8 +301,26 @@ class ChooseSecurityQuestion(forms.Form):
             )
 
 class AnswerSecurityQuestions(forms.Form):
-        answer_one = forms.CharField(max_length=100)
-        answer_two = forms.CharField(max_length=100)
 
-        def __init__(self, *args, **kwargs):
-            super(AnswerSecurityQuestions, self).__init__(*args, **kwargs)
+        question_email = forms.CharField(required=False)
+        answer_one = forms.CharField(max_length=100)
+        q1 = forms.IntegerField(required=False)
+        answer_two = forms.CharField(max_length=100)
+        q2 = forms.IntegerField(required=False)
+
+        def clean(self):
+            cleaned_data = super(AnswerSecurityQuestions, self).clean()
+            q1 = cleaned_data.get('q1')
+            answer_one = cleaned_data.get('answer_one')
+            q2 = cleaned_data.get('q2')
+            answer_two = cleaned_data.get('answer_two')
+            email = cleaned_data.get('question_email')
+
+            user = User.objects.get(email=email)
+            questions = SecurityQuestions.objects.get(user=user)
+
+            test = questions.check_answers(q1, answer_one, q2, answer_two)
+            if not test:
+                raise forms.ValidationError(
+                    test
+                )

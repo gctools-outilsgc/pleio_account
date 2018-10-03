@@ -12,6 +12,9 @@ from django.conf import settings
 
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import authenticate, update_session_auth_hash
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
 from two_factor.views import ProfileView
 from user_sessions.views import SessionListView
 from django.utils.translation import gettext, gettext_lazy as _
@@ -27,6 +30,7 @@ from django.utils.http import urlquote
 from datetime import datetime
 import hashlib
 import hmac
+import random
 
 def home(request):
     if request.user.is_authenticated():
@@ -155,8 +159,41 @@ def change_password_form(request, page_action):
     return form
 
 def security_questions(request):
+
+    user = User.objects.get(email=request.session['email'])
+    try:
+        questions = SecurityQuestions.objects.get(user=user)
+    except SecurityQuestions.DoesNotExist:
+        questions = None
+    has_questions = False if questions is None else True
+
+    if has_questions:
+        picks = [1,2,3]
+        random.shuffle(picks)
+        picked_questions = questions.get_questions(picks[0],picks[1])
+    else:
+        del request.session['email']
+        picked_questions = {}
+        picks = {}
+
     form = AnswerSecurityQuestions()
-    return render(request, 'password_reset_questions.html', {'form': form})
+    if request.method == "POST":
+        form = AnswerSecurityQuestions(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            return redirect(request.is_secure() and "https" or "http" + '://' +
+            request.META['HTTP_HOST'] +
+            '/reset/' +
+             (urlsafe_base64_encode(force_bytes(user.pk))).decode('utf-8') + '/' +
+             default_token_generator.make_token(user)
+             )
+
+    return render(request, 'password_reset_questions.html', {
+        'form': form,
+        "has_questions": has_questions,
+        "questions": picked_questions,
+        "picks": picks
+    })
 
 def set_security_question(request, page_action):
     security_questions = {}

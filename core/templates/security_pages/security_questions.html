@@ -51,7 +51,7 @@
     </div>
   </div>
   <div class="card__action ___addpadding-side extra content">
-      <button name="submit-questions" type="submit" class="ui button right floated primary" value="submit">{% trans "Set questions" %}</button>
+      <button name="submit-questions" type="submit" class="ui button right floated primary" value="submit">{% trans "Save answers" %}</button>
   </div>
 </form>
 {% endif %}
@@ -68,7 +68,7 @@
   <form method="post" action="/securitypages/set-questions/" class="ui form card" style="width:auto; max-width: 450px;">
     {% csrf_token %}
     <div class="card__action ___addpadding-side extra content">
-        <button name="submit-questions" type="submit" class="ui button right floated primary" value="submit">{% trans "View questions" %}</button>
+        <button name="submit-questions" type="submit" class="ui button right floated primary" value="submit">{% trans "Set questions" %}</button>
     </div>
   </form>
 </div>

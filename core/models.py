@@ -310,6 +310,52 @@ class SecurityQuestions(models.Model):
     answer_2 =  models.CharField(max_length=255)
     answer_3 =  models.CharField(max_length=255)
 
+    def get_questions(self, q1, q2):
+        questions = [0,0]
+
+        if q1 == 1:
+            questions[0] = self.question_1
+        elif q1 == 2:
+            questions[0] = self.question_2
+        else:
+            questions[0] = self.question_3
+
+        if q2 == 1:
+            questions[1] = self.question_1
+        elif q2 == 2:
+            questions[1] = self.question_2
+        else:
+            questions[1] = self.question_3
+
+        return questions
+
+    def get_answers(self, q1, q2):
+        answers = [0,0]
+
+        if q1 == 1:
+            answers[0] = self.answer_1
+        elif q1 == 2:
+            answers[0] = self.answer_2
+        else:
+            answers[0] = self.answer_3
+
+        if q2 == 1:
+            answers[1] = self.answer_1
+        elif q2 == 2:
+            answers[1] = self.answer_2
+        else:
+            answers[1] = self.answer_3
+
+        return answers
+
+    def check_answers(self, q1, a1, q2, a2):
+        answers = self.get_answers(q1, q2)
+        if a1 == answers[0] and a2 == answers[1]:
+            result = True
+        else:
+            result = False
+        return result
+
 class AppCustomization(models.Model):
     BG_IMAGE_OPTIONS = (
         ('C', 'Cover'),
