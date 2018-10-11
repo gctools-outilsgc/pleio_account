@@ -303,9 +303,9 @@ class ChooseSecurityQuestion(forms.Form):
 class AnswerSecurityQuestions(forms.Form):
 
         question_email = forms.CharField(required=False)
-        answer_one = forms.CharField(max_length=100)
+        answer_one = forms.CharField(max_length=100, initial="")
         q1 = forms.IntegerField(required=False)
-        answer_two = forms.CharField(max_length=100)
+        answer_two = forms.CharField(max_length=100, initial="")
         q2 = forms.IntegerField(required=False)
 
         def clean(self):
@@ -319,8 +319,8 @@ class AnswerSecurityQuestions(forms.Form):
             user = User.objects.get(email=email)
             questions = SecurityQuestions.objects.get(user=user)
 
-            test = questions.check_answers(q1, answer_one, q2, answer_two)
+            test = questions.check_answers(q1, answer_one.lower(), q2, answer_two.lower())
             if not test:
                 raise forms.ValidationError(
-                    test
+                    _("One or more of your answers do not match the registered answers.")
                 )

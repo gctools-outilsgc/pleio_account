@@ -132,12 +132,54 @@ def terms_of_use(request):
     return render(request, 'terms_of_use.html')
 
 
+def security_questions(request):
+
+    #bring user back to start
+    if 'email' not in request.session:
+        return redirect('password_reset')
+
+    user = User.objects.get(email=request.session['email'])
+    try:
+        questions = SecurityQuestions.objects.get(user=user)
+    except SecurityQuestions.DoesNotExist:
+        questions = None
+    has_questions = False if questions is None else True
+
+    if has_questions:
+        picks = [1,2,3]
+        random.shuffle(picks)
+        if 'picks' not in request.session:
+            request.session['picks'] = picks
+        picked_questions = questions.get_questions(request.session['picks'][0],request.session['picks'][1])
+    else:
+        picked_questions = {}
+
+    form = AnswerSecurityQuestions()
+    if request.method == "POST":
+        form = AnswerSecurityQuestions(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            del  request.session['email']
+            return redirect(request.is_secure() and "https" or "http" + '://' +
+            request.META['HTTP_HOST'] +
+            '/reset/' +
+             (urlsafe_base64_encode(force_bytes(user.pk))).decode('utf-8') + '/' +
+             default_token_generator.make_token(user)
+             )
+
+    return render(request, 'password_reset_questions.html', {
+        'form': form,
+        "has_questions": has_questions,
+        "questions": picked_questions,
+        "picks": request.session['picks']
+    })
+
 @login_required
 def security_pages(request, page_action=None):
 
     return render(request, 'security_pages.html', {
         'pass_reset_form': change_password_form(request, page_action),
-        'security_questions': set_security_question(request, page_action),
+        'security_questions': security_question(request),
         '2FA': two_factor_form(request, page_action),
         'user_session_form': user_sessions_form(request)
     })
@@ -158,85 +200,47 @@ def change_password_form(request, page_action):
 
     return form
 
-def security_questions(request):
-
-    user = User.objects.get(email=request.session['email'])
-    try:
-        questions = SecurityQuestions.objects.get(user=user)
-    except SecurityQuestions.DoesNotExist:
-        questions = None
-    has_questions = False if questions is None else True
-
-    if has_questions:
-        picks = [1,2,3]
-        random.shuffle(picks)
-        picked_questions = questions.get_questions(picks[0],picks[1])
-    else:
-        del request.session['email']
-        picked_questions = {}
-        picks = {}
-
-    form = AnswerSecurityQuestions()
-    if request.method == "POST":
-        form = AnswerSecurityQuestions(request.POST)
-        if form.is_valid():
-            data = form.cleaned_data
-            return redirect(request.is_secure() and "https" or "http" + '://' +
-            request.META['HTTP_HOST'] +
-            '/reset/' +
-             (urlsafe_base64_encode(force_bytes(user.pk))).decode('utf-8') + '/' +
-             default_token_generator.make_token(user)
-             )
-
-    return render(request, 'password_reset_questions.html', {
-        'form': form,
-        "has_questions": has_questions,
-        "questions": picked_questions,
-        "picks": picks
-    })
-
-def set_security_question(request, page_action):
+def security_question(request):
     security_questions = {}
-    #check to see if user already set questions
-    try:
-        questions = SecurityQuestions.objects.get(user=request.user)
-    except SecurityQuestions.DoesNotExist:
-        questions = None
+    return security_questions
 
-    #load correct page based on action
-    if page_action == 'set-questions':
-        security_questions['form'] = ChooseSecurityQuestion()
-        security_questions['state'] = 'view'
-    elif page_action == 'save-questions':
-        security_questions['form'] = ChooseSecurityQuestion(request.POST)
-        security_questions['state'] = 'validate'
-        form = security_questions['form']
+def set_security_question(request):
+
+    form = ChooseSecurityQuestion()
+    if request.method == 'POST':
+        form = ChooseSecurityQuestion(request.POST)
         if form.is_valid():
+            #check to see if user already set questions
+            try:
+                questions = SecurityQuestions.objects.get(user=request.user)
+            except SecurityQuestions.DoesNotExist:
+                questions = None
+
             data = form.cleaned_data
             if questions == None:
                 new_question = SecurityQuestions.objects.create(
                     user=request.user,
                     question_1=data['question_one'],
-                    answer_1=data['answer_one'],
+                    answer_1=data['answer_one'].lower(),
                     question_2=data['question_two'],
-                    answer_2=data['answer_two'],
+                    answer_2=data['answer_two'].lower(),
                     question_3=data['question_three'],
-                    answer_3=data['answer_three']
+                    answer_3=data['answer_three'].lower()
                 )
                 new_question.save()
             else:
                 questions.question_1=data['question_one']
-                questions.answer_1=data['answer_one']
+                questions.answer_1=data['answer_one'].lower()
                 questions.question_2=data['question_two']
-                questions.answer_2=data['answer_two']
+                questions.answer_2=data['answer_two'].lower()
                 questions.question_3=data['question_three']
-                questions.answer_3=data['answer_three']
+                questions.answer_3=data['answer_three'].lower()
                 questions.save()
 
-            messages.success(request, _('Questions set'))
-            security_questions['state'] = 'hidden'
-    else:
-        security_questions['state'] = 'hidden'
+            messages.success(request, _('Your security questions and answers have been successfully saved.'))
+            return redirect('security_pages')
+
+    return render(request, 'security_pages_questions.html', { 'form': form })
 
     return security_questions
 
