@@ -1,5 +1,6 @@
 from django.contrib.admin import ModelAdmin
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.hashers import check_password
 from django.utils import timezone
 from django.utils.text import slugify
 from django.core import signing
@@ -350,7 +351,7 @@ class SecurityQuestions(models.Model):
 
     def check_answers(self, q1, a1, q2, a2):
         answers = self.get_answers(q1, q2)
-        if a1 == answers[0] and a2 == answers[1]:
+        if check_password(a1, answers[0]) and check_password(a2, answers[1]):
             result = True
         else:
             result = False

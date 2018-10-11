@@ -13,6 +13,7 @@ from django.conf import settings
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import authenticate, update_session_auth_hash
 from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.hashers import make_password
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from two_factor.views import ProfileView
@@ -159,7 +160,8 @@ def security_questions(request):
         form = AnswerSecurityQuestions(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            del  request.session['email']
+            del request.session['email']
+            del request.session['picks']
             return redirect(request.is_secure() and "https" or "http" + '://' +
             request.META['HTTP_HOST'] +
             '/reset/' +
@@ -221,20 +223,20 @@ def set_security_question(request):
                 new_question = SecurityQuestions.objects.create(
                     user=request.user,
                     question_1=data['question_one'],
-                    answer_1=data['answer_one'].lower(),
+                    answer_1=make_password(data['answer_one'].lower()),
                     question_2=data['question_two'],
-                    answer_2=data['answer_two'].lower(),
+                    answer_2=make_password(data['answer_two'].lower()),
                     question_3=data['question_three'],
-                    answer_3=data['answer_three'].lower()
+                    answer_3=make_password(data['answer_three'].lower())
                 )
                 new_question.save()
             else:
                 questions.question_1=data['question_one']
-                questions.answer_1=data['answer_one'].lower()
+                questions.answer_1=make_password(data['answer_one'].lower())
                 questions.question_2=data['question_two']
-                questions.answer_2=data['answer_two'].lower()
+                questions.answer_2=make_password(data['answer_two'].lower())
                 questions.question_3=data['question_three']
-                questions.answer_3=data['answer_three'].lower()
+                questions.answer_3=make_password(data['answer_three'].lower())
                 questions.save()
 
             messages.success(request, _('Your security questions and answers have been successfully saved.'))
