@@ -3,17 +3,16 @@
 This is the Pleio microservice used for handling user registration, login and SAML2 SSO. It is based on [Django project](https://www.djangoproject.com/) and handles login througout the Pleio ecosystem using OAuth2.
 
 ## Setup development (through Docker)
+Make sure [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/install/) is installed. Then run the following commands within the repository:
 
-Make sure [Docker](https://www.docker.com/) and [yarn](https://yarnpkg.com/lang/en/) is installed. Then run the following commands within the repository:
-
-    docker-compose up
-    yarn install
-    yarn run watch
+    docker-compose -f docker-compose.dev.yml up
 
 Then create a superuser account using:
     docker-compose exec web python manage.py createsuperuser
 
 Now login with your new (superuser) account on http://localhost:8000
+
+The docker-compose.dev.yml is meant to be used in non HTTPS settings like a development environment
 
 ## Setup development (manually)
 
@@ -61,9 +60,20 @@ Start a yarn and Django server using:
 Now login with your new (superuser) account on http://localhost:8000
 
 ## Deploy to Kubernetes
-
   kubectl create namespace gctoolsv2
   kubectl create -f https://raw.githubusercontent.com/gctools-outilsgc/pleio_account/master/kubernetes/deployment.yaml
+
+## Deploy using Docker
+Make sure [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/install/) is installed. Then run the following commands within the repository:
+
+    docker-compose -f docker-compose.yml up --build -d
+
+Then create a superuser account using:
+    docker-compose exec web python manage.py createsuperuser
+
+Now login with your new (superuser) account on https://DOMAIN_NAME:8000
+
+The docker-compose.yml is meant to be use behind a Nginx Proxy that handles the HTTPS connection
 
 ## Generate new translations
 

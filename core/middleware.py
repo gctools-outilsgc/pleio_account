@@ -5,22 +5,31 @@ from django.utils.deprecation import MiddlewareMixin
 
 VALID_KEY_CHARS = string.ascii_lowercase + string.digits
 
-class DeviceIdMiddleware(MiddlewareMixin):
-    def process_response(self, request, response):
+class DeviceIdMiddleware(object):
+    def __init__(self,get_response):
+        self.get_response = get_response
+        
+    def __call__(self,request):
+
         try:
             device_id = request.COOKIES['device_id']
             if len(device_id) != 32:
                 raise KeyError
+            else:
+                request.session['device_id'] = device_id
         except KeyError:
             device_id = get_random_string(32, VALID_KEY_CHARS)
+            request.session['device_id'] = device_id
+
+        response = self.get_response(request)
 
         max_age = 365 * 24 * 60 * 60  # one year
-        response.set_cookie('device_id', device_id,
+        response.set_cookie('device_id', value = device_id,
             max_age=max_age,
             path=settings.SESSION_COOKIE_PATH,
             secure=settings.SESSION_COOKIE_SECURE or None,
-            httponly=settings.SESSION_COOKIE_HTTPONLY or None
-        )
+            httponly=settings.SESSION_COOKIE_HTTPONLY or False
+            )
 
         return response
 

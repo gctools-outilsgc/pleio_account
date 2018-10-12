@@ -27,10 +27,10 @@
                         {{ form.email }}
                         <!--<span class="badge green __uppercase ui label"><i class="icon">{% include_asset "icons/check.svg" %}</i>{% trans "Government" %}</span>-->
                     </div>
-                    <div class="field">
-                        <label for="id_receives_newsletter">{% trans "Receive Suspicious Sign In Emails" %}</label>
+                    <div class="field ui checkbox">
                         {{ form.errors.receives_newsletter }}
                         {{ form.receives_newsletter }}
+                        <label for="id_receives_newsletter">{% trans "Receive Suspicious Sign In Emails" %}</label>
                     </div>
                 </fieldset>
 		</div>
