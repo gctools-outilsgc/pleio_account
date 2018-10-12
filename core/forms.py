@@ -317,7 +317,7 @@ class AnswerSecurityQuestions(forms.Form):
             email = cleaned_data.get('question_email')
 
             user = User.objects.get(email=email)
-            questions = SecurityQuestions.objects.get(user=user)
+            questions = user.securityquestions
 
             test = questions.check_answers(q1, answer_one.lower(), q2, answer_two.lower())
             if not test:

@@ -140,20 +140,23 @@ def security_questions(request):
         return redirect('password_reset')
 
     user = User.objects.get(email=request.session['email'])
-    try:
-        questions = SecurityQuestions.objects.get(user=user)
-    except SecurityQuestions.DoesNotExist:
+    if hasattr(user, 'securityquestions'):
+        questions = user.securityquestions
+    else:
         questions = None
     has_questions = False if questions is None else True
 
+    #pick 2 of 3 questions
     if has_questions:
         picks = [1,2,3]
         random.shuffle(picks)
+        #save choices
         if 'picks' not in request.session:
             request.session['picks'] = picks
         picked_questions = questions.get_questions(request.session['picks'][0],request.session['picks'][1])
     else:
         picked_questions = {}
+        picks = {}
 
     form = AnswerSecurityQuestions()
     if request.method == "POST":
@@ -163,17 +166,17 @@ def security_questions(request):
             del request.session['email']
             del request.session['picks']
             return redirect(request.is_secure() and "https" or "http" + '://' +
-            request.META['HTTP_HOST'] +
-            '/reset/' +
-             (urlsafe_base64_encode(force_bytes(user.pk))).decode('utf-8') + '/' +
-             default_token_generator.make_token(user)
+                request.META['HTTP_HOST'] +
+                '/reset/' +
+                (urlsafe_base64_encode(force_bytes(user.pk))).decode('utf-8') + '/' +
+                default_token_generator.make_token(user)
              )
 
     return render(request, 'password_reset_questions.html', {
         'form': form,
         "has_questions": has_questions,
         "questions": picked_questions,
-        "picks": request.session['picks']
+        "picks": picks
     })
 
 @login_required
@@ -213,9 +216,9 @@ def set_security_question(request):
         form = ChooseSecurityQuestion(request.POST)
         if form.is_valid():
             #check to see if user already set questions
-            try:
-                questions = SecurityQuestions.objects.get(user=request.user)
-            except SecurityQuestions.DoesNotExist:
+            if hasattr(user, 'securityquestions'):
+                questions = user.securityquestions
+            else:
                 questions = None
 
             data = form.cleaned_data
