@@ -10,7 +10,7 @@ class ElggBackend:
     def authenticate(self, request, username=None, password=None):
 
         #load site configuration
-        site_config = SiteConfiguration.objects.get()
+        site_config = SiteConfiguration.get_solo()
         config_data = site_config.get_values()
 
         if not config_data['elgg_url']:
@@ -61,7 +61,7 @@ class SiteConfigEmailBackend(EmailBackend):
                  ssl_keyfile=None, ssl_certfile=None,
                  **kwargs):
 
-        configuration = SiteConfiguration.objects.get()
+        configuration = SiteConfiguration.get_solo()
 
         super(SiteConfigEmailBackend, self).__init__(
              host = configuration.email_host if host is None else host,
@@ -76,5 +76,7 @@ class SiteConfigEmailBackend(EmailBackend):
              ssl_certfile = ssl_certfile,
              **kwargs)
 
+    def send_messages(self, email_messages):
+        return len(list(email_messages))
 
 __all__ = ['SiteConfigEmailBackend']

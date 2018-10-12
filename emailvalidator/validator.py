@@ -12,7 +12,7 @@ from core.models import SiteConfiguration
 def is_email_valid(email):
 
     #load site configuration
-    site_config = SiteConfiguration.objects.get()
+    site_config = SiteConfiguration.get_solo()
     config_data = site_config.get_values()
 
     # Verify email address is in user invitation list

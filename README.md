@@ -1,4 +1,5 @@
 # Pleio account
+
 This is the Pleio microservice used for handling user registration, login and SAML2 SSO. It is based on [Django project](https://www.djangoproject.com/) and handles login througout the Pleio ecosystem using OAuth2.
 
 ## Setup development (through Docker)
@@ -14,6 +15,7 @@ Now login with your new (superuser) account on http://localhost:8000
 The docker-compose.dev.yml is meant to be used in non HTTPS settings like a development environment
 
 ## Setup development (manually)
+
 To setup the development environment, make sure Python3 and yarn is installed on your development machine. Then run the following commands:
 
     mkvirtualenv pleio_account --python=/usr/bin/python3
@@ -74,6 +76,7 @@ Now login with your new (superuser) account on https://DOMAIN_NAME:8000
 The docker-compose.yml is meant to be use behind a Nginx Proxy that handles the HTTPS connection
 
 ## Generate new translations
+
 We use the standard [i18n toolset of Django](https://docs.djangoproject.com/en/1.10/topics/i18n/). To add new translations to the source files use:
 
     python manage.py makemessages
@@ -88,6 +91,7 @@ On OSX first make sure gettext (> 0.14) is installed and linked using:
     brew link --force gettext
 
 ## Run tests
+
 To run the accompanied test suite use:
 
     python manage.py test

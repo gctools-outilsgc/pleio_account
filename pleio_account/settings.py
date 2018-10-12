@@ -31,7 +31,6 @@ WEBPACK_LOADER = {
 # Application definition
 
 INSTALLED_APPS = [
-    'solo',
     'core',
     'emailvalidator',
     'api',
@@ -49,6 +48,7 @@ INSTALLED_APPS = [
     'django_otp.plugins.otp_totp',
     'two_factor',
     'oidc_provider',
+    'solo',
     'corsheaders'
 ]
 
@@ -111,6 +111,17 @@ WSGI_APPLICATION = 'pleio_account.wsgi.application'
 
 SESSION_ENGINE = 'user_sessions.backends.db'
 
+## To be replaced later with REDIS when merging with Account Lockout
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'default-cache',
+    },
+    'solo': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'solo-cache',
+    }
+}
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
 
