@@ -113,6 +113,10 @@ SESSION_ENGINE = 'user_sessions.backends.db'
 
 ## To be replaced later with REDIS when merging with Account Lockout
 CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'default-cache',
+    }
     'solo': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         'LOCATION': 'solo-cache',
