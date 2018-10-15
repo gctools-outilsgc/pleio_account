@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate
 from two_factor.forms import AuthenticationTokenForm, TOTPDeviceForm
 from two_factor.utils import totp_digits
 from emailvalidator.validator import is_email_valid
-from .models import User, SecurityQuestions
+from .models import User, SecurityQuestions, SiteConfiguration
 from .helpers import verify_captcha_response
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
@@ -39,6 +39,10 @@ class ResetPasswordRequestView(FormView):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
 
+        #load site configuration
+        site_config = SiteConfiguration.get_solo()
+        config_data = site_config.get_values()
+
         if form.is_valid():
             email = form.cleaned_data["email"]
             request.session['email'] = email
@@ -62,12 +66,12 @@ class ResetPasswordRequestView(FormView):
                     subject = ''.join(subject.splitlines())
                     email = loader.render_to_string(email_template_name, c)
                     html_email = loader.render_to_string(html_email_template_name, c)
-                    send_mail(subject, email, settings.DEFAULT_FROM_EMAIL, [user.email], fail_silently=False, html_message=html_email)
+                    send_mail(subject, email, config_data['from_email'], [user.email], fail_silently=False, html_message=html_email)
 
                 return self.form_valid(form)
 
-            elif hasattr(settings, 'ELGG_URL'):
-                elgg_url = settings.ELGG_URL
+            elif config_data['elgg_url']:
+                elgg_url = config_data['elgg_url']
 
                 # Verify user exists in Elgg
                 valid_user_request = requests.post(elgg_url + "/services/api/rest/json/", data={'method': 'pleio.userexists', 'user': email})
@@ -100,7 +104,7 @@ class ResetPasswordRequestView(FormView):
                     subject = ''.join(subject.splitlines())
                     email = loader.render_to_string(email_template_name, c)
                     html_email = loader.render_to_string(html_email_template_name, c)
-                    send_mail(subject, email, settings.DEFAULT_FROM_EMAIL, [user.email], fail_silently=False, html_message=html_email)
+                    send_mail(subject, email, config_data['from_email'], [user.email], fail_silently=False, html_message=html_email)
 
                     return self.form_valid(form)
 

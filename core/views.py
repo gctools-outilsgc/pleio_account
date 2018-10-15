@@ -2,13 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from .forms import RegisterForm, UserProfileForm, PleioTOTPDeviceForm, ChangePasswordForm, ChooseSecurityQuestion, AnswerSecurityQuestions
-from .models import User, PreviousLogins, SecurityQuestions
+from .models import User, PreviousLogins, SiteConfiguration, SecurityQuestions
 from django.urls import reverse
 from base64 import b32encode
 from binascii import unhexlify
 from django_otp.util import random_hex
 import django_otp
-from django.conf import settings
 
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import authenticate, update_session_auth_hash
@@ -216,8 +215,8 @@ def set_security_question(request):
         form = ChooseSecurityQuestion(request.POST)
         if form.is_valid():
             #check to see if user already set questions
-            if hasattr(user, 'securityquestions'):
-                questions = user.securityquestions
+            if hasattr(request.user, 'securityquestions'):
+                questions = request.user.securityquestions
             else:
                 questions = None
 
@@ -314,6 +313,7 @@ def user_sessions_form(request):
 @never_cache
 @login_required
 def freshdesk_sso(request):
+
     if not request.user:
         raise Http404()
 
@@ -321,8 +321,12 @@ def freshdesk_sso(request):
     email = request.user.email
     dt = int(datetime.utcnow().strftime("%s")) - 148
 
-    data = '{0}{1}{2}{3}'.format(name, settings.FRESHDESK_SECRET_KEY, email, dt)
-    generated_hash = hmac.new(settings.FRESHDESK_SECRET_KEY.encode(), data.encode(), hashlib.md5).hexdigest()
-    url = settings.FRESHDESK_URL+'login/sso/?name='+urlquote(name)+'&email='+urlquote(email)+'&'+u'timestamp='+str(dt)+'&hash='+generated_hash
+    #load site configuration
+    site_config = SiteConfiguration.get_solo()
+    config_data = site_config.get_values()
+
+    data = '{0}{1}{2}{3}'.format(name, config_data['freshdesk_key'], email, dt)
+    generated_hash = hmac.new(config_data['freshdesk_key'].encode(), data.encode(), hashlib.md5).hexdigest()
+    url = config_data['freshdesk_url']+'login/sso/?name='+urlquote(name)+'&email='+urlquote(email)+'&'+u'timestamp='+str(dt)+'&hash='+generated_hash
 
     return HttpResponseRedirect(url)

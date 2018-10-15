@@ -3,8 +3,10 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.hashers import check_password
 from django.utils import timezone
 from django.utils.text import slugify
+from django.utils.translation import ugettext as _
 from django.core import signing
 from django.core.mail import send_mail
+from django.core.exceptions import ValidationError
 from django.contrib import admin
 from django.contrib.sites.shortcuts import get_current_site
 from django.db import models
@@ -12,6 +14,80 @@ from django.conf import settings
 from django.template.loader import render_to_string
 from .helpers import unique_filepath
 from .login_session_helpers import get_city, get_country, get_device, get_lat_lon
+from solo.models import SingletonModel
+
+class SiteConfiguration(SingletonModel):
+
+    activate_site_configuration = models.BooleanField(default=False)
+
+    elgg_url = models.CharField(max_length=255, blank=True, null=True)
+
+    freshdesk_url = models.CharField(max_length=255, blank=True, null=True)
+    freshdesk_secret_key = models.CharField(max_length=255, blank=True, null=True)
+
+    from_email = models.CharField(max_length=255, blank=True, null=True)
+    email_host = models.CharField(max_length=255, blank=True, null=True)
+    email_port = models.IntegerField(blank=True, null=True)
+    email_user = models.CharField(max_length=255, blank=True, null=True)
+    email_password = models.CharField(max_length=255, blank=True, null=True)
+    email_use_tls = models.BooleanField(default=False, verbose_name = _("Use TSL"))
+    email_use_ssl =  models.BooleanField(default=False, verbose_name = _("Use SSL"))
+    email_fail_silently = models.BooleanField(default=False, verbose_name = _("Fail Silently"))
+    email_timeout = models.SmallIntegerField(blank=True, null=True, verbose_name = _("Email send timeout (seconds)"))
+
+    cors_origin_whitelist = models.CharField(max_length=255, blank=True, null=True)
+
+    profile_as_service_endpoint = models.CharField(max_length=255, blank=True, null=True)
+
+    password_reset_timeout_days = models.IntegerField(default='1')
+    account_activation_days = models.IntegerField(default='7')
+
+    send_suspicious_behaviour_warnings = models.BooleanField(default=False)
+
+    def get_values(self):
+        values = {}
+        #check if active flag is true
+        if self.activate_site_configuration:
+            #run through optional fields to see if we are using configuration for all of them
+            if self.from_email:
+                values['from_email'] = self.from_email
+            else:
+                values['from_email'] = settings.DEFAULT_FROM_EMAIL
+
+            if self.elgg_url:
+                values['elgg_url'] = self.elgg_url
+            else:
+                values['elgg_url'] = settings.ELGG_URL
+
+            if self.freshdesk_url:
+                values['freshdesk_url'] = self.freshdesk_url
+                values['freshdesk_key'] = self.freshdesk_secret_key
+            else:
+                values['freshdesk_url'] = settings.FRESHDESK_URL
+                values['freshdesk_key'] = settings.FRESHDESK_SECRET_KEY
+
+            values['activate_days'] = self.account_activation_days
+            values['password_reset'] = self.password_reset_timeout_days
+        else:
+            values['from_email'] = settings.DEFAULT_FROM_EMAIL
+            values['elgg_url'] = settings.ELGG_URL
+            values['activate_days'] = settings.ACCOUNT_ACTIVATION_DAYS
+            values['password_reset'] = settings.PASSWORD_RESET_TIMEOUT_DAYS
+            values['freshdesk_url'] = settings.FRESHDESK_URL
+            values['freshdesk_key'] = settings.FRESHDESK_SECRET_KEY
+
+        return values
+
+    def clean(self):
+        if self.email_use_tls and self.email_use_ssl:
+            raise ValidationError(
+            _("Both \"Use TSL\" and \"Use SSL\" cannot be selected at the same time"))
+
+    def __unicode__(self):
+        return u"Site Configuration"
+
+    class Meta:
+        verbose_name = "Site Configuration"
 
 class Manager(BaseUserManager):
     def create_user(self, email, name, password=None, accepted_terms=False, receives_newsletter=True):
@@ -94,7 +170,10 @@ class User(AbstractBaseUser):
         return self.name
 
     def email_user(self, subject, message, **kwargs):
-        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [self.email], **kwargs)
+        #load site configuration
+        site_config = SiteConfiguration.get_solo()
+        config_data = site_config.get_values()
+        send_mail(subject, message, config_data['from_email'], [self.email], **kwargs)
 
     def send_activation_token(self, request):
         current_site = get_current_site(request)
@@ -114,10 +193,14 @@ class User(AbstractBaseUser):
         )
 
     def activate_user(self, activation_token):
+        #load site configuration
+        site_config = SiteConfiguration.get_solo()
+        config_data = site_config.get_values()
+
         try:
             email = signing.loads(
                 activation_token,
-                max_age=settings.ACCOUNT_ACTIVATION_DAYS * 86400
+                max_age=config_data['activate_days'] * 86400
             )
 
             if email is None:
@@ -141,7 +224,7 @@ class User(AbstractBaseUser):
         result = True
 
         try:
-            device_id = request.COOKIES['device_id']
+            device_id = request.session['device_id']
             login = self.previous_logins.get(device_id=device_id)
             previous_login_present = login.confirmed_login
         except:
@@ -184,7 +267,7 @@ class User(AbstractBaseUser):
 
     def send_suspicious_login_message(self, request):
         session = request.session
-        device_id = request.COOKIES['device_id']
+        device_id = request.session['device_id']
         current_site = get_current_site(request)
 
         template_context = {
@@ -211,7 +294,7 @@ from django.contrib.auth.admin import UserAdmin
 class UserAdmin(UserAdmin):
     search_fields = ModelAdmin.search_fields = ('username', 'name', 'email',)
     list_filter = ModelAdmin.list_filter + ('is_active', 'is_admin',)
-    list_display = ModelAdmin.list_display + ('is_active',)
+    list_display = ModelAdmin.list_display + ('is_active','id',)
     filter_horizontal = ()
     ordering = ('-id', )
     fieldsets = add_fieldsets = (
@@ -233,7 +316,7 @@ class PreviousLogins(models.Model):
 
     def add_known_login(request, user):
         session = request.session
-        device_id = request.COOKIES['device_id']
+        device_id = request.session['device_id']
 
         lat_lon = get_lat_lon(session.ip)
         try:
@@ -270,10 +353,14 @@ class PreviousLogins(models.Model):
             pass
 
     def accept_previous_logins(request, acceptation_token):
+        #load site configuration
+        site_config = SiteConfiguration.get_solo()
+        config_data = site_config.get_values()
+
         try:
             signed_value = signing.loads(
                 acceptation_token,
-                max_age=settings.ACCOUNT_ACTIVATION_DAYS * 86400
+                max_age=config_data['activate_days'] * 86400
             )
             device_id = signed_value[0]
             email = signed_value[1]

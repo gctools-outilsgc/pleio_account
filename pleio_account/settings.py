@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django_otp.plugins.otp_totp',
     'two_factor',
     'oidc_provider',
+    'solo',
     'corsheaders'
 ]
 
@@ -76,7 +77,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django_otp.middleware.OTPMiddleware',
     'core.middleware.PartnerSiteMiddleware',
     'core.middleware.DeviceIdMiddleware'
@@ -111,6 +111,17 @@ WSGI_APPLICATION = 'pleio_account.wsgi.application'
 
 SESSION_ENGINE = 'user_sessions.backends.db'
 
+## To be replaced later with REDIS when merging with Account Lockout
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'default-cache',
+    },
+    'solo': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'solo-cache',
+    }
+}
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
 
@@ -179,6 +190,8 @@ LOGOUT_REDIRECT_URL = '/logout/'
 
 OIDC_USERINFO = 'pleio_account.oidc_provider_settings.userinfo'
 OIDC_EXTRA_SCOPE_CLAIMS = 'pleio_account.oidc_provider_settings.CustomScopeClaims'
+
+EMAIL_BACKEND = "core.backends.SiteConfigEmailBackend"
 
 FRESHDESK_URL = 'https://gccollab.gctools-outilsgc.ca/'
 FRESHDESK_SECRET_KEY = os.getenv('FRESHDESK_SECRET_KEY', '')
