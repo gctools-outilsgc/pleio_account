@@ -19,8 +19,12 @@
 {% endcomment %}
     <div class="">
         <form name="ui" action="{% url 'set_language' %}" method="post">{% csrf_token %}
+            <label aria-hidden="true" type="hidden">
             <input name="next" type="hidden" value="{{ redirect_to }}" />
+            </label>
+            <label aria-hidden="true" type="hidden">
             <input name="language" type="hidden"/>
+            </label>
             {% get_current_language as LANGUAGE_CODE %}
             {% get_language_info for LANGUAGE_CODE as lang %}
             {% get_available_languages as LANGUAGES %}
