@@ -18,44 +18,46 @@
     </a>
 {% endcomment %}
     <div class="">
-        {% get_current_language as LANGUAGE_CODE %}
-        {% get_available_languages as LANGUAGES %}
-        {% if LANGUAGES|length < 3 %}
-            {% for langs in LANGUAGES %}
-                {% if langs.0 != LANGUAGE_CODE %}
-                    <a href="{{ current_path }}" class="ui primary button compact" onclick="changeLanguage('{{ langs.0 }}');" id='btn' title="{% trans "Change language" %}">
-                        <span>{{ langs.0|upper }}</span>
-                    </a> 
-                {% endif %}
-                
-            {% endfor %}
-        
-        {% else %}
-        <div class="ui dropdown item">
-                {{ LANGUAGE_CODE|language_name_translated }}
-              <i class="dropdown icon"></i>
-                <div class="menu" title="{% trans "Change language" %}">
-                  
-                  {% for langs in LANGUAGES %}
-                  <a href="{{ current_path }}" class="item" onclick="changeLanguage('{{ langs.0 }}');">   
-                      {{ langs.0|language_name_local }}
-                  </a>
-                  {% endfor %}
+        <form name="ui" action="{% url 'set_language' %}" method="post">{% csrf_token %}
+            <input name="next" type="hidden" value="{{ redirect_to }}" />
+            <input name="language" type="hidden"/>
+            {% get_current_language as LANGUAGE_CODE %}
+            {% get_language_info for LANGUAGE_CODE as lang %}
+            {% get_available_languages as LANGUAGES %}
+            {% get_language_info_list for LANGUAGES as languages %}
+            {% if LANGUAGES|length < 3 %}
+                {% for language in languages %}
+                    {% if langs.0 != LANGUAGE_CODE %}
+                        <a href="{{ current_path }}" class="ui primary button compact" onclick="document.ui.language.value='{{ language.code}}'; document.ui.submit();" id='btn' title="{% trans "Change language" %}">
+                            <span>{{ langs.0|upper }}</span>
+                        </a> 
+                    {% endif %}   
+                {% endfor %}
+            {% else %}
+                <div class="ui dropdown item">
+                    {{ lang.name_local }}
+                    <i class="dropdown icon"></i>
+                    <div class="menu" title="{% trans "Change language" %}">
+                        {% for language in languages %}
+                            <a href="#" class="item" onclick="document.ui.language.value='{{ language.code}}'; document.ui.submit();">{{ language.name_local }}</a>
+                        {% endfor %}
+                    </div>
                 </div>
-          </div>
-        {% endif %}
-
+            {% endif %}
+        </form>
     </div>
 
 <script>
 
 function changeLanguage(lang) {
+    console.log('my lang'+lang);
     $.ajax({
         type: "POST",
         url: "{% url 'set_language' %}",
         data: {'language': lang, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
         success: function(response) {
             setLangCookie(lang);
+            console.log('set cookie '+lang);
         },
         error: function(rs, e) { console.log(e); }
     });    
