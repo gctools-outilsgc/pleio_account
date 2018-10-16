@@ -187,7 +187,6 @@ class RegisterForm(forms.Form):
 
     def clean(self):
         super(RegisterForm, self).clean()
-        sniubauvdab
         if not verify_captcha_response(self.cleaned_data.get('g-recaptcha-response')):
             raise forms.ValidationError(
                 self.error_messages['captcha_mismatch'],
