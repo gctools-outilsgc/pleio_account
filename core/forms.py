@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate
 from two_factor.forms import AuthenticationTokenForm, TOTPDeviceForm
 from two_factor.utils import totp_digits
 from emailvalidator.validator import is_email_valid
-from .models import User, SecurityQuestions, SiteConfiguration
+from .models import User, SiteConfiguration
 from .helpers import verify_captcha_response
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes

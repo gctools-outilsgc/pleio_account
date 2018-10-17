@@ -161,7 +161,6 @@ def security_questions(request):
     if request.method == "POST":
         form = AnswerSecurityQuestions(request.POST)
         if form.is_valid():
-            data = form.cleaned_data
             del request.session['email']
             del request.session['picks']
             return redirect(request.is_secure() and "https" or "http" + '://' +
@@ -245,8 +244,6 @@ def set_security_question(request):
             return redirect('security_pages')
 
     return render(request, 'security_pages_questions.html', { 'form': form })
-
-    return security_questions
 
 def two_factor_form(request, page_action):
     two_factor_authorization =  {}
