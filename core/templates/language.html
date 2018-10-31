@@ -21,6 +21,7 @@
     {% csrf_token %}
     <input name="next" type="hidden" value="{{ redirect_to }}" />
     <div class="">
+<<<<<<< HEAD
         {% get_current_language as LANGUAGE_CODE %}
         {% get_available_languages as LANGUAGES %}
         {% if LANGUAGES|length < 3 %}
@@ -49,6 +50,26 @@
                     onclick="changeLanguage('{{ langs.0 }}');">
                     {{ langs.0|upper }}
                     </button>
+=======
+        <form name="ui" action="{% url 'set_language' %}" method="post">{% csrf_token %}
+            <label aria-hidden="true" type="hidden">
+            <input name="next" type="hidden" value="{{ redirect_to }}" />
+            </label>
+            <label aria-hidden="true" type="hidden">
+            <input name="language" type="hidden"/>
+            </label>
+            {% get_current_language as LANGUAGE_CODE %}
+            {% get_language_info for LANGUAGE_CODE as lang %}
+            {% get_available_languages as LANGUAGES %}
+            {% get_language_info_list for LANGUAGES as languages %}
+            {% if LANGUAGES|length < 3 %}
+                {% for language in languages %}
+                    {% if langs.0 != LANGUAGE_CODE %}
+                        <a href="{{ current_path }}" class="ui primary button compact" onclick="document.ui.language.value='{{ language.code}}'; document.ui.submit();" id='btn' title="{% trans "Change language" %}">
+                            <span>{{ langs.0|upper }}</span>
+                        </a> 
+                    {% endif %}   
+>>>>>>> 54d941ac4ec423a38c28a95b2c3a4356da544b3d
                 {% endfor %}
             </div>
         </div>
