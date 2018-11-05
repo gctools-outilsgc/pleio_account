@@ -240,7 +240,7 @@ def set_security_question(request):
                 questions.answer_3=make_password(data['answer_three'].lower())
                 questions.save()
 
-            messages.success(request, _('Your security questions and answers have been successfully saved.'))
+            messages.success(request, _('Security questions set. Your security questions and answers have been successfully saved.'))
             return redirect('security_pages')
 
     return render(request, 'security_pages_questions.html', { 'form': form })
