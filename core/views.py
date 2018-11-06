@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-from .forms import RegisterForm, UserProfileForm, PleioTOTPDeviceForm, ChangePasswordForm
-from .models import User, PreviousLogins, SiteConfiguration
+from .forms import RegisterForm, UserProfileForm, PleioTOTPDeviceForm, ChangePasswordForm, ChooseSecurityQuestion, AnswerSecurityQuestions
+from .models import User, PreviousLogins, SiteConfiguration, SecurityQuestions
 from django.urls import reverse
 from base64 import b32encode
 from binascii import unhexlify
@@ -11,6 +11,10 @@ import django_otp
 
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import authenticate, update_session_auth_hash
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.hashers import make_password
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
 from two_factor.views import ProfileView
 from user_sessions.views import SessionListView
 from django.utils.translation import gettext, gettext_lazy as _
@@ -26,6 +30,7 @@ from django.utils.http import urlquote
 from datetime import datetime
 import hashlib
 import hmac
+import random
 
 def home(request):
     if request.user.is_authenticated():
@@ -127,11 +132,57 @@ def terms_of_use(request):
     return render(request, 'terms_of_use.html')
 
 
+def security_questions(request):
+
+    #bring user back to start
+    if 'email' not in request.session:
+        return redirect('password_reset')
+
+    user = User.objects.get(email=request.session['email'])
+    if hasattr(user, 'securityquestions'):
+        questions = user.securityquestions
+    else:
+        questions = None
+    has_questions = False if questions is None else True
+
+    #pick 2 of 3 questions
+    if has_questions:
+        picks = [1,2,3]
+        random.shuffle(picks)
+        #save choices
+        if 'picks' not in request.session:
+            request.session['picks'] = picks
+        picked_questions = questions.get_questions(request.session['picks'][0],request.session['picks'][1])
+    else:
+        picked_questions = {}
+        picks = {}
+
+    form = AnswerSecurityQuestions()
+    if request.method == "POST":
+        form = AnswerSecurityQuestions(request.POST)
+        if form.is_valid():
+            del request.session['email']
+            del request.session['picks']
+            return redirect(request.is_secure() and "https" or "http" + '://' +
+                request.META['HTTP_HOST'] +
+                '/reset/' +
+                (urlsafe_base64_encode(force_bytes(user.pk))).decode('utf-8') + '/' +
+                default_token_generator.make_token(user)
+             )
+
+    return render(request, 'password_reset_questions.html', {
+        'form': form,
+        "has_questions": has_questions,
+        "questions": picked_questions,
+        "picks": picks
+    })
+
 @login_required
 def security_pages(request, page_action=None):
 
     return render(request, 'security_pages.html', {
         'pass_reset_form': change_password_form(request, page_action),
+        'security_questions': security_question(request),
         '2FA': two_factor_form(request, page_action),
         'user_session_form': user_sessions_form(request)
     })
@@ -151,6 +202,48 @@ def change_password_form(request, page_action):
         form = ChangePasswordForm()
 
     return form
+
+def security_question(request):
+    security_questions = {}
+    return security_questions
+
+def set_security_question(request):
+
+    form = ChooseSecurityQuestion()
+    if request.method == 'POST':
+        form = ChooseSecurityQuestion(request.POST)
+        if form.is_valid():
+            #check to see if user already set questions
+            if hasattr(request.user, 'securityquestions'):
+                questions = request.user.securityquestions
+            else:
+                questions = None
+
+            data = form.cleaned_data
+            if questions == None:
+                new_question = SecurityQuestions.objects.create(
+                    user=request.user,
+                    question_1=data['question_one'],
+                    answer_1=make_password(data['answer_one'].lower()),
+                    question_2=data['question_two'],
+                    answer_2=make_password(data['answer_two'].lower()),
+                    question_3=data['question_three'],
+                    answer_3=make_password(data['answer_three'].lower())
+                )
+                new_question.save()
+            else:
+                questions.question_1=data['question_one']
+                questions.answer_1=make_password(data['answer_one'].lower())
+                questions.question_2=data['question_two']
+                questions.answer_2=make_password(data['answer_two'].lower())
+                questions.question_3=data['question_three']
+                questions.answer_3=make_password(data['answer_three'].lower())
+                questions.save()
+
+            messages.success(request, _('Security questions set. Your security questions and answers have been successfully saved.'))
+            return redirect('security_pages')
+
+    return render(request, 'security_pages_questions.html', { 'form': form })
 
 def two_factor_form(request, page_action):
     two_factor_authorization =  {}

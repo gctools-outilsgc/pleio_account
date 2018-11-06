@@ -1,5 +1,6 @@
 from django.contrib.admin import ModelAdmin
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.hashers import check_password
 from django.utils import timezone
 from django.utils.text import slugify
 from django.utils.translation import ugettext as _
@@ -387,6 +388,61 @@ class PleioPartnerSite(models.Model):
 
     def __str__(self):
         return self.partner_site_name
+
+class SecurityQuestions(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    question_1 =  models.CharField(max_length=255)
+    question_2 =  models.CharField(max_length=255)
+    question_3 =  models.CharField(max_length=255)
+    answer_1 =  models.CharField(max_length=255)
+    answer_2 =  models.CharField(max_length=255)
+    answer_3 =  models.CharField(max_length=255)
+
+    def get_questions(self, q1, q2):
+        questions = [0,0]
+
+        if q1 == 1:
+            questions[0] = self.question_1
+        elif q1 == 2:
+            questions[0] = self.question_2
+        else:
+            questions[0] = self.question_3
+
+        if q2 == 1:
+            questions[1] = self.question_1
+        elif q2 == 2:
+            questions[1] = self.question_2
+        else:
+            questions[1] = self.question_3
+
+        return questions
+
+    def get_answers(self, q1, q2):
+        answers = [0,0]
+
+        if q1 == 1:
+            answers[0] = self.answer_1
+        elif q1 == 2:
+            answers[0] = self.answer_2
+        else:
+            answers[0] = self.answer_3
+
+        if q2 == 1:
+            answers[1] = self.answer_1
+        elif q2 == 2:
+            answers[1] = self.answer_2
+        else:
+            answers[1] = self.answer_3
+
+        return answers
+
+    def check_answers(self, q1, a1, q2, a2):
+        answers = self.get_answers(q1, q2)
+        if check_password(a1, answers[0]) and check_password(a2, answers[1]):
+            result = True
+        else:
+            result = False
+        return result
 
 class AppCustomization(models.Model):
     BG_IMAGE_OPTIONS = (

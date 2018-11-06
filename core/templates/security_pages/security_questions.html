@@ -1,0 +1,15 @@
+{% load i18n %}
+{% load Pleio_templatetags %}
+
+<div class="ui card">
+  <div class="account__cards content">
+    <h3 class="card__title ___addpadding-side header">{% trans "Security questions" %}</h3>
+
+    <div class="___addpadding-side">
+      <p>{% trans "Security questions allow you to regain entry to your account if you have forgotten your password and no longer have access to the email associated with your account." %}</p>
+    </div>
+  </div>
+  <div class="card__action ___addpadding-side extra content">
+      <a href="{% url 'set-questions' %}" class="ui button right floated primary">{% trans "Set questions" %}</a>
+  </div>
+</div>

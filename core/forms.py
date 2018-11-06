@@ -45,6 +45,7 @@ class ResetPasswordRequestView(FormView):
 
         if form.is_valid():
             email = form.cleaned_data["email"]
+            request.session['email'] = email
 
         if self.validate_email_address(email):
             found_user = User.objects.filter(email__iexact=email)
@@ -268,3 +269,61 @@ class ChangePasswordForm(forms.Form):
 
         password_validation.validate_password(self.cleaned_data.get('new_password2'))
         return new_password2
+
+class ChooseSecurityQuestion(forms.Form):
+    QUESTIONS = [
+        ('', _('Please select one of the questions')),
+        (1, _('What is your favourite board game?')),
+        (2, _('Who is your favourite fictional character?')),
+        (3, _('What is your least favourite chore?')),
+        (4, _('What type of music do you dislike most?')),
+        (5, _('What was your favourite TV show when you were a child?')),
+        (6, _('Who was your best friend in kindergarten?')),
+        (7, _('If you won the lottery, what would be your first big purchase?')),
+        (8, _('What is the first movie you saw in theatres?')),
+        (9, _('What was your first cell phone?')),
+        (10, _('What movie do you know the most quotes from?'))
+    ]
+
+    question_one = forms.ChoiceField(choices=QUESTIONS, initial=0)
+    answer_one = forms.CharField(min_length=3, max_length=100)
+    question_two = forms.ChoiceField(choices=QUESTIONS, initial=0)
+    answer_two = forms.CharField(min_length=3, max_length=100)
+    question_three = forms.ChoiceField(choices=QUESTIONS, initial=0)
+    answer_three = forms.CharField(min_length=3, max_length=100)
+
+    def clean(self):
+        cleaned_data = super(ChooseSecurityQuestion, self).clean()
+        question_one = cleaned_data.get('question_one')
+        question_two = cleaned_data.get('question_two')
+        question_three = cleaned_data.get('question_three')
+
+        if question_one == question_two or question_one == question_three or question_two == question_three:
+            raise forms.ValidationError(
+                _("The same question can not be used more than once")
+            )
+
+class AnswerSecurityQuestions(forms.Form):
+
+        question_email = forms.CharField(required=False)
+        answer_one = forms.CharField(max_length=100, initial="")
+        q1 = forms.IntegerField(required=False)
+        answer_two = forms.CharField(max_length=100, initial="")
+        q2 = forms.IntegerField(required=False)
+
+        def clean(self):
+            cleaned_data = super(AnswerSecurityQuestions, self).clean()
+            q1 = cleaned_data.get('q1')
+            answer_one = cleaned_data.get('answer_one')
+            q2 = cleaned_data.get('q2')
+            answer_two = cleaned_data.get('answer_two')
+            email = cleaned_data.get('question_email')
+
+            user = User.objects.get(email=email)
+            questions = user.securityquestions
+
+            test = questions.check_answers(q1, answer_one.lower(), q2, answer_two.lower())
+            if not test:
+                raise forms.ValidationError(
+                    _("One or more of your answers do not match the registered answers.")
+                )
