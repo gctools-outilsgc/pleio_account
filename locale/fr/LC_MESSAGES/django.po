@@ -8,6 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-11-05 10:48-0500\n"
 "POT-Creation-Date: 2018-05-09 14:40-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
@@ -18,37 +19,90 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: core/forms.py:107 core/forms.py:111
+#: core/forms.py:112 core/forms.py:116
 msgid "No user is associated with this email address."
 msgstr "Aucun utilisateur n'est associé à cette adresse e-mail."
 
-#: core/forms.py:115
+#: core/forms.py:120
 msgid "Please provide a valid email address."
 msgstr "Veuillez fournir une adresse e-mail valide."
 
-#: core/forms.py:123
+#: core/forms.py:128
 msgid "Your email address is not allowed."
 msgstr "Votre adresse e-mail n'est pas autorisée."
 
-#: core/forms.py:128
+#: core/forms.py:133
 msgid "This email is already registered."
 msgstr "Cet e-mail est déjà enregistré."
 
-#: core/forms.py:135 core/forms.py:236
+#: core/forms.py:140 core/forms.py:241
 msgid "The two password fields didn't match."
 msgstr "Ces deux champs réservés au mot de passe ne sont pas identiques."
 
-#: core/forms.py:137
+#: core/forms.py:142
 msgid "This email is already in use."
 msgstr "La présente adresse courriel est actuellement utilisée."
 
-#: core/forms.py:222 core/forms.py:226
+#: core/forms.py:227 core/forms.py:231
 msgid "Token"
 msgstr "Jeton"
 
-#: core/forms.py:235
+#: core/forms.py:240
 msgid "The password is invalid."
 msgstr "Le mot de passe est invalide"
+
+#: core/forms.py:275 core/templatetags/Pleio_templatetags.py:15
+msgid "Please select one of the questions"
+msgstr "Veuillez choisir une question dans la liste."
+
+#: core/forms.py:276 core/templatetags/Pleio_templatetags.py:16
+msgid "What is your favourite board game?"
+msgstr "Quel est votre jeu de société préféré?"
+
+#: core/forms.py:277 core/templatetags/Pleio_templatetags.py:17
+msgid "Who is your favourite fictional character?"
+msgstr "Qui est votre personnage fictif préféré?"
+
+#: core/forms.py:278 core/templatetags/Pleio_templatetags.py:18
+msgid "What is your least favourite chore?"
+msgstr "Quelle tâche aimez-vous le moins?"
+
+#: core/forms.py:279 core/templatetags/Pleio_templatetags.py:19
+msgid "What type of music do you dislike most?"
+msgstr "Quel type de musique vous déplaît le plus?"
+
+#: core/forms.py:280 core/templatetags/Pleio_templatetags.py:20
+msgid "What was your favourite TV show when you were a child?"
+msgstr ""
+"Quelle était votre émission de télévision préférée lorsque vous étiez enfant?"
+
+#: core/forms.py:281 core/templatetags/Pleio_templatetags.py:21
+msgid "Who was your best friend in kindergarten?"
+msgstr "Qui était votre meilleur ami à la maternelle?"
+
+#: core/forms.py:282 core/templatetags/Pleio_templatetags.py:22
+msgid "If you won the lottery, what would be your first big purchase?"
+msgstr "Si vous gagniez la loterie, quel serait votre premier gros achat?"
+
+#: core/forms.py:283 core/templatetags/Pleio_templatetags.py:23
+msgid "What is the first movie you saw in theatres?"
+msgstr "Quel est le premier film que vous avez vu en salle de cinéma?"
+
+#: core/forms.py:284 core/templatetags/Pleio_templatetags.py:24
+msgid "What was your first cell phone?"
+msgstr "Quel était votre premier téléphone cellulaire?"
+
+#: core/forms.py:285 core/templatetags/Pleio_templatetags.py:25
+msgid "What movie do you know the most quotes from?"
+msgstr "De quel film connaissez-vous le plus de citations?"
+
+#: core/forms.py:303
+msgid "The same question can not be used more than once"
+msgstr "Une même question ne peut pas être utilisée plus d’une fois."
+
+#: core/forms.py:328
+msgid "One or more of your answers do not match the registered answers."
+msgstr "Au moins une de vos réponses diffère des réponses sauvegardées."
 
 #: core/login_session_helpers.py:9
 msgid "Chrome"
@@ -139,16 +193,39 @@ msgstr ""
 msgid "%(browser)s on %(device)s"
 msgstr ""
 
+#: core/models.py:33
+msgid "Use TSL"
+msgstr ""
+
+#: core/models.py:34
+msgid "Use SSL"
+msgstr ""
+
+#: core/models.py:35
+#, fuzzy
+#| msgid "Email sent"
+msgid "Fail Silently"
+msgstr "Courriel envoyé"
+
+#: core/models.py:36
+msgid "Email send timeout (seconds)"
+msgstr ""
+
+#: core/models.py:84
+msgid "Both \"Use TSL\" and \"Use SSL\" cannot be selected at the same time"
+msgstr ""
+
 #: core/templates/404.html:6 core/templates/404.html:10
 msgid "Page not found"
 msgstr "Page non trouvée"
 
-#: core/templates/404.html:13 core/templates/locked_out.html:23
-#: core/templates/login.html:126 core/templates/login.html:149
-#: core/templates/password_reset.html:41
+#: core/templates/404.html:13 core/templates/login.html:126
+#: core/templates/login.html:149 core/templates/password_reset.html:48
 #: core/templates/password_reset_complete.html:25
-#: core/templates/password_reset_done.html:26 core/templates/register.html:96
-#: core/templates/register_activate.html:18
+#: core/templates/password_reset_done.html:31
+#: core/templates/password_reset_questions.html:45
+#: core/templates/password_reset_questions.html:53
+#: core/templates/register.html:96 core/templates/register_activate.html:18
 #: core/templates/register_complete.html:19
 msgid "Return to sign in"
 msgstr "Retournez pour vous connecter"
@@ -207,14 +284,17 @@ msgstr "Compte %(app_title)s"
 msgid "Back to the homepage"
 msgstr "Retour à la page d’accueil"
 
+#: core/templates/base.html:75 core/templates/base_account.html:142
 #: core/templates/base.html:72 core/templates/base_account.html:142
 msgid "Help / Contact Us"
 msgstr "Aide / Contactez-nous"
 
+#: core/templates/base.html:79 core/templates/base_account.html:146
 #: core/templates/base.html:76 core/templates/base_account.html:146
 msgid "Terms and Conditions"
 msgstr "Conditions D'Utilisation"
 
+#: core/templates/base.html:80 core/templates/base_account.html:147
 #: core/templates/base.html:77 core/templates/base_account.html:147
 #: core/templates/register.html:76
 msgid "Opens in a new tab"
@@ -237,6 +317,7 @@ msgstr "Profil"
 msgid "Your details"
 msgstr "Vos détails"
 
+#: core/templates/base_account.html:86 core/templates/security_pages.html:8
 #: core/templates/base_account.html:74
 msgid "Avatar"
 msgstr "Avatar"
@@ -251,6 +332,15 @@ msgstr "Sécurité"
 msgid "Password"
 msgstr "Mot de passe"
 
+#: core/templates/base_account.html:87
+#: core/templates/password_reset_questions.html:7
+#: core/templates/password_reset_questions.html:13
+#: core/templates/security_pages/security_questions.html:6
+#: core/templates/security_pages_questions.html:10
+msgid "Security questions"
+msgstr "Questions de sécurité"
+
+#: core/templates/base_account.html:87
 #: core/templates/base_account.html:87
 msgid "Sessions"
 msgstr "Séances"
@@ -463,6 +553,7 @@ msgstr "Le mot de passe que vous avez entré ne correspond pas à celui utilisé
 msgid "You can try "
 msgstr "Il vous reste "
 
+#: core/templates/login.html:44 core/templates/password_reset.html:37
 #: core/templates/login.html:35
 msgid " more times. After that, your account will be locked for"
 msgstr " tentatives. Votre compte sera ensuite verrouillé pendant"
@@ -494,7 +585,7 @@ msgid "Email address"
 msgstr "Courriel"
 
 #: core/templates/login.html:53 core/templates/password_reset_confirm.html:35
-#: core/templates/password_reset_confirm.html:44
+#: core/templates/password_reset_confirm.html:46
 #: core/templates/register.html:58 core/templates/register.html:67
 msgid "Show password"
 msgstr "Montrer le mot de passe"
@@ -583,22 +674,30 @@ msgstr "Refuser"
 msgid "Error"
 msgstr "Erreur"
 
-#: core/templates/password_reset.html:39
+#: core/templates/password_reset.html:22
+msgid "Please enter the email address for your GCcollab account."
+msgstr ""
+"Veuillez entrer l’adresse de courriel utilisée pour votre compte GCcollab."
+
+#: core/templates/password_reset.html:43
 #: core/templates/password_reset_complete.html:12
 #: core/templates/password_reset_confirm.html:6
 #: core/templates/password_reset_confirm.html:15
-#: core/templates/security_pages/change_password.html:9
+#: core/templates/security_pages/change_password.html:8
 msgid "Reset password"
 msgstr "Réinitialiser le mot de passe"
 
-#: core/templates/password_reset.html:50
-msgid "Need help?"
-msgstr "Besoin d’aide?"
-
-#: core/templates/password_reset.html:51 core/templates/profile.html:25
-#: core/templates/register.html:49
-msgid "Email"
-msgstr "Courriel"
+#: core/templates/password_reset.html:46
+msgid ""
+"We need this information to find your account. If you no longer have access "
+"to this email, you can answer security questions to get back into your "
+"account."
+msgstr ""
+"Nous avons besoin de cette information pour trouver votre compte. Si vous "
+"n’avez plus accès à ce courriel, vous pouvez utiliser vos questions de "
+"sécurité ou communiquer avec le bureau d’aide pour réinitialiser votre mot "
+"de passe et votre courriel après avoir envoyé l’adresse de courriel de votre "
+"compte."
 
 #: core/templates/password_reset_complete.html:6
 #: core/templates/password_reset_complete.html:19
@@ -610,22 +709,30 @@ msgid "You can now login with your new password."
 msgstr "Vous pouvez maintenant vous connecter avec votre nouveau mot de passe."
 
 #: core/templates/password_reset_confirm.html:31
-#: core/templates/security_pages/change_password.html:35
+#: core/templates/security_pages/change_password.html:33
 msgid "New password"
 msgstr "Nouveau mot de passe"
 
-#: core/templates/password_reset_confirm.html:40
+#: core/templates/password_reset_confirm.html:37
+msgid ""
+"Your password must be at least 8 characters in length, with 1 uppercase "
+"letter, one lowercase letter, a specical character"
+msgstr ""
+"Votre mot de passe doit contenir au moins huit caractères, dont une lettre "
+"majuscule, une lettre minuscule et un caractère spécial"
+
+#: core/templates/password_reset_confirm.html:42
 #: core/templates/register.html:63
-#: core/templates/security_pages/change_password.html:45
+#: core/templates/security_pages/change_password.html:43
 msgid "Confirm password"
 msgstr "Confirmez le mot de passe"
 
-#: core/templates/password_reset_confirm.html:49
-#: core/templates/security_pages/change_password.html:60
+#: core/templates/password_reset_confirm.html:52
+#: core/templates/security_pages/change_password.html:55
 msgid "Confirm"
 msgstr "Confirmer"
 
-#: core/templates/password_reset_confirm.html:56
+#: core/templates/password_reset_confirm.html:59
 msgid ""
 "Your password reset link has expired. Request a new password reset to "
 "receive a new link by email."
@@ -634,7 +741,7 @@ msgstr ""
 "nouvelle réinitialisation de mot de passe pour recevoir un nouveau lien par "
 "courriel."
 
-#: core/templates/password_reset_confirm.html:59
+#: core/templates/password_reset_confirm.html:62
 msgid "Reset my password"
 msgstr "Réinitialiser mon mot de passe"
 
@@ -652,6 +759,38 @@ msgstr ""
 "recevrez un courriel dans lequel il y a un lien pour configurer un nouveau "
 "mot de passe."
 
+#: core/templates/password_reset_done.html:26
+msgid "Don't have access to the registered email address?"
+msgstr "Vous n’avez pas accès à l’adresse de courriel enregistrée?"
+
+#: core/templates/password_reset_done.html:27
+msgid "Use security questions to reset your password"
+msgstr ""
+"Utilisez les questions de sécurité pour réinitialiser votre mot de passe."
+
+#: core/templates/password_reset_questions.html:17
+msgid "Please enter the answers to the security questions you picked."
+msgstr ""
+"Veuillez entrer les réponses aux questions de sécurité que vous avez "
+"choisies."
+
+#: core/templates/password_reset_questions.html:40
+msgid "Submit"
+msgstr "Soumettre"
+
+#: core/templates/password_reset_questions.html:49
+msgid ""
+"Your account does not have any set security questions. You can submit a "
+"ticket to  help desk to reset your password."
+msgstr ""
+"Votre compte ne comporte pas de questions de sécurité préétablies. Vous "
+"pouvez envoyer un billet au bureau d’aide pour réinitialiser votre mot de "
+"passe."
+
+#: core/templates/password_reset_questions.html:56
+msgid "Contact help desk"
+msgstr "Communiquer avec le bureau d’aide"
+
 #: core/templates/profile.html:5 core/templates/profile.html:7
 msgid "Account Settings"
 msgstr "Paramètres du compte"
@@ -660,11 +799,15 @@ msgstr "Paramètres du compte"
 msgid "Name"
 msgstr "Nom"
 
+#: core/templates/profile.html:25 core/templates/register.html:49
+msgid "Email"
+msgstr "Courriel"
+
 #: core/templates/profile.html:28
 msgid "Government"
 msgstr "Gouvernement"
 
-#: core/templates/profile.html:31 core/templates/register.html:82
+#: core/templates/profile.html:33 core/templates/register.html:82
 msgid "Receive Suspicious Sign In Emails"
 msgstr "Recevoir des e-mails de connexion suspects"
 
@@ -757,12 +900,29 @@ msgstr ""
 "inscription."
 
 #: core/templates/security_pages.html:6
+#: core/templates/security_pages_questions.html:5
+#: core/templates/security_pages_questions.html:7
 msgid "Security settings"
 msgstr "Les paramètres de sécurité"
 
-#: core/templates/security_pages/change_password.html:24
+#: core/templates/security_pages/change_password.html:22
 msgid "Current password"
 msgstr "Mot de passe actuel"
+
+#: core/templates/security_pages/security_questions.html:9
+msgid ""
+"Security questions allow you to regain entry to your account if you have "
+"forgotten your password and no longer have access to the email associated "
+"with your account."
+msgstr ""
+"Les questions de sécurité vous permettent de ravoir l’accès à votre compte "
+"si vous avez oublié votre mot de passe et si vous n’avez plus accès au "
+"courriel associé à votre compte."
+
+#: core/templates/security_pages/security_questions.html:13
+#: core/templates/security_pages_questions.html:14
+msgid "Set questions"
+msgstr "Questions prédéfinies"
 
 #: core/templates/security_pages/two_factor_authorization.html:13
 #: core/templates/tf_profile.html:12
@@ -939,6 +1099,54 @@ msgstr "%(time)s précédentes"
 msgid "End All Other Sessions"
 msgstr "Fermer toutes les autres séances"
 
+#: core/templates/security_pages_questions.html:21
+msgid ""
+"Select three security questions, and input your answer in the box beneath."
+msgstr ""
+"Sélectionnez trois questions de sécurité et entrez votre réponse dans la "
+"case ci-dessous.Vos réponses doivent comporter au moins trois caractères et "
+"elles ne sont pas sensibles à la casse."
+
+#: core/templates/security_pages_questions.html:22
+msgid ""
+"Your answers must be at least three characters long, and are not case-"
+"sensitive."
+msgstr ""
+"Vos réponses doivent comporter au moins trois caractères. Le système n’est "
+"pas sensible à la casse."
+
+#: core/templates/security_pages_questions.html:32
+msgid "Question 1"
+msgstr "Question 1"
+
+#: core/templates/security_pages_questions.html:37
+msgid "Answer 1"
+msgstr "Réponse 1"
+
+#: core/templates/security_pages_questions.html:42
+msgid "Question 2"
+msgstr "Question 2"
+
+#: core/templates/security_pages_questions.html:47
+msgid "Answer 2"
+msgstr "Réponse 2"
+
+#: core/templates/security_pages_questions.html:52
+msgid "Question 3"
+msgstr "Question 3"
+
+#: core/templates/security_pages_questions.html:57
+msgid "Answer 3"
+msgstr "Réponse 3"
+
+#: core/templates/security_pages_questions.html:65
+msgid "Cancel"
+msgstr "Annuler"
+
+#: core/templates/security_pages_questions.html:66
+msgid "Save answers"
+msgstr "Sauvegarder les réponses"
+
 #: core/templates/session_list.html:57
 #, fuzzy
 #| msgid "End All Other Sessions"
@@ -1043,11 +1251,17 @@ msgid ""
 "                    security."
 msgstr ""
 
-#: core/views.py:144
+#: core/views.py:200
 #, fuzzy
 #| msgid "The password has been changed successfully."
 msgid "The Password has been changed successfully."
 msgstr "Le mot de passe a été modifié avec succès."
+
+#: core/views.py:243
+msgid ""
+"Security questions set. Your security questions and answers have been "
+"successfully saved."
+msgstr "Questions de sécurité. Vos questions et réponses ont été sauvegardées."
 
 #: pleio_account/oidc_provider_settings.py:22
 msgid "Basic profile"
@@ -1057,35 +1271,37 @@ msgstr "Profil de base"
 msgid "Access to your name"
 msgstr "Accès à votre nom"
 
-#: pleio_account/password_validation.py:18
+#: pleio_account/password_validation.py:17
 #, python-format
 msgid "Password must contain at least %(min_numbers)d digit."
 msgstr ""
 
-#: pleio_account/password_validation.py:20
+#: pleio_account/password_validation.py:19
 #, fuzzy, python-format
 #| msgid "Contain at least 1 lowercase and 1 uppercase letter"
 msgid ""
 "Password must contain at least %(min_lowercase_letters)d lowercase letter."
 msgstr "Contenir au moins 1 lettre minuscule et 1 majuscule"
 
-#: pleio_account/password_validation.py:22
+#: pleio_account/password_validation.py:21
 #, fuzzy, python-format
 #| msgid "Contain at least 1 lowercase and 1 uppercase letter"
 msgid ""
 "Password must contain at least %(min_uppercase_letters)d uppercase letter."
 msgstr "Contenir au moins 1 lettre minuscule et 1 majuscule"
 
-#: pleio_account/password_validation.py:24
+#: pleio_account/password_validation.py:23
 #, python-format
 msgid ""
 "Password must contain at least %(min_special_characters)d special character."
 msgstr ""
 
+#: pleio_account/settings.py:154
 #: pleio_account/settings.py:146
 msgid "English"
 msgstr "Anglais"
 
+#: pleio_account/settings.py:155
 #: pleio_account/settings.py:147
 msgid "Dutch"
 msgstr ""
@@ -1093,6 +1309,64 @@ msgstr ""
 #: pleio_account/settings.py:148
 msgid "French"
 msgstr "Français"
+
+#: solo/admin.py:53
+#, fuzzy, python-format
+#| msgid "The password has been changed successfully."
+msgid "%(obj)s was changed successfully."
+msgstr "Le mot de passe a été modifié avec succès."
+
+#: solo/admin.py:55
+msgid "You may edit it again below."
+msgstr ""
+
+#: solo/templates/admin/solo/change_form.html:7
+#: solo/templates/admin/solo/object_history.html:6
+msgid "Home"
+msgstr ""
+
+#: solo/templates/admin/solo/change_form.html:14
+#: solo/templates/admin/solo/object_history.html:9
+msgid "History"
+msgstr ""
+
+#: solo/templates/admin/solo/change_form.html:15
+msgid "View on site"
+msgstr ""
+
+#: solo/templatetags/solo_tags.py:22
+#, python-format
+msgid ""
+"Templatetag requires the model dotted path: 'app_label.ModelName'. Received "
+"'%s'."
+msgstr ""
+
+#: solo/templatetags/solo_tags.py:28
+#, python-format
+msgid ""
+"Could not get the model name '%(model)s' from the application named '%(app)s'"
+msgstr ""
+
+#, fuzzy
+#~| msgid ""
+#~| "\n"
+#~| "                    You have only one backup token remaining.\n"
+#~| "                    "
+#~| msgid_plural ""
+#~| "Vous n’avez plus qu’un seul jeton de sauvegarde.\n"
+#~| "                    You have %(counter)s backup tokens remaining.\n"
+#~| "                    "
+#~ msgid ""
+#~ "\n"
+#~ "                            %(app_title)s Account\n"
+#~ "                            "
+#~ msgstr "Il vous reste %(counter)s jetons de sauvegarde."
+
+#~ msgid "Avatar"
+#~ msgstr "Avatar"
+
+#~ msgid "Need help?"
+#~ msgstr "Besoin d’aide?"
 
 #: venv/lib/python3.6/site-packages/defender/config.py:61
 #, fuzzy
@@ -2708,6 +2982,9 @@ msgstr ""
 
 #~ msgid "Enable two factor authentication"
 #~ msgstr "Activez l’authentification à deux facteurs"
+
+#~ msgid "Back"
+#~ msgstr "Retournez"
 
 #~ msgid "of your account"
 #~ msgstr "dans votre compte"

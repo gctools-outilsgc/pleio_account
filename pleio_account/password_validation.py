@@ -10,8 +10,7 @@ class CustomPasswordValidator(object):
         self.min_uppercase_letters = uppercase_letters
         self.min_special_characters = special_characters
 
-    def validate(self, password, user):
-        print(password)
+    def validate(self, password, user=None):
         special_characters = "[~\!@#\$%\^&\*\(\)_\+{}\":;'\[\]]"
         errors = []
         
