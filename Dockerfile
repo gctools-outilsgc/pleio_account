@@ -12,25 +12,27 @@ RUN apk --no-cache add \
     zlib-dev \
     mailcap
 
-COPY . /app
-
+RUN mkdir /app
 WORKDIR /app
+ADD requirements.txt /app
+ADD package.json /app
+ADD package-lock.json /app
 
 ## Update NPM
 RUN npm install -g npm
 
 ## Install and update NPM packages
-RUN npm install && \
-    npm update && \
-    npm run build
+RUN npm install && npm update
+
+RUN pip3 install -r requirements.txt
+
+ADD . /app
+
+RUN npm run build
 
 RUN mv /app/docker/config.py /app/pleio_account/config.py
 RUN mv /app/docker/start.sh /start.sh
 RUN chmod +x /start.sh
-
-RUN pip3 install virtualenv && \
-    virtualenv /app/env && \
-    /app/env/bin/pip install -r requirements.txt
 
 ENV PATH="/app/env/bin:${PATH}"
 EXPOSE 8000
