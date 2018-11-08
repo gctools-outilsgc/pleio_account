@@ -75,13 +75,13 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'core.middleware.FailedLoginMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_otp.middleware.OTPMiddleware',
     'core.middleware.PartnerSiteMiddleware',
     'core.middleware.DeviceIdMiddleware',
-
+    'core.middleware.FailedLoginMiddleware',
 ]
 
 
