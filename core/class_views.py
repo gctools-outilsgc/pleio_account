@@ -28,11 +28,11 @@ class PleioLoginView(LoginView):
     )
 
     def get_context_data(self, **kwargs):
-        attemps = utils.get_user_attempts(self.request)
+        attempts = utils.get_user_attempts(self.request)
         get_username = utils.get_username_from_request(self.request)
         time = int(config.COOLOFF_TIME / 60)
         attemps_left = (config.FAILURE_LIMIT - utils.get_user_attempts(self.request))
-        kwargs = dict(kwargs,attemps=attemps,username=get_username, time=time, attemps_left=attemps_left)
+        kwargs = dict(kwargs,attempts=attempts,username=get_username, time=time, attempts_left=attempts_left)
 
         context = super(PleioLoginView, self).get_context_data(**kwargs)
         next = self.request.GET.get('next')
