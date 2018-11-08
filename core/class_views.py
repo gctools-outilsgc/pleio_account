@@ -31,7 +31,7 @@ class PleioLoginView(LoginView):
         attempts = utils.get_user_attempts(self.request)
         get_username = utils.get_username_from_request(self.request)
         time = int(config.COOLOFF_TIME / 60)
-        attemps_left = (config.FAILURE_LIMIT - utils.get_user_attempts(self.request))
+        attempts_left = (config.FAILURE_LIMIT - utils.get_user_attempts(self.request))
         kwargs = dict(kwargs,attempts=attempts,username=get_username, time=time, attempts_left=attempts_left)
 
         context = super(PleioLoginView, self).get_context_data(**kwargs)
