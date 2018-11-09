@@ -18,7 +18,7 @@ from django.core.validators import validate_email
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
-from core.models import User
+from core.models import User, SiteConfiguration
 REDIS_SERVER = get_redis_connection()
 
 LOG = logging.getLogger(__name__)
@@ -261,10 +261,13 @@ def record_failed_attempt(request,ip_address, username):
     # if any blocks return False, no blocks. return True
     return not (ip_block or user_block)
 
-def send_blocked_email(request, username)
+def send_blocked_email(request, username):
     if validate_email_address(username):
         found_user = User.objects.filter(email__iexact=username)
         if found_user.exists():
+            #load site configuration
+            site_config = SiteConfiguration.get_solo()
+            config_data = site_config.get_values()
             for user in found_user:
 
                 c = {
@@ -284,7 +287,7 @@ def send_blocked_email(request, username)
                 subject = ''.join(subject.splitlines())
                 email = loader.render_to_string(email_template_name, c)
                 html_email = loader.render_to_string(html_email_template_name, c)
-                send_mail(subject, email, settings.DEFAULT_FROM_EMAIL, [user.email], fail_silently=False, html_message=html_email)
+                send_mail(subject, email, config_data['from_email'], [user.email], fail_silently=False, html_message=html_email)
 
 def unblock_ip(ip_address, pipe=None):
     """ unblock the given IP """
