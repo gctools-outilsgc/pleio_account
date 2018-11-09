@@ -5,11 +5,9 @@ from django.shortcuts import render
 from django.core.validators import validate_ipv46_address
 from django.core.exceptions import ValidationError
 from django.utils.module_loading import import_string
-# from core.models import GET_USERNAME_FROM_REQUEST_PATH
 from defender.connection import get_redis_connection
 from defender import config
 from django.core.mail import send_mail
-# from defender.config import config
 from defender.data import store_login_attempt
 from defender.signals import send_username_block_signal, send_ip_block_signal
 from django.template import loader
