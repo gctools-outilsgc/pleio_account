@@ -226,31 +226,7 @@ def record_failed_attempt(request,ip_address, username):
         ip_count = increment_key(get_ip_attempt_cache_key(ip_address)) + 1
             # if over the limit, add to block
         if ip_count > config.IP_FAILURE_LIMIT:
-            block_ip(ip_address)        
-            if validate_email_address(username):
-                found_user = User.objects.filter(email__iexact=username)
-                if found_user.exists():
-                    for user in found_user:
-
-                        c = {
-                            'domain': request.META['HTTP_HOST'],
-                            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                            'user': user,
-                            'token': default_token_generator.make_token(user),
-                            'protocol': request.is_secure() and "https" or "http",
-                            'attemps': config.IP_FAILURE_LIMIT,
-                            'time': int(config.COOLOFF_TIME /60)
-                        }
-
-                        subject_template_name = 'emails/reset_password_subject.txt'
-                        email_template_name = 'emails/reset_password.txt'
-                        html_email_template_name = 'emails/reset_password_lockout.html'
-                        subject = loader.render_to_string(subject_template_name)
-                        subject = ''.join(subject.splitlines())
-                        email = loader.render_to_string(email_template_name, c)
-                        html_email = loader.render_to_string(html_email_template_name, c)
-                        send_mail(subject, email, settings.DEFAULT_FROM_EMAIL, [user.email], fail_silently=False, html_message=html_email)
-
+            block_ip(ip_address)
             ip_block = True
 
     user_block = False
@@ -285,6 +261,30 @@ def record_failed_attempt(request,ip_address, username):
     # if any blocks return False, no blocks. return True
     return not (ip_block or user_block)
 
+def send_blocked_email(request, username)
+    if validate_email_address(username):
+        found_user = User.objects.filter(email__iexact=username)
+        if found_user.exists():
+            for user in found_user:
+
+                c = {
+                    'domain': request.META['HTTP_HOST'],
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'user': user,
+                    'token': default_token_generator.make_token(user),
+                    'protocol': request.is_secure() and "https" or "http",
+                    'attemps': config.IP_FAILURE_LIMIT,
+                    'time': int(config.COOLOFF_TIME /60)
+                }
+
+                subject_template_name = 'emails/reset_password_subject.txt'
+                email_template_name = 'emails/reset_password.txt'
+                html_email_template_name = 'emails/reset_password_lockout.html'
+                subject = loader.render_to_string(subject_template_name)
+                subject = ''.join(subject.splitlines())
+                email = loader.render_to_string(email_template_name, c)
+                html_email = loader.render_to_string(html_email_template_name, c)
+                send_mail(subject, email, settings.DEFAULT_FROM_EMAIL, [user.email], fail_silently=False, html_message=html_email)
 
 def unblock_ip(ip_address, pipe=None):
     """ unblock the given IP """
@@ -325,14 +325,15 @@ def reset_failed_attempts(ip_address=None, username=None):
 
 def lockout_response(request):
     """ if we are locked out, here is the response """
+    username = get_username_from_request(request)
     if config.LOCKOUT_TEMPLATE:
         context = {
             'cooloff_time_seconds': config.COOLOFF_TIME,
             'cooloff_time_minutes': int(config.COOLOFF_TIME / 60),
             'failure_limit': config.FAILURE_LIMIT,
-            'email_lockout': get_username_from_request(request),
+            'email_lockout': username,
         }
-        print(config.LOCKOUT_TEMPLATE)
+        send_blocked_email(request, username)
         return render(request, config.LOCKOUT_TEMPLATE, context)
 
     if config.LOCKOUT_URL:
@@ -389,15 +390,7 @@ def check_request(request, login_unsuccessful,
         return True
     else:
         # add a failed attempt for this user
-        # alert_attemp(request)
         return record_failed_attempt(request,ip_address, username)
-
-
-def alert_attemp(request):
-
-    print('test')
-    #return render(request, 'login.html',{'message': 'now'})
-    return login(request, 'login.html', {'message':'now'})
 
 def add_login_attempt_to_db(request, login_valid,
                             get_username=get_username_from_request,
