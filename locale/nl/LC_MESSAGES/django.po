@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-05 10:48-0500\n"
+"POT-Creation-Date: 2018-11-13 13:37-0500\n"
 "PO-Revision-Date: 2017-12-15 16:48+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -274,12 +274,6 @@ msgstr "Je hebt nog geen backup tokens."
 msgid "Generate tokens"
 msgstr "Genereer tokens"
 
-#: core/templates/base.html:44 core/templates/base_account.html:42
-#, fuzzy, python-format
-#| msgid "in your Pleio account"
-msgid "%(app_title)s Account"
-msgstr "in uw Pleio-account"
-
 #: core/templates/base.html:48 core/templates/base_account.html:36
 msgid "Back to the homepage"
 msgstr "Terug naar de homepagina"
@@ -448,7 +442,7 @@ msgstr "Je hebt ingelogd vanaf een nieuwe locatie"
 msgid "Logged in from a new location"
 msgstr "Ingelogd vanaf een nieuwe locatie"
 
-#: core/templates/language.html:26 core/templates/language.html:37
+#: core/templates/language.html:44
 msgid "Change language"
 msgstr ""
 
@@ -575,7 +569,7 @@ msgstr ""
 #: core/templates/password_reset.html:22
 #, fuzzy
 #| msgid "Now please enter a new password for your account."
-msgid "Please enter the email address for your GCcollab account."
+msgid "Please enter the email address for your account."
 msgstr "Vul een nieuw wachtwoord in voor je account."
 
 #: core/templates/password_reset.html:43
@@ -1226,6 +1220,11 @@ msgstr ""
 msgid ""
 "Could not get the model name '%(model)s' from the application named '%(app)s'"
 msgstr ""
+
+#, fuzzy
+#~| msgid "in your Pleio account"
+#~ msgid "%(app_title)s Account"
+#~ msgstr "in uw Pleio-account"
 
 #, fuzzy
 #~| msgid ""

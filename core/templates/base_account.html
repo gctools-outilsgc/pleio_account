@@ -38,8 +38,8 @@
                     <a href="{% url 'profile' %}" style="color:black;">
                         <img alt ="" src="{% show_customizations_logo %}" class="ui top aligned mini image header-logo">
                         <span class="ui huge header">
-                            {% show_customizations_title as app_title2 %}
-                            {% blocktrans with app_title=app_title2 %}{{ app_title }} Account{% endblocktrans %}
+                            {% show_customizations_title as app_title %}
+                            {{ app_title }}
                         </span>
                     </a>
 
@@ -174,7 +174,9 @@
 .page-heading h1{
     float:left;
 }
-
+.ui.labeled.icon.menu .item {
+  margin:0;
+}
 #show_menu {
 display:none;
 }

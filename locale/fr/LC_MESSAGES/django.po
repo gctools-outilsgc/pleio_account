@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-05 10:48-0500\n"
+"POT-Creation-Date: 2018-11-13 13:37-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -274,11 +274,6 @@ msgstr "Vous n’avez pas encore de codes de sauvegarde."
 msgid "Generate tokens"
 msgstr "Générer des jetons"
 
-#: core/templates/base.html:44 core/templates/base_account.html:42
-#, python-format
-msgid "%(app_title)s Account"
-msgstr "Compte %(app_title)s"
-
 #: core/templates/base.html:48 core/templates/base_account.html:36
 msgid "Back to the homepage"
 msgstr "Retour à la page d’accueil"
@@ -448,7 +443,7 @@ msgstr ""
 msgid "Logged in from a new location"
 msgstr "Connecté à partir d'un nouvel emplacement"
 
-#: core/templates/language.html:26 core/templates/language.html:37
+#: core/templates/language.html:44
 msgid "Change language"
 msgstr "Changer de langue"
 
@@ -567,9 +562,8 @@ msgid "Error"
 msgstr "Erreur"
 
 #: core/templates/password_reset.html:22
-msgid "Please enter the email address for your GCcollab account."
-msgstr ""
-"Veuillez entrer l’adresse de courriel utilisée pour votre compte GCcollab."
+msgid "Please enter the email address for your account."
+msgstr "Veuillez entrer l’adresse de courriel utilisée pour votre compte."
 
 #: core/templates/password_reset.html:43
 #: core/templates/password_reset_complete.html:12
@@ -1232,6 +1226,9 @@ msgstr ""
 msgid ""
 "Could not get the model name '%(model)s' from the application named '%(app)s'"
 msgstr ""
+
+#~ msgid "%(app_title)s Account"
+#~ msgstr "Compte %(app_title)s"
 
 #, fuzzy
 #~| msgid ""
