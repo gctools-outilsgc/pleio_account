@@ -1,6 +1,10 @@
 from django.core.validators import validate_ipv46_address
 from django.core.exceptions import ValidationError
-from . import config
+from defender.connection import get_redis_connection
+from defender.signals import send_ip_block_signal
+from . import config,utils
+
+REDIS_SERVER = get_redis_connection()
 
 def get(request):
     """ get the ip address from the request """
@@ -12,6 +16,43 @@ def get(request):
     else:
         ip_address = get_from_request(request)
     return ip_address
+
+def get_blocked_ips():
+    """ get a list of blocked ips from redis """
+    if config.DISABLE_IP_LOCKOUT:
+        # There are no blocked IP's since we disabled them.
+        return []
+    key = get_blocked_cache_key("*")
+    key_list = [redis_key.decode('utf-8')
+                for redis_key in REDIS_SERVER.keys(key)]
+    return utils.strip_keys(key_list)
+
+def block(ip_address):
+    """ given the ip, block it """
+    if not ip_address:
+        # no reason to continue when there is no ip
+        return
+    if config.DISABLE_IP_LOCKOUT:
+        # no need to block, we disabled it.
+        return
+    key = get_blocked_cache_key(ip_address)
+    if config.COOLOFF_TIME:
+        REDIS_SERVER.set(key, 'blocked', config.COOLOFF_TIME)
+    else:
+        REDIS_SERVER.set(key, 'blocked')
+    send_ip_block_signal(ip_address)
+
+def unblock(ip_address, pipe=None):
+    """ unblock the given IP """
+    do_commit = False
+    if not pipe:
+        pipe = REDIS_SERVER.pipeline()
+        do_commit = True
+    if ip_address:
+        pipe.delete(get_attempt_cache_key(ip_address))
+        pipe.delete(get_blocked_cache_key(ip_address))
+        if do_commit:
+            pipe.execute()
 
 def get_from_request(request):
     """ Makes the best attempt to get the client's real IP or return
@@ -31,3 +72,12 @@ def is_valid_ip(ip_address):
         return True
     except ValidationError:
         return False
+
+def get_attempt_cache_key(ip_address):
+    """ get the cache key by ip """
+    return "{0}:failed:ip:{1}".format(config.CACHE_PREFIX, ip_address)
+
+
+def get_blocked_cache_key(ip_address):
+    """ get the cache key by ip """
+    return "{0}:blocked:ip:{1}".format(config.CACHE_PREFIX, ip_address)
