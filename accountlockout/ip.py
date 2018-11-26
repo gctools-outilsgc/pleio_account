@@ -1,15 +1,16 @@
 from django.core.validators import validate_ipv46_address
 from django.core.exceptions import ValidationError
+from defender import config as def_config
 from defender.connection import get_redis_connection
 from defender.signals import send_ip_block_signal
-from . import config,utils
+from . import utils
 
 REDIS_SERVER = get_redis_connection()
 
 def get(request):
     """ get the ip address from the request """
-    if config.BEHIND_REVERSE_PROXY:
-        ip_address = request.META.get(config.REVERSE_PROXY_HEADER, '')
+    if def_config.BEHIND_REVERSE_PROXY:
+        ip_address = request.META.get(def_config.REVERSE_PROXY_HEADER, '')
         ip_address = ip_address.split(",", 1)[0].strip()
         if ip_address == '':
             ip_address = get_from_request(request)
@@ -19,7 +20,7 @@ def get(request):
 
 def get_blocked_ips():
     """ get a list of blocked ips from redis """
-    if config.DISABLE_IP_LOCKOUT:
+    if def_config.DISABLE_IP_LOCKOUT:
         # There are no blocked IP's since we disabled them.
         return []
     key = get_blocked_cache_key("*")
@@ -32,12 +33,12 @@ def block(ip_address):
     if not ip_address:
         # no reason to continue when there is no ip
         return
-    if config.DISABLE_IP_LOCKOUT:
+    if def_config.DISABLE_IP_LOCKOUT:
         # no need to block, we disabled it.
         return
     key = get_blocked_cache_key(ip_address)
-    if config.COOLOFF_TIME:
-        REDIS_SERVER.set(key, 'blocked', config.COOLOFF_TIME)
+    if def_config.COOLOFF_TIME:
+        REDIS_SERVER.set(key, 'blocked', def_config.COOLOFF_TIME)
     else:
         REDIS_SERVER.set(key, 'blocked')
     send_ip_block_signal(ip_address)
@@ -75,9 +76,9 @@ def is_valid_ip(ip_address):
 
 def get_attempt_cache_key(ip_address):
     """ get the cache key by ip """
-    return "{0}:failed:ip:{1}".format(config.CACHE_PREFIX, ip_address)
+    return "{0}:failed:ip:{1}".format(def_config.CACHE_PREFIX, ip_address)
 
 
 def get_blocked_cache_key(ip_address):
     """ get the cache key by ip """
-    return "{0}:blocked:ip:{1}".format(config.CACHE_PREFIX, ip_address)
+    return "{0}:blocked:ip:{1}".format(def_config.CACHE_PREFIX, ip_address)

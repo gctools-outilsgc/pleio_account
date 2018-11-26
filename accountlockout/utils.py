@@ -13,7 +13,7 @@ from core.models import User, SiteConfiguration
 from defender.connection import get_redis_connection
 from defender.data import store_login_attempt
 from defender import config as def_config
-from . import  ip, users
+from . import ip, users
 
 LOG = logging.getLogger(__name__)
 
@@ -74,10 +74,10 @@ def lockout_response(request):
         send_blocked_email(request, username)
         return render(request, def_config.LOCKOUT_TEMPLATE, context)
 
-    if config.LOCKOUT_URL:
-        return HttpResponseRedirect(config.LOCKOUT_URL)
+    if def_config.LOCKOUT_URL:
+        return HttpResponseRedirect(def_config.LOCKOUT_URL)
 
-    if config.COOLOFF_TIME:
+    if def_config.COOLOFF_TIME:
         return HttpResponse("Account locked: too many login attempts.  "
                             "Please try again later.")
     else:
