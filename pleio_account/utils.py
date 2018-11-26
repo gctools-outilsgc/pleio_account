@@ -2,7 +2,6 @@ import logging
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.core.validators import validate_ipv46_address
 from django.core.exceptions import ValidationError
 from django.utils.module_loading import import_string
 from defender.connection import get_redis_connection
@@ -17,42 +16,11 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from core.models import User, SiteConfiguration
+from accountlockout import ip
+
 REDIS_SERVER = get_redis_connection()
 
 LOG = logging.getLogger(__name__)
-
-
-def is_valid_ip(ip_address):
-    """ Check Validity of an IP address """
-    if not ip_address:
-        return False
-    ip_address = ip_address.strip()
-    try:
-        validate_ipv46_address(ip_address)
-        return True
-    except ValidationError:
-        return False
-
-
-def get_ip_address_from_request(request):
-    """ Makes the best attempt to get the client's real IP or return
-        the loopback """
-    remote_addr = request.META.get('REMOTE_ADDR', '')
-    if remote_addr and is_valid_ip(remote_addr):
-        return remote_addr.strip()
-    return '127.0.0.1'
-
-
-def get_ip(request):
-    """ get the ip address from the request """
-    if config.BEHIND_REVERSE_PROXY:
-        ip_address = request.META.get(config.REVERSE_PROXY_HEADER, '')
-        ip_address = ip_address.split(",", 1)[0].strip()
-        if ip_address == '':
-            ip_address = get_ip_address_from_request(request)
-    else:
-        ip_address = get_ip_address_from_request(request)
-    return ip_address
 
 
 def lower_username(username):
@@ -152,7 +120,7 @@ get_username_from_request = import_string(
 def get_user_attempts(request, get_username=get_username_from_request, username=None):
     """ Returns number of access attempts for this ip, username
     """
-    ip_address = get_ip(request)
+    ip_address = ip.get(request)
     username = lower_username(username or get_username(request))
     # get by IP
     ip_count = REDIS_SERVER.get(get_ip_attempt_cache_key(ip_address))
@@ -369,7 +337,7 @@ def is_already_locked(request, get_username=get_username_from_request, username=
     """Parse the username & IP from the request, and see if it's
     already locked."""
     user_blocked = is_user_already_locked(username or get_username(request))
-    ip_blocked = is_source_ip_already_locked(get_ip(request))
+    ip_blocked = is_source_ip_already_locked(ip.get(request))
 
     if config.LOCKOUT_BY_IP_USERNAME:
         # if both this IP and this username are present the request is blocked
@@ -382,7 +350,7 @@ def check_request(request, login_unsuccessful,
                   get_username=get_username_from_request,
                   username=None):
     """ check the request, and process results"""
-    ip_address = get_ip(request)
+    ip_address = ip.get(request)
     username = username or get_username(request)
 
     if not login_unsuccessful:
@@ -406,7 +374,7 @@ def add_login_attempt_to_db(request, login_valid,
     username = username or get_username(request)
 
     user_agent = request.META.get('HTTP_USER_AGENT', '<unknown>')[:255]
-    ip_address = get_ip(request)
+    ip_address = ip.get(request)
     http_accept = request.META.get('HTTP_ACCEPT', '<unknown>')
     path_info = request.META.get('PATH_INFO', '<unknown>')
 
