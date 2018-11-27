@@ -3,6 +3,7 @@ from defender.connection import get_redis_connection
 
 import accountlockout.helper
 import accountlockout.helper.users_helper
+import accountlockout.helper.utils_helper
 from accountlockout import users, utils
 
 REDIS_SERVER = get_redis_connection()
@@ -27,7 +28,7 @@ def __record_failed(request, ip_address, username):
 
     if not def_config.DISABLE_IP_LOCKOUT:
         # we only want to increment the IP if this is disabled.
-        ip_count = utils.__increment_key(accountlockout.helper.ip_helper.__get_attempt_cache_key(ip_address)) + 1
+        ip_count = accountlockout.helper.utils_helper.__increment_key(accountlockout.helper.ip_helper.__get_attempt_cache_key(ip_address)) + 1
             # if over the limit, add to block
         if ip_count > def_config.IP_FAILURE_LIMIT:
             accountlockout.helper.ip_helper.__block(ip_address)
@@ -35,7 +36,7 @@ def __record_failed(request, ip_address, username):
 
     user_block = False
     if username and not def_config.DISABLE_USERNAME_LOCKOUT:
-        user_count = utils.__increment_key(accountlockout.helper.users_helper.__get_attempt_cache_key(username)) + 1
+        user_count = accountlockout.helper.utils_helper.__increment_key(accountlockout.helper.users_helper.__get_attempt_cache_key(username)) + 1
         # if over the limit, add to block
         if user_count > def_config.USERNAME_FAILURE_LIMIT:
             accountlockout.helper.users_helper.__block(username)
