@@ -1,10 +1,6 @@
 from defender import config as def_config
-from defender.connection import get_redis_connection
-import accountlockout.helper
-import accountlockout.helper.users_helper
-import accountlockout.helper.utils_helper
-
-REDIS_SERVER = get_redis_connection()
+from . import ip_helper, users_helper, utils_helper
+from .defender_vars import REDIS_SERVER
 
 
 def reset_failed(ip_address=None, username=None):
@@ -12,8 +8,8 @@ def reset_failed(ip_address=None, username=None):
     """
     pipe = REDIS_SERVER.pipeline()
 
-    accountlockout.helper.ip_helper.unblock(ip_address, pipe=pipe)
-    accountlockout.helper.users_helper.unblock(username, pipe=pipe)
+    ip_helper.unblock(ip_address, pipe=pipe)
+    users_helper.unblock(username, pipe=pipe)
 
     pipe.execute()
 
@@ -26,18 +22,20 @@ def record_failed(request, ip_address, username):
 
     if not def_config.DISABLE_IP_LOCKOUT:
         # we only want to increment the IP if this is disabled.
-        ip_count = accountlockout.helper.utils_helper.increment_key(accountlockout.helper.ip_helper.get_attempt_cache_key(ip_address)) + 1
-            # if over the limit, add to block
+        ip_cache_key = ip_helper.get_attempt_cache_key(ip_address)
+        ip_count = utils_helper.increment_key(ip_cache_key) + 1
+        # if over the limit, add to block
         if ip_count > def_config.IP_FAILURE_LIMIT:
-            accountlockout.helper.ip_helper.block(ip_address)
+            ip_helper.block(ip_address)
             ip_block = True
 
     user_block = False
     if username and not def_config.DISABLE_USERNAME_LOCKOUT:
-        user_count = accountlockout.helper.utils_helper.increment_key(accountlockout.helper.users_helper.get_attempt_cache_key(username)) + 1
+        user_cache_key = users_helper.get_attempt_cache_key(username)
+        user_count = utils_helper.increment_key(user_cache_key) + 1
         # if over the limit, add to block
         if user_count > def_config.USERNAME_FAILURE_LIMIT:
-            accountlockout.helper.users_helper.block(username)
+            users_helper.block(username)
             user_block = True
 
     # if we have this turned on, then there is no reason to look at ip_block

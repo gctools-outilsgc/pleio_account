@@ -1,10 +1,9 @@
 from defender import config as def_config
-from defender.connection import get_redis_connection
 from defender.signals import send_ip_block_signal
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_ipv46_address
 
-REDIS_SERVER = get_redis_connection()
+from .defender_vars import REDIS_SERVER
 
 
 def get(request):

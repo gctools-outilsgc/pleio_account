@@ -1,13 +1,6 @@
 from defender import config as def_config
-from defender.connection import get_redis_connection
 from defender.signals import send_username_block_signal
-from django.utils.module_loading import import_string
-
-REDIS_SERVER = get_redis_connection()
-get_username_from_request = import_string(
-    def_config.GET_USERNAME_FROM_REQUEST_PATH
-)
-
+from .defender_vars import get_username_from_request, REDIS_SERVER
 
 def get_username(request, get_usernamefunc=None):
     if(get_usernamefunc is None):
@@ -16,7 +9,7 @@ def get_username(request, get_usernamefunc=None):
         return get_usernamefunc(request)
 
 
-def __lower(username):
+def lower(username):
     """
     Single entry point to force the username to lowercase, all the functions
     that need to deal with username should call this.
@@ -74,9 +67,11 @@ def is_already_locked(request, get_usernameFunc, username):
 
 def get_attempt_cache_key(username):
     """ get the cache key by username """
-    return "{0}:failed:username:{1}".format(def_config.CACHE_PREFIX, __lower(username))
+    return "{0}:failed:username:{1}".format(def_config.CACHE_PREFIX,
+                                            lower(username))
 
 
 def get_blocked_cache_key(username):
     """ get the cache key by username """
-    return "{0}:blocked:username:{1}".format(def_config.CACHE_PREFIX, __lower(username))
+    return "{0}:blocked:username:{1}".format(def_config.CACHE_PREFIX,
+                                             lower(username))
