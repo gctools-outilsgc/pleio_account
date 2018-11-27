@@ -4,17 +4,17 @@ from . import ip,users,utils
 
 REDIS_SERVER = get_redis_connection()
 
-def reset_failed(ip_address=None, username=None):
+def __reset_failed(ip_address=None, username=None):
     """ reset the failed attempts for these ip's and usernames
     """
     pipe = REDIS_SERVER.pipeline()
 
-    ip.unblock(ip_address, pipe=pipe)
-    users.unblock(username, pipe=pipe)
+    ip.__unblock(ip_address, pipe=pipe)
+    users.__unblock(username, pipe=pipe)
 
     pipe.execute()
 
-def record_failed(request,ip_address, username):
+def __record_failed(request, ip_address, username):
     """ record the failed login attempt, if over limit return False,
     if not over limit return True """
     # increment the failed count, and get current number
@@ -22,18 +22,18 @@ def record_failed(request,ip_address, username):
 
     if not def_config.DISABLE_IP_LOCKOUT:
         # we only want to increment the IP if this is disabled.
-        ip_count = utils.increment_key(ip.get_attempt_cache_key(ip_address)) + 1
+        ip_count = utils.__increment_key(ip.__get_attempt_cache_key(ip_address)) + 1
             # if over the limit, add to block
         if ip_count > def_config.IP_FAILURE_LIMIT:
-            ip.block(ip_address)
+            ip.__block(ip_address)
             ip_block = True
 
     user_block = False
     if username and not def_config.DISABLE_USERNAME_LOCKOUT:
-        user_count = utils.increment_key(users.get_attempt_cache_key(username)) + 1
+        user_count = utils.__increment_key(users.__get_attempt_cache_key(username)) + 1
         # if over the limit, add to block
         if user_count > def_config.USERNAME_FAILURE_LIMIT:
-            users.block(username)
+            users.__block(username)
             user_block = True
 
     # if we have this turned on, then there is no reason to look at ip_block

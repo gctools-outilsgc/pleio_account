@@ -22,8 +22,8 @@ REDIS_SERVER = get_redis_connection()
 def is_already_locked(request, get_username=None, username=None):
     """Parse the username & IP from the request, and see if it's
     already locked."""
-    user_blocked = users.is_already_locked(request, username, get_username)
-    ip_blocked = ip.is_source_already_locked(ip.get(request))
+    user_blocked = users.__is_already_locked(request, username, get_username)
+    ip_blocked = ip.__is_source_already_locked(ip.__get(request))
 
     if def_config.LOCKOUT_BY_IP_USERNAME:
         # if both this IP and this username are present the request is blocked
@@ -31,7 +31,7 @@ def is_already_locked(request, get_username=None, username=None):
 
     return ip_blocked or user_blocked
 
-def strip_keys(key_list):
+def __strip_keys(key_list):
     """ Given a list of keys, remove the prefix and remove just
     the data we care about.
 
@@ -49,7 +49,7 @@ def strip_keys(key_list):
 def get_time():
     return int(def_config.COOLOFF_TIME / 60);
 
-def increment_key(key):
+def __increment_key(key):
     """ given a key increment the value """
     pipe = REDIS_SERVER.pipeline()
     pipe.incr(key, 1)
@@ -71,7 +71,7 @@ def lockout_response(request):
             'failure_limit': def_config.FAILURE_LIMIT,
             'email_lockout': username,
         }
-        send_blocked_email(request, username)
+        __send_blocked_email(request, username)
         return render(request, def_config.LOCKOUT_TEMPLATE, context)
 
     if def_config.LOCKOUT_URL:
@@ -95,7 +95,7 @@ def add_login_attempt_to_db(request, login_valid,get_usernamefunc=None,username=
     username = username or users.get_username(request, get_usernamefunc)
 
     user_agent = request.META.get('HTTP_USER_AGENT', '<unknown>')[:255]
-    ip_address = ip.get(request)
+    ip_address = ip.__get(request)
     http_accept = request.META.get('HTTP_ACCEPT', '<unknown>')
     path_info = request.META.get('PATH_INFO', '<unknown>')
 
@@ -106,8 +106,8 @@ def add_login_attempt_to_db(request, login_valid,get_usernamefunc=None,username=
     else:
         store_login_attempt(user_agent, ip_address, username, http_accept, path_info, login_valid)
 
-def send_blocked_email(request, username):
-    if validate_email_address(username):
+def __send_blocked_email(request, username):
+    if __validate_email_address(username):
         found_user = User.objects.filter(email__iexact=username)
         if found_user.exists():
             #load site configuration
@@ -134,7 +134,7 @@ def send_blocked_email(request, username):
                 html_email = loader.render_to_string(html_email_template_name, c)
                 send_mail(subject, email, config_data['from_email'], [user.email], fail_silently=False, html_message=html_email)
 
-def validate_email_address(email):
+def __validate_email_address(email):
     try:
         validate_email(email)
         return True
