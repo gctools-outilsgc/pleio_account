@@ -29,14 +29,14 @@ class PleioLoginView(LoginView):
     )
 
     def get_context_data(self, **kwargs):
-        attempts = users.get_user_attempts((self.request));
-        get_username = accountlockout.helper.users_helper.get_username_from_request(self.request);
-        kwargs = dict(kwargs,attempts=attempts,username=get_username, time=utils.get_time(), attempts_left=utils.get_attemps_left(self.request));
+        attempts = users.get_user_attempts((self.request))
+        get_username = accountlockout.helper.users_helper.get_username_from_request(self.request)
+        kwargs = dict(kwargs,attempts=attempts,username=get_username, time=utils.get_time(), attempts_left=utils.get_attemps_left(self.request))
 
-        context = super(PleioLoginView, self).get_context_data(**kwargs);
-        next = self.request.GET.get('next');
+        context = super(PleioLoginView, self).get_context_data(**kwargs)
+        next = self.request.GET.get('next')
         if next:
-            context['next'] = next;
+            context['next'] = next
 
         self.set_partner_site_info()
 
