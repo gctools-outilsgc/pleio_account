@@ -23,7 +23,7 @@ def is_already_locked(request, get_username=None, username=None):
     """Parse the username & IP from the request, and see if it's
     already locked."""
     user_blocked = users.is_already_locked(request, username, get_username)
-    ip_blocked = ip.is_valid_ip(ip.get(request))
+    ip_blocked = ip.is_source_already_locked(ip.get(request))
 
     if def_config.LOCKOUT_BY_IP_USERNAME:
         # if both this IP and this username are present the request is blocked

@@ -74,14 +74,6 @@ def is_already_locked(request, get_usernameFunc, username):
 
     return REDIS_SERVER.get(get_blocked_cache_key(username))
 
-def is_source_ip_already_locked(ip_address):
-    """Is this IP already locked?"""
-    if ip_address is None:
-        return False
-    if def_config.DISABLE_IP_LOCKOUT:
-        return False
-    return REDIS_SERVER.get(get_blocked_cache_key(ip_address))
-
 def get_user_attempts(request, get_usernamefunc, username=None):
     """ Returns number of access attempts for this ip, username
     """

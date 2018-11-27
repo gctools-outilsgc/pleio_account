@@ -82,3 +82,11 @@ def get_attempt_cache_key(ip_address):
 def get_blocked_cache_key(ip_address):
     """ get the cache key by ip """
     return "{0}:blocked:ip:{1}".format(def_config.CACHE_PREFIX, ip_address)
+
+def is_source_already_locked(ip_address):
+    """Is this IP already locked?"""
+    if ip_address is None:
+        return False
+    if def_config.DISABLE_IP_LOCKOUT:
+        return False
+    return REDIS_SERVER.get(get_blocked_cache_key(ip_address))
