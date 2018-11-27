@@ -1,6 +1,7 @@
 import accountlockout.helper.attemps_helper
 import accountlockout.helper.ip_helper
-from .users import get_username_from_request
+from accountlockout.helper.users_helper import get_username_from_request
+
 
 def check(request, login_unsuccessful,
                   get_username=get_username_from_request,

@@ -2,6 +2,7 @@ from defender import config as def_config
 from defender.connection import get_redis_connection
 
 import accountlockout.helper
+import accountlockout.helper.users_helper
 from accountlockout import users, utils
 
 REDIS_SERVER = get_redis_connection()
@@ -13,7 +14,7 @@ def __reset_failed(ip_address=None, username=None):
     pipe = REDIS_SERVER.pipeline()
 
     accountlockout.helper.ip_helper.__unblock(ip_address, pipe=pipe)
-    users.__unblock(username, pipe=pipe)
+    accountlockout.helper.users_helper.__unblock(username, pipe=pipe)
 
     pipe.execute()
 
@@ -34,10 +35,10 @@ def __record_failed(request, ip_address, username):
 
     user_block = False
     if username and not def_config.DISABLE_USERNAME_LOCKOUT:
-        user_count = utils.__increment_key(users.__get_attempt_cache_key(username)) + 1
+        user_count = utils.__increment_key(accountlockout.helper.users_helper.__get_attempt_cache_key(username)) + 1
         # if over the limit, add to block
         if user_count > def_config.USERNAME_FAILURE_LIMIT:
-            users.__block(username)
+            accountlockout.helper.users_helper.__block(username)
             user_block = True
 
     # if we have this turned on, then there is no reason to look at ip_block

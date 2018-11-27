@@ -1,4 +1,6 @@
 from django.urls import reverse_lazy
+
+import accountlockout.helper.users_helper
 from .forms import PleioAuthenticationTokenForm, PleioAuthenticationForm, LabelledLoginForm
 from .models import User, PleioPartnerSite
 from two_factor.forms import TOTPDeviceForm, BackupTokenForm
@@ -28,7 +30,7 @@ class PleioLoginView(LoginView):
 
     def get_context_data(self, **kwargs):
         attempts = users.get_user_attempts((self.request));
-        get_username = users.get_username_from_request(self.request);
+        get_username = accountlockout.helper.users_helper.get_username_from_request(self.request);
         kwargs = dict(kwargs,attempts=attempts,username=get_username, time=utils.get_time(), attempts_left=utils.get_attemps_left(self.request));
 
         context = super(PleioLoginView, self).get_context_data(**kwargs);
