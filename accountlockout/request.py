@@ -1,6 +1,6 @@
+import accountlockout.helper.attemps_helper
 import accountlockout.helper.ip_helper
 from .users import get_username_from_request
-from . import ip,attemps
 
 def check(request, login_unsuccessful,
                   get_username=get_username_from_request,
@@ -11,9 +11,9 @@ def check(request, login_unsuccessful,
 
     if not login_unsuccessful:
         # user logged in -- forget the failed attempts
-        attemps.__reset_failed(ip_address=ip_address, username=username)
+        accountlockout.helper.attemps_helper.__reset_failed(ip_address=ip_address, username=username)
         return True
     else:
         # add a failed attempt for this user
-        return attemps.__record_failed(request, ip_address, username)
+        return accountlockout.helper.attemps_helper.__record_failed(request, ip_address, username)
 

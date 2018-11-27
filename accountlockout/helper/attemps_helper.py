@@ -1,10 +1,11 @@
 from defender import config as def_config
 from defender.connection import get_redis_connection
 
-import accountlockout.helper.ip_helper
-from . import ip,users,utils
+import accountlockout.helper
+from accountlockout import users, utils
 
 REDIS_SERVER = get_redis_connection()
+
 
 def __reset_failed(ip_address=None, username=None):
     """ reset the failed attempts for these ip's and usernames
@@ -15,6 +16,7 @@ def __reset_failed(ip_address=None, username=None):
     users.__unblock(username, pipe=pipe)
 
     pipe.execute()
+
 
 def __record_failed(request, ip_address, username):
     """ record the failed login attempt, if over limit return False,
