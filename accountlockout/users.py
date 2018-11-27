@@ -2,8 +2,8 @@ from defender import config as def_config
 
 import accountlockout.helper.ip_helper
 import accountlockout.helper.utils_helper
-from accountlockout.helper.users_helper import REDIS_SERVER, __get_username, __lower, __get_attempt_cache_key, \
-    __get_blocked_cache_key
+from accountlockout.helper.users_helper import REDIS_SERVER, get_username, __lower, get_attempt_cache_key, \
+    get_blocked_cache_key
 from . import utils
 
 def get_from_request(request):
@@ -16,10 +16,10 @@ def get_from_request(request):
 def get_user_attempts(request, get_usernamefunc, username=None):
     """ Returns number of access attempts for this ip, username
     """
-    ip_address = accountlockout.helper.ip_helper.__get(request)
-    username = __lower(username or __get_username(request, get_usernamefunc))
+    ip_address = accountlockout.helper.ip_helper.get(request)
+    username = __lower(username or get_username(request, get_usernamefunc))
     # get by IP
-    ip_count = REDIS_SERVER.get(accountlockout.helper.ip_helper.__get_attempt_cache_key(ip_address))
+    ip_count = REDIS_SERVER.get(accountlockout.helper.ip_helper.get_attempt_cache_key(ip_address))
     if not ip_count:
         ip_count = 1
     else:
@@ -27,7 +27,7 @@ def get_user_attempts(request, get_usernamefunc, username=None):
         ip_count = int(ip_count) + 1
 
     # get by username
-    username_count = REDIS_SERVER.get(__get_attempt_cache_key(username))
+    username_count = REDIS_SERVER.get(get_attempt_cache_key(username))
     if not username_count:
         username_count = 1
     else:
@@ -41,8 +41,8 @@ def get_blocked_usernames():
     if def_config.DISABLE_USERNAME_LOCKOUT:
         # There are no blocked usernames since we disabled them.
         return []
-    key = __get_blocked_cache_key("*")
+    key = get_blocked_cache_key("*")
     key_list = [redis_key.decode('utf-8')
                 for redis_key in REDIS_SERVER.keys(key)]
-    return accountlockout.helper.utils_helper.__strip_keys(key_list)
+    return accountlockout.helper.utils_helper.strip_keys(key_list)
 

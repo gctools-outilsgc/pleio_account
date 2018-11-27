@@ -1,26 +1,24 @@
 from defender import config as def_config
 from defender.connection import get_redis_connection
-
 import accountlockout.helper
 import accountlockout.helper.users_helper
 import accountlockout.helper.utils_helper
-from accountlockout import users, utils
 
 REDIS_SERVER = get_redis_connection()
 
 
-def __reset_failed(ip_address=None, username=None):
+def reset_failed(ip_address=None, username=None):
     """ reset the failed attempts for these ip's and usernames
     """
     pipe = REDIS_SERVER.pipeline()
 
-    accountlockout.helper.ip_helper.__unblock(ip_address, pipe=pipe)
-    accountlockout.helper.users_helper.__unblock(username, pipe=pipe)
+    accountlockout.helper.ip_helper.unblock(ip_address, pipe=pipe)
+    accountlockout.helper.users_helper.unblock(username, pipe=pipe)
 
     pipe.execute()
 
 
-def __record_failed(request, ip_address, username):
+def record_failed(request, ip_address, username):
     """ record the failed login attempt, if over limit return False,
     if not over limit return True """
     # increment the failed count, and get current number
@@ -28,18 +26,18 @@ def __record_failed(request, ip_address, username):
 
     if not def_config.DISABLE_IP_LOCKOUT:
         # we only want to increment the IP if this is disabled.
-        ip_count = accountlockout.helper.utils_helper.__increment_key(accountlockout.helper.ip_helper.__get_attempt_cache_key(ip_address)) + 1
+        ip_count = accountlockout.helper.utils_helper.increment_key(accountlockout.helper.ip_helper.get_attempt_cache_key(ip_address)) + 1
             # if over the limit, add to block
         if ip_count > def_config.IP_FAILURE_LIMIT:
-            accountlockout.helper.ip_helper.__block(ip_address)
+            accountlockout.helper.ip_helper.block(ip_address)
             ip_block = True
 
     user_block = False
     if username and not def_config.DISABLE_USERNAME_LOCKOUT:
-        user_count = accountlockout.helper.utils_helper.__increment_key(accountlockout.helper.users_helper.__get_attempt_cache_key(username)) + 1
+        user_count = accountlockout.helper.utils_helper.increment_key(accountlockout.helper.users_helper.get_attempt_cache_key(username)) + 1
         # if over the limit, add to block
         if user_count > def_config.USERNAME_FAILURE_LIMIT:
-            accountlockout.helper.users_helper.__block(username)
+            accountlockout.helper.users_helper.block(username)
             user_block = True
 
     # if we have this turned on, then there is no reason to look at ip_block

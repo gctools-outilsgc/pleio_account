@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 import accountlockout.helper.ip_helper
 import accountlockout.helper.users_helper
-from accountlockout.helper.utils_helper import __send_blocked_email
+from accountlockout.helper.utils_helper import send_blocked_email
 from defender.data import store_login_attempt
 from defender import config as def_config
 from . import users
@@ -13,8 +13,8 @@ from . import users
 def is_already_locked(request, get_username=None, username=None):
     """Parse the username & IP from the request, and see if it's
     already locked."""
-    user_blocked = accountlockout.helper.users_helper.__is_already_locked(request, username, get_username)
-    ip_blocked = accountlockout.helper.ip_helper.__is_source_already_locked(accountlockout.helper.ip_helper.__get(request))
+    user_blocked = accountlockout.helper.users_helper.is_already_locked(request, username, get_username)
+    ip_blocked = accountlockout.helper.ip_helper.is_source_already_locked(accountlockout.helper.ip_helper.get(request))
 
     if def_config.LOCKOUT_BY_IP_USERNAME:
         # if both this IP and this username are present the request is blocked
@@ -40,7 +40,7 @@ def lockout_response(request):
             'failure_limit': def_config.FAILURE_LIMIT,
             'email_lockout': username,
         }
-        __send_blocked_email(request, username)
+        send_blocked_email(request, username)
         return render(request, def_config.LOCKOUT_TEMPLATE, context)
 
     if def_config.LOCKOUT_URL:
@@ -61,10 +61,10 @@ def add_login_attempt_to_db(request, login_valid,get_usernamefunc=None,username=
         # If we don't want to store in the database, then don't proceed.
         return
 
-    username = username or accountlockout.helper.users_helper.__get_username(request, get_usernamefunc)
+    username = username or accountlockout.helper.users_helper.get_username(request, get_usernamefunc)
 
     user_agent = request.META.get('HTTP_USER_AGENT', '<unknown>')[:255]
-    ip_address = accountlockout.helper.ip_helper.__get(request)
+    ip_address = accountlockout.helper.ip_helper.get(request)
     http_accept = request.META.get('HTTP_ACCEPT', '<unknown>')
     path_info = request.META.get('PATH_INFO', '<unknown>')
 

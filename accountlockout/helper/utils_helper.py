@@ -16,7 +16,7 @@ LOG = logging.getLogger(__name__)
 REDIS_SERVER = get_redis_connection()
 
 
-def __strip_keys(key_list):
+def strip_keys(key_list):
     """ Given a list of keys, remove the prefix and remove just
     the data we care about.
 
@@ -32,7 +32,7 @@ def __strip_keys(key_list):
     return [key.split(":")[-1] for key in key_list]
 
 
-def __increment_key(key):
+def increment_key(key):
     """ given a key increment the value """
     pipe = REDIS_SERVER.pipeline()
     pipe.incr(key, 1)
@@ -42,7 +42,7 @@ def __increment_key(key):
     return new_value
 
 
-def __send_blocked_email(request, username):
+def send_blocked_email(request, username):
     if __validate_email_address(username):
         found_user = User.objects.filter(email__iexact=username)
         if found_user.exists():
