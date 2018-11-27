@@ -1,5 +1,7 @@
 from defender import config as def_config
 from defender.connection import get_redis_connection
+
+import accountlockout.helper.ip_helper
 from . import ip,users,utils
 
 REDIS_SERVER = get_redis_connection()
@@ -9,7 +11,7 @@ def __reset_failed(ip_address=None, username=None):
     """
     pipe = REDIS_SERVER.pipeline()
 
-    ip.__unblock(ip_address, pipe=pipe)
+    accountlockout.helper.ip_helper.__unblock(ip_address, pipe=pipe)
     users.__unblock(username, pipe=pipe)
 
     pipe.execute()
@@ -22,10 +24,10 @@ def __record_failed(request, ip_address, username):
 
     if not def_config.DISABLE_IP_LOCKOUT:
         # we only want to increment the IP if this is disabled.
-        ip_count = utils.__increment_key(ip.__get_attempt_cache_key(ip_address)) + 1
+        ip_count = utils.__increment_key(accountlockout.helper.ip_helper.__get_attempt_cache_key(ip_address)) + 1
             # if over the limit, add to block
         if ip_count > def_config.IP_FAILURE_LIMIT:
-            ip.__block(ip_address)
+            accountlockout.helper.ip_helper.__block(ip_address)
             ip_block = True
 
     user_block = False

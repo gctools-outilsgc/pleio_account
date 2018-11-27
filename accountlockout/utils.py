@@ -9,6 +9,8 @@ from django.core.exceptions import ValidationError
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
+
+import accountlockout.helper.ip_helper
 from core.models import User, SiteConfiguration
 from defender.connection import get_redis_connection
 from defender.data import store_login_attempt
@@ -23,7 +25,7 @@ def is_already_locked(request, get_username=None, username=None):
     """Parse the username & IP from the request, and see if it's
     already locked."""
     user_blocked = users.__is_already_locked(request, username, get_username)
-    ip_blocked = ip.__is_source_already_locked(ip.__get(request))
+    ip_blocked = accountlockout.helper.ip_helper.__is_source_already_locked(accountlockout.helper.ip_helper.__get(request))
 
     if def_config.LOCKOUT_BY_IP_USERNAME:
         # if both this IP and this username are present the request is blocked
@@ -95,7 +97,7 @@ def add_login_attempt_to_db(request, login_valid,get_usernamefunc=None,username=
     username = username or users.get_username(request, get_usernamefunc)
 
     user_agent = request.META.get('HTTP_USER_AGENT', '<unknown>')[:255]
-    ip_address = ip.__get(request)
+    ip_address = accountlockout.helper.ip_helper.__get(request)
     http_accept = request.META.get('HTTP_ACCEPT', '<unknown>')
     path_info = request.META.get('PATH_INFO', '<unknown>')
 

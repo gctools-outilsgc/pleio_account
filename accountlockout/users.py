@@ -2,6 +2,8 @@ from django.utils.module_loading import import_string
 from defender import config as def_config
 from defender.connection import get_redis_connection
 from defender.signals import send_username_block_signal
+
+import accountlockout.helper.ip_helper
 from . import utils, ip
 
 REDIS_SERVER = get_redis_connection()
@@ -78,10 +80,10 @@ def __is_already_locked(request, get_usernameFunc, username):
 def get_user_attempts(request, get_usernamefunc, username=None):
     """ Returns number of access attempts for this ip, username
     """
-    ip_address = ip.__get(request)
+    ip_address = accountlockout.helper.ip_helper.__get(request)
     username = __lower(username or get_username(request, get_usernamefunc))
     # get by IP
-    ip_count = REDIS_SERVER.get(ip.__get_attempt_cache_key(ip_address))
+    ip_count = REDIS_SERVER.get(accountlockout.helper.ip_helper.__get_attempt_cache_key(ip_address))
     if not ip_count:
         ip_count = 1
     else:

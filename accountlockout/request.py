@@ -1,3 +1,4 @@
+import accountlockout.helper.ip_helper
 from .users import get_username_from_request
 from . import ip,attemps
 
@@ -5,7 +6,7 @@ def check(request, login_unsuccessful,
                   get_username=get_username_from_request,
                   username=None):
     """ check the request, and process results"""
-    ip_address = ip.__get(request)
+    ip_address = accountlockout.helper.ip_helper.__get(request)
     username = username or get_username(request)
 
     if not login_unsuccessful:
