@@ -29,9 +29,9 @@ class PleioLoginView(LoginView):
         kwargs = dict(kwargs, attempts=attempts, username=get_username, time=utils.get_time(), attempts_left=utils.get_attemps_left(self.request))
 
         context = super(PleioLoginView, self).get_context_data(**kwargs)
-        next = self.request.GET.get('next')
-        if next:
-            context['next'] = next
+        next_request = self.request.GET.get('next')
+        if next_request:
+            context['next'] = next_request
 
         self.set_partner_site_info()
 
