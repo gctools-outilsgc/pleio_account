@@ -35,7 +35,7 @@
         <td>
             <form method='POST' action="{% url 'defender_unblock_ip_view' block %}">
                 {% csrf_token %}
-                <input type='submit' value='unblock' />
+                <input type='submit' value='unblock' aria-label='unblock' />
             </form>
         </td>
     </tr>
@@ -59,7 +59,7 @@
         <td>
             <form method='POST' action="{% url 'defender_unblock_username_view' block %}">
                 {% csrf_token %}
-                <input type='submit' value='unblock' />
+                <input type='submit' value='unblock' aria-label='unblock' />
             </form>
         </td>
     </tr>
