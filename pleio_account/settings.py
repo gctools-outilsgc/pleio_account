@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'django_otp.plugins.otp_totp',
     'two_factor',
     'oidc_provider',
-    'defender',
+    'account_defender',
     'solo',
     'corsheaders'
 ]

@@ -1,20 +1,15 @@
 from django.urls import reverse_lazy
-
-import accountlockout.helper.users_helper
 from .forms import PleioAuthenticationTokenForm, PleioAuthenticationForm, LabelledLoginForm
-from .models import User, PleioPartnerSite
+from .models import PleioPartnerSite
 from two_factor.forms import TOTPDeviceForm, BackupTokenForm
 from two_factor.views.core import LoginView, SetupView, BackupTokensView
 from two_factor.views.profile import ProfileView
 from user_sessions.views import SessionListView, SessionDeleteOtherView, SessionDeleteView, LoginRequiredMixin
 from django_otp.plugins.otp_static.models import StaticToken
 from django.template.response import TemplateResponse
-from django_otp import devices_for_user
-from django.shortcuts import redirect
-from django.views.generic.list import ListView
-from django.utils.timezone import now
-from django.contrib.auth.forms import AuthenticationForm
-from accountlockout import users, utils
+from account_defender import utils
+from account_defender import connection
+
 
 class PleioLoginView(LoginView):
 
@@ -29,9 +24,9 @@ class PleioLoginView(LoginView):
     )
 
     def get_context_data(self, **kwargs):
-        attempts = users.get_user_attempts((self.request))
-        get_username = accountlockout.helper.users_helper.get_username_from_request(self.request)
-        kwargs = dict(kwargs,attempts=attempts,username=get_username, time=utils.get_time(), attempts_left=utils.get_attemps_left(self.request))
+        attempts = utils.get_user_attempts((self.request))
+        get_username = utils.get_username_from_request(self.request)
+        kwargs = dict(kwargs, attempts=attempts, username=get_username, time=utils.get_time(), attempts_left=utils.get_attemps_left(self.request))
 
         context = super(PleioLoginView, self).get_context_data(**kwargs)
         next = self.request.GET.get('next')
@@ -44,9 +39,9 @@ class PleioLoginView(LoginView):
 
     def set_partner_site_info(self):
         try:
-            http_referer = urlparse(self.request.META['HTTP_REFERER'])
+            http_referer = connection.urlparse(self.request.META['HTTP_REFERER'])
         except:
-            #no referer: cookies have to be deleted in PartnerSiteMiddleware
+            #no referer: cookies have to be deleted in PartnerSiteMiddleware#
             self.request.COOKIES['partner_site_url'] = None
             self.request.COOKIES['partner_site_name'] = None
             self.request.COOKIES['partner_site_logo_url'] = None

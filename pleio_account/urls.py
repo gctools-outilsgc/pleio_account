@@ -118,7 +118,7 @@ oidc_urls = [
 ]
 
 defender_urls = [
-    url(r'^admin/defender/', include('defender.urls')),
+    url(r'^admin/defender/', include('account_defender.urls')),
 ]
 
 urlpatterns = legacy_urls + urls + tf_urls + us_urls + django_urls + oidc_urls + defender_urls
