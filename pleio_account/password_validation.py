@@ -1,6 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
-from pleio_account import utils
+from account_defender import utils
 
 class CustomPasswordValidator(object):
 
