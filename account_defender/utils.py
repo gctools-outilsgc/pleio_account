@@ -424,3 +424,9 @@ def add_login_attempt_to_db(request, login_valid,
     else:
         store_login_attempt(user_agent, ip_address, username,
                             http_accept, path_info, login_valid)
+
+def get_time():
+    return int(config.COOLOFF_TIME / 60)
+
+def get_attemps_left(request):
+    return (config.FAILURE_LIMIT - get_user_attempts(request))
