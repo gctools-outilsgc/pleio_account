@@ -75,6 +75,10 @@ Now login with your new (superuser) account on https://DOMAIN_NAME:8000
 
 The docker-compose.yml is meant to be use behind a Nginx Proxy that handles the HTTPS connection
 
+## Install REDIS-SERVER
+`sudo apt-get install redis-server`
+`sudo service redis-server start`
+
 ## Generate new translations
 
 We use the standard [i18n toolset of Django](https://docs.djangoproject.com/en/1.10/topics/i18n/). To add new translations to the source files use:
