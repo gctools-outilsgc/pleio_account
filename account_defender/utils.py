@@ -8,7 +8,8 @@ from django.utils.module_loading import import_string
 from django.core.mail import send_mail
 from django.template import loader
 from django.core.validators import validate_email
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.core.signing import Signer
+from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from core.models import User, SiteConfiguration
@@ -411,7 +412,7 @@ def add_login_attempt_to_db(request, login_valid,
 
     username = username or get_username(request)
 
-    user_agent = request.META.get('HTTP_USER_AGENT', '<unknown>')[:255]
+    user_agent = request.META.get('HTTP_USER_AGENT', '<unknown>')
     ip_address = get_ip(request)
     http_accept = request.META.get('HTTP_ACCEPT', '<unknown>')
     path_info = request.META.get('PATH_INFO', '<unknown>')

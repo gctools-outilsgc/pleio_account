@@ -317,7 +317,8 @@ class AccessAttemptTest(DefenderTestCase):
         self.assertNotContains(response, LOGIN_FORM_KEY, status_code=302)
 
     @patch('account_defender.config.BEHIND_REVERSE_PROXY', True)
-    @patch('account_defender.config.REVERSE_PROXY_HEADER', 'HTTP_X_FORWARDED_FOR')
+    @patch('account_defender.config.REVERSE_PROXY_HEADER',
+           'HTTP_X_FORWARDED_FOR')
     def test_get_ip_reverse_proxy(self):
         """ Tests if can handle a long user agent
         """
@@ -368,7 +369,8 @@ class AccessAttemptTest(DefenderTestCase):
         # Make a login attempt again
         self.test_valid_login()
 
-    @patch('account_defender.config.LOCKOUT_URL', 'http://localhost/othe/login/')
+    @patch('account_defender.config.LOCKOUT_URL',
+           'http://localhost/othe/login/')
     def test_failed_login_redirect_to_url(self):
         """ Test to make sure that after lockout we send to the correct
         redirect URL """
@@ -897,7 +899,7 @@ class AccessAttemptTest(DefenderTestCase):
 
     @patch('account_defender.config.BEHIND_REVERSE_PROXY', True)
     @patch('account_defender.config.IP_FAILURE_LIMIT', 3)
-    def test_login_non_blocked_for_non_standard_login_views_different_msg(self):
+    def test_login_non_blocked_for_non_standard_login_different_msg(self):
         """
         Check that a view wich returns the expected status code but not the
         expected message is not causing the IP to be locked out.

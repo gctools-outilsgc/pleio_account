@@ -1,5 +1,6 @@
 try:
-    from django.utils.deprecation import MiddlewareMixin as MIDDLEWARE_BASE_CLASS
+    from django.utils.deprecation import MiddlewareMixin \
+        as MIDDLEWARE_BASE_CLASS
 except ImportError:
     MIDDLEWARE_BASE_CLASS = object
 from django.contrib.auth import views as auth_views

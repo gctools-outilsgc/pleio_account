@@ -5,7 +5,9 @@ import redis
 try:
     import urlparse
 except ImportError:  # pragma: no cover
-    import urllib.parse as urlparse  # pragma: no cover # Python3 # pylint: disable=import-error,no-name-in-module,line-too-long
+    import urllib.parse as urlparse
+# pragma: no cover # Python3 # pylint: disable=import-error,
+# no-name-in-module,line-too-long
 
 from . import config
 
@@ -44,10 +46,8 @@ def get_redis_connection():
             ssl=redis_config.get('SSL'))
 
 
-
 def parse_redis_url(url):
     """Parses a redis URL."""
-
     # create config with some sane defaults
     redis_config = {
         "DB": 0,

@@ -71,7 +71,8 @@ BROKER_BACKEND = 'memory'
 BROKER_URL = 'memory://'
 
 # set the default Django settings module for the 'celery' program.
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'account_defender.travis_settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE',
+                      'account_defender.travis_settings')
 
 app = Celery('account_defender')
 
