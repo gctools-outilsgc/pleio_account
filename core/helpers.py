@@ -1,9 +1,10 @@
-import uuid
 import os
-from urllib.parse import urlencode
-from urllib.request import urlopen
-from django.conf import settings
+import uuid
+
 import requests
+from django.conf import settings
+from constance import config
+
 
 def unique_filepath(self, filename):
     ext = filename.split('.')[-1]
@@ -12,23 +13,21 @@ def unique_filepath(self, filename):
 
 
 def verify_captcha_response(response):
-    print('captcha: ', response)
-
     try:
         data = {
-            'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+            'secret': config.RECAPTCHA_SECRET_KEY,
             'response': response
         }
     except AttributeError:
         return True
 
     try:
-        result = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data).json()
-        print("result['success']: ", result['success'])
+        result = requests.post(
+            'https://www.google.com/recaptcha/api/siteverify',
+            data=data
+        ).json()
         return result['success']
-
-    except:
-        print('False')
+    except Exception:
         return False
 
 

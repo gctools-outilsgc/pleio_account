@@ -20,9 +20,12 @@
             <h1 class="ui large header">{% trans "Register" %}<div class="sub header">{% trans "to create an account" %}</div></h1>
 
         </div>
+        <br/>
+        <p class="text_grey">
+            {% trans "Open to all Canadian public servants (federal, provincial, territorial and municipal), academics and students, as well as to all Canadians by invitation." %}*
+        </p>
         <!--<img src="/static/images/logo-icon.svg" class="login__step-icon"/>
 -->    </div>
-
 
             {% for error in form.non_field_errors %}
 	<div class="ui negative message">
@@ -84,10 +87,8 @@
             {% endcomment %}
         </div>
 
-        {% settings_value 'GOOGLE_RECAPTCHA_SITE_KEY' as recaptcha_site_key %}
-
-        {% if recaptcha_site_key %}
-            <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
+        {% if config.RECAPTCHA_ENABLED %}
+            <div class="g-recaptcha" data-sitekey="{{ config.RECAPTCHA_SITE_KEY }}"></div>
         {% endif %}
 
         <div class="register__buttons">
@@ -96,6 +97,10 @@
               <a href="{% url 'login' %}" >{% trans "Return to sign in" %}</a>
             </div>
         </div>
+        <br/>
+        <p class="text_grey small_text">
+            *{% trans "Existing members can invite their stakeholders and partners to create an account through GCcollab." %}
+        </p>
 
     </fieldset>
 </form>

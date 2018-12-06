@@ -1,124 +1,76 @@
 from django import template
-from core.models import AppCustomization
-from django.core.exceptions import ObjectDoesNotExist
+from django.conf import settings
+from constance import config
 
 register = template.Library()
 
+
 @register.simple_tag()
 def show_customizations_title():
-    try:
-        q = AppCustomization.objects.get(id=1)
-        return q.product_title
-    except AppCustomization.DoesNotExist:
-        return ''
+    return config.APP_TITLE
+
 
 @register.simple_tag()
 def show_customizations_color():
-    try:
-        q = AppCustomization.objects.get(id=1)
-        return q.color_hex
-    except AppCustomization.DoesNotExist:
-        return '2185d0'
+    color = config.APP_BRAND_COLOR
+    return color[1:] if color.startswith('#') else color
+
 
 @register.simple_tag()
 def show_customizations_logo():
-    try:
-        q = AppCustomization.objects.get(id=1)
-        if not q.logo_image:
-            return ''
-        else:
-            return q.logo_image.url
-    except AppCustomization.DoesNotExist:
-        return ''
+    if config.APP_LOGO:
+        return settings.MEDIA_URL + config.APP_LOGO
+    return ''
+
 
 @register.simple_tag()
 def show_customizations_bg_image():
-    try:
-        q = AppCustomization.objects.get(id=1)
-        if not q.app_background_photo:
-            return ' none;'
-        else:
-            image = q.app_background_photo.url
-            option = q.app_background_options
-            if option == 'T':
-                return 'url(' +image+ '); background-repeat: repeat;'
-            else:
-                return 'url(' +image+ '); background-repeat: no-repeat; background-size: cover;'
-    except AppCustomization.DoesNotExist:
+    bg_image = config.APP_BACKGROUND_IMAGE
+    if not bg_image:
         return ' none;'
+
+    return f'url({settings.MEDIA_URL}{bg_image}); ' + {
+            'T': 'background-repeat: repeat;',
+            'C': 'background-repeat: no-repeat; background-size: cover;'
+    }[config.APP_BACKGROUND_OPTIONS]
+
 
 @register.simple_tag()
 def show_customizations_favicon():
-    try:
-        q = AppCustomization.objects.get(id=1)
-        if not q.app_favicon:
-            return ''
-        else:
-            return q.app_favicon.url
-    except AppCustomization.DoesNotExist:
-        return ''
+    if config.APP_FAVICON:
+        return settings.MEDIA_URL + config.APP_FAVICON
+    return ''
+
 
 @register.simple_tag()
 def show_language_toggle():
-    try:
-        q = AppCustomization.objects.get(id=1)
-        toggle = q.display_language_toggle
-        if toggle == True:
-            return True
-        else:
-            return ''
-    except AppCustomization.DoesNotExist:
-        return ''
-        
+    return config.APP_LANGUAGE_TOGGLE
+
+
 @register.simple_tag()
 def email_language_toggle():
-    try:
-        q = AppCustomization.objects.get(id=1)
-        toggle = q.email_language_toggle
-        if toggle == True:
-            return True
-        else:
-            return ''
-    except AppCustomization.DoesNotExist:
-        return ''
+    return config.APP_USE_ALL_LANGUAGES_IN_EMAIL
+
 
 @register.simple_tag()
 def custom_helpdesk_link():
-    try:
-        q = AppCustomization.objects.get(id=1)
-        return q.custom_helpdesk_link
-    except AppCustomization.DoesNotExist:
-        return ''
+    return config.APP_HELPDESK_LINK
+
 
 @register.simple_tag()
 def show_footer_images():
-    try:
-        q = AppCustomization.objects.get(id=1)
-        if q.footer_image_left and q.footer_image_right:
-            return True
-        else:
-            return False
-    except AppCustomization.DoesNotExist:
-        return ''
+    return config.APP_FOOTER_IMAGE_LEFT and config.APP_FOOTER_IMAGE_RIGHT
+
 
 @register.simple_tag()
 def show_footer_image_left():
-    try:
-        q = AppCustomization.objects.get(id=1)
-        if not q.footer_image_left:
-            return ''
-        else:
-            return q.footer_image_left.url
-    except AppCustomization.DoesNotExist:
-        return ''
+    if config.APP_FOOTER_IMAGE_LEFT:
+        return settings.MEDIA_URL + config.APP_FOOTER_IMAGE_LEFT
+    return ''
+
 
 @register.simple_tag()
 def show_footer_image_right():
-    try:
-        q = AppCustomization.objects.get(id=1)
-        if not q.footer_image_right:
-            return ''
-        else:
-            return q.footer_image_right.url
-    except AppCustomization.DoesNotExist:
-        return ''
+    if config.APP_FOOTER_IMAGE_RIGHT:
+        return settings.MEDIA_URL + config.APP_FOOTER_IMAGE_RIGHT
+    return ''

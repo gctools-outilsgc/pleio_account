@@ -57,10 +57,8 @@
             </div>
 
 
-            {% settings_value 'GOOGLE_RECAPTCHA_SITE_KEY' as recaptcha_site_key %}
-
-            {% if recaptcha_site_key %}
-                <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
+            {% if config.RECAPTCHA_ENABLED %}
+                <div class="g-recaptcha" data-sitekey="{{ config.RECAPTCHA_SITE_KEY }}"></div>
             {% endif %}
 
 
@@ -70,6 +68,13 @@
                   <span style="margin-right:5px">{% trans "Don't have an account?" %}</span><a class="item" href="{% url 'register' %}">{% trans "Register" %}</a>
                 </div>
             </div>
+            <br/>
+            <p class="text_grey">
+                {% trans "Open to all Canadian public servants (federal, provincial, territorial and municipal), academics and students, as well as to all Canadians by invitation." %}
+            </p>
+            <p class="text_grey">
+                {% trans "Existing members can invite their stakeholders and partners to create an account through GCcollab." %}
+            </p>
         </fieldset>
         <input type="hidden" name="next" value="{{next}}" />
 
@@ -93,7 +98,6 @@
         }
       };
     </script>
-
 
     <div class="login__step-title">
         <div>
