@@ -543,6 +543,16 @@ msgstr ""
 "les conserver dans un endroit sécuritaire Veuillez entrer l’un de ces jetons "
 "de sauvegarde pour vous connecter à votre compte."
 
+#: core/templates/login.html:75
+#: core/templates/register.html:25
+msgid "Open to all Canadian public servants (federal, provincial, territorial and municipal), academics and students, as well as to all Canadians by invitation."
+msgstr "Ouvert à tous les fonctionnaires canadiens (fédéraux, provinciaux, territoriaux et municipaux), universitaires et étudiants, ainsi qu'à tous les Canadiens et à toutes les Canadiennes, par invitation."
+
+#: core/templates/login.html:78
+#: core/templates/register.html:105
+msgid "Existing members can invite their stakeholders and partners to create an account through GCcollab."
+msgstr "Les membres existants peuvent inviter leurs intervenants et partenaires à se créer un compte à partir de GCcollab."
+
 #: core/templates/oidc_provider/authorize.html:5
 #: core/templates/oidc_provider/authorize.html:12
 #: core/templates/oidc_provider/authorize.html:27
