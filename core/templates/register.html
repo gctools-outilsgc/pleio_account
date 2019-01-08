@@ -20,9 +20,12 @@
             <h1 class="ui large header">{% trans "Register" %}<div class="sub header">{% trans "to create an account" %}</div></h1>
 
         </div>
+        <br/>
+        <p class="text_grey">
+            {% trans "Open to all Canadian public servants (federal, provincial, territorial and municipal), academics and students, as well as to all Canadians by invitation." %}*
+        </p>
         <!--<img src="/static/images/logo-icon.svg" class="login__step-icon"/>
 -->    </div>
-
 
             {% for error in form.non_field_errors %}
 	<div class="ui negative message">
@@ -96,6 +99,10 @@
               <a href="{% url 'login' %}" >{% trans "Return to sign in" %}</a>
             </div>
         </div>
+        <br/>
+        <p class="text_grey small_text">
+            *{% trans "Existing members can invite their stakeholders and partners to create an account through GCcollab." %}                
+        </p>
 
     </fieldset>
 </form>
