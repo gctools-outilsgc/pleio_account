@@ -10,7 +10,8 @@ RUN apk --no-cache add \
     linux-headers \
     postgresql-dev \
     zlib-dev \
-    mailcap
+    mailcap \
+    gettext
 
 RUN mkdir /app
 WORKDIR /app

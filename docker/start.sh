@@ -15,15 +15,11 @@ echo
 
 # Localization
 echo "Localization with gettext"
-django-admin compilemessages
+python manage.py compilemessages
 
 # Apply database migrations
 echo "Apply database migrations"
 python manage.py migrate
-
-# Start Redis Server
-echo "Starting Redis Cache Server"
-redis-server --daemonize yes
 
 # Start server
 echo "Starting server"
