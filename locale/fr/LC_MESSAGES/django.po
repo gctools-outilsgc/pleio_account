@@ -279,18 +279,17 @@ msgid "Back to the homepage"
 msgstr "Retour à la page d’accueil"
 
 #: core/templates/base.html:75 core/templates/base_account.html:142
-#: core/templates/base.html:72 core/templates/base_account.html:142
+#: core/templates/base.html:72
 msgid "Help / Contact Us"
 msgstr "Aide / Contactez-nous"
 
 #: core/templates/base.html:79 core/templates/base_account.html:146
-#: core/templates/base.html:76 core/templates/base_account.html:146
+#: core/templates/base.html:76
 msgid "Terms and Conditions"
 msgstr "Conditions D'Utilisation"
 
 #: core/templates/base.html:80 core/templates/base_account.html:147
-#: core/templates/base.html:77 core/templates/base_account.html:147
-#: core/templates/register.html:76
+#: core/templates/base.html:77 core/templates/register.html:76
 msgid "Opens in a new tab"
 msgstr "Ouvre dans un nouvel onglet"
 
@@ -334,7 +333,6 @@ msgstr "Mot de passe"
 msgid "Security questions"
 msgstr "Questions de sécurité"
 
-#: core/templates/base_account.html:87
 #: core/templates/base_account.html:87
 msgid "Sessions"
 msgstr "Séances"
@@ -389,29 +387,45 @@ msgstr "Bonjour"
 
 #: core/templates/emails/reset_password.html:17
 #: core/templates/emails/reset_password.html:33
-msgid "We received a request to change your password. You can click on the link below to reset your password:"
-msgstr "Nous avons reçu une demande pour modifier votre mot de passe. Vous pouvez cliquer sur le lien ci-dessous pour réinitialiser votre mot de passe :"
-
+msgid ""
+"We received a request to change your password. You can click on the link "
+"below to reset your password:"
+msgstr ""
+"Nous avons reçu une demande pour modifier votre mot de passe. Vous pouvez "
+"cliquer sur le lien ci-dessous pour réinitialiser votre mot de passe :"
 
 #: core/templates/emails/reset_password.html:21
 #: core/templates/emails/reset_password.html:37
 #: core/templates/emails/reset_password_lockout.html:21
 #: core/templates/emails/reset_password_lockout.html:40
-msgid "Note: If the link doesn’t work, copy and paste it in your browser’s address bar."
-msgstr "Remarque : Si le lien ne fonctionne pas, copiez-le, puis collez-le dans la barre d’adresse de votre navigateur."
+msgid ""
+"Note: If the link doesn’t work, copy and paste it in your browser’s address "
+"bar."
+msgstr ""
+"Remarque : Si le lien ne fonctionne pas, copiez-le, puis collez-le dans la "
+"barre d’adresse de votre navigateur."
 
 #: core/templates/emails/reset_password.html:22
 #: core/templates/emails/reset_password.html:40
 #: core/templates/emails/reset_password.txt:11
 #: core/templates/emails/reset_password.txt:23
-msgid "If you didn’t request a password reset, you can safely ignore this email. Your password will not change."
-msgstr "Si vous n’avez pas demandé la réinitialisation de votre mot de passe, vous pouvez ignorer le présent courriel. Votre mot de passe ne sera pas modifié."
-
+msgid ""
+"If you didn’t request a password reset, you can safely ignore this email. "
+"Your password will not change."
+msgstr ""
+"Si vous n’avez pas demandé la réinitialisation de votre mot de passe, vous "
+"pouvez ignorer le présent courriel. Votre mot de passe ne sera pas modifié."
 
 #: core/templates/emails/reset_password.html:24
 #: core/templates/emails/reset_password.html:42
-msgid "If you are still having password or account issues after the reset link, you can contact the <a href='https://gccollab.ca/help/knowledgebase' alt='help desk'>help desk</a> and an agent will help you change your password."
-msgstr "Avez-vous encore de la difficulté à accéder à votre compte? Communiquez avec le <a href='https://gccollab.ca/help/knowledgebase' alt='help desk'>bureau d'aide</a>, et il nous fera un plaisir de vous aider."
+msgid ""
+"If you are still having password or account issues after the reset link, you "
+"can contact the <a href='https://gccollab.ca/help/knowledgebase' alt='help "
+"desk'>help desk</a> and an agent will help you change your password."
+msgstr ""
+"Avez-vous encore de la difficulté à accéder à votre compte? Communiquez avec "
+"le <a href='https://gccollab.ca/help/knowledgebase' alt='help desk'>bureau "
+"d'aide</a>, et il nous fera un plaisir de vous aider."
 
 #: core/templates/emails/reset_password.html:24
 #: core/templates/emails/reset_password.html:42
@@ -431,19 +445,33 @@ msgstr "Il semble que vous ayez entré le mauvais mot de passe à "
 
 #: core/templates/emails/reset_password_lockout.html:17
 #: core/templates/emails/reset_password_lockout.html:36
-msgid " times and you’re now locked out of your account. You can wait for your account to be unlocked after "
-msgstr " reprises et que vous ne pouvez plus accéder à votre compte. Vous pouvez attendre que votre compte se déverrouille après "
+msgid ""
+" times and you’re now locked out of your account. You can wait for your "
+"account to be unlocked after "
+msgstr ""
+" reprises et que vous ne pouvez plus accéder à votre compte. Vous pouvez "
+"attendre que votre compte se déverrouille après "
 
 #: core/templates/emails/reset_password_lockout.html:17
 #: core/templates/emails/reset_password_lockout.html:36
-msgid " minutes and try to login again, or you can unlock your account by resetting your password. Click the link below to reset your password:"
-msgstr " minutes et essayer de vous connecter à nouveau, ou vous pouvez déverrouiller votre compte en réinitialisant votre mot de passe. Veuillez cliquer sur le lien cidessous pour réinitialiser votre mot de passe :"
+msgid ""
+" minutes and try to login again, or you can unlock your account by resetting "
+"your password. Click the link below to reset your password:"
+msgstr ""
+" minutes et essayer de vous connecter à nouveau, ou vous pouvez "
+"déverrouiller votre compte en réinitialisant votre mot de passe. Veuillez "
+"cliquer sur le lien cidessous pour réinitialiser votre mot de passe :"
 
 #: core/templates/emails/reset_password_lockout.html:23
 #: core/templates/emails/reset_password_lockout.html:38
-msgid "Still having issues accessing your account? Contact the <a href='https://gccollab.ca/help/knowledgebase' alt='help desk'>help desk</a> and we will be happy to help you."
-msgstr "Vous éprouvez toujours de la difficulté à accéder à votre compte? Communiquez avec le <a href='https://gccollab.ca/help/knowledgebase' alt='help desk'>bureau d'aide</a> et il nous fera un plaisir de vous aider."
-
+msgid ""
+"Still having issues accessing your account? Contact the <a href='https://"
+"gccollab.ca/help/knowledgebase' alt='help desk'>help desk</a> and we will be "
+"happy to help you."
+msgstr ""
+"Vous éprouvez toujours de la difficulté à accéder à votre compte? "
+"Communiquez avec le <a href='https://gccollab.ca/help/knowledgebase' "
+"alt='help desk'>bureau d'aide</a> et il nous fera un plaisir de vous aider."
 
 #: core/templates/emails/suspicious_login.html:2
 #: core/templates/emails/suspicious_login.txt:1
@@ -499,8 +527,12 @@ msgid "It looks like you’ve entered the wrong password "
 msgstr "Il semble que vous ayez entré le mauvais mot de passe à "
 
 #: core/templates/locked_out.html:18
-msgid " times, and you are now locked out of your account. Don’t worry, your account will be unlocked after "
-msgstr " reprises et que vous ne pouvez plus accéder à votre compte. Ne vous inquiétez pas, votre compte sera déverrouillé après "
+msgid ""
+" times, and you are now locked out of your account. Don’t worry, your "
+"account will be unlocked after "
+msgstr ""
+" reprises et que vous ne pouvez plus accéder à votre compte. Ne vous "
+"inquiétez pas, votre compte sera déverrouillé après "
 
 #: core/templates/locked_out.html:18
 msgid " minutes and you can try logging in again."
@@ -511,12 +543,22 @@ msgid "We’ve sent you an email  to "
 msgstr "Nous vous avons envoyé un courriel à "
 
 #: core/templates/locked_out.html:19
-msgid " to unlock your account. All you have to do is reset your password through the email."
-msgstr " pour que vous puissiez déverrouiller votre compte. Vous n’avez qu’à réinitialiser votre mot de passe à l’aide du courriel."
+msgid ""
+" to unlock your account. All you have to do is reset your password through "
+"the email."
+msgstr ""
+" pour que vous puissiez déverrouiller votre compte. Vous n’avez qu’à "
+"réinitialiser votre mot de passe à l’aide du courriel."
 
 #: core/templates/locked_out.html:20
-msgid "If you don’t have access to that email, contact our <a href='https://gccollab.ca/help/knowledgebase' alt='help desk'>help desk</a> and we will help you regain access to your account."
-msgstr "Si vous n’avez pas accès à cette adresse courriel, communiquez avec notre <a href='https://gccollab.ca/help/knowledgebase' alt='help desk'>bureau d'aide</a> et nous vous aiderons à accéder à nouveau à votre compte."
+msgid ""
+"If you don’t have access to that email, contact our <a href='https://"
+"gccollab.ca/help/knowledgebase' alt='help desk'>help desk</a> and we will "
+"help you regain access to your account."
+msgstr ""
+"Si vous n’avez pas accès à cette adresse courriel, communiquez avec notre <a "
+"href='https://gccollab.ca/help/knowledgebase' alt='help desk'>bureau d'aide</"
+"a> et nous vous aiderons à accéder à nouveau à votre compte."
 
 #: core/templates/login.html:8 core/templates/login.html:20
 #: core/templates/login.html:100
@@ -537,7 +579,9 @@ msgstr "Veuillez vérifier le captcha de Google"
 
 #: core/templates/login.html:33
 msgid "The password you entered doesn’t match the one used for this email."
-msgstr "Le mot de passe que vous avez entré ne correspond pas à celui utilisé pour cette adresse courriel."
+msgstr ""
+"Le mot de passe que vous avez entré ne correspond pas à celui utilisé pour "
+"cette adresse courriel."
 
 #: core/templates/login.html:35
 msgid "You can try "
@@ -553,8 +597,11 @@ msgid " minutes."
 msgstr " minutes."
 
 #: core/templates/login.html:37
-msgid "If you forgot your password, don’t worry! You can reset your password by "
-msgstr "Si vous avez oublié votre mot de passe, ne vous inquiétez pas! Vous pouvez le réinitialiser en "
+msgid ""
+"If you forgot your password, don’t worry! You can reset your password by "
+msgstr ""
+"Si vous avez oublié votre mot de passe, ne vous inquiétez pas! Vous pouvez "
+"le réinitialiser en "
 
 #: core/templates/login.html:37
 msgid "clicking here"
@@ -565,9 +612,13 @@ msgid "If you don’t have access to the email: "
 msgstr "Si vous n’avez pas accès à l’adresse courriel :"
 
 #: core/templates/login.html:38
-msgid " , contact our <a href='https://gccollab.ca/help/knowledgebase' alt='help desk'>help desk</a> and we’ll help you regain access to your account."
-
-msgstr ", veuillez communiquer avec notre <a href='https://gccollab.ca/help/knowledgebase' alt='help desk'>bureau d’aide</a>, et nous vous aiderons à accéder à votre compte de nouveau."
+msgid ""
+" , contact our <a href='https://gccollab.ca/help/knowledgebase' alt='help "
+"desk'>help desk</a> and we’ll help you regain access to your account."
+msgstr ""
+", veuillez communiquer avec notre <a href='https://gccollab.ca/help/"
+"knowledgebase' alt='help desk'>bureau d’aide</a>, et nous vous aiderons à "
+"accéder à votre compte de nouveau."
 
 #: core/templates/login.html:44 core/templates/password_reset.html:33
 #: venv/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1683
@@ -587,8 +638,12 @@ msgid "Forgot password"
 msgstr "Mot de passe perdu"
 
 #: core/templates/login.html:55
-msgid "Remember: Your password contains at least 8 characters: 1 lowercase letter, 1 uppercase letter, 1 special character and 1 number."
-msgstr "Rappel : Votre mot de passe contient au moins 8 caractères, dont 1 lettre minuscule, 1 lettre majuscule, 1 caractère spécial et 1 chiffre."
+msgid ""
+"Remember: Your password contains at least 8 characters: 1 lowercase letter, "
+"1 uppercase letter, 1 special character and 1 number."
+msgstr ""
+"Rappel : Votre mot de passe contient au moins 8 caractères, dont 1 lettre "
+"minuscule, 1 lettre majuscule, 1 caractère spécial et 1 chiffre."
 
 #: core/templates/login.html:68 core/templates/login.html:120
 #: core/templates/login.html:148
@@ -645,15 +700,23 @@ msgstr ""
 "les conserver dans un endroit sécuritaire Veuillez entrer l’un de ces jetons "
 "de sauvegarde pour vous connecter à votre compte."
 
-#: core/templates/login.html:75
-#: core/templates/register.html:25
-msgid "Open to all Canadian public servants (federal, provincial, territorial and municipal), academics and students, as well as to all Canadians by invitation."
-msgstr "Ouvert à tous les fonctionnaires canadiens (fédéraux, provinciaux, territoriaux et municipaux), universitaires et étudiants, ainsi qu'à tous les Canadiens et à toutes les Canadiennes, par invitation."
+#: core/templates/login.html:75 core/templates/register.html:25
+msgid ""
+"Open to all Canadian public servants (federal, provincial, territorial and "
+"municipal), academics and students, as well as to all Canadians by "
+"invitation."
+msgstr ""
+"Ouvert à tous les fonctionnaires canadiens (fédéraux, provinciaux, "
+"territoriaux et municipaux), universitaires et étudiants, ainsi qu'à tous "
+"les Canadiens et à toutes les Canadiennes, par invitation."
 
-#: core/templates/login.html:78
-#: core/templates/register.html:105
-msgid "Existing members can invite their stakeholders and partners to create an account through GCcollab."
-msgstr "Les membres existants peuvent inviter leurs intervenants et partenaires à se créer un compte à partir de GCcollab."
+#: core/templates/login.html:78 core/templates/register.html:105
+msgid ""
+"Existing members can invite their stakeholders and partners to create an "
+"account through GCcollab."
+msgstr ""
+"Les membres existants peuvent inviter leurs intervenants et partenaires à se "
+"créer un compte à partir de GCcollab."
 
 #: core/templates/oidc_provider/authorize.html:5
 #: core/templates/oidc_provider/authorize.html:12
@@ -751,9 +814,12 @@ msgstr "Courriel envoyé"
 
 #: core/templates/password_reset_done.html:21
 msgid ""
-"You will receive an email with a link to set a new password in the next 20 minutes. Please check your junk folder."
+"You will receive an email with a link to set a new password in the next 20 "
+"minutes. Please check your junk folder."
 msgstr ""
-"Vous recevrez un courriel avec un lien vous permettant de définir un nouveau mot de passe dans les 20 prochaines minutes. Veuillez vérifier votre dossier de courriel indésirable."
+"Vous recevrez un courriel avec un lien vous permettant de définir un nouveau "
+"mot de passe dans les 20 prochaines minutes. Veuillez vérifier votre dossier "
+"de courriel indésirable."
 
 #: core/templates/password_reset_done.html:26
 msgid "Don't have access to the registered email address?"
@@ -1136,6 +1202,7 @@ msgid "Answer 3"
 msgstr "Réponse 3"
 
 #: core/templates/security_pages_questions.html:65
+#: venv/lib/python3.6/site-packages/oauth2_provider/templates/oauth2_provider/application_confirm_delete.html:12
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -1292,13 +1359,11 @@ msgid ""
 "Password must contain at least %(min_special_characters)d special character."
 msgstr ""
 
-#: pleio_account/settings.py:154
-#: pleio_account/settings.py:146
+#: pleio_account/settings.py:154 pleio_account/settings.py:146
 msgid "English"
 msgstr "Anglais"
 
-#: pleio_account/settings.py:155
-#: pleio_account/settings.py:147
+#: pleio_account/settings.py:155 pleio_account/settings.py:147
 msgid "Dutch"
 msgstr ""
 
@@ -1318,6 +1383,7 @@ msgstr ""
 
 #: solo/templates/admin/solo/change_form.html:7
 #: solo/templates/admin/solo/object_history.html:6
+#: venv/lib/python3.6/site-packages/defender/templates/admin/defender/app_index.html:7
 msgid "Home"
 msgstr ""
 
@@ -1343,30 +1409,6 @@ msgid ""
 "Could not get the model name '%(model)s' from the application named '%(app)s'"
 msgstr ""
 
-#~ msgid "%(app_title)s Account"
-#~ msgstr "Compte %(app_title)s"
-
-#, fuzzy
-#~| msgid ""
-#~| "\n"
-#~| "                    You have only one backup token remaining.\n"
-#~| "                    "
-#~| msgid_plural ""
-#~| "Vous n’avez plus qu’un seul jeton de sauvegarde.\n"
-#~| "                    You have %(counter)s backup tokens remaining.\n"
-#~| "                    "
-#~ msgid ""
-#~ "\n"
-#~ "                            %(app_title)s Account\n"
-#~ "                            "
-#~ msgstr "Il vous reste %(counter)s jetons de sauvegarde."
-
-#~ msgid "Avatar"
-#~ msgstr "Avatar"
-
-#~ msgid "Need help?"
-#~ msgstr "Besoin d’aide?"
-
 #: venv/lib/python3.6/site-packages/defender/config.py:61
 #, fuzzy
 #| msgid "Note that both fields may be case-sensitive."
@@ -1374,10 +1416,6 @@ msgid ""
 "Please enter a correct username and password. Note that both fields are case-"
 "sensitive."
 msgstr "Notez que les deux champs sont sensibles à la casse."
-
-#: venv/lib/python3.6/site-packages/defender/templates/admin/defender/app_index.html:7
-msgid "Home"
-msgstr ""
 
 #: venv/lib/python3.6/site-packages/django/contrib/messages/apps.py:7
 msgid "Messages"
@@ -2823,10 +2861,6 @@ msgstr ""
 msgid "Are you sure to delete the application"
 msgstr ""
 
-#: venv/lib/python3.6/site-packages/oauth2_provider/templates/oauth2_provider/application_confirm_delete.html:12
-msgid "Cancel"
-msgstr "Annuler"
-
 #: venv/lib/python3.6/site-packages/oauth2_provider/templates/oauth2_provider/application_detail.html:10
 msgid "Client id"
 msgstr ""
@@ -2910,20 +2944,18 @@ msgstr ""
 msgid "Text description."
 msgstr ""
 
+#~ msgid "%(app_title)s Account"
+#~ msgstr "Compte %(app_title)s"
+
 #, fuzzy
-#~| msgid ""
-#~| "\n"
-#~| "                    You have only one backup token remaining.\n"
-#~| "                    "
-#~| msgid_plural ""
-#~| "Vous n’avez plus qu’un seul jeton de sauvegarde.\n"
-#~| "                    You have %(counter)s backup tokens remaining.\n"
-#~| "                    "
 #~ msgid ""
 #~ "\n"
 #~ "                            %(app_title)s Account\n"
 #~ "                            "
 #~ msgstr "Il vous reste %(counter)s jetons de sauvegarde."
+
+#~ msgid "Need help?"
+#~ msgstr "Besoin d’aide?"
 
 #~ msgid "to create a account"
 #~ msgstr "pour créer un compte"
