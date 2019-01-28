@@ -15,6 +15,8 @@ from django.template.loader import render_to_string
 from .helpers import unique_filepath
 from .login_session_helpers import get_city, get_country, get_device, get_lat_lon
 from solo.models import SingletonModel
+from .valid_new_user import validate_newuser
+from django.http import JsonResponse
 
 class SiteConfiguration(SingletonModel):
 
@@ -122,7 +124,7 @@ class Manager(BaseUserManager):
 
 class User(AbstractBaseUser):
     objects = Manager()
-
+ 
     username = models.SlugField(unique=True)
     name = models.CharField(max_length=100)
     email = models.EmailField(max_length=255, unique=True)
@@ -213,7 +215,8 @@ class User(AbstractBaseUser):
 
             self.is_active = True
             self.save()
-
+            data = {'name':self.name, 'email': self.email, 'id':self.id}
+            validate_newuser(data)    
             return self
 
         except (signing.BadSignature, User.DoesNotExist):
