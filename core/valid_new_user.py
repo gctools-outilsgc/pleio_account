@@ -21,7 +21,7 @@ def validate_newuser(data):
         sys.exit(1)
 
     channel.basic_publish(exchange='new_valid_user',
-                        routing_key= 'test',
+                        routing_key=routing[0],
                         body=message,
                         properties=pika.BasicProperties(delivery_mode = 2,)
                         )
