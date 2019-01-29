@@ -163,9 +163,7 @@ def security_questions(request):
         if form.is_valid():
             del request.session['email']
             del request.session['picks']
-            return redirect(request.is_secure() and "https" or "http" + '://' +
-                request.META['HTTP_HOST'] +
-                '/reset/' +
+            return redirect(request.scheme + '://' + request.META['HTTP_HOST'] + '/reset/' +
                 (urlsafe_base64_encode(force_bytes(user.pk))).decode('utf-8') + '/' +
                 default_token_generator.make_token(user)
              )
