@@ -17,9 +17,6 @@ def mq_newuser(data):
     message = json.dumps(data, default=jdefault)
 
     routing = data
-    if not routing:
-        sys.stderr.write("Usage: %s [routing_key]...\n" % sys.argv[0])
-        sys.exit(1)
 
     channel.basic_publish(exchange='account',
                         routing_key=routing[0],
