@@ -2,7 +2,7 @@ import pika
 import sys
 import json
 
-def validate_newuser(data):
+def mq_newuser(data):
     # credentials = pika.PlainCredentials('gcaccount', 'pleio')
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
     channel = connection.channel()
