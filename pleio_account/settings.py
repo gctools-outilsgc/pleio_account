@@ -216,3 +216,8 @@ LOGGING = {
         },
     },
 }
+
+#RabbitMq settings
+CRED_USERNAME = "gcaccount"
+CRED_PASSWORD = "pleio"
+PIKA_CONNECTION = "localhost"

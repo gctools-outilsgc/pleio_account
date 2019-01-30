@@ -1,10 +1,11 @@
 import pika
 import sys
 import json
+from django.conf import settings
 
 def mq_newuser(data):
-    # credentials = pika.PlainCredentials('gcaccount', 'pleio')
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+    credentials = pika.PlainCredentials(settings.LANGUAGE_CODE, settings.LANGUAGE_CODE)
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=settings.LANGUAGE_CODE))
     channel = connection.channel()
 
     channel.exchange_declare(exchange='account', exchange_type='topic', durable=True)
