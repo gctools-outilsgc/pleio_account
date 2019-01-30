@@ -210,9 +210,8 @@
                                 </tr>
                                 <!-- Header -->
                                 <tr>
-                                    <td class="header" style="color:#ffffff; font-family:Arial,sans-serif; font-size:26px; line-height:30px; text-align:left; padding:15px 50px; font-weight:bold"
-                                        bgcolor="#{% show_customizations_color %}">
-                                        <span class="link-white" style="color:#ffffff; text-decoration:none">{% show_customizations_title %}</span>
+                                    <td class="header" style="color:#ffffff; font-family:Arial,sans-serif; font-size:26px; line-height:30px; text-align:left; padding:15px 50px; font-weight:bold" bgcolor="{{ app.APP_BRAND_TITLE }}">
+                                        <span class="link-white" style="color:#ffffff; text-decoration:none">{{ app.APP_TITLE }}</span>
                                     </td>
                                 </tr>
                                 <!-- END Header -->
@@ -264,10 +263,10 @@
                                                         <td valign="top" style="padding-right: 9px; padding-left: 9px; padding-top: 0; padding-bottom: 0; text-align:center;">
 
                                                             <a href="{{ protocol }}://{{ domain }}">
-                                                                <img align="center" alt="" src="{{ protocol }}://{{ domain }}{% show_customizations_logo %}" width="84"
+                                                                <img align="center" alt="" src="{{ protocol }}://{{ domain }}{{ MEDIA_URL }}{{ app.APP_LOGO }}" width="84"
                                                                     style="max-width:30px; padding-bottom: 0; display: inline !important; vertical-align: top;"
                                                                     class="img-m-center">
-                                                                    {% show_customizations_title %}
+                                                                    {{ app.APP_TITLE }}
                                                             </a>
                                                         </td>
                                                     </tr>
