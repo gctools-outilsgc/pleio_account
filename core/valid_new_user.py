@@ -7,7 +7,7 @@ def mq_newuser(data):
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
     channel = connection.channel()
 
-    channel.exchange_declare(exchange='new_valid_user', exchange_type='topic', durable=True)
+    channel.exchange_declare(exchange='account', exchange_type='topic', durable=True)
 
     #Transform data
     def jdefault(data):
@@ -20,7 +20,7 @@ def mq_newuser(data):
         sys.stderr.write("Usage: %s [routing_key]...\n" % sys.argv[0])
         sys.exit(1)
 
-    channel.basic_publish(exchange='new_valid_user',
+    channel.basic_publish(exchange='account',
                         routing_key=routing[0],
                         body=message,
                         properties=pika.BasicProperties(delivery_mode = 2,)
