@@ -246,14 +246,23 @@ from django.contrib.auth.admin import UserAdmin
 
 
 class UserAdmin(UserAdmin):
-    search_fields = ModelAdmin.search_fields = ('username', 'name', 'email',)
+    search_fields = ModelAdmin.search_fields + ('username', 'name', 'email',)
     list_filter = ModelAdmin.list_filter + ('is_active', 'is_admin',)
-    list_display = ModelAdmin.list_display + ('is_active','id',)
+    list_display = ModelAdmin.list_display + ('is_active', 'id',)
     filter_horizontal = ()
     ordering = ('-id', )
     fieldsets = add_fieldsets = (
-        (None, {'fields': ('last_login', 'name', 'email', 'password', 'avatar',)}),
-        ('Settings', {'fields': ('accepted_terms', 'receives_newsletter', 'is_active', 'is_admin',)}),
+        (None, {
+            'fields': ('last_login', 'name', 'email', 'password', 'avatar',)
+        }),
+        ('Settings', {
+            'fields': (
+                'accepted_terms',
+                'receives_newsletter',
+                'is_active',
+                'is_admin',
+            )
+        }),
     )
 
 
