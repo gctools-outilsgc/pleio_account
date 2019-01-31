@@ -4,8 +4,8 @@ import json
 from django.conf import settings
 
 def mq_newuser(data):
-    credentials = pika.PlainCredentials(settings.LANGUAGE_CODE, settings.LANGUAGE_CODE)
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host=settings.LANGUAGE_CODE))
+    credentials = pika.PlainCredentials(settings.CRED_USERNAME, settings.CRED_PASSWORD)
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=settings.PIKA_CONNECTION))
     channel = connection.channel()
 
     channel.exchange_declare(exchange='account', exchange_type='topic', durable=True)
@@ -16,10 +16,8 @@ def mq_newuser(data):
 
     message = json.dumps(data, default=jdefault)
 
-    routing = data
-
     channel.basic_publish(exchange='account',
-                        routing_key=routing[0],
+                        routing_key='',
                         body=message,
                         properties=pika.BasicProperties(delivery_mode = 2,)
                         )
