@@ -10,15 +10,9 @@ def mq_newuser(data):
 
     channel.exchange_declare(exchange='account', exchange_type='topic', durable=True)
 
-    #Transform data
-    def jdefault(data):
-        return data.__dict__
-
-    message = json.dumps(data, default=jdefault)
-
     channel.basic_publish(exchange='account',
                         routing_key='',
-                        body=message,
+                        body=data,
                         properties=pika.BasicProperties(delivery_mode = 2,)
                         )
     print(" [x] Sent %r to RabbitMQ" % data)

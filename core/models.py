@@ -1,3 +1,4 @@
+import json
 from django.contrib.admin import ModelAdmin
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.hashers import check_password
@@ -16,7 +17,6 @@ from .helpers import unique_filepath
 from .login_session_helpers import get_city, get_country, get_device, get_lat_lon
 from solo.models import SingletonModel
 from .valid_new_user import mq_newuser
-from django.http import JsonResponse
 
 class SiteConfiguration(SingletonModel):
 
@@ -216,7 +216,7 @@ class User(AbstractBaseUser):
             self.is_active = True
             self.save()
             data = {'name':self.name, 'email': self.email, 'id':self.id}
-            mq_newuser(data)    
+            mq_newuser(json.dumps(data))    
             return self
 
         except (signing.BadSignature, User.DoesNotExist):
