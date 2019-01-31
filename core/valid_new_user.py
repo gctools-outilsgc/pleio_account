@@ -11,7 +11,7 @@ def mq_newuser(data):
     channel.exchange_declare(exchange='account', exchange_type='topic', durable=True)
 
     channel.basic_publish(exchange='account',
-                        routing_key='',
+                        routing_key='valid_user',
                         body=data,
                         properties=pika.BasicProperties(delivery_mode = 2,)
                         )

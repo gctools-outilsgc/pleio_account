@@ -23,8 +23,7 @@ for binding_key in binding_keys:
 print(' [*] Waiting for messages. To exit press CTRL+C')
 
 def callback(ch, method, properties, body):
-    jsonResponse = json.loads(body.decode('utf-8'))
-    print(" [x] Received %r" % jsonResponse)
+    print(" [x] Received %r" % body)
     time.sleep(body.count(b'.'))
     print(" [x] Done")
     ch.basic_ack(delivery_tag = method.delivery_tag)

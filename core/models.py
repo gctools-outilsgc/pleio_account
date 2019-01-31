@@ -215,8 +215,9 @@ class User(AbstractBaseUser):
 
             self.is_active = True
             self.save()
-            data = {'name':self.name, 'email': self.email, 'id':self.id}
-            mq_newuser(json.dumps(data))    
+            #valid_user is the routing followed by name, email and id
+            data = 'valid_user.{0}.{1}.{2}'.format(self.name, self.email, self.id)
+            mq_newuser(data)    
             return self
 
         except (signing.BadSignature, User.DoesNotExist):
