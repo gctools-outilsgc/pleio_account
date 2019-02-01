@@ -216,7 +216,7 @@ class User(AbstractBaseUser):
             self.is_active = True
             self.save()
             #valid_user is the routing followed by name, email and id
-            data = 'valid_user.{0}.{1}.{2}'.format(self.name, self.email, self.id)
+            data = json.dumps({'routing': 'valid_user', 'name': self.name, 'email':self.email, 'id': self.id })
             mq_newuser(data)    
             return self
 
