@@ -8,8 +8,6 @@ def mq_newuser(routing,data):
     channel = connection.channel()
     channel.exchange_declare(exchange='account', exchange_type='topic', durable=True)
 
-    resp = json.loads(data)
-
     channel.basic_publish(exchange='account',
                         routing_key=routing,
                         body=data,
