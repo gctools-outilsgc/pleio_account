@@ -1,21 +1,18 @@
 import pika
-import sys
 import json
 from django.conf import settings
 
-def mq_newuser(data):
-    credentials = pika.PlainCredentials(settings.CRED_USERNAME, settings.CRED_PASSWORD)
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host=settings.PIKA_CONNECTION))
+def mq_newuser(routing,data):
+    credentials = pika.PlainCredentials(settings.MQ_USER, settings.MQ_PASSWORD)
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=settings.MQ_CONNECTION))
     channel = connection.channel()
     channel.exchange_declare(exchange='account', exchange_type='topic', durable=True)
 
     resp = json.loads(data)
-    routing=resp['routing']
 
     channel.basic_publish(exchange='account',
                         routing_key=routing,
                         body=data,
                         properties=pika.BasicProperties(delivery_mode = 2,)
                         )
-    print(" [x] Sent %r to RabbitMQ" % data)
     connection.close()

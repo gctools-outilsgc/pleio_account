@@ -218,6 +218,6 @@ LOGGING = {
 }
 
 #RabbitMq settings
-CRED_USERNAME = "gcaccount"
-CRED_PASSWORD = "pleio"
-PIKA_CONNECTION = "localhost"
+MQ_USER = "gcaccount"
+MQ_PASSWORD = "pleio"
+MQ_CONNECTION = "localhost"
