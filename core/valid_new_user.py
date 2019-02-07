@@ -1,5 +1,4 @@
 import pika
-import json
 from django.conf import settings
 
 def mq_newuser(routing,data):
