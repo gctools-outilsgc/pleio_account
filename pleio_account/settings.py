@@ -218,6 +218,6 @@ LOGGING = {
 }
 
 #RabbitMq settings
-MQ_USER = "gcaccount"
-MQ_PASSWORD = "pleio"
-MQ_CONNECTION = "localhost"
+MQ_USER = ""
+MQ_PASSWORD = ""
+MQ_CONNECTION = ""
