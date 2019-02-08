@@ -8,7 +8,7 @@ from api.serializers import UserSerializer
 @api_view(['GET'])
 @permission_classes((IsAuthenticated,))
 def me(request):
-    if not request.user.is_authenticated():
+    if not request.user.is_authenticated:
         return HttpResponse(status=404)
 
     serializer = UserSerializer(request.user)

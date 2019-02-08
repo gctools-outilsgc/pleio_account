@@ -4,8 +4,7 @@
 
 {% block content %}
 
-{% email_language_toggle as toggle %}
-{% if toggle %}
+{% if app.APP_USE_ALL_LANGUAGES_IN_EMAIL %}
 
     {% get_available_languages as LANGUAGES %}
     {% for langs in LANGUAGES %}

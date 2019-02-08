@@ -1,39 +1,49 @@
+import urllib
+import hashlib
+import hmac
+import random
+
 from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-from .forms import RegisterForm, UserProfileForm, PleioTOTPDeviceForm, ChangePasswordForm, ChooseSecurityQuestion, AnswerSecurityQuestions
-from .models import User, PreviousLogins, SiteConfiguration, SecurityQuestions
+from .forms import (
+    RegisterForm,
+    UserProfileForm,
+    PleioTOTPDeviceForm,
+    ChangePasswordForm,
+    ChooseSecurityQuestion,
+    AnswerSecurityQuestions
+)
+from .models import User, PreviousLogins, SecurityQuestions
 from django.urls import reverse
+from constance import config
 from base64 import b32encode
 from binascii import unhexlify
 from django_otp.util import random_hex
 import django_otp
 
-from django.contrib.auth import views as auth_views
-from django.contrib.auth import authenticate, update_session_auth_hash
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.hashers import make_password
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
-from two_factor.views import ProfileView
-from user_sessions.views import SessionListView
-from django.utils.translation import gettext, gettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.contrib import messages
-from django.template.response import TemplateResponse
-from django.contrib.auth import password_validation
-from core.class_views import PleioBackupTokensView, PleioSessionListView, PleioProfileView
+from core.class_views import (
+    PleioBackupTokensView,
+    PleioSessionListView,
+    PleioProfileView
+)
 from two_factor.views.profile import DisableView
 
 from django.http import Http404, HttpResponseRedirect
 from django.views.decorators.cache import never_cache
 from django.utils.http import urlquote
 from datetime import datetime
-import hashlib
-import hmac
-import random
+
 
 def home(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         return redirect('profile')
 
     return redirect('login')
@@ -45,7 +55,7 @@ def logout(request):
 
 
 def register(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         return redirect('profile')
 
     if request.method == "POST":
@@ -60,7 +70,7 @@ def register(request):
                     accepted_terms=data['accepted_terms'],
                     receives_newsletter=True
                 )
-            except:
+            except Exception:
                 user = User.objects.get(email=data['email'])
 
             if not user.is_active:
@@ -78,7 +88,7 @@ def register_complete(request):
 
 
 def register_activate(request, activation_token=None):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         return redirect('profile')
 
     user = User.activate_user(None, activation_token)
@@ -163,9 +173,7 @@ def security_questions(request):
         if form.is_valid():
             del request.session['email']
             del request.session['picks']
-            return redirect(request.is_secure() and "https" or "http" + '://' +
-                request.META['HTTP_HOST'] +
-                '/reset/' +
+            return redirect(request.scheme + '://' + request.META['HTTP_HOST'] + '/reset/' +
                 (urlsafe_base64_encode(force_bytes(user.pk))).decode('utf-8') + '/' +
                 default_token_generator.make_token(user)
              )
@@ -302,10 +310,12 @@ def two_factor_form(request, page_action):
 
     return two_factor_authorization
 
+
 def user_sessions_form(request):
     user_sessions = PleioSessionListView.as_view(template_name='security_pages.html')(request).context_data
 
     return user_sessions['object_list']
+
 
 @never_cache
 @login_required
@@ -318,12 +328,20 @@ def freshdesk_sso(request):
     email = request.user.email
     dt = int(datetime.utcnow().strftime("%s")) - 148
 
-    #load site configuration
-    site_config = SiteConfiguration.get_solo()
-    config_data = site_config.get_values()
+    data = '{0}{1}{2}{3}'.format(name, config.FRESHDESK_SECRET_KEY, email, dt)
+    generated_hash = hmac.new(
+        config.FRESHDESK_SECRET_KEY,
+        data,
+        hashlib.md5
+    ).hexdigest()
 
-    data = '{0}{1}{2}{3}'.format(name, config_data['freshdesk_key'], email, dt)
-    generated_hash = hmac.new(config_data['freshdesk_key'].encode(), data.encode(), hashlib.md5).hexdigest()
-    url = config_data['freshdesk_url']+'login/sso/?name='+urlquote(name)+'&email='+urlquote(email)+'&'+u'timestamp='+str(dt)+'&hash='+generated_hash
-
-    return HttpResponseRedirect(url)
+    return HttpResponseRedirect(
+        config.FRESHDESK_URL
+        + 'login/sso/?'
+        + urllib.urlencode({
+            'name': name,
+            'email': email,
+            'timestamp': str(dt),
+            'hash': generated_hash
+        })
+    )

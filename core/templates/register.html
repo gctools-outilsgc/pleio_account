@@ -87,10 +87,8 @@
             {% endcomment %}
         </div>
 
-        {% settings_value 'GOOGLE_RECAPTCHA_SITE_KEY' as recaptcha_site_key %}
-
-        {% if recaptcha_site_key %}
-            <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
+        {% if config.RECAPTCHA_ENABLED %}
+            <div class="g-recaptcha" data-sitekey="{{ config.RECAPTCHA_SITE_KEY }}"></div>
         {% endif %}
 
         <div class="register__buttons">
@@ -101,7 +99,7 @@
         </div>
         <br/>
         <p class="text_grey small_text">
-            *{% trans "Existing members can invite their stakeholders and partners to create an account through GCcollab." %}                
+            *{% trans "Existing members can invite their stakeholders and partners to create an account through GCcollab." %}
         </p>
 
     </fieldset>

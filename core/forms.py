@@ -1,27 +1,30 @@
-from django.utils.translation import gettext, gettext_lazy as _
+import json
+
+import requests
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import password_validation
-from django.conf import settings
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate
-from two_factor.forms import AuthenticationTokenForm, TOTPDeviceForm
-from two_factor.utils import totp_digits
-from emailvalidator.validator import is_email_valid
-from .models import User, SiteConfiguration
-from .helpers import verify_captcha_response
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.http import urlsafe_base64_encode
 from django.template import loader
 from django.views.generic.edit import FormView
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
-import requests
-import json
+from two_factor.forms import AuthenticationTokenForm, TOTPDeviceForm
+from emailvalidator.validator import is_email_valid
+from constance import config
+
+from .models import User
+from .helpers import verify_captcha_response
+
 
 class PasswordResetRequestForm(forms.Form):
     email = forms.CharField(label=("Email address"), max_length=254)
+
 
 class ResetPasswordRequestView(FormView):
     template_name = "password_reset.html"
@@ -38,10 +41,6 @@ class ResetPasswordRequestView(FormView):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
-
-        #load site configuration
-        site_config = SiteConfiguration.get_solo()
-        config_data = site_config.get_values()
 
         if form.is_valid():
             email = form.cleaned_data["email"]
@@ -65,16 +64,31 @@ class ResetPasswordRequestView(FormView):
                     subject = loader.render_to_string(subject_template_name)
                     subject = ''.join(subject.splitlines())
                     email = loader.render_to_string(email_template_name, c)
-                    html_email = loader.render_to_string(html_email_template_name, c)
-                    send_mail(subject, email, config_data['from_email'], [user.email], fail_silently=False, html_message=html_email)
+                    html_email = loader.render_to_string(
+                        html_email_template_name,
+                        c
+                    )
+                    send_mail(
+                        subject,
+                        email,
+                        config.EMAIL_FROM,
+                        [user.email],
+                        fail_silently=config.EMAIL_FAIL_SILENTLY,
+                        html_message=html_email
+                    )
 
                 return self.form_valid(form)
 
-            elif config_data['elgg_url']:
-                elgg_url = config_data['elgg_url']
-
+            elif config.ELGG_URL:
                 # Verify user exists in Elgg
-                valid_user_request = requests.post(elgg_url + "/services/api/rest/json/", data={'method': 'pleio.userexists', 'user': email})
+                valid_user_request = requests.post(
+                    config.ELGG_URL
+                    + "/services/api/rest/json/",
+                    data={
+                        'method': 'pleio.userexists',
+                        'user': email
+                    }
+                )
                 valid_user_json = json.loads(valid_user_request.text)
                 valid_user_result = valid_user_json["result"] if 'result' in valid_user_json else []
                 valid_user = valid_user_result["valid"] if 'valid' in valid_user_result else False
@@ -104,7 +118,14 @@ class ResetPasswordRequestView(FormView):
                     subject = ''.join(subject.splitlines())
                     email = loader.render_to_string(email_template_name, c)
                     html_email = loader.render_to_string(html_email_template_name, c)
-                    send_mail(subject, email, config_data['from_email'], [user.email], fail_silently=False, html_message=html_email)
+                    send_mail(
+                        subject,
+                        email,
+                        config.EMAIL_FROM,
+                        [user.email],
+                        fail_silently=config.EMAIL_FAIL_SILENTLY,
+                        html_message=html_email
+                    )
 
                     return self.form_valid(form)
 
@@ -119,6 +140,7 @@ class ResetPasswordRequestView(FormView):
         else:
             form.add_error(None, _("Please provide a valid email address."))
             return self.form_invalid(form)
+
 
 class EmailField(forms.EmailField):
     def clean(self, value):
@@ -142,17 +164,34 @@ class RegisterForm(forms.Form):
         'unique_email': _('This email is already in use.'),
     }
 
-    name = forms.CharField(required=True, max_length=100, widget=forms.TextInput(attrs={'aria-labelledby':"error_name"}))
-    email = EmailField(required=True, widget=forms.TextInput(attrs={'aria-labelledby':"error_email"}))
-    password1 = forms.CharField(strip=False, widget=forms.PasswordInput(attrs={'aria-labelledby':"error_password1"}))
-    password2 = forms.CharField(strip=False, widget=forms.PasswordInput(attrs={'aria-labelledby':"error_password2"}))
+    name = forms.CharField(
+        required=True,
+        max_length=100,
+        widget=forms.TextInput(attrs={'aria-labelledby': 'error_name'})
+    )
+    email = EmailField(
+        required=True,
+        widget=forms.TextInput(attrs={'aria-labelledby': 'error_email'})
+    )
+    password1 = forms.CharField(
+        strip=False,
+        widget=forms.PasswordInput(attrs={
+            'aria-labelledby': 'error_password1'
+        })
+    )
+    password2 = forms.CharField(
+        strip=False,
+        widget=forms.PasswordInput(attrs={
+            'aria-labelledby': 'error_password2'
+        })
+    )
     accepted_terms = forms.BooleanField(required=True)
     receives_newsletter = forms.BooleanField(required=False)
 
     def __init__(self, *args, **kwargs):
         super(RegisterForm, self).__init__(*args, **kwargs)
 
-        if getattr(settings, "GOOGLE_RECAPTCHA_SITE_KEY", None):
+        if config.RECAPTCHA_ENABLED:
             self.fields["g-recaptcha-response"] = forms.CharField()
 
     def clean_email(self):
@@ -160,16 +199,21 @@ class RegisterForm(forms.Form):
         email = self.cleaned_data.get('email')
 
         try:
-            match = User.objects.get(email=email)
+            User.objects.get(email=email)
         except User.DoesNotExist:
             return email
 
-        raise forms.ValidationError(self.error_messages['unique_email'], code='unique_email',)
+        raise forms.ValidationError(
+            self.error_messages['unique_email'],
+            code='unique_email'
+        )
 
     def clean_password1(self):
         password1 = self.cleaned_data.get("password1")
 
-        password_validation.validate_password(self.cleaned_data.get('password1'))
+        password_validation.validate_password(
+            self.cleaned_data.get('password1')
+        )
         return password1
 
     def clean_password2(self):
@@ -182,46 +226,69 @@ class RegisterForm(forms.Form):
                 code='password_mismatch',
             )
 
-        #password_validation.validate_password(self.cleaned_data.get('password2'))
         return password2
 
     def clean(self):
         super(RegisterForm, self).clean()
-        if not verify_captcha_response(self.cleaned_data.get('g-recaptcha-response')):
+        re_response = self.cleaned_data.get('g-recaptcha-response')
+        if not verify_captcha_response(re_response):
             raise forms.ValidationError(
                 self.error_messages['captcha_mismatch'],
                 code='captcha_mismatch',
             )
+
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('name', 'email', 'receives_newsletter',)
 
+
 class LabelledLoginForm(AuthenticationForm):
-        username = forms.CharField(required=True, max_length=254, widget=forms.TextInput(attrs={'id':"id_auth-username", 'aria-labelledby':"error_login"}))
-        password = forms.CharField(required=True, strip=False, widget=forms.PasswordInput(attrs={'autocomplete':"off"}))
+        username = forms.CharField(
+            required=True,
+            max_length=254,
+            widget=forms.TextInput(attrs={
+                'id': 'id_auth-username',
+                'aria-labelledby': 'error_login'
+            })
+        )
+        password = forms.CharField(
+            required=True,
+            strip=False,
+            widget=forms.PasswordInput(attrs={'autocomplete': 'off'})
+        )
+
 
 class PleioAuthenticationForm(AuthenticationForm):
     error_messages = {
-        'captcha_mismatch': 'captcha_mismatch',
+        'captcha_mismatch': 'captcha_mismatch'
     }
 
-    username = forms.CharField(required=True, max_length=254, widget=forms.TextInput(attrs={'id':"id_auth-username", 'aria-labelledby':"error_login"}))
+    username = forms.CharField(
+        required=True,
+        max_length=254,
+        widget=forms.TextInput(attrs={
+            'id': 'id_auth-username',
+            'aria-labelledby': 'error_login'
+        })
+    )
 
     def __init__(self, *args, **kwargs):
         super(PleioAuthenticationForm, self).__init__(*args, **kwargs)
 
-        if getattr(settings, "GOOGLE_RECAPTCHA_SITE_KEY", None):
+        if config.RECAPTCHA_ENABLED:
             self.fields['g-recaptcha-response'] = forms.CharField()
 
     def clean(self):
         super(PleioAuthenticationForm, self).clean()
-        if not verify_captcha_response(self.cleaned_data.get('g-recaptcha-response')):
+        re_response = self.cleaned_data.get('g-recaptcha-response')
+        if not verify_captcha_response(re_response):
             raise forms.ValidationError(
                 self.error_messages['captcha_mismatch'],
                 code='captcha_mismatch',
             )
+
 
 class PleioAuthenticationTokenForm(AuthenticationTokenForm):
     otp_token = forms.IntegerField(label=_("Token"), widget=forms.TextInput)
@@ -241,9 +308,24 @@ class ChangePasswordForm(forms.Form):
         'password_mismatch': _("The two password fields didn't match."),
     }
 
-    old_password = forms.CharField(strip=False, widget=forms.PasswordInput(attrs={'aria-labelledby':"error_id_old_password"}))
-    new_password1 = forms.CharField(strip=False, widget=forms.PasswordInput(attrs={'aria-labelledby':"error_id_new_password1"}))
-    new_password2 = forms.CharField(strip=False, widget=forms.PasswordInput(attrs={'aria-labelledby':"error_id_new_password2"}))
+    old_password = forms.CharField(
+        strip=False,
+        widget=forms.PasswordInput(attrs={
+            'aria-labelledby': 'error_id_old_password'
+        })
+    )
+    new_password1 = forms.CharField(
+        strip=False,
+        widget=forms.PasswordInput(attrs={
+            'aria-labelledby': 'error_id_new_password1'
+        })
+    )
+    new_password2 = forms.CharField(
+        strip=False,
+        widget=forms.PasswordInput(attrs={
+            'aria-labelledby': 'error_id_new_password2'
+        })
+    )
 
     def clean_old_password(self):
         old_password = self.cleaned_data.get("old_password")
@@ -267,8 +349,11 @@ class ChangePasswordForm(forms.Form):
                 code='password_mismatch',
             )
 
-        password_validation.validate_password(self.cleaned_data.get('new_password2'))
+        password_validation.validate_password(
+            self.cleaned_data.get('new_password2')
+        )
         return new_password2
+
 
 class ChooseSecurityQuestion(forms.Form):
     QUESTIONS = [
@@ -279,7 +364,9 @@ class ChooseSecurityQuestion(forms.Form):
         (4, _('What type of music do you dislike most?')),
         (5, _('What was your favourite TV show when you were a child?')),
         (6, _('Who was your best friend in kindergarten?')),
-        (7, _('If you won the lottery, what would be your first big purchase?')),
+        (7, _(
+            'If you won the lottery, what would be your first big purchase?'
+        )),
         (8, _('What is the first movie you saw in theatres?')),
         (9, _('What was your first cell phone?')),
         (10, _('What movie do you know the most quotes from?'))
@@ -298,13 +385,14 @@ class ChooseSecurityQuestion(forms.Form):
         question_two = cleaned_data.get('question_two')
         question_three = cleaned_data.get('question_three')
 
-        if question_one == question_two or question_one == question_three or question_two == question_three:
+        if question_one == question_two or question_one == question_three or \
+                question_two == question_three:
             raise forms.ValidationError(
                 _("The same question can not be used more than once")
             )
 
-class AnswerSecurityQuestions(forms.Form):
 
+class AnswerSecurityQuestions(forms.Form):
         question_email = forms.CharField(required=False)
         answer_one = forms.CharField(max_length=100, initial="")
         q1 = forms.IntegerField(required=False)
@@ -322,8 +410,15 @@ class AnswerSecurityQuestions(forms.Form):
             user = User.objects.get(email=email)
             questions = user.securityquestions
 
-            test = questions.check_answers(q1, answer_one.lower(), q2, answer_two.lower())
+            test = questions.check_answers(
+                q1,
+                answer_one.lower(),
+                q2,
+                answer_two.lower()
+            )
+
             if not test:
-                raise forms.ValidationError(
-                    _("One or more of your answers do not match the registered answers.")
-                )
+                raise forms.ValidationError(_(
+                    'One or more of your answers do not match'
+                    ' the registered answers.'
+                ))

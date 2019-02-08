@@ -1,22 +1,14 @@
 import requests
 import json
-from .models import User, SiteConfiguration
-from django.core.files.base import ContentFile
-from urllib.request import urlopen
+from .models import User
 from django.core.mail.backends.smtp import EmailBackend
+from constance import config
+
 
 class ElggBackend:
-
     def authenticate(self, request, username=None, password=None):
-
-        #load site configuration
-        site_config = SiteConfiguration.get_solo()
-        config_data = site_config.get_values()
-
-        if not config_data['elgg_url']:
-            return None
-
-        elgg_url = config_data['elgg_url']
+        if not config.ELGG_URL:
+            return
 
         # Check if user exists (case-insensitive)
         try:
@@ -25,7 +17,14 @@ class ElggBackend:
                 return user
         except User.DoesNotExist:
             # Verify username/password combination
-            valid_user_request = requests.post(elgg_url + "/services/api/rest/json/", data={'method': 'pleio.verifyuser', 'user': username, 'password': password})
+            valid_user_request = requests.post(
+                config.ELGG_URL + "/services/api/rest/json/",
+                data={
+                    'method': 'pleio.verifyuser',
+                    'user': username,
+                    'password': password
+                }
+            )
             valid_user_json = json.loads(valid_user_request.text)
             valid_user_result = valid_user_json["result"] if 'result' in valid_user_json else []
             valid_user = valid_user_result["valid"] if 'valid' in valid_user_result else False
@@ -61,20 +60,19 @@ class SiteConfigEmailBackend(EmailBackend):
                  ssl_keyfile=None, ssl_certfile=None,
                  **kwargs):
 
-        configuration = SiteConfiguration.get_solo()
-
         super(SiteConfigEmailBackend, self).__init__(
-             host = configuration.email_host if host is None else host,
-             port = configuration.email_port if port is None else port,
-             username = configuration.email_user if username is None else username,
-             password = configuration.email_password if password is None else password,
-             use_tls = configuration.email_use_tls if use_tls is None else use_tls,
-             fail_silently = configuration.email_fail_silently if fail_silently is None else fail_silently,
-             use_ssl = configuration.email_use_ssl if use_ssl is None else use_ssl,
-             timeout = configuration.email_timeout if timeout is None else timeout,
-             ssl_keyfile = ssl_keyfile,
-             ssl_certfile = ssl_certfile,
-             **kwargs)
+             host=host or config.EMAIL_HOST,
+             port=port or config.EMAIL_PORT,
+             username=username or config.EMAIL_USER,
+             password=password or config.EMAIL_PASS,
+             use_tls=use_tls or config.EMAIL_SECURITY == 'tls',
+             use_ssl=use_ssl or config.EMAIL_SECURITY == 'ssl',
+             fail_silently=fail_silently or config.EMAIL_FAIL_SILENTLY,
+             timeout=timeout or config.EMAIL_TIMEOUT,
+             ssl_keyfile=ssl_keyfile,
+             ssl_certfile=ssl_certfile,
+             **kwargs
+        )
 
     def send_messages(self, email_messages):
         return len(list(email_messages))
