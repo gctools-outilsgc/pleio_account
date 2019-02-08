@@ -1,3 +1,4 @@
+import json
 from django.contrib.admin import ModelAdmin
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.hashers import check_password
@@ -55,7 +56,6 @@ class Manager(BaseUserManager):
 
 class User(AbstractBaseUser):
     objects = Manager()
-
     username = models.SlugField(unique=True)
     name = models.CharField(max_length=100)
     email = models.EmailField(max_length=255, unique=True)
@@ -121,7 +121,6 @@ class User(AbstractBaseUser):
             'protocol': 'https' if request.is_secure() else 'http',
             'domain': current_site.domain
         }
-
         self.email_user(
             render_to_string('emails/register_subject.txt', template_context),
             render_to_string('emails/register.txt', template_context),
@@ -149,7 +148,10 @@ class User(AbstractBaseUser):
 
             self.is_active = True
             self.save()
-
+            #valid_user is the routing followed by name, email and id
+            data = json.dumps({'name': self.name, 'email':self.email, 'id': self.id })
+            routing = 'user.new'
+            mq_newuser(routing,data)
             return self
 
         except (signing.BadSignature, User.DoesNotExist):

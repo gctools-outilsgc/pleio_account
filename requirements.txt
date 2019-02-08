@@ -19,3 +19,4 @@ gunicorn==19.9.0
 Pillow==4.0.0
 psycopg2==2.7
 uWSGI==2.0.15
+pika==0.12.0

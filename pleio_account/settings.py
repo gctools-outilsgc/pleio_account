@@ -214,6 +214,11 @@ LOGGING = {
     },
 }
 
+#RabbitMq settings
+MQ_USER = ""
+MQ_PASSWORD = ""
+MQ_CONNECTION = ""
+
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 CONSTANCE_IGNORE_ADMIN_VERSION_CHECK = True
 CONSTANCE_ADDITIONAL_FIELDS = {
@@ -344,3 +349,4 @@ CONSTANCE_CONFIG_FIELDSETS = OrderedDict([
         'RECAPTCHA_SECRET_KEY'
     ))
 ])
+
