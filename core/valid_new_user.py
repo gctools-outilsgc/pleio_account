@@ -3,7 +3,7 @@ from django.conf import settings
 
 def mq_newuser(routing,data):
     credentials = pika.PlainCredentials(settings.MQ_USER, settings.MQ_PASSWORD)
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host=settings.MQ_CONNECTION))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=settings.MQ_CONNECTION, credentials=credentials))
     channel = connection.channel()
     channel.exchange_declare(exchange='account', exchange_type='topic', durable=True)
 
