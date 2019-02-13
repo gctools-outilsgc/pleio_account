@@ -141,7 +141,6 @@ def terms_of_use(request):
 
     return render(request, 'terms_of_use.html')
 
-
 def security_questions(request):
 
     #bring user back to start
@@ -215,6 +214,7 @@ def security_question(request):
     security_questions = {}
     return security_questions
 
+@login_required
 def set_security_question(request):
 
     form = ChooseSecurityQuestion()
