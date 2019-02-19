@@ -14,7 +14,7 @@ from .forms import (
     ChooseSecurityQuestion,
     AnswerSecurityQuestions
 )
-from .models import User, PreviousLogins, SecurityQuestions
+from .models import User, PreviousLogin, SecurityQuestions
 from django.urls import reverse
 from constance import config
 from base64 import b32encode
@@ -130,19 +130,18 @@ def avatar(request):
 
 def accept_previous_login(request, acceptation_token=None):
     try:
-        PreviousLogins.accept_previous_logins(request, acceptation_token)
-    except:
+        PreviousLogin.accept_previous_logins(request, acceptation_token)
+    except Exception:
         pass
 
     return redirect('profile')
 
 
 def terms_of_use(request):
-
     return render(request, 'terms_of_use.html')
 
-def security_questions(request):
 
+def security_questions(request):
     #bring user back to start
     if 'email' not in request.session:
         return redirect('password_reset')

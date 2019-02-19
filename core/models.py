@@ -19,6 +19,7 @@ from .login_session_helpers import (
     get_device,
     get_lat_lon
 )
+from .valid_new_user import mq_newuser
 
 
 class Manager(BaseUserManager):
@@ -148,39 +149,32 @@ class User(AbstractBaseUser):
 
             self.is_active = True
             self.save()
-            #valid_user is the routing followed by name, email and id
-            data = json.dumps({'name': self.name, 'email':self.email, 'id': self.id })
-            routing = 'user.new'
-            mq_newuser(routing,data)
+            # valid_user is the routing followed by name, email and id
+            mq_newuser('user.new', json.dumps({
+                'name': self.name,
+                'email': self.email,
+                'id': self.id
+            }))
             return self
 
         except (signing.BadSignature, User.DoesNotExist):
             return None
 
     def check_users_previous_logins(self, request):
-        send_suspicious_behavior_warnings = self.receives_newsletter
-        result = True
+        session = request.session
 
         try:
-            device_id = request.session['device_id']
-            login = self.previous_logins.get(device_id=device_id)
-            previous_login_present = login.confirmed_login
-        except Exception:
-            previous_login_present = False
-
-        if previous_login_present:
-            # cookie is present so no need to send an email and no further
-            # checking is requiered
-            send_suspicious_behavior_warnings = False
+            login = self.previous_logins.get(
+                ip=session.ip,
+                user_agent=get_device(session.user_agent)
+            )
             login.update_previous_login(request)
-
-        if send_suspicious_behavior_warnings:
-            if not self.logged_in_previously(request):
-                # no confirmed matching login found, so email must be sent
+            return True
+        except PreviousLogin.DoesNotExist:
+            PreviousLogin.add_known_login(request, self)
+            if self.receives_newsletter is True:
                 self.send_suspicious_login_message(request)
-                result = False
-
-        return result
+            return False
 
     def logged_in_previously(self, request):
         # check whether user has previously logged in from this location and
@@ -197,7 +191,7 @@ class User(AbstractBaseUser):
         if not known_login:
             # request.user is atm still "Anonymoususer", so have to add self as
             # second arg
-            PreviousLogins.add_known_login(request, self)
+            PreviousLogin.add_known_login(request, self)
         else:
             login[0].update_previous_login(request)
 
@@ -244,7 +238,7 @@ class User(AbstractBaseUser):
         return self.is_admin
 
 
-from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.admin import UserAdmin  # noqa
 
 
 class UserAdmin(UserAdmin):
@@ -268,9 +262,13 @@ class UserAdmin(UserAdmin):
     )
 
 
-class PreviousLogins(models.Model):
-    user = models.ForeignKey('User', on_delete=models.CASCADE, db_index=True, related_name='previous_logins')
-    device_id = models.CharField(max_length=40, editable=False, null=True, db_index=True)
+class PreviousLogin(models.Model):
+    user = models.ForeignKey(
+        'User',
+        on_delete=models.CASCADE,
+        db_index=True,
+        related_name='previous_logins'
+    )
     ip = models.GenericIPAddressField(null=True, blank=True, verbose_name='IP')
     user_agent = models.CharField(null=True, blank=True, max_length=200)
     city = models.CharField(null=True, blank=True, max_length=100)
@@ -278,70 +276,38 @@ class PreviousLogins(models.Model):
     latitude = models.DecimalField(max_digits=5, decimal_places=3, null=True)
     longitude = models.DecimalField(max_digits=6, decimal_places=3, null=True)
     last_login_date = models.DateTimeField(default=timezone.now)
-    confirmed_login = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = ('user', 'ip', 'user_agent')
 
     def add_known_login(request, user):
         session = request.session
-        device_id = request.session['device_id']
 
         lat_lon = get_lat_lon(session.ip)
         try:
             latitude = lat_lon[0]
             longitude = lat_lon[1]
-        except:
+        except Exception:
             latitude = None
             longitude = None
 
-        login = PreviousLogins.objects.create(
-            user = user,
-            device_id =  device_id,
-            ip = session.ip,
-            user_agent = get_device(session.user_agent),
-            city = get_city(session.ip),
-            country = get_country(session.ip),
-            latitude = latitude,
-            longitude = longitude,
+        login = PreviousLogin.objects.create(
+            user=user,
+            ip=session.ip,
+            user_agent=get_device(session.user_agent),
+            city=get_city(session.ip),
+            country=get_country(session.ip),
+            latitude=latitude,
+            longitude=longitude,
          )
         login.save()
 
     def update_previous_login(self, request):
-        session = request.session
-
         try:
             self.last_login_date = timezone.now()
-            self.ip = session.ip
-            self.user_agent = get_device(session.user_agent)
-            self.city = get_city(session.ip)
-            self.country = get_country(session.ip)
-            self.lat_lon = get_lat_lon(session.ip)
             self.save()
         except Exception:
             pass
-
-    def accept_previous_logins(request, acceptation_token):
-        try:
-            signed_value = signing.loads(
-                acceptation_token,
-                config.ACCOUNT_ACTIVATION_DAYS * 86400
-            )
-            device_id = signed_value[0]
-            email = signed_value[1]
-            user = User.objects.get(email=email)
-
-            if device_id is None:
-                return False
-
-            self = PreviousLogins.objects.get(
-                user=user,
-                device_id=device_id
-            )
-            self.confirmed_login = True
-            self.save()
-
-            return True
-
-        except (signing.BadSignature, PreviousLogins.DoesNotExist):
-            return False
 
 
 class PleioPartnerSite(models.Model):
