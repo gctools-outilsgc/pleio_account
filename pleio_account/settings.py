@@ -9,11 +9,12 @@ https://docs.djangoproject.com/en/1.10/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.10/ref/settings/
 """
-
-from django.utils.translation import ugettext_lazy as _
-from .config import *
-from collections import OrderedDict
 import os
+import ast
+from collections import OrderedDict
+
+import dj_database_url
+from django.utils.translation import ugettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -130,16 +131,25 @@ CACHES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'UserAttributeSimilarityValidator'
+        )
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation.MinimumLengthValidator'
+        )
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation.CommonPasswordValidator'
+        )
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation.NumericPasswordValidator'
+        )
     },
     {
         'NAME': 'pleio_account.password_validation.CustomPasswordValidator',
@@ -182,7 +192,6 @@ STATICFILES_DIRS = [
 ]
 
 GEOIP_PATH = os.path.join(BASE_DIR, 'assets/geopip2/')
-#GEOS_LIBRARY_PATH = os.path.join(BASE_DIR, 'bin/geos')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
@@ -192,7 +201,9 @@ LOGIN_REDIRECT_URL = '/profile/'
 LOGOUT_REDIRECT_URL = '/logout/'
 
 OIDC_USERINFO = 'pleio_account.oidc_provider_settings.userinfo'
-OIDC_EXTRA_SCOPE_CLAIMS = 'pleio_account.oidc_provider_settings.CustomScopeClaims'
+OIDC_EXTRA_SCOPE_CLAIMS = (
+    'pleio_account.oidc_provider_settings.CustomScopeClaims'
+)
 
 EMAIL_BACKEND = "core.backends.SiteConfigEmailBackend"
 
@@ -214,7 +225,7 @@ LOGGING = {
     },
 }
 
-#RabbitMq settings
+# RabbitMq settings
 MQ_USER = ""
 MQ_PASSWORD = ""
 MQ_CONNECTION = ""
@@ -297,7 +308,11 @@ CONSTANCE_CONFIG = {
     ),
     'APP_FOOTER_IMAGE_LEFT': ('', '', 'image_field'),
     'APP_FOOTER_IMAGE_RIGHT': ('', '', 'image_field'),
-    'RECAPTCHA_ENABLED': (True, 'Enable reCAPTCHA validation on logins.', bool),
+    'RECAPTCHA_ENABLED': (
+        True,
+        'Enable reCAPTCHA validation on logins.',
+        bool
+    ),
     'RECAPTCHA_SITE_KEY': (
         '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',
         'The reCAPTCHA site key to use (debug key by default)',
@@ -350,3 +365,20 @@ CONSTANCE_CONFIG_FIELDSETS = OrderedDict([
     ))
 ])
 
+SECRET_KEY = os.environ.get('CONCIERGE_SECRET_KEY')
+
+default_db_path = os.path.join(BASE_DIR, 'db.sqlite3')
+DATABASES = {
+    'default': dj_database_url.config(
+        env='CONCIERGE_DATABASE_URL',
+        default=f'sqlite:///{default_db_path}',
+        conn_max_age=600
+    )
+}
+
+try:
+    allowed_hosts = os.environ['CONCIERGE_ALLOWED_HOSTS']
+except KeyError:
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1', '::1']
+else:
+    ALLOWED_HOSTS = ast.literal_eval(allowed_hosts)
