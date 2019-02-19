@@ -24,7 +24,8 @@ jobs:
             - run:
                 name: run tests (postgresql)
                 environment:
-                      CONCIERGE_DATABASE_URL: postgres://concierge@localhost:5432/test_concierge
+                      # Default django test runner will prefix test_ to the db name.
+                      CONCIERGE_DATABASE_URL: postgres://concierge@localhost:5432/concierge
                 command: |
                     . venv/bin/activate
                     python manage.py test
