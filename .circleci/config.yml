@@ -1,0 +1,40 @@
+version: 2
+jobs:
+    build:
+        docker:
+            - image: circleci/python:3.7
+              environment:
+                  CONCIERGE_SECRET_KEY: testing
+            - image: circleci/postgres:9.4
+              environment:
+                  POSTGRES_USER: concierge
+                  POSTGRES_DB: test_concierge
+
+        working_directory: ~/repo
+
+        steps:
+            - checkout
+            - run:
+                name: install dependencies
+                command: |
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    pip install -r requirements.txt
+
+            - run:
+                name: run tests (postgresql)
+                environment:
+                      CONCIERGE_DATABASE_URL: postgres://concierge@localhost:5432/test_concierge
+                command: |
+                    . venv/bin/activate
+                    python manage.py test
+
+            - run:
+                name: run tests (sqlite)
+                command: |
+                    . venv/bin/activate
+                    python manage.py test
+
+            - store_artifacts:
+                path: test-reports
+                destination: test-reports
