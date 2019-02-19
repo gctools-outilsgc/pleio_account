@@ -1,11 +1,14 @@
 """
 Registration form validation tests using emailvalidator app
 """
-from django.test import TestCase
+from django.test import TransactionTestCase
+from constance.test import override_config
+
 from .validator import is_email_valid
 
 
-class EmailValidatorAnyTestCase(TestCase):
+@override_config(ELGG_URL='')
+class EmailValidatorAnyTestCase(TransactionTestCase):
     """
     Run tests when the database allows any email address
     """
@@ -18,7 +21,8 @@ class EmailValidatorAnyTestCase(TestCase):
         self.assertIs(is_email_valid("anyone@anywhere.net"), True)
 
 
-class EmailValidatorGoCTestCase(TestCase):
+@override_config(ELGG_URL='')
+class EmailValidatorGoCTestCase(TransactionTestCase):
     """
     Run tests when the database only accepts GoC addresses
     """
