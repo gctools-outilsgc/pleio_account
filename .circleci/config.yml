@@ -8,7 +8,7 @@ jobs:
             - image: circleci/postgres:9.4
               environment:
                   POSTGRES_USER: concierge
-                  POSTGRES_DB: test_concierge
+                  POSTGRES_DB: concierge
 
         working_directory: ~/repo
 
