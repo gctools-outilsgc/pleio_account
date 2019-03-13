@@ -19,7 +19,7 @@ python manage.py migrate
 
 # Localization
 echo "Localization with gettext"
-django-admin compilemessages
+python manage.py compilemessages
 
 # Start server
 echo "Starting server"

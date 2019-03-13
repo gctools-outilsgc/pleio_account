@@ -159,7 +159,9 @@ urlpatterns = [
     path('openid/', decorated_includes(
       xframe_options_exempt,
       include('oidc_provider.urls', namespace='oidc_provider')
-    ))
+    )),
+    # django-defender
+    path('admin/defender/', include('defender.urls'))
 ]
 
 if settings.DEBUG:

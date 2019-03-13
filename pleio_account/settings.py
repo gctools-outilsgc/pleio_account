@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'django_otp.plugins.otp_totp',
     'two_factor',
     'oidc_provider',
+    'defender',
     'corsheaders',
     'debug_toolbar'
 ]
@@ -84,7 +85,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_otp.middleware.OTPMiddleware',
     'core.middleware.PartnerSiteMiddleware',
-    'core.middleware.DeviceIdMiddleware'
+    'core.middleware.DeviceIdMiddleware',
+    'defender.middleware.FailedLoginMiddleware'
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -119,13 +121,13 @@ WSGI_APPLICATION = 'pleio_account.wsgi.application'
 
 SESSION_ENGINE = 'user_sessions.backends.db'
 
-# To be replaced later with REDIS when merging with Account Lockout
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'default-cache',
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': 'localhost:6379',
     }
 }
+
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
 
@@ -229,6 +231,13 @@ LOGGING = {
 MQ_USER = ""
 MQ_PASSWORD = ""
 MQ_CONNECTION = ""
+
+# django-defender
+DEFENDER_LOGIN_FAILURE_LIMIT = 5
+DEFENDER_DISABLE_IP_LOCKOUT = True
+DEFENDER_COOLOFF_TIME = 600
+DEFENDER_ACCESS_ATTEMPT_EXPIRATION = 24
+DEFENDER_USERNAME_FORM_FIELD = 'auth-username'
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 CONSTANCE_IGNORE_ADMIN_VERSION_CHECK = True
