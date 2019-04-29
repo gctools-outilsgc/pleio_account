@@ -259,37 +259,6 @@ class LabelledLoginForm(AuthenticationForm):
             widget=forms.PasswordInput(attrs={'autocomplete': 'off'})
         )
 
-
-class PleioAuthenticationForm(AuthenticationForm):
-    error_messages = {
-        'captcha_mismatch': 'captcha_mismatch'
-    }
-
-    username = forms.CharField(
-        required=True,
-        max_length=254,
-        widget=forms.TextInput(attrs={
-            'id': 'id_auth-username',
-            'aria-labelledby': 'error_login'
-        })
-    )
-
-    def __init__(self, *args, **kwargs):
-        super(PleioAuthenticationForm, self).__init__(*args, **kwargs)
-
-        if config.RECAPTCHA_ENABLED:
-            self.fields['g-recaptcha-response'] = forms.CharField()
-
-    def clean(self):
-        super(PleioAuthenticationForm, self).clean()
-        re_response = self.cleaned_data.get('g-recaptcha-response')
-        if not verify_captcha_response(re_response):
-            raise forms.ValidationError(
-                self.error_messages['captcha_mismatch'],
-                code='captcha_mismatch',
-            )
-
-
 class PleioAuthenticationTokenForm(AuthenticationTokenForm):
     otp_token = forms.IntegerField(label=_("Token"), widget=forms.TextInput)
 
