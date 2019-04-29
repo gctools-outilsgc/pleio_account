@@ -245,19 +245,38 @@ class UserProfileForm(forms.ModelForm):
 
 
 class LabelledLoginForm(AuthenticationForm):
-        username = forms.CharField(
-            required=True,
-            max_length=254,
-            widget=forms.TextInput(attrs={
-                'id': 'id_auth-username',
-                'aria-labelledby': 'error_login'
-            })
-        )
-        password = forms.CharField(
-            required=True,
-            strip=False,
-            widget=forms.PasswordInput(attrs={'autocomplete': 'off'})
-        )
+    username = forms.CharField(
+        required=True,
+        max_length=254,
+        widget=forms.TextInput(attrs={
+            'id': 'id_auth-username',
+            'aria-labelledby': 'error_login'
+        })
+    )
+    password = forms.CharField(
+        required=True,
+        strip=False,
+        widget=forms.PasswordInput(attrs={'autocomplete': 'off'})
+    )
+    def clean(self):
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+
+        credentials={
+            'username': username,
+            'password': password,
+            'auth-username': username,
+            'auth-password': password
+        }
+
+        if username is not None and password:
+            self.user_cache = authenticate(self.request, **credentials)
+            if self.user_cache is None:
+                raise self.get_invalid_login_error()
+            else:
+                self.confirm_login_allowed(self.user_cache)
+
+        return self.cleaned_data
 
 class PleioAuthenticationTokenForm(AuthenticationTokenForm):
     otp_token = forms.IntegerField(label=_("Token"), widget=forms.TextInput)

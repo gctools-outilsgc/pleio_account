@@ -15,10 +15,22 @@ from collections import OrderedDict
 
 import dj_database_url
 from django.utils.translation import ugettext_lazy as _
+from datetime import timedelta
+import logging
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+DEBUG = True
+
+# Set debugging to log everthing to console.
+INTERNAL_IPS = '127.0.0.1'
+if DEBUG:
+    # will output to your console
+    logging.basicConfig(
+        level = logging.DEBUG,
+        format = '%(asctime)s %(levelname)s %(message)s',
+    )
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
@@ -52,7 +64,7 @@ INSTALLED_APPS = [
     'django_otp.plugins.otp_totp',
     'two_factor',
     'oidc_provider',
-    'defender',
+    'axes',
     'corsheaders',
     'debug_toolbar'
 ]
@@ -86,10 +98,10 @@ MIDDLEWARE = [
     'django_otp.middleware.OTPMiddleware',
     'core.middleware.PartnerSiteMiddleware',
     'core.middleware.DeviceIdMiddleware',
-    'defender.middleware.FailedLoginMiddleware'
 ]
 
 AUTHENTICATION_BACKENDS = [
+    'axes.backends.AxesModelBackend',
     'django.contrib.auth.backends.ModelBackend',
     'core.backends.ElggBackend'
 ]
@@ -123,8 +135,18 @@ SESSION_ENGINE = 'user_sessions.backends.db'
 
 CACHES = {
     'default': {
-        'BACKEND': 'redis_cache.RedisCache',
-        'LOCATION': 'localhost:6379',
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/0',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    },
+    'axes_cache': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/1',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient'
+        }
     }
 }
 
@@ -232,12 +254,14 @@ MQ_USER = ""
 MQ_PASSWORD = ""
 MQ_CONNECTION = ""
 
-# django-defender
-DEFENDER_LOGIN_FAILURE_LIMIT = 5
-DEFENDER_DISABLE_IP_LOCKOUT = True
-DEFENDER_COOLOFF_TIME = 600
-DEFENDER_ACCESS_ATTEMPT_EXPIRATION = 24
-DEFENDER_USERNAME_FORM_FIELD = 'auth-username'
+# Axes Lockout
+AXES_CACHE = 'axes_cache'
+AXES_COOLOFF_TIME = timedelta(seconds=30)
+AXES_LOCKOUT_URL = 'https://firstclasslocksmith.com/wp-content/uploads/2017/07/LOCKED-OUT-OF-HOME-HOUSTON-845x321.jpg'
+AXES_ONLY_USER_FAILURES = True
+AXES_USERNAME_FORM_FIELD = 'auth-username'
+AXES_PASSWORD_FORM_FIELD = 'auth-password'
+
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 CONSTANCE_IGNORE_ADMIN_VERSION_CHECK = True
