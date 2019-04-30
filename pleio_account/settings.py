@@ -261,6 +261,7 @@ AXES_LOCKOUT_URL = 'https://firstclasslocksmith.com/wp-content/uploads/2017/07/L
 AXES_ONLY_USER_FAILURES = True
 AXES_USERNAME_FORM_FIELD = 'auth-username'
 AXES_PASSWORD_FORM_FIELD = 'auth-password'
+AXES_FAILURE_LIMIT=5
 
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
