@@ -13,4 +13,5 @@ postgres-data/
 pleio_account/config.py
 .venv/
 .vscode/
+*.mo
 
