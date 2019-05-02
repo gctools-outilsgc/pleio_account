@@ -256,8 +256,8 @@ MQ_CONNECTION = ""
 
 # Axes Lockout
 AXES_CACHE = 'axes_cache'
-AXES_COOLOFF_TIME = timedelta(seconds=30)
-AXES_LOCKOUT_URL = 'https://firstclasslocksmith.com/wp-content/uploads/2017/07/LOCKED-OUT-OF-HOME-HOUSTON-845x321.jpg'
+AXES_COOLOFF_TIME = timedelta(minutes=5)
+AXES_LOCKOUT_TEMPLATE = 'locked_out.html'
 AXES_ONLY_USER_FAILURES = True
 AXES_USERNAME_FORM_FIELD = 'auth-username'
 AXES_PASSWORD_FORM_FIELD = 'auth-password'

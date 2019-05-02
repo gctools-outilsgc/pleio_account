@@ -33,7 +33,7 @@
                     {% else %}
                     <div class="textcolor_primary">{% trans "The password you entered doesn’t match the one used for this email." %}</div></br>
                     <div class="textcolor_secondary">{% trans "Note that both fields may be case-sensitive." %}</div>
-                        {% if attempts >= 2 %}
+                        {% if attempt >= 2 %}
                         <div class="textcolor_primary">{% trans "You can try " %} {{ attempts_left }} {% trans " more times. After that, your account will be locked for"%} {{ time }} {% trans " minutes." %}</div></br>
                         {% endif %}
                     <div class="textcolor_secondary">{% trans "If you forgot your password, don’t worry! You can reset your password by " %} <a href="{% url 'password_reset' %}" class="forgot-password">{% trans "clicking here" %}</a></div></br>
