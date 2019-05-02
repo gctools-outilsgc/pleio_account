@@ -161,9 +161,12 @@ AUTH_PASSWORD_VALIDATORS = [
         )
     },
     {
-        'NAME': (
-            'django.contrib.auth.password_validation.MinimumLengthValidator'
-        )
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            # NIST Special Publication 800-63B Minimum for subscriber-chosen
+            # passwords.
+            'min_length': 8,
+        }
     },
     {
         'NAME': (
@@ -171,13 +174,8 @@ AUTH_PASSWORD_VALIDATORS = [
         )
     },
     {
-        'NAME': (
-            'django.contrib.auth.password_validation.NumericPasswordValidator'
-        )
-    },
-    {
-        'NAME': 'pleio_account.password_validation.CustomPasswordValidator',
-    },
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    }
 ]
 
 AUTH_USER_MODEL = 'core.User'

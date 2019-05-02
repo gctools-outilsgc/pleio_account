@@ -206,7 +206,7 @@ msgstr "Page non trouvée"
 #: core/templates/register.html:97 core/templates/register_activate.html:18
 #: core/templates/register_complete.html:19
 msgid "Return to sign in"
-msgstr "Retournez pour vous connecter"
+msgstr "Retournez à la connexion"
 
 #: core/templates/backup_tokens.html:5 core/templates/tf_profile.html:10
 #, fuzzy
@@ -464,7 +464,7 @@ msgstr "Connectez-vous"
 
 #: core/templates/login.html:20 core/templates/login.html:109
 msgid "with your account"
-msgstr "de votre compte"
+msgstr "à votre compte"
 
 #: core/templates/login.html:31 core/templates/register.html:35
 msgid "Login failed."
@@ -545,7 +545,7 @@ msgstr "Vous n’avez pas de compte?"
 #: core/templates/login.html:73 core/templates/register.html:8
 #: core/templates/register.html:20 core/templates/register.html:95
 msgid "Register"
-msgstr "Inscription"
+msgstr "S'inscrire"
 
 #: core/templates/login.html:78 core/templates/register.html:25
 msgid ""
@@ -763,6 +763,11 @@ msgstr "Recevoir des e-mails de connexion suspects"
 #: core/templates/profile.html:38
 msgid "Save"
 msgstr "Sauvegarder"
+
+#: core/templates/register.html:20
+msgctxt "title"
+msgid "Register"
+msgstr "Inscrivez-vous"
 
 #: core/templates/register.html:20
 msgid "to create an account"
