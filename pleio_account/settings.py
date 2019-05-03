@@ -21,8 +21,6 @@ import logging
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-DEBUG = True
-
 # Set debugging to log everthing to console.
 INTERNAL_IPS = '127.0.0.1'
 if DEBUG:
@@ -260,6 +258,7 @@ AXES_ONLY_USER_FAILURES = True
 AXES_USERNAME_FORM_FIELD = 'auth-username'
 AXES_PASSWORD_FORM_FIELD = 'auth-password'
 AXES_FAILURE_LIMIT=5
+AXES_PROXY_COUNT=1
 
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
