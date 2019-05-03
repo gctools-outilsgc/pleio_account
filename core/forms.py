@@ -17,6 +17,7 @@ from django.core.mail import send_mail
 from two_factor.forms import AuthenticationTokenForm, TOTPDeviceForm
 from emailvalidator.validator import is_email_valid
 from constance import config
+from axes.utils import reset
 
 from .models import User
 from .helpers import verify_captcha_response
@@ -76,6 +77,9 @@ class ResetPasswordRequestView(FormView):
                         fail_silently=config.EMAIL_FAIL_SILENTLY,
                         html_message=html_email
                     )
+
+                    reset(username=user.username)
+
 
                 return self.form_valid(form)
 
