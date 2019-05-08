@@ -15,6 +15,7 @@ from core.class_views import (
     PleioSessionDeleteView,
     PleioSessionDeleteOtherView
 )
+from axes.decorators import axes_dispatch
 
 
 class DecoratedURLPattern(URLPattern):
@@ -78,7 +79,7 @@ urlpatterns = [
     ),
     path(
         'login/',
-        PleioLoginView.as_view(),
+        axes_dispatch(PleioLoginView.as_view()),
         name='login'
     ),
     path('logout/', views.logout, name='logout'),
@@ -159,7 +160,7 @@ urlpatterns = [
     path('openid/', decorated_includes(
       xframe_options_exempt,
       include('oidc_provider.urls', namespace='oidc_provider')
-    ))
+    )),
 ]
 
 if settings.DEBUG:

@@ -9,15 +9,26 @@ https://docs.djangoproject.com/en/1.10/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.10/ref/settings/
 """
-
-from django.utils.translation import ugettext_lazy as _
-from .config import *
-from collections import OrderedDict
 import os
+import ast
+from collections import OrderedDict
+
+import dj_database_url
+from django.utils.translation import ugettext_lazy as _
+from datetime import timedelta
+import logging
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# Set debugging to log everthing to console.
+INTERNAL_IPS = '127.0.0.1'
+if DEBUG:
+    # will output to your console
+    logging.basicConfig(
+        level = logging.DEBUG,
+        format = '%(asctime)s %(levelname)s %(message)s',
+    )
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
@@ -51,6 +62,7 @@ INSTALLED_APPS = [
     'django_otp.plugins.otp_totp',
     'two_factor',
     'oidc_provider',
+    'axes',
     'corsheaders',
     'debug_toolbar'
 ]
@@ -83,10 +95,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_otp.middleware.OTPMiddleware',
     'core.middleware.PartnerSiteMiddleware',
-    'core.middleware.DeviceIdMiddleware'
+    'core.middleware.DeviceIdMiddleware',
 ]
 
 AUTHENTICATION_BACKENDS = [
+    'axes.backends.AxesModelBackend',
     'django.contrib.auth.backends.ModelBackend',
     'core.backends.ElggBackend'
 ]
@@ -118,19 +131,32 @@ WSGI_APPLICATION = 'pleio_account.wsgi.application'
 
 SESSION_ENGINE = 'user_sessions.backends.db'
 
-# To be replaced later with REDIS when merging with Account Lockout
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'default-cache',
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://redis:6379/0',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    },
+    'axes_cache': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://redis:6379/1',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient'
+        }
     }
 }
+
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'UserAttributeSimilarityValidator'
+        )
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
@@ -141,7 +167,9 @@ AUTH_PASSWORD_VALIDATORS = [
         }
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation.CommonPasswordValidator'
+        )
     },
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
@@ -184,7 +212,6 @@ STATICFILES_DIRS = [
 ]
 
 GEOIP_PATH = os.path.join(BASE_DIR, 'assets/geopip2/')
-#GEOS_LIBRARY_PATH = os.path.join(BASE_DIR, 'bin/geos')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
@@ -194,7 +221,9 @@ LOGIN_REDIRECT_URL = '/profile/'
 LOGOUT_REDIRECT_URL = '/logout/'
 
 OIDC_USERINFO = 'pleio_account.oidc_provider_settings.userinfo'
-OIDC_EXTRA_SCOPE_CLAIMS = 'pleio_account.oidc_provider_settings.CustomScopeClaims'
+OIDC_EXTRA_SCOPE_CLAIMS = (
+    'pleio_account.oidc_provider_settings.CustomScopeClaims'
+)
 
 EMAIL_BACKEND = "core.backends.SiteConfigEmailBackend"
 
@@ -216,10 +245,21 @@ LOGGING = {
     },
 }
 
-#RabbitMq settings
+# RabbitMq settings
 MQ_USER = ""
 MQ_PASSWORD = ""
 MQ_CONNECTION = ""
+
+# Axes Lockout
+AXES_CACHE = 'axes_cache'
+AXES_COOLOFF_TIME = timedelta(minutes=5)
+AXES_LOCKOUT_TEMPLATE = 'locked_out.html'
+AXES_ONLY_USER_FAILURES = True
+AXES_USERNAME_FORM_FIELD = 'auth-username'
+AXES_PASSWORD_FORM_FIELD = 'auth-password'
+AXES_FAILURE_LIMIT=5
+AXES_PROXY_COUNT=1
+
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 CONSTANCE_IGNORE_ADMIN_VERSION_CHECK = True
@@ -299,7 +339,11 @@ CONSTANCE_CONFIG = {
     ),
     'APP_FOOTER_IMAGE_LEFT': ('', '', 'image_field'),
     'APP_FOOTER_IMAGE_RIGHT': ('', '', 'image_field'),
-    'RECAPTCHA_ENABLED': (True, 'Enable reCAPTCHA validation on logins.', bool),
+    'RECAPTCHA_ENABLED': (
+        True,
+        'Enable reCAPTCHA validation on logins.',
+        bool
+    ),
     'RECAPTCHA_SITE_KEY': (
         '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',
         'The reCAPTCHA site key to use (debug key by default)',
@@ -352,3 +396,20 @@ CONSTANCE_CONFIG_FIELDSETS = OrderedDict([
     ))
 ])
 
+SECRET_KEY = os.environ.get('CONCIERGE_SECRET_KEY')
+
+default_db_path = os.path.join(BASE_DIR, 'db.sqlite3')
+DATABASES = {
+    'default': dj_database_url.config(
+        env='CONCIERGE_DATABASE_URL',
+        default=f'sqlite:///{default_db_path}',
+        conn_max_age=600
+    )
+}
+
+try:
+    allowed_hosts = os.environ['CONCIERGE_ALLOWED_HOSTS']
+except KeyError:
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1', '::1']
+else:
+    ALLOWED_HOSTS = ast.literal_eval(allowed_hosts)

@@ -17,6 +17,7 @@ from django.core.mail import send_mail
 from two_factor.forms import AuthenticationTokenForm, TOTPDeviceForm
 from emailvalidator.validator import is_email_valid
 from constance import config
+from axes.utils import reset
 
 from .models import User
 from .helpers import verify_captcha_response
@@ -76,6 +77,9 @@ class ResetPasswordRequestView(FormView):
                         fail_silently=config.EMAIL_FAIL_SILENTLY,
                         html_message=html_email
                     )
+
+                    reset(username=user.username)
+
 
                 return self.form_valid(form)
 
@@ -245,26 +249,6 @@ class UserProfileForm(forms.ModelForm):
 
 
 class LabelledLoginForm(AuthenticationForm):
-        username = forms.CharField(
-            required=True,
-            max_length=254,
-            widget=forms.TextInput(attrs={
-                'id': 'id_auth-username',
-                'aria-labelledby': 'error_login'
-            })
-        )
-        password = forms.CharField(
-            required=True,
-            strip=False,
-            widget=forms.PasswordInput(attrs={'autocomplete': 'off'})
-        )
-
-
-class PleioAuthenticationForm(AuthenticationForm):
-    error_messages = {
-        'captcha_mismatch': 'captcha_mismatch'
-    }
-
     username = forms.CharField(
         required=True,
         max_length=254,
@@ -273,22 +257,30 @@ class PleioAuthenticationForm(AuthenticationForm):
             'aria-labelledby': 'error_login'
         })
     )
-
-    def __init__(self, *args, **kwargs):
-        super(PleioAuthenticationForm, self).__init__(*args, **kwargs)
-
-        if config.RECAPTCHA_ENABLED:
-            self.fields['g-recaptcha-response'] = forms.CharField()
-
+    password = forms.CharField(
+        required=True,
+        strip=False,
+        widget=forms.PasswordInput(attrs={'autocomplete': 'off'})
+    )
     def clean(self):
-        super(PleioAuthenticationForm, self).clean()
-        re_response = self.cleaned_data.get('g-recaptcha-response')
-        if not verify_captcha_response(re_response):
-            raise forms.ValidationError(
-                self.error_messages['captcha_mismatch'],
-                code='captcha_mismatch',
-            )
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
 
+        credentials={
+            'username': username,
+            'password': password,
+            'auth-username': username,
+            'auth-password': password
+        }
+
+        if username is not None and password:
+            self.user_cache = authenticate(self.request, **credentials)
+            if self.user_cache is None:
+                raise self.get_invalid_login_error()
+            else:
+                self.confirm_login_allowed(self.user_cache)
+
+        return self.cleaned_data
 
 class PleioAuthenticationTokenForm(AuthenticationTokenForm):
     otp_token = forms.IntegerField(label=_("Token"), widget=forms.TextInput)

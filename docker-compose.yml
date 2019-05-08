@@ -9,15 +9,18 @@ services:
     build: .
     environment:
       - DEBUG=True
-      - ALLOWED_HOST=*
-      - SECRET_KEY=qWxPJrZCLeHZraNTWjEKHdJJxJyho8
+      - CONCIERGE_ALLOWED_HOSTS='*'
+      - CONCIERGE_SECRET_KEY=qWxPJrZCLeHZraNTWjEKHdJJxJyho8
+      - CONCIERGE_DATABASE_URL=postgres://postgres:postgres@db:5432/postgres
       - SEND_SUSPICIOUS_BEHAVIOR_WARNINGS=True
       - DB_HOST=db
       - DB_USER=postgres
       - DB_PASSWORD=postgres
     ports:
-      - "8000:8000"
+      - "80:8000"
     depends_on:
       - db
     volumes:
       - ./media:/app/media
+  redis:
+    image: redis

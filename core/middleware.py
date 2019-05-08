@@ -5,12 +5,12 @@ from django.utils.deprecation import MiddlewareMixin
 
 VALID_KEY_CHARS = string.ascii_lowercase + string.digits
 
-class DeviceIdMiddleware(object):
-    def __init__(self,get_response):
-        self.get_response = get_response
-        
-    def __call__(self,request):
 
+class DeviceIdMiddleware(object):
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
         try:
             device_id = request.COOKIES['device_id']
             if len(device_id) != 32:
@@ -24,20 +24,27 @@ class DeviceIdMiddleware(object):
         response = self.get_response(request)
 
         max_age = 365 * 24 * 60 * 60  # one year
-        response.set_cookie('device_id', value = device_id,
+        response.set_cookie(
+            'device_id',
+            value=device_id,
             max_age=max_age,
             path=settings.SESSION_COOKIE_PATH,
             secure=settings.SESSION_COOKIE_SECURE or None,
             httponly=settings.SESSION_COOKIE_HTTPONLY or False
-            )
+        )
 
         return response
+
 
 class PartnerSiteMiddleware(MiddlewareMixin):
     def process_response(self, request, response):
         self.handle_partner_site_cookie(request, response, 'partner_site_url')
         self.handle_partner_site_cookie(request, response, 'partner_site_name')
-        self.handle_partner_site_cookie(request, response, 'partner_site_logo_url')
+        self.handle_partner_site_cookie(
+            request,
+            response,
+            'partner_site_logo_url'
+        )
 
         return response
 

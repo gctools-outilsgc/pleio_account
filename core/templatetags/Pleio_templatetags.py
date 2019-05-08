@@ -2,6 +2,7 @@ from django import template
 from django.conf import settings
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext, gettext_lazy as _
+from django.utils import dateparse
 
 register = template.Library()
 
@@ -26,3 +27,7 @@ def load_question(value):
     ]
 
     return QUESTIONS[int(value)]
+
+@register.filter
+def iso_to_dateTime(value):
+    return dateparse.parse_duration(value)
