@@ -23,6 +23,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Set debugging to log everthing to console.
 INTERNAL_IPS = '127.0.0.1'
+
+try:
+    DEBUG = os.environ['DEBUG']
+except KeyError:
+    DEBUG = False
+
 if DEBUG:
     # will output to your console
     logging.basicConfig(
