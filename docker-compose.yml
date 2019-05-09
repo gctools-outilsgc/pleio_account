@@ -9,7 +9,7 @@ services:
     build: .
     environment:
       - DEBUG=True
-      - CONCIERGE_ALLOWED_HOSTS='*'
+      - CONCIERGE_ALLOWED_HOSTS=['*']
       - CONCIERGE_SECRET_KEY=qWxPJrZCLeHZraNTWjEKHdJJxJyho8
       - CONCIERGE_DATABASE_URL=postgres://postgres:postgres@db:5432/postgres
       - SEND_SUSPICIOUS_BEHAVIOR_WARNINGS=True
