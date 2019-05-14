@@ -1,46 +1,55 @@
+from urllib.parse import urlparse
+
 from django.urls import reverse_lazy
-from .forms import PleioAuthenticationTokenForm, PleioAuthenticationForm, LabelledLoginForm
-from .models import User, PleioPartnerSite
-from two_factor.forms import TOTPDeviceForm, BackupTokenForm
-from two_factor.views.core import LoginView, SetupView, BackupTokensView
-from two_factor.views.profile import ProfileView
-from user_sessions.views import SessionListView, SessionDeleteOtherView, SessionDeleteView, LoginRequiredMixin
-from django_otp.plugins.otp_static.models import StaticToken
 from django.template.response import TemplateResponse
-from django_otp import devices_for_user
-from django.shortcuts import redirect
-from django.views.generic.list import ListView
-from django.utils.timezone import now
-from django.contrib.auth.forms import AuthenticationForm
+from two_factor.forms import BackupTokenForm
+from two_factor.views.core import LoginView, BackupTokensView
+from two_factor.views.profile import ProfileView
+from user_sessions.views import (
+    SessionListView,
+    SessionDeleteOtherView,
+    SessionDeleteView
+)
+from django_otp.plugins.otp_static.models import StaticToken
+
+from .models import PleioPartnerSite
+from .forms import PleioAuthenticationTokenForm, LabelledLoginForm
+from axes.attempts import get_cache_key, get_axes_cache
+from pleio_account import settings
 
 class PleioLoginView(LoginView):
 
     template_name = 'login.html'
 
     form_list = (
-        #('auth', PleioAuthenticationForm),
-        #('auth', AuthenticationForm),
         ('auth', LabelledLoginForm),
         ('token', PleioAuthenticationTokenForm),
         ('backup', BackupTokenForm),
     )
 
     def get_context_data(self, **kwargs):
-
-        context = super(PleioLoginView, self).get_context_data(**kwargs)
-        next = self.request.GET.get('next')
-        if next:
-            context['next'] = next
-
+        cache_hash_key = get_cache_key(self.request)
+        attempt = get_axes_cache().get(cache_hash_key)
+        if not attempt:
+            attempt = 0
+        username = self.request.POST.get('auth-username', None)
+        time = settings.AXES_COOLOFF_TIME
+        attempts_left = (settings.AXES_FAILURE_LIMIT - attempt)
+        kwargs= dict(kwargs, attempt=attempt, username=username, time=time, attempts_left=attempts_left)
+        
+        context = super().get_context_data(**kwargs)
         self.set_partner_site_info()
-
+        context[self.redirect_field_name] = self.request.POST.get(
+            self.redirect_field_name,
+            self.request.GET.get(self.redirect_field_name, '')
+        )
         return context
 
     def set_partner_site_info(self):
         try:
             http_referer = urlparse(self.request.META['HTTP_REFERER'])
-        except:
-            #no referer: cookies have to be deleted in PartnerSiteMiddleware
+        except Exception:
+            # no referer: cookies have to be deleted in PartnerSiteMiddleware
             self.request.COOKIES['partner_site_url'] = None
             self.request.COOKIES['partner_site_name'] = None
             self.request.COOKIES['partner_site_logo_url'] = None
@@ -49,25 +58,24 @@ class PleioLoginView(LoginView):
         try:
             clean_url = http_referer.scheme+"://"+http_referer.netloc+"/"
             if http_referer.netloc == self.request.META['HTTP_HOST']:
-                #referer is this site: no action to be taken
+                # referer is this site: no action to be taken
                 return False
-
             try:
-                #search for matching partnersite data
+                # search for matching partnersite data
                 partnersite = PleioPartnerSite.objects.get(partner_site_url=clean_url)
                 self.request.COOKIES['partner_site_url'] = partnersite.partner_site_url
                 self.request.COOKIES['partner_site_name'] = partnersite.partner_site_name
                 self.request.COOKIES['partner_site_logo_url'] = partnersite.partner_site_logo_url
-            except:
+            except Exception:
                 try:
-                    #no matching partnersite data found: default background image will be used
+                    # no matching partnersite data found: default background image will be used
                     partnersite = PleioPartnerSite.objects.get(partner_site_url='http://localhost')
                     self.request.COOKIES['partner_site_url'] = clean_url
                     self.request.COOKIES['partner_site_name'] = http_referer.netloc
                     self.request.COOKIES['partner_site_logo_url'] = partnersite.partner_site_logo_url
-                except:
+                except Exception:
                     return False
-        except:
+        except Exception:
             return False
 
         return True
@@ -78,7 +86,7 @@ class PleioLoginView(LoginView):
         user = self.get_user()
         user.check_users_previous_logins(self.request)
 
-        return LoginView.done(self, form_list, **kwargs)
+        return super().done(form_list, **kwargs)
 
 
 class PleioProfileView(ProfileView):
@@ -139,6 +147,7 @@ class PleioSessionDeleteOtherView(SessionDeleteOtherView):
     """
     def get_success_url(self):
         return str(reverse_lazy('security_pages'))
+
 
 class PleioBackupTokensView(BackupTokensView):
     """

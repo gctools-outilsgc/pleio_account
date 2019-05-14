@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load Pleio_templatetags %}
+{% load settings_value %}
+{% load app_customization %}
+
+ {% block content %}
+
+ <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+    <div class="login__step-title">
+        <div>
+            <h1 class="ui large header">{% trans "Security Alert" %} </h1>
+        </div>
+            <!--<img src="/static/images/logo-icon.svg" class="login__step-icon"/>-->
+    </div>
+
+     <div class="ui large negative message" id="error_login">
+        <div class="textcolor_primary">{% trans "Oops! Your account is temporarily locked." %}</div><br>
+        <div class="textcolor_primary">{% trans "It looks like you’ve entered the wrong password "%} {{ failure_limit }} {% trans " times, and you are now locked out of your account. Don’t worry, your account will be unlocked after " %} {{ cooloff_time|iso_to_dateTime }} {% trans " minutes and you can try logging in again." %}</div><br>
+        <div class="textcolor_primary">{% trans "For assistance please contact our <a href='https://gccollab.ca/help/knowledgebase' alt='help desk'>help desk</a> and we will help you regain access to your account." %}</div><br>
+
+     </div>
+<div><a class="button ___stretch ___active fluid ui button primary" href="{% url 'login' %}">{% trans "Return to sign in" %}</a></div>
+
+
+ {% endblock %}

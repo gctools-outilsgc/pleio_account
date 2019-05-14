@@ -1,33 +1,24 @@
-"""pleio_account URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/1.10/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  url(r'^$', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.conf.urls import url, include
-    2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
-"""
 from django.conf import settings
-from django.conf.urls.static import static
-from django.conf.urls import url, include
+from django.conf.urls import include
 from django.contrib.auth import views as auth_views
-from django.core.urlresolvers import RegexURLPattern, RegexURLResolver
 from django.views.decorators.clickjacking import xframe_options_exempt
-from oauth2_provider import views as oauth2_views
-from api import views as api_views
+from django.urls import path, URLPattern, URLResolver
 from django.contrib import admin
-from core import views, forms
-from core.class_views import PleioLoginView, PleioSessionDeleteView, PleioSessionDeleteOtherView
 from django.views.i18n import JavaScriptCatalog
+from oauth2_provider import views as oauth2_views
+from two_factor.urls import urlpatterns as tf_urls
+
+from api import views as api_views
+from core import views, forms
+from core.class_views import (
+    PleioLoginView,
+    PleioSessionDeleteView,
+    PleioSessionDeleteOtherView
+)
+from axes.decorators import axes_dispatch
 
 
-class DecoratedURLPattern(RegexURLPattern):
+class DecoratedURLPattern(URLPattern):
     def resolve(self, *args, **kwargs):
         result = super(DecoratedURLPattern, self).resolve(*args, **kwargs)
         if result:
@@ -35,7 +26,7 @@ class DecoratedURLPattern(RegexURLPattern):
         return result
 
 
-class DecoratedRegexURLResolver(RegexURLResolver):
+class DecoratedRegexURLResolver(URLResolver):
     def resolve(self, *args, **kwargs):
         result = super(DecoratedRegexURLResolver, self) \
             .resolve(*args, **kwargs)
@@ -52,67 +43,135 @@ def decorated_includes(func, includes):
     urlconf_urls = urlconf_module.urlpatterns
 
     for item in urlconf_urls:
-        if isinstance(item, RegexURLPattern):
+        if isinstance(item, URLPattern):
             item.__class__ = DecoratedURLPattern
             item._decorate_with = func
-
-        elif isinstance(item, RegexURLResolver):
+        elif isinstance(item, URLResolver):
             item.__class__ = DecoratedRegexURLResolver
             item._decorate_with = func
 
     return urlconf_module, app_name, namespace
 
 
-legacy_urls = [
-    url(r'^mod/profile/icondirect.php$', views.avatar, name='avatar_legacy'),
-    url(r'^action/logout$', views.logout, name='logout_legacy')
-]
-
-urls = [
-    url(r'^register/$', views.register, name='register'),
-    url(r'^register/complete/$', views.register_complete, name='register_complete'),
-    url(r'^register/activate/(?P<activation_token>[-:\w]+)/$', views.register_activate, name='register_activate'),
-    url(r'^termsofuse/$', views.terms_of_use, name='terms_of_use'),
-    url(r'^securitypages/(?P<page_action>[\w-]+)/$', views.security_pages, name='security_pages'),
-    url(r'^securitypages/$', views.security_pages, name='security_pages'),
-    url(r'^password_reset/$', forms.ResetPasswordRequestView.as_view(), name='password_reset'),
-    # url(r'^password_reset/$', auth_views.password_reset, { 'template_name': 'password_reset.html', 'subject_template_name': 'emails/reset_password_subject.txt', 'email_template_name': 'emails/reset_password.txt', 'html_email_template_name': 'emails/reset_password.html' }, name='password_reset'),
-    url(r'^password_reset/done/$', auth_views.password_reset_done, { 'template_name': 'password_reset_done.html' }, name='password_reset_done'),
-    url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', auth_views.password_reset_confirm, { 'template_name': 'password_reset_confirm.html' }, name='password_reset_confirm'),
-    url(r'^reset/done/$', auth_views.password_reset_complete, { 'template_name': 'password_reset_complete.html' }, name='password_reset_complete'),
-    url(r'^login/$', PleioLoginView.as_view(), name='login'),
-    url(r'^logout/$', views.logout, name='logout'),
-    url(r'^profile/$', views.profile, name='profile'),
-    url(r'^accept_previous_logins/(?P<acceptation_token>[-:\w]+)/$', views.accept_previous_login, name='accept_previous_login'),
-    url(r'^account/sessions/other/delete/$', view=PleioSessionDeleteOtherView.as_view(), name='session_delete_other'),
-    url(r'^account/sessions/(?P<pk>\w+)/delete/$', view=PleioSessionDeleteView.as_view(), name='session_delete'),
-    url(r'^oauth/v2/authorize$', oauth2_views.AuthorizationView.as_view(), name='authorize'),
-    url(r'^oauth/v2/token$', oauth2_views.TokenView.as_view(), name='token'),
-    url(r'^oauth/v2/revoke_token$', oauth2_views.RevokeTokenView.as_view(), name='revoke-token'),
-    url(r'^api/users/me$', api_views.me, name='me'),
-    url(r'^admin/', admin.site.urls),
-    url(r'^$', views.home, name='home'),
-    url(r'^i18n/', include('django.conf.urls.i18n'))
-]
-
-tf_urls = [
-    url(r'', include('two_factor.urls', 'two_factor'))
-]
-us_urls = [
-    url(r'', include('user_sessions.urls', 'user_sessions'))
-]
-django_urls = [
-    url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
-]
-
-oidc_urls = [
-    url(r'^openid/', decorated_includes(
+urlpatterns = [
+    path('register/', views.register, name='register'),
+    path(
+        'register/complete/',
+        views.register_complete,
+        name='register_complete'
+    ),
+    path(
+        'register/activate/<activation_token>/',
+        views.register_activate,
+        name='register_activate'
+    ),
+    path('termsofuse/', views.terms_of_use, name='terms_of_use'),
+    path(
+        'securitypages/<page_action>/',
+        views.security_pages,
+        name='security_pages'
+    ),
+    path('securitypages/', views.security_pages, name='security_pages'),
+    path(
+        'security-questions/',
+        views.set_security_question,
+        name='set-questions'
+    ),
+    path(
+        'login/',
+        axes_dispatch(PleioLoginView.as_view()),
+        name='login'
+    ),
+    path('logout/', views.logout, name='logout'),
+    path('profile/', views.profile, name='profile'),
+    path(
+        'accept_previous_logins/<acceptation_token>/',
+        views.accept_previous_login,
+        name='accept_previous_login'
+    ),
+    path(
+        'account/sessions/other/delete/',
+        view=PleioSessionDeleteOtherView.as_view(),
+        name='session_delete_other'
+    ),
+    path(
+        'account/sessions/<pk>/delete/',
+        view=PleioSessionDeleteView.as_view(),
+        name='session_delete'
+    ),
+    path(
+        'oauth/v2/authorize',
+        oauth2_views.AuthorizationView.as_view(),
+        name='authorize'
+    ),
+    path('oauth/v2/token', oauth2_views.TokenView.as_view(), name='token'),
+    path(
+        'oauth/v2/revoke_token',
+        oauth2_views.RevokeTokenView.as_view(),
+        name='revoke-token'
+    ),
+    path('api/users/me', api_views.me, name='me'),
+    path('admin/', admin.site.urls),
+    path('', views.home, name='home'),
+    path('i18n/', include('django.conf.urls.i18n')),
+    path('freshdesk/', views.freshdesk_sso, name='freshdesk_sso'),
+    path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+    # Overriding some of the built-in contrib.auth views to use our templates
+    # instead.
+    path(
+        'password_reset/',
+        forms.ResetPasswordRequestView.as_view(),
+        name='password_reset'
+    ),
+    path(
+        'password_reset/done/',
+        auth_views.PasswordResetDoneView.as_view(),
+        {
+            'template_name': 'password_reset_done.html'
+        },
+        name='password_reset_done'
+    ),
+    path(
+        'password_reset/questions/',
+        views.security_questions,
+        name='password_reset_questions'
+    ),
+    path(
+        'reset/<uidb64>/<token>/',
+        auth_views.PasswordResetConfirmView.as_view(),
+        {
+            'template_name': 'password_reset_confirm.html'
+        },
+        name='password_reset_confirm'
+    ),
+    path(
+        'reset/done/',
+        auth_views.PasswordResetCompleteView.as_view(),
+        {
+            'template_name': 'password_reset_complete.html'
+        },
+        name='password_reset_complete'
+    ),
+    # django-two-factor
+    path('', include(tf_urls)),
+    # django-user-sessions
+    path('', include('user_sessions.urls', 'user_sessions')),
+    # django-oidc-provider
+    path('openid/', decorated_includes(
       xframe_options_exempt,
       include('oidc_provider.urls', namespace='oidc_provider')
-    ))
+    )),
 ]
 
-urlpatterns = legacy_urls + urls + tf_urls + us_urls + django_urls + oidc_urls
-
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    import debug_toolbar
+    from django.conf.urls.static import static
+
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT
+    )
+
+    urlpatterns += [
+        path('__debug__/', include(debug_toolbar.urls))
+    ]

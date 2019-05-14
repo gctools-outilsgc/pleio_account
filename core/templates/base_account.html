@@ -11,13 +11,13 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>{% show_customizations_title %} - {% block page_title %}{% endblock %}</title>
+        <title>{{ app.APP_TITLE }} - {% block page_title %}{% endblock %}</title>
         <meta name="viewport" content="width=device-width,height=device-height,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
-        <meta property="og:title" content="{% show_customizations_title %}">
-        <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% show_customizations_logo %}">
+        <meta property="og:title" content="{{ app.APP_TITLE }}">
+        <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ MEDIA_URL }}{{ app.APP_LOGO }}">
         <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.get_full_path }}">
         <link href="//fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
-        <link rel="icon" href="{% show_customizations_favicon %}">
+        <link rel="icon" href="{{ MEDIA_URL }}{{ app.APP_FAVICON }}">
         {% render_bundle "web" "css" %}
         <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
         <link rel="stylesheet" type="text/css" href="/static/semantic/dist/semantic.min.css">
@@ -36,10 +36,9 @@
                     <a class="navigation__logo" title="{% trans "Back to the homepage" %}" href="https://www.pleio.nl/">{% include_asset "images/logo.svg" %}</a>
                     {% endcomment %}
                     <a href="{% url 'profile' %}" style="color:black;">
-                        <img alt ="" src="{% show_customizations_logo %}" class="ui top aligned mini image">
+                        <img alt ="" src="{{ MEDIA_URL }}{{ app.APP_LOGO }}" class="ui top aligned mini image header-logo">
                         <span class="ui huge header">
-                            {% show_customizations_title as app_title2 %}
-                            {% blocktrans with app_title=app_title2 %}{{ app_title }} Account{% endblocktrans %}
+                            {{ app.APP_TITLE }}
                         </span>
                     </a>
 
@@ -50,7 +49,6 @@
 
 
                 <div class="account-menu__header">
-                    {% show_customizations_title as title %}
                      <div class="textcolor_primary ui header welcome-header">{% trans "Welcome" %} {{request.user.name}}</div>
 
 		                 {% if request.user.avatar %}
@@ -71,7 +69,7 @@
                             <i aria-hidden="true">{% include_asset "icons/person.svg" %}</i>
                             <div>
                                 <div class="title">{% trans "Profile" %}</div>
-				                        <div class="">{% trans "Your details" %}, {% trans "Avatar" %}</div>
+				                        <div class="">{% trans "Your details" %}</div>
                             </div>
                         </a>
                     </li>
@@ -84,7 +82,7 @@
                             <i aria-hidden="true">{% include_asset "icons/security.svg" %}</i>
                             <div>
                                 <div class="title">{% trans "Security" %}</div>
-				                        <div>{% trans "Password" %}, {% trans "Sessions" %}, {% trans "Two-factor authentication" %}</div>
+				                        <div>{% trans "Password" %}, {% trans "Security questions" %}, {% trans "Sessions" %}, {% trans "Two-factor authentication" %}</div>
                             </div>
                         </a>
                     </li>
@@ -121,8 +119,7 @@
                 <main id="account-main">
                     <div class="page-heading ui sticky">
                         <h1 class="ui large header">{% block page_header %}{% endblock %}</h1>
-                        {% show_language_toggle as toggle %}
-                        {% if toggle %}
+                        {% if app.APP_LANGUAGE_TOGGLE %}
                           <div class="base-language-toggle">
                               {% include "language.html" %}
                           </div>
@@ -136,10 +133,9 @@
                     <footer class="account__fip" style="margin:100px 3em 50px 3em; border-top:1px solid rgba(34,36,38,.15); padding-top: 1em;">
                         <div style="margin-bottom:20px">
                             <ul class="u horizontal list">
-                              {% custom_helpdesk_link as link %}
-                                {% if link %}
+                                {% if app.APP_HELPDESK_LINK %}
                                   <li class="item">
-                                      <a href="{% custom_helpdesk_link %}">{% trans "Help / Contact Us" %}</a>
+                                      <a href="{{ app.APP_HELPDESK_LINK }}">{% trans "Help / Contact Us" %}</a>
                                   </li>
                                 {% endif %}
                                 <li class="item">
@@ -148,33 +144,35 @@
                                 </li>
                             </ul>
                         </div>
-                        {% show_footer_images as show_footer %}
-                        {% if show_footer %}
                         <div style="margin-bottom:10px;">
+                            {% if app.APP_FOOTER_IMAGE_LEFT %}
                             <div class="left floated fip__signature" style="height:22px; float:left;">
-                              <img alt="" src="{% show_footer_image_left %}">
+                                <img alt="" src="{{ MEDIA_URL }}{{ app.APP_FOOTER_IMAGE_LEFT }}">
                             </div>
+                            {% endif %}
+                            {% if app.APP_FOOTER_IMAGE_RIGHT %}
                             <div class="right floated fip__watermark">
-                              <img alt="" src="{% show_footer_image_right %}">
+                                <img alt="" src="{{ MEDIA_URL }}{{ app.APP_FOOTER_IMAGE_RIGHT }}">
                             </div>
+                            {% endif %}
                         </div>
-                        {% endif %}
                     </footer>
             </div>
         </div>
 
-	<style>
+<style>
 
 .page-heading {
     min-height:60px;
-  background-color: #{% show_customizations_color %};
-
+    background-color: {{ app.APP_BRAND_COLOR }};
 }
 
 .page-heading h1{
     float:left;
 }
-
+.ui.labeled.icon.menu .item {
+  margin:0;
+}
 #show_menu {
 display:none;
 }
@@ -254,7 +252,7 @@ color:#212121;
 transition: color 0.2s;
 }
 .show svg {
-    fill: #{% show_customizations_color %};
+    fill: {{ app.APP_BRAND_COLOR }};
 }
 .account-menu__list li a {
 color: #757575;
@@ -308,11 +306,11 @@ border: 0.1rem solid #1565c0;
 float:left;
 }
 .ui.primary.button, .ui.primary.button:active{
-    background-color: #{% show_customizations_color %};
+    background-color: {{ app.APP_BRAND_TITLE }};
 }
 
 .ui.primary.button:hover{
-    background-color: #{% show_customizations_color %};
+    background-color: {{ app.APP_BRAND_TITLE }};
     opacity: 0.8;
 }
 
