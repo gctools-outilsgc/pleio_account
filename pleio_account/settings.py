@@ -321,6 +321,8 @@ CONSTANCE_CONFIG = {
     'EMAIL_FAIL_SILENTLY': (False, 'Should sending email fail quietly?', bool),
 
     'ACCOUNT_ACTIVATION_DAYS': (7, '', int),
+    'GRAPHQL_TRIGGER':(False, 'Get information from Profile as a Service', bool),
+    'GRAPHQL_ENDPOINT':('', 'Profile as a Service Endpoint', 'url'),
 
     'APP_TITLE': ('', 'Name to use for branding.', str),
     'APP_BRAND_COLOR': ('#2185d0', 'Primary branding color.', 'color_picker'),
@@ -377,6 +379,8 @@ CONSTANCE_CONFIG_FIELDSETS = OrderedDict([
     )),
     ('Misc.', (
         'ACCOUNT_ACTIVATION_DAYS',
+        'GRAPHQL_TRIGGER',
+        'GRAPHQL_ENDPOINT',
     )),
     ('Email', (
         'EMAIL_FROM',

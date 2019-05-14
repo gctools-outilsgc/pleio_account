@@ -4,7 +4,7 @@ OIDC provider settings
 from django.utils.translation import ugettext as _
 from oidc_provider.lib.claims import ScopeClaims
 import requests
-from django.conf import settings
+from constance import config
 
 def userinfo(claims, user):
     """
@@ -15,7 +15,7 @@ def userinfo(claims, user):
     claims['name'] = user.name
     claims['email'] = user.email
 
-    if settings.GRAPHQL_TRIGGERS:
+    if config.GRAPHQL_TRIGGER:
         return claimsfromprofiles(retrys, claims)
     else:
         return claims
@@ -31,7 +31,7 @@ def queryprofile(retry):
                  'address{streetAddress,city, province, postalCode, country}}}'}
 
     while not success and attempt < retry:
-        response = requests.post(settings.GRAPHQL_ENDPOINT,
+        response = requests.post(config.GRAPHQL_ENDPOINT,
                                  headers={'Authorization': 'Token ' + settings.GRAPHQL_TOKEN}, data=query)
 
         if not response.status_code == requests.codes.ok:
