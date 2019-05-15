@@ -16,12 +16,12 @@ def userinfo(claims, user):
     claims['email'] = user.email
 
     if config.GRAPHQL_TRIGGER:
-        return claimsfromprofiles(retrys, claims)
+        return claimsfromprofiles(retrys, claims, user)
     else:
         return claims
 
 
-def queryprofile(retry):
+def queryprofile(retry, user):
     success = False
     attempt = 0
 
@@ -31,8 +31,7 @@ def queryprofile(retry):
                  'address{streetAddress,city, province, postalCode, country}}}'}
 
     while not success and attempt < retry:
-        response = requests.post(config.GRAPHQL_ENDPOINT,
-                                 headers={'Authorization': 'Token ' + settings.GRAPHQL_TOKEN}, data=query)
+        response = requests.post(config.GRAPHQL_ENDPOINT, data=query)
 
         if not response.status_code == requests.codes.ok:
             attempt = attempt + 1
@@ -47,8 +46,8 @@ def queryprofile(retry):
     return response
 
 
-def claimsfromprofiles(retry, claims):
-    response = queryprofile(retry)
+def claimsfromprofiles(retry, claims, user):
+    response = queryprofile(retry, user)
 
     if response is None:
         return claims
