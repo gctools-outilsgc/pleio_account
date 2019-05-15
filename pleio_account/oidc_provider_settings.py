@@ -30,6 +30,7 @@ def queryprofile(retry, user):
     query($userID: ID!){
         profiles(gcID: $userID){
             name,
+            avatar,
             email,
             mobilePhone,
             officePhone,
@@ -46,12 +47,9 @@ def queryprofile(retry, user):
         "userID": user.id
     }
 
-    print(variables)
-  
     while not success and attempt < retry:
         response = requests.post(config.GRAPHQL_ENDPOINT,
                                 headers={"Content-Type":"application/json"}, json={'query':query, 'variables': variables})
-        print(response.content)
         if not response.status_code == requests.codes.ok:
             attempt = attempt + 1
         else:
