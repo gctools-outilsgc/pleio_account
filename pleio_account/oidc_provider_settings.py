@@ -28,7 +28,7 @@ def queryprofile(retry, user):
     # Get rest of information from Profile as a Service
     query = """
     query($userID: ID!){
-        profiles(gcID: $userID){
+        profiles(gcID: \"$userID\"){
             name,
             email,
             mobilePhone,
