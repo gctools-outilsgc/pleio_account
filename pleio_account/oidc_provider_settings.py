@@ -26,13 +26,29 @@ def queryprofile(retry, user):
     attempt = 0
 
     # Get rest of information from Profile as a Service
-    query = {
-        'query': 'query{profiles(gcID: "' + str(user.id) + '"){name, email, avatar, mobilePhone, officePhone,' +
-                 'address{streetAddress,city, province, postalCode, country}}}'}
-
+    query = """
+    query($userID: ID!){
+        profiles(gcID: $userID){
+            name,
+            email,
+            mobilePhone,
+            officePhone,
+            address{
+                streetAddress,
+                city,
+                postalCode,
+                country
+            }    
+        }
+    }  
+    """
+    variables = {
+        "userID": str(user.id)
+    }
+  
     while not success and attempt < retry:
-        response = requests.post(config.GRAPHQL_ENDPOINT, data=query)
-
+        response = requests.post(config.GRAPHQL_ENDPOINT,
+                                headers={"Content-Type":"application/json"}, json={'query':query, 'variables': variables})
         if not response.status_code == requests.codes.ok:
             attempt = attempt + 1
         else:
