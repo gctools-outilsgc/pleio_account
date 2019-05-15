@@ -43,7 +43,7 @@ def queryprofile(retry, user):
     }  
     """
     variables = {
-        "userID": str(user.id)
+        "userID": user.id
     }
   
     while not success and attempt < retry:
