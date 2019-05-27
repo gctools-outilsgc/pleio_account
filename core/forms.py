@@ -357,19 +357,19 @@ class ChooseSecurityQuestion(forms.Form):
 
     QUESTIONS2 = [
         ('', _('Please select one of the questions')),
-        (1, _('What type of music do you dislike most?')),
-        (2, _('What was your favourite TV show when you were a child?')),
-        (3, _('Who was your best friend in kindergarten?')),
+        (4, _('What type of music do you dislike most?')),
+        (5, _('What was your favourite TV show when you were a child?')),
+        (6, _('Who was your best friend in kindergarten?')),
     ]
 
     QUESTIONS3 = [
         ('', _('Please select one of the questions')),
-        (1, _(
+        (7, _(
             'If you won the lottery, what would be your first big purchase?'
         )),
-        (2, _('What is the first movie you saw in theatres?')),
-        (3, _('What was your first cell phone?')),
-        (4, _('What movie do you know the most quotes from?'))
+        (8, _('What is the first movie you saw in theatres?')),
+        (9, _('What was your first cell phone?')),
+        (10, _('What movie do you know the most quotes from?'))
     ]
 
     question_one = forms.ChoiceField(choices=QUESTIONS1, initial=0)
