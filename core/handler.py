@@ -4,8 +4,8 @@ from oidc_provider.models import Client
 
 def cors_allow_mysites(sender, request, **kwargs):
     
-    print "Remote Host key: %s" % (request.META["REMOTE_HOST"])
-    print "Remote Address key: %s" % (request.META["REMOTE_ADDR"])
+    print("Remote Host key: %s" % (request.META["REMOTE_HOST"]))
+    print("Remote Address key: %s" % (request.META["REMOTE_ADDR"]))
     
     ## Check to see if caller is localhost
     try :
