@@ -60,7 +60,7 @@ class UserTestCase(TestCase):
         middleware.process_request(request)
 
         activation_token = signing.dumps(obj=self.user.email)
-        with mock.patch('core.models.mq_newuser', return_value=None):
+        with mock.patch('core.models.service_mesh_message', return_value=None):
             self.user.activate_user(activation_token)
 
         self.user.refresh_from_db()

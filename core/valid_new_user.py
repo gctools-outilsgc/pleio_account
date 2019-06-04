@@ -1,15 +1,20 @@
 import pika
-from django.conf import settings
+from constance import config
 
-def mq_newuser(routing,data):
-    credentials = pika.PlainCredentials(settings.MQ_USER, settings.MQ_PASSWORD)
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host=settings.MQ_CONNECTION, credentials=credentials))
-    channel = connection.channel()
-    channel.exchange_declare(exchange='account', exchange_type='topic', durable=True)
+def service_mesh_message(routing,data):
 
-    channel.basic_publish(exchange='account',
-                        routing_key=routing,
-                        body=data,
-                        properties=pika.BasicProperties(delivery_mode = 2,)
-                        )
-    connection.close()
+    try:
+        if config.SERVICE_MESH_ACTIVATION:
+            credentials = pika.PlainCredentials(config.SERVICE_MESH_USER, config.SERVICE_MESH_PASSWORD)
+            connection = pika.BlockingConnection(pika.ConnectionParameters(host=config.SERVICE_MESH_URL, credentials=credentials))
+            channel = connection.channel()
+            channel.exchange_declare(exchange='account', exchange_type='topic', durable=True)
+
+            channel.basic_publish(exchange='account',
+                                routing_key=routing,
+                                body=data,
+                                properties=pika.BasicProperties(delivery_mode = 2,)
+                                )
+            connection.close()
+    except Exception as e:
+        print('Service Mesh Error: ' + str(e))
