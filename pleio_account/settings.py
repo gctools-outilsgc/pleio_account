@@ -89,6 +89,7 @@ REST_FRAMEWORK = {
 
 MIDDLEWARE = [
     'core.middleware.XRealIPMiddleware',
+    'core.middleware.DynamicCORSMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
