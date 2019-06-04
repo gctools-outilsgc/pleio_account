@@ -96,7 +96,6 @@ class DynamicCORSMiddleware(object):
                     CORSList.append(url.scheme + "://" + url.netloc)
                 
             CORSList = list(dict.fromkeys(CORSList))
-            print("CORS LIST:" + str(CORSList))
             settings.CORS_ORIGIN_WHITELIST = CORSList
         except Exception as e:
             print("Error in Dynamic CORS middleware")
