@@ -25,7 +25,6 @@ RUN npm install && \
     npm update && \
     npm run build
 
-RUN mv /app/docker/config.py /app/pleio_account/config.py
 RUN mv /app/docker/start.sh /start.sh
 RUN chmod +x /start.sh
 
