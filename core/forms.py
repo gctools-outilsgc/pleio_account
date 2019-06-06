@@ -348,14 +348,22 @@ class ChangePasswordForm(forms.Form):
 
 
 class ChooseSecurityQuestion(forms.Form):
-    QUESTIONS = [
+    QUESTIONS1 = [
         ('', _('Please select one of the questions')),
         (1, _('What is your favourite board game?')),
         (2, _('Who is your favourite fictional character?')),
         (3, _('What is your least favourite chore?')),
+    ]
+
+    QUESTIONS2 = [
+        ('', _('Please select one of the questions')),
         (4, _('What type of music do you dislike most?')),
         (5, _('What was your favourite TV show when you were a child?')),
         (6, _('Who was your best friend in kindergarten?')),
+    ]
+
+    QUESTIONS3 = [
+        ('', _('Please select one of the questions')),
         (7, _(
             'If you won the lottery, what would be your first big purchase?'
         )),
@@ -364,11 +372,11 @@ class ChooseSecurityQuestion(forms.Form):
         (10, _('What movie do you know the most quotes from?'))
     ]
 
-    question_one = forms.ChoiceField(choices=QUESTIONS, initial=0)
+    question_one = forms.ChoiceField(choices=QUESTIONS1, initial=0)
     answer_one = forms.CharField(min_length=3, max_length=100)
-    question_two = forms.ChoiceField(choices=QUESTIONS, initial=0)
+    question_two = forms.ChoiceField(choices=QUESTIONS2, initial=0)
     answer_two = forms.CharField(min_length=3, max_length=100)
-    question_three = forms.ChoiceField(choices=QUESTIONS, initial=0)
+    question_three = forms.ChoiceField(choices=QUESTIONS3, initial=0)
     answer_three = forms.CharField(min_length=3, max_length=100)
 
     def clean(self):

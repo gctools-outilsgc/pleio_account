@@ -155,11 +155,13 @@ def security_questions(request):
 
     #pick 2 of 3 questions
     if has_questions:
-        picks = [1,2,3]
-        random.shuffle(picks)
         #save choices
         if 'picks' not in request.session:
+            picks = [1,2,3]
+            random.shuffle(picks)
             request.session['picks'] = picks
+        else:
+            picks = request.session['picks']
         picked_questions = questions.get_questions(request.session['picks'][0],request.session['picks'][1])
     else:
         picked_questions = {}
