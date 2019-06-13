@@ -257,6 +257,9 @@ MQ_USER = ""
 MQ_PASSWORD = ""
 MQ_CONNECTION = ""
 
+# You can introspect any apps tokens
+OIDC_INTROSPECTION_VALIDATE_AUDIENCE_SCOPE = False
+
 # Axes Lockout
 AXES_CACHE = 'axes_cache'
 AXES_COOLOFF_TIME = timedelta(minutes=5)
