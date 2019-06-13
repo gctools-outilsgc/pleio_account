@@ -19,7 +19,7 @@ from .login_session_helpers import (
     get_device,
     get_lat_lon
 )
-from .valid_new_user import service_mesh_message
+from .service_mesh import service_mesh_message
 
 
 class Manager(BaseUserManager):
@@ -154,7 +154,7 @@ class User(AbstractBaseUser):
             service_mesh_message('user.new', json.dumps({
                 'name': self.name,
                 'email': self.email,
-                'id': self.id
+                'gcID': self.id
             }))
             return self
 

@@ -327,7 +327,7 @@ CONSTANCE_CONFIG = {
     'SERVICE_MESH_ACTIVATION':(False, 'Activate Broadcase to Service Mesh', bool),
     'SERVICE_MESH_USER':('', 'Username for Service Mesh', str),
     'SERVICE_MESH_PASSWORD':('', 'Password for Service Mesh', str),
-    'SERVICE_MESH_URL':('', 'URL for Service Mesh endpoint', 'url'),
+    'SERVICE_MESH_HOST':('', 'Host name for Service Mesh endpoint', str),
 
     'APP_TITLE': ('', 'Name to use for branding.', str),
     'APP_BRAND_COLOR': ('#2185d0', 'Primary branding color.', 'color_picker'),
@@ -389,7 +389,7 @@ CONSTANCE_CONFIG_FIELDSETS = OrderedDict([
         'SERVICE_MESH_ACTIVATION',
         'SERVICE_MESH_USER',
         'SERVICE_MESH_PASSWORD',
-        'SERVICE_MESH_URL'
+        'SERVICE_MESH_HOST'
 
     )),
     ('Email', (

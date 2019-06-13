@@ -6,7 +6,7 @@ def service_mesh_message(routing,data):
     try:
         if config.SERVICE_MESH_ACTIVATION:
             credentials = pika.PlainCredentials(config.SERVICE_MESH_USER, config.SERVICE_MESH_PASSWORD)
-            connection = pika.BlockingConnection(pika.ConnectionParameters(host=config.SERVICE_MESH_URL, credentials=credentials))
+            connection = pika.BlockingConnection(pika.ConnectionParameters(host=config.SERVICE_MESH_HOST, credentials=credentials))
             channel = connection.channel()
             channel.exchange_declare(exchange='account', exchange_type='topic', durable=True)
 
