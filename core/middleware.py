@@ -2,6 +2,8 @@ import string
 from django.conf import settings
 from django.utils.crypto import get_random_string
 from django.utils.deprecation import MiddlewareMixin
+from oidc_provider.models import Client
+from urllib.parse import urlparse
 
 VALID_KEY_CHARS = string.ascii_lowercase + string.digits
 
@@ -80,3 +82,25 @@ class XRealIPMiddleware(object):
         else:
             request.META['REMOTE_ADDR'] = real_ip
         return self.get_response(request)
+
+class DynamicCORSMiddleware(object):
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        try:
+            CORSList = []
+            for client in Client.objects.all():
+                for redirect in client.redirect_uris:
+                    url = urlparse(redirect)
+                    CORSList.append(url.scheme + "://" + url.netloc)
+                
+            CORSList = list(dict.fromkeys(CORSList))
+            settings.CORS_ORIGIN_WHITELIST = CORSList
+        except Exception as e:
+            print("Error in Dynamic CORS middleware")
+            print(str(e))
+        
+        return self.get_response(request)
+
+
