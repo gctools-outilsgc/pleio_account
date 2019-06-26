@@ -1,0 +1,79 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ include "concierge.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "concierge.name" . }}
+    helm.sh/chart: {{ include "concierge.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "concierge.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "concierge.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+          - name: http
+            containerPort: 80
+            protocol: TCP
+        env:
+        - name: "DEBUG"
+          value: "True"
+        - name: "CONCIERGE_ALLOWED_HOST"
+          value: "*"
+        - name: "CONCIERGE_SECRET_KEY"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "concierge.fullname" . }}-env
+              key: secret-key
+        - name: "CONCIERGE_DATABASE_URL"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "concierge.fullname" . }}-env
+              key: db-url
+{{- if .Values.livenessProbe.enabled }}
+        livenessProbe:
+          httpGet:
+            path: /splash/
+            port: http
+{{ toYaml .Values.livenessProbe | indent 12 }}
+{{- end}}
+{{- if .Values.readinessProbe.enabled }}
+        readinessProbe:
+          httpGet:
+            path: /splash/
+            port: http
+{{ toYaml .Values.readinessProbe | indent 12 }}
+{{- end}}
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+        volumeMounts:
+        - mountPath: {{ .Values.env.dataroot }}
+          name: concierge-data-volume
+      volumes:
+      - name: concierge-data-volume
+        persistentVolumeClaim:
+          claimName: {{ template "concierge.fullname" . }}-data
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}

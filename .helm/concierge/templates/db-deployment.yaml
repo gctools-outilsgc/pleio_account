@@ -1,0 +1,63 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ include "concierge.fullname" . }}-postgres
+  labels:
+    app.kubernetes.io/name: {{ include "concierge.name" . }}-postgres
+    helm.sh/chart: {{ include "concierge.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "concierge.name" . }}-postgres
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "concierge.name" . }}-postgres
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}-postgres
+        image: "{{ .Values.postgres.image.repository }}:{{ .Values.postgres.image.tag }}"
+        imagePullPolicy: {{ .Values.postgres.image.pullPolicy }}
+        ports:
+        - name: mysql
+          containerPort: 3306
+          protocol: TCP
+        env:
+        - name: "POSTGRES_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "concierge.fullname" . }}-env
+              key: db-root
+        - name: "POSTGRES_DB"
+          value: "concierge"
+        - name: "POSTGRES_USER"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "concierge.fullname" . }}-env
+              key: db-user
+        resources:
+{{ toYaml .Values.postgres.resources | indent 10 }}
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: concierge-db-volume
+      volumes:
+      - name: concierge-db-volume
+        persistentVolumeClaim:
+          claimName: {{ template "concierge.fullname" . }}-postgres-data
+    {{- with .Values.postgres.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.postgres.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.postgres.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}

@@ -1,0 +1,26 @@
+{{- if .Values.postgres.enabled -}}
+{{- if .Values.postgres.persistence.enabled -}}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "concierge.fullname" . }}-postgres-data
+  labels:
+    app: {{ template "concierge.name" . }}-postgres
+    chart: {{ template "concierge.chart" . }}
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.postgres.persistence.size | quote }}
+{{- if .Values.postgres.persistence.storageClass }}
+{{- if (eq "-" .Values.postgres.persistence.storageClass) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: {{ .Values.postgres.persistence.storageClass | quote }}
+{{- end }}
+{{- end }}
+{{- end -}}
+{{- end -}}
