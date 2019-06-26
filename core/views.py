@@ -178,7 +178,7 @@ def security_questions(request):
                 default_token_generator.make_token(user)
              )
 
-    return render(request, 'password_reset_questions.html', {
+    return render(request, 'registration/password_reset_questions.html', {
         'form': form,
         "has_questions": has_questions,
         "questions": picked_questions,
