@@ -28,7 +28,7 @@ class PasswordResetRequestForm(forms.Form):
 
 
 class ResetPasswordRequestView(FormView):
-    template_name = "password_reset.html"
+    template_name = "registration/password_reset.html"
     success_url = '/password_reset/done/'
     form_class = PasswordResetRequestForm
 
