@@ -35,7 +35,7 @@ spec:
               name: {{ template "concierge.fullname" . }}-env
               key: db-root
         - name: "POSTGRES_DB"
-          value: "concierge"
+          value: "{{ .Values.postgres.db.name }}"
         - name: "POSTGRES_USER"
           valueFrom:
             secretKeyRef:

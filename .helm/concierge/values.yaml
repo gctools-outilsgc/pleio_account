@@ -113,7 +113,9 @@ postgres:
     name: concierge
     user: concierge
     ## If the password is not specified, postgres will generates a random password
-    # password:
+    password:
+    url:
+
   image:
     repository: postgres
     tag: 11
@@ -133,12 +135,6 @@ postgres:
     ##
     # storageClass: "-"
     size: 8Gi
-
-# define your own credentials or leave blank for auto-generated ones
-  auth:
-    root:
-    user:
-    password:
 
   nodeSelector: {}
 
