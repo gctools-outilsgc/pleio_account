@@ -21,7 +21,7 @@ fullnameOverride: ""
 service:
   type: ClusterIP
   clusterIP: ""
-  port: 80
+  port: 8000
 
 url: http://concierge.local/
 ingress:
@@ -71,7 +71,8 @@ persistence:
   size: 10Gi
 
 env:
-  dataroot: /data/root/
+  debug: "True"
+  allowed_hosts: "*"
 
 ## Configure extra options for liveness and readiness probes
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes)
@@ -96,32 +97,15 @@ readinessProbe:
 ## External or separately deployed database configuration
 ##
 externalDatabase:
-  ## Database host
-  host:
-
-  ## Database port
-  port: 3306
-
-  ## Database user
-  user: concierge
-
-  ## Database password
-  password:
-
-  ## Database name
-  database: concierge
+  ## Database url if using a separately hosted / external db
+  url: 
 
 ##
 ## postgres chart configuration
 ##
-## https://github.com/helm/charts/blob/master/stable/postgres/values.yaml
-##
 postgres:
   ## Whether to deploy a postgres server to satisfy the applications database requirements. To use an external database set this to false and configure the externalDatabase parameters
   enabled: true
-  ## Disable postgres replication
-  replication:
-    enabled: false
 
   ## Create a database and a database user
   ##
@@ -129,7 +113,6 @@ postgres:
     name: concierge
     user: concierge
     ## If the password is not specified, postgres will generates a random password
-    ##
     # password:
   image:
     repository: postgres

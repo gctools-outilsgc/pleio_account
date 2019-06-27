@@ -1,3 +1,4 @@
+{{- if .Values.postgres.enabled -}}
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
@@ -24,8 +25,8 @@ spec:
         image: "{{ .Values.postgres.image.repository }}:{{ .Values.postgres.image.tag }}"
         imagePullPolicy: {{ .Values.postgres.image.pullPolicy }}
         ports:
-        - name: mysql
-          containerPort: 3306
+        - name: postgres
+          containerPort: 5432
           protocol: TCP
         env:
         - name: "POSTGRES_PASSWORD"
@@ -61,3 +62,4 @@ spec:
       tolerations:
 {{ toYaml . | indent 8 }}
     {{- end }}
+{{- end -}}

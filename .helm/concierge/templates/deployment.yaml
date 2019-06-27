@@ -25,13 +25,13 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
           - name: http
-            containerPort: 80
+            containerPort: 8000
             protocol: TCP
         env:
         - name: "DEBUG"
-          value: "True"
+          value: "{{ .Values.env.debug }}"
         - name: "CONCIERGE_ALLOWED_HOST"
-          value: "*"
+          value: "{{ .Values.env.allowed_hosts }}"
         - name: "CONCIERGE_SECRET_KEY"
           valueFrom:
             secretKeyRef:
@@ -45,14 +45,14 @@ spec:
 {{- if .Values.livenessProbe.enabled }}
         livenessProbe:
           httpGet:
-            path: /splash/
+            path: /login
             port: http
 {{ toYaml .Values.livenessProbe | indent 12 }}
 {{- end}}
 {{- if .Values.readinessProbe.enabled }}
         readinessProbe:
           httpGet:
-            path: /splash/
+            path: /login
             port: http
 {{ toYaml .Values.readinessProbe | indent 12 }}
 {{- end}}
