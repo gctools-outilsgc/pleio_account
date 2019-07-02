@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load Pleio_templatetags %}
 
 {% block page_title %}
 {% trans "Authorize" %}
@@ -22,6 +23,16 @@
         <li><strong>{{ scope.name }}</strong><br><i>{{ scope.description }}</i>
     {% endfor %}
     </ul>
+
+    {% if client.terms_url %}
+        <div class="ui form field">
+            <a class="terms_link" target="_blank" href="{{ client.terms_url }}">
+                {% trans "Terms and Conditions"%} 
+                <span aria-hidden="true">{% include_asset "icons/external.svg" %}</span>
+                <span class="invisible">{% trans "Opens in a new tab" %}</span>
+            </a>
+        </div>
+    {% endif %}
 
     <input class="ui button" type="submit" value="{% trans 'Decline' %}" />
     <input class="ui button primary" name="allow" type="submit" value="{% trans 'Authorize' %}" />
