@@ -38,6 +38,7 @@ def queryprofile(retry, user):
                 streetAddress,
                 city,
                 postalCode,
+                province,
                 country
             }    
         }
