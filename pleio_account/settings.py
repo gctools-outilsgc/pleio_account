@@ -17,6 +17,7 @@ import dj_database_url
 from django.utils.translation import ugettext_lazy as _
 from datetime import timedelta
 import logging
+from core.helpers import str_to_bool
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -24,10 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Set debugging to log everthing to console.
 INTERNAL_IPS = '127.0.0.1'
 
-try:
-    DEBUG = os.environ['DEBUG']
-except KeyError:
-    DEBUG = False
+DEBUG =  str_to_bool(os.environ['DEBUG'])
 
 if DEBUG:
     # will output to your console

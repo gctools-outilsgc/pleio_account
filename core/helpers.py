@@ -41,4 +41,4 @@ def str_to_bool(s):
     elif not s:
         return False
     else:
-        return None
+        return False
