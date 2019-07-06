@@ -120,7 +120,8 @@ class User(AbstractBaseUser):
             'user': self,
             'activation_token': signing.dumps(obj=self.email),
             'protocol': 'https' if request.is_secure() else 'http',
-            'domain': current_site.domain
+            'domain': current_site.domain,
+            'app': config
         }
         self.email_user(
             render_to_string('emails/register_subject.txt', template_context),
@@ -210,7 +211,8 @@ class User(AbstractBaseUser):
             'country': get_country(session.ip),
             'user_agent': session.user_agent,
             'protocol': 'https' if request.is_secure() else 'http',
-            'domain': current_site.domain
+            'domain': current_site.domain,
+            'app': config
         }
 
         self.email_user(

@@ -56,7 +56,8 @@ class ResetPasswordRequestView(FormView):
                         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                         'user': user,
                         'token': default_token_generator.make_token(user),
-                        'protocol': request.is_secure() and "https" or "http"
+                        'protocol': request.is_secure() and "https" or "http",
+                        'app': config
                     }
 
                     subject_template_name = 'emails/reset_password_subject.txt'
@@ -113,7 +114,8 @@ class ResetPasswordRequestView(FormView):
                         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                         'user': user,
                         'token': default_token_generator.make_token(user),
-                        'protocol': request.is_secure() and "https" or "http"
+                        'protocol': request.is_secure() and "https" or "http",
+                        'app': config
                     }
                     subject_template_name = 'emails/reset_password_subject.txt'
                     email_template_name = 'emails/reset_password.txt'

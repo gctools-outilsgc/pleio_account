@@ -319,7 +319,7 @@ CONSTANCE_CONFIG = {
     'EMAIL_PASS': ('', 'SMTP Paswsord', str),
     'EMAIL_TIMEOUT': (5, 'SMTP Timeout', int),
     'EMAIL_SECURITY': ('none', 'SMTP Security', 'security_selector'),
-    'EMAIL_FAIL_SILENTLY': (True, 'Should sending email fail quietly?', bool),
+    'EMAIL_FAIL_SILENTLY': (False, 'Should sending email fail quietly?', bool),
 
     'ACCOUNT_ACTIVATION_DAYS': (7, '', int),
 
