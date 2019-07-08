@@ -32,13 +32,10 @@
               <div class="account-menu-container ui sticky">
                 <input type="checkbox" id="show_menu" />
                 <div class="account__top-bar">
-                    {% comment 'removing for now' %}
-                    <a class="navigation__logo" title="{% trans "Back to the homepage" %}" href="https://www.pleio.nl/">{% include_asset "images/logo.svg" %}</a>
-                    {% endcomment %}
                     <a href="{% url 'profile' %}" style="color:black;">
                         <img alt ="" src="{{ MEDIA_URL }}{{ app.APP_LOGO }}" class="ui top aligned mini image header-logo">
                         <span class="ui huge header">
-                            {{ app.APP_TITLE }}
+                                {% blocktrans with title=app.APP_TITLE|translate %} {{ title }} {% endblocktrans %}
                         </span>
                     </a>
 
