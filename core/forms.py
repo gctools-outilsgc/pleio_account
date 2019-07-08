@@ -53,7 +53,7 @@ class ResetPasswordRequestView(FormView):
                 for user in found_user:
                     c = {
                         'domain': request.META['HTTP_HOST'],
-                        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                        'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
                         'user': user,
                         'token': default_token_generator.make_token(user),
                         'protocol': request.is_secure() and "https" or "http",
@@ -111,7 +111,7 @@ class ResetPasswordRequestView(FormView):
                     user.save()
                     c = {
                         'domain': request.META['HTTP_HOST'],
-                        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                        'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
                         'user': user,
                         'token': default_token_generator.make_token(user),
                         'protocol': request.is_secure() and "https" or "http",
