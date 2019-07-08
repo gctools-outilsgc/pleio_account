@@ -331,15 +331,15 @@ def freshdesk_sso(request):
 
     data = '{0}{1}{2}{3}'.format(name, config.FRESHDESK_SECRET_KEY, email, dt)
     generated_hash = hmac.new(
-        config.FRESHDESK_SECRET_KEY,
-        data,
+        config.FRESHDESK_SECRET_KEY.encode(),
+        data.encode(),
         hashlib.md5
     ).hexdigest()
 
     return HttpResponseRedirect(
         config.FRESHDESK_URL
         + 'login/sso/?'
-        + urllib.urlencode({
+        + urllib.parse.urlencode({
             'name': name,
             'email': email,
             'timestamp': str(dt),
