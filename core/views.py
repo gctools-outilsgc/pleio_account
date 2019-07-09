@@ -39,8 +39,7 @@ from two_factor.views.profile import DisableView
 from django.http import Http404, HttpResponseRedirect
 from django.views.decorators.cache import never_cache
 from django.utils.http import urlquote
-from datetime import datetime
-
+import time
 
 def home(request):
     if request.user.is_authenticated:
@@ -327,7 +326,7 @@ def freshdesk_sso(request):
 
     name = request.user.name
     email = request.user.email
-    dt = int(datetime.utcnow().strftime("%s")) - 148
+    dt = int(time.time())
 
     data = '{0}{1}{2}{3}'.format(name, config.FRESHDESK_SECRET_KEY, email, dt)
     generated_hash = hmac.new(
