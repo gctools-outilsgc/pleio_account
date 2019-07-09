@@ -24,8 +24,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Set debugging to log everthing to console.
 INTERNAL_IPS = '127.0.0.1'
-
-DEBUG =  str_to_bool(os.environ['DEBUG'])
+try:
+    DEBUG =  str_to_bool(os.environ['DEBUG'])
+except KeyError:
+    DEBUG = False
 
 if DEBUG:
     # will output to your console

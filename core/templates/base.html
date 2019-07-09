@@ -40,13 +40,9 @@
                     <a href="{% url 'login' %}" style="color:black;">
                         <img alt ="" src="{{ MEDIA_URL }}{{ app.APP_LOGO }}" class="ui top aligned mini image header-logo">
                         <span class="ui huge header">
-                            {{ app.APP_TITLE }}
+                            {% blocktrans with title=app.APP_TITLE|translate %} {{ title }} {% endblocktrans %}
                         </span>
                     </a>
-                    {% comment 'removing for now' %}
-                    <a class="navigation__logo" title="{% trans "Back to the homepage" %}" href="https://www.pleio.nl/">{% include_asset "images/logo.svg" %}</a>
-                    {% endcomment %}
-
                     {% if app.APP_LANGUAGE_TOGGLE %}
                       <div class="language-toggle">
                           {% include "language.html" %}
