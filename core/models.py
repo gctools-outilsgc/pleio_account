@@ -19,7 +19,7 @@ from .login_session_helpers import (
     get_device,
     get_lat_lon
 )
-from .valid_new_user import mq_newuser
+# from .valid_new_user import mq_newuser
 
 
 class Manager(BaseUserManager):
@@ -151,11 +151,11 @@ class User(AbstractBaseUser):
             self.is_active = True
             self.save()
             # valid_user is the routing followed by name, email and id
-            mq_newuser('user.new', json.dumps({
-                'name': self.name,
-                'email': self.email,
-                'id': self.id
-            }))
+            # mq_newuser('user.new', json.dumps({
+            #    'name': self.name,
+            #    'email': self.email,
+            #    'id': self.id
+            # }))
             return self
 
         except (signing.BadSignature, User.DoesNotExist):
