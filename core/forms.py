@@ -295,6 +295,7 @@ class PleioTOTPDeviceForm(TOTPDeviceForm):
 class ChangePasswordForm(forms.Form):
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
+        self.request = kwargs.pop('request', None)
         super(ChangePasswordForm, self).__init__(*args, **kwargs)
 
     error_messages = {
@@ -323,7 +324,7 @@ class ChangePasswordForm(forms.Form):
 
     def clean_old_password(self):
         old_password = self.cleaned_data.get("old_password")
-        user = authenticate(username=self.user.email, password=old_password)
+        user = authenticate(self.request, username=self.user.email, password=old_password)
 
         if user is None:
             raise forms.ValidationError(
