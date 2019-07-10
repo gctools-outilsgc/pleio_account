@@ -197,7 +197,7 @@ def security_pages(request, page_action=None):
 def change_password_form(request, page_action):
     if page_action == 'change-password':
         user = request.user
-        form = ChangePasswordForm(request.POST, user=user)
+        form = ChangePasswordForm(request.POST, user=user, request=request)
         if form.is_valid():
             data = form.cleaned_data
             new_password2 = data['new_password2']
