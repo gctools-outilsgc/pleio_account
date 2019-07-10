@@ -23,18 +23,6 @@
     </head>
     <body>
         <div class="account-overlay  ui container">
-
-            {% if request.COOKIES.partner_site_url %}
-                <div class="account-theme" data-bg="{{ request.COOKIES.partner_site_logo_url }}">
-            {% else %}
-                <div class="account-theme">
-            {% endif %}
-
-                {% if request.COOKIES.partner_site_url %}
-                    <a href={{ request.COOKIES.partner_site_url }} class="button ___white ___outline account__close">{{ request.COOKIES.partner_site_name }}</a>
-                {% endif %}
-            </div>
-
             <div class="account">
                 <div class="account__top-bar">
                     <a href="{% url 'login' %}" style="color:black;">

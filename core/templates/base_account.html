@@ -110,9 +110,6 @@
             </div>
 
             <div class="account-right" id="account-content">
-                {% if request.COOKIES.partner_site_url %}
-                    <a href={{ request.COOKIES.partner_site_url }} class="button ___white ___outline account__close">{{ request.COOKIES.partner_site_name }}</a>
-                {% endif %}
                 <main id="account-main">
                     <div class="page-heading ui sticky">
                         <h1 class="ui large header">{% block page_header %}{% endblock %}</h1>
