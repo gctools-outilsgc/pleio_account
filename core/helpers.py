@@ -32,13 +32,11 @@ def verify_captcha_response(response):
 
 
 def str_to_bool(s):
-    if s.lower() == 'true':
-        return True
-    elif s.lower() == 'false':
-        return False
-    elif s:
-        return True
-    elif not s:
-        return False
-    else:
-        return False
+    if isinstance(s, str):
+        if s.lower() == 'true':
+            return True
+    if isinstance(s, bool):
+        if s:
+            return True
+
+    return False
