@@ -6,6 +6,7 @@ import json
 
 import requests
 from constance import config
+from core.helpers import str_to_bool
 
 from .models import EmailRegExValidator
 
@@ -29,7 +30,6 @@ def is_email_valid(email):
 
     # Verify email address is in user invitation list
     if config.ELGG_URL:
-        print('*' * 80)
         valid_user_request = requests.post(
             config.ELGG_URL
             + "/services/api/rest/json/",
@@ -40,7 +40,7 @@ def is_email_valid(email):
         )
 
         valid_user_json = json.loads(valid_user_request.text)
-        if valid_user_json.get('result', False):
+        if str_to_bool(valid_user_json.get('result', False)):
             return True
 
     return False
