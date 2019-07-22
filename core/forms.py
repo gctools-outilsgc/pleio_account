@@ -202,7 +202,7 @@ class RegisterForm(forms.Form):
 
     def clean_email(self):
         # Get the emails
-        email = self.cleaned_data.get('email')
+        email = self.cleaned_data.get('email').lower()
 
         try:
             User.objects.get(email=email)
@@ -248,6 +248,8 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('name', 'email', 'receives_newsletter',)
+    def clean_email(self):
+        return self.cleaned_data.get('email').lower()
 
 
 class LabelledLoginForm(AuthenticationForm):
@@ -265,7 +267,7 @@ class LabelledLoginForm(AuthenticationForm):
         widget=forms.PasswordInput(attrs={'autocomplete': 'off'})
     )
     def clean(self):
-        username = self.cleaned_data.get('username')
+        username = self.cleaned_data.get('username').lower()
         password = self.cleaned_data.get('password')
 
         credentials={

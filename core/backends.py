@@ -35,7 +35,7 @@ class ElggBackend:
             if valid_user is True:
                 user = User.objects.create_user(
                     name=name,
-                    email=username,
+                    email=username.lower(),
                     password=password,
                     accepted_terms=True,
                     receives_newsletter=True
