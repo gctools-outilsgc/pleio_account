@@ -105,7 +105,7 @@ def profile(request):
         form = UserProfileForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             user = form.save()
-
+            form = UserProfileForm(instance=request.user)
     else:
         form = UserProfileForm(instance=request.user)
 
