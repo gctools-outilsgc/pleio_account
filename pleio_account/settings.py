@@ -231,6 +231,7 @@ OIDC_USERINFO = 'pleio_account.oidc_provider_settings.userinfo'
 OIDC_EXTRA_SCOPE_CLAIMS = (
     'pleio_account.oidc_provider_settings.CustomScopeClaims'
 )
+OIDC_IDTOKEN_INCLUDE_CLAIMS = True
 
 EMAIL_BACKEND = "core.backends.SiteConfigEmailBackend"
 
