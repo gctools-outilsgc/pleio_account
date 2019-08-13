@@ -1,0 +1,26 @@
+{% load user_sessions %}
+{% load i18n %}
+
+    <h2>{% trans "Authorized applications" %}</h2>
+
+    <div class="account__cards ui card" id="authorized-app">
+        <div class="card ___stretch ___nopadding content">
+            <h3 class="card__title ___addpadding-side header">{% trans "Connected applications" %}</h3>
+
+                {% for object in authorized_apps %}
+                    <div>
+                        <p>{{ object.client }}</p>
+                        <p>ID -> {{ object.id }}</p>
+                        <p>{{ object.scope }}</p>
+                        <p>{{ object.date_given }}</p>
+                        <p>{{ object.expires_at }}</p>
+                        <form method="post" action="{% url 'remove_access' %}">
+                            {% csrf_token %}
+                            <input type="hidden"  id="object_id_{{ object.id }}" name="object_id" aria-label="object" value="{{ object.id }}">
+                            <button type="submit" class="button __stretch ___clear ui button">{% trans "Remove access" %}</button>
+                        </form>
+                    </div>
+                {% endfor %}
+
+        </div>
+    </div>

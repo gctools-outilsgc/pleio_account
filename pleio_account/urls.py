@@ -161,6 +161,11 @@ urlpatterns = [
       xframe_options_exempt,
       include('oidc_provider.urls', namespace='oidc_provider')
     )),
+    path(
+        'security_pages/remove_access',
+        views.revoke_app_access,
+        name='remove_access'
+    )
 ]
 
 if settings.DEBUG:
