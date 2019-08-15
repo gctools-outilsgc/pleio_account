@@ -1,4 +1,4 @@
-{% load user_sessions %}
+{% load oidc_clients_tags %}
 {% load i18n %}
 
     <h2>{% trans "Authorized applications" %}</h2>
@@ -8,19 +8,143 @@
             <h3 class="card__title ___addpadding-side header">{% trans "Connected applications" %}</h3>
 
                 {% for object in authorized_apps %}
-                    <div>
-                        <p>{{ object.client }}</p>
-                        <p>ID -> {{ object.id }}</p>
-                        <p>{{ object.scope }}</p>
-                        <p>{{ object.date_given }}</p>
-                        <p>{{ object.expires_at }}</p>
-                        <form method="post" action="{% url 'remove_access' %}">
-                            {% csrf_token %}
-                            <input type="hidden"  id="object_id_{{ object.id }}" name="object_id" aria-label="object" value="{{ object.id }}">
-                            <button type="submit" class="button __stretch ___clear ui button">{% trans "Remove access" %}</button>
-                        </form>
+                    <div class="auth_app-container">
+                        <div class="auth_app-header">
+                            <h4>
+                                <button aria-expanded="false" aria-controls="app_info_{{ object.id }}" class="d-flex app-collapse">
+                                    <div class="align-self-center">
+                                        {% get_client_logo object.client as client_obj %}
+                                        {% if client_obj.logo %}
+                                            <img class="client-logo" src="{{ client_obj.logo }}" alt="">
+                                        {% endif %}
+                                    </div>
+                                    <div class="align-self-center auth_app-header-name">
+                                        {{ object.client }}
+                                    </div>
+                                </button>
+                            </h4>
+                        </div>
+                        
+                        <div id="app_info_{{ object.id }}" class="auth_app-info hidden" aria-hidden="true">
+                            <div class="app_info-row">
+                                <div class="app_info-row-header">
+                                    <p>Has access to:</p>
+                                </div>
+                                <div class="app_info-row-body">
+                                    Basic profile information
+                                        <ul>
+                                            {% readable_scopes object.scope as scopes %}
+                                            {% for claim in scopes %}
+                                                <li>{{ claim }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                </div>
+                            </div>
+                            <div class="app_info-row">
+                                <div class="app_info-row-header">
+                                    <p>Application URL:</p>
+                                </div>
+                                <div class="app_info-row-body">
+                                    <a href="{{ client_obj.url }}">{{ client_obj.url }}</a>
+                                </div>
+                            </div>
+                            <div class="app_info-row">
+                                <div class="app_info-row-header">
+                                    <p>Granted on:</p>
+                                </div>
+                                <div class="app_info-row-body">
+                                    {{ object.date_given }}
+                                </div>
+                            </div>
+                            <form class="disconnect-form" method="post" action="{% url 'remove_access' %}">
+                                {% csrf_token %}
+                                <input type="hidden"  id="object_id_{{ object.id }}" name="object_id" aria-label="object" value="{{ object.id }}">
+                                <button type="submit" class="button ___clear ui negative">{% trans "Disconnect" %}</button>
+                            </form>
+                        </div>
                     </div>
                 {% endfor %}
 
         </div>
     </div>
+
+    <style>
+        #authorized-app {
+            width: 100%;
+            max-width: 500px;
+        }
+        #authorized-app .client-logo {
+            width: 40px;
+            height: 40px;
+        }
+        .auth_app-container {
+            border-radius: 4px;
+            border: 1px solid #cecece;
+            margin-bottom: 5px;
+            width: 100%;
+        }
+        .auth_app-container.active {
+            background: #eaeaea;
+        }
+        .auth_app-container.active.active>.auth_app-header h4 {
+            font-size: 1.45rem;
+        }
+        .auth_app-header button {
+            border: none;
+            background: transparent;
+            width: 100%;
+            height: 60px;
+            padding: 10px;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            font-weight: 700;
+        }
+        .auth_app-header button:hover {
+            background: #eaeaea;
+            cursor: pointer;
+        }
+        .auth_app-header button:focus {
+            background: #eaeaea;
+        }
+        .auth_app-header-name {
+            padding-left: 5px;
+        }
+        .auth_app-info {
+            margin: 0 10px 10px;
+            padding: 10px;
+            border-radius: 4px;
+            background: white;
+        }
+
+        .auth_app-info.hidden {
+            display: none;
+        }
+
+        .app_info-row {
+            margin-bottom: 5px;
+        }
+
+        .app_info-row-header {
+            width: 40%;
+            display: inline-block;
+            vertical-align: top;
+        }
+        .app_info-row-body {
+            display: inline-block;
+        }
+
+        .disconnect-form {
+            height: 48px;
+            padding-top: 9px;
+            text-align: end;
+        }
+
+        .d-flex {
+            display: -webkit-flex!important;
+            display: flex!important;
+        }
+        .align-self-center {
+            -webkit-align-self: center!important;
+            align-self: center!important;
+        }
+    </style>
