@@ -5,7 +5,9 @@
 
     <div class="account__cards ui card" id="authorized-app">
         <div class="card ___stretch ___nopadding content">
-            <h3 class="card__title ___addpadding-side header">{% trans "Connected applications" %}</h3>
+            <h3 class="card__title ___addpadding-side header">{% trans "Authorized applications" %}</h3>
+
+            <p>{% trans "These are the applications connected to you GCaccount." %}</p><br>
 
                 {% for object in authorized_apps %}
                     <div class="auth_app-container">
@@ -28,10 +30,10 @@
                         <div id="app_info_{{ object.id }}" class="auth_app-info hidden" aria-hidden="true">
                             <div class="app_info-row">
                                 <div class="app_info-row-header">
-                                    <p>Has access to:</p>
+                                    <p><b>{% trans "Has access to:" %}</b></p>
                                 </div>
                                 <div class="app_info-row-body">
-                                    Basic profile information
+                                    {% trans "Basic profile information" %}
                                         <ul>
                                             {% readable_scopes object.scope as scopes %}
                                             {% for claim in scopes %}
@@ -40,17 +42,20 @@
                                         </ul>
                                 </div>
                             </div>
+
+                            {% if client_obj.url %}
                             <div class="app_info-row">
                                 <div class="app_info-row-header">
-                                    <p>Application URL:</p>
+                                    <p><b>{% trans "Application URL:" %}</b></p>
                                 </div>
                                 <div class="app_info-row-body">
                                     <a href="{{ client_obj.url }}">{{ client_obj.url }}</a>
                                 </div>
                             </div>
+                            {% endif %}
                             <div class="app_info-row">
                                 <div class="app_info-row-header">
-                                    <p>Granted on:</p>
+                                    <p><b>{% trans "Connected on:" %}</b></p>
                                 </div>
                                 <div class="app_info-row-body">
                                     {{ object.date_given }}
@@ -67,84 +72,3 @@
 
         </div>
     </div>
-
-    <style>
-        #authorized-app {
-            width: 100%;
-            max-width: 500px;
-        }
-        #authorized-app .client-logo {
-            width: 40px;
-            height: 40px;
-        }
-        .auth_app-container {
-            border-radius: 4px;
-            border: 1px solid #cecece;
-            margin-bottom: 5px;
-            width: 100%;
-        }
-        .auth_app-container.active {
-            background: #eaeaea;
-        }
-        .auth_app-container.active.active>.auth_app-header h4 {
-            font-size: 1.45rem;
-        }
-        .auth_app-header button {
-            border: none;
-            background: transparent;
-            width: 100%;
-            height: 60px;
-            padding: 10px;
-            border-top-left-radius: 4px;
-            border-top-right-radius: 4px;
-            font-weight: 700;
-        }
-        .auth_app-header button:hover {
-            background: #eaeaea;
-            cursor: pointer;
-        }
-        .auth_app-header button:focus {
-            background: #eaeaea;
-        }
-        .auth_app-header-name {
-            padding-left: 5px;
-        }
-        .auth_app-info {
-            margin: 0 10px 10px;
-            padding: 10px;
-            border-radius: 4px;
-            background: white;
-        }
-
-        .auth_app-info.hidden {
-            display: none;
-        }
-
-        .app_info-row {
-            margin-bottom: 5px;
-        }
-
-        .app_info-row-header {
-            width: 40%;
-            display: inline-block;
-            vertical-align: top;
-        }
-        .app_info-row-body {
-            display: inline-block;
-        }
-
-        .disconnect-form {
-            height: 48px;
-            padding-top: 9px;
-            text-align: end;
-        }
-
-        .d-flex {
-            display: -webkit-flex!important;
-            display: flex!important;
-        }
-        .align-self-center {
-            -webkit-align-self: center!important;
-            align-self: center!important;
-        }
-    </style>
