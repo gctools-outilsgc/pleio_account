@@ -345,7 +345,7 @@ def revoke_app_access(request):
             messages.success(request, (_("Application access has been removed")))
 
             return redirect('security_pages')
-    
+
     return redirect('security_pages')
 
 

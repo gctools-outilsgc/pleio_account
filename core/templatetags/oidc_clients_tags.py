@@ -1,7 +1,7 @@
 from django import template
 from django.conf import settings
 from oidc_provider.models import Client
-from django.utils.translation import gettext, gettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 register = template.Library()
 

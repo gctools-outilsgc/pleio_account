@@ -58,18 +58,18 @@ $(document).ready(function() {
 
     $('.popup-html').popup();
 
-    $('.app-collapse').on('click', function() {
+    $(".app-collapse").on("click", function() {
         
-        var targetInfo = $(this).attr('aria-controls');
+        var targetInfo = $(this).attr("aria-controls");
         
-        if($('#'+targetInfo).hasClass('hidden')){
-            $(this).attr('aria-expanded', true);
-            $('#'+targetInfo).attr('aria-hidden', false).removeClass('hidden');
-            $('#'+targetInfo).closest('.auth_app-container').addClass('active');
+        if($("#"+targetInfo).hasClass("hidden")){
+            $(this).attr("aria-expanded", true);
+            $("#"+targetInfo).attr("aria-hidden", false).removeClass("hidden");
+            $("#"+targetInfo).closest(".auth_app-container").addClass("active");
         } else {
-            $(this).attr('aria-expanded', false);
-            $('#'+targetInfo).attr('aria-hidden', true).addClass('hidden');
-            $('#'+targetInfo).closest('.auth_app-container').removeClass('active');
+            $(this).attr("aria-expanded", false);
+            $("#"+targetInfo).attr("aria-hidden", true).addClass("hidden");
+            $("#"+targetInfo).closest(".auth_app-container").removeClass("active");
         }
 
     });
