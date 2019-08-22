@@ -12,7 +12,8 @@ from .forms import (
     PleioTOTPDeviceForm,
     ChangePasswordForm,
     ChooseSecurityQuestion,
-    AnswerSecurityQuestions
+    AnswerSecurityQuestions,
+    AppRemoveAccess
 )
 from .models import User, PreviousLogin, SecurityQuestions
 from django.urls import reverse
@@ -40,6 +41,8 @@ from django.http import Http404, HttpResponseRedirect
 from django.views.decorators.cache import never_cache
 from django.utils.http import urlquote
 import time
+from datetime import datetime
+from oidc_provider.models import UserConsent
 
 def home(request):
     if request.user.is_authenticated:
@@ -191,7 +194,8 @@ def security_pages(request, page_action=None):
         'pass_reset_form': change_password_form(request, page_action),
         'security_questions': security_question(request),
         '2FA': two_factor_form(request, page_action),
-        'user_session_form': user_sessions_form(request)
+        'user_session_form': user_sessions_form(request),
+        'authorized_apps': authorized_apps(request)
     })
 
 def change_password_form(request, page_action):
@@ -315,6 +319,34 @@ def user_sessions_form(request):
     user_sessions = PleioSessionListView.as_view(template_name='security_pages.html')(request).context_data
 
     return user_sessions['object_list']
+
+def authorized_apps(request):
+    user_email = request.user.email
+    authorized_apps = UserConsent.objects.filter(user__email=user_email)
+    apps = []
+    #Remove expired access apps from list
+    for app in authorized_apps:
+        if app.expires_at > datetime.now(app.expires_at.tzinfo):
+            apps.append(app)
+    return apps
+
+def revoke_app_access(request):
+    if request.method == "POST":
+        form = AppRemoveAccess(request.user, request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+
+            #Grab consent object
+            app_consent = UserConsent.objects.get(id=data['object_id'])
+            #Set new expiration time. Now - 12 hours to be safe
+            app_consent.expires_at = (datetime.fromtimestamp(time.time() - 43200))
+            app_consent.save()
+
+            messages.success(request, (_("Application access has been removed")))
+
+            return redirect('security_pages')
+
+    return redirect('security_pages')
 
 
 @never_cache

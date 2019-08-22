@@ -18,6 +18,7 @@ from two_factor.forms import AuthenticationTokenForm, TOTPDeviceForm
 from emailvalidator.validator import is_email_valid
 from constance import config
 from axes.utils import reset
+from oidc_provider.models import UserConsent
 
 from .models import User
 from .helpers import verify_captcha_response
@@ -427,3 +428,20 @@ class AnswerSecurityQuestions(forms.Form):
                     'One or more of your answers do not match'
                     ' the registered answers.'
                 ))
+
+
+class AppRemoveAccess(forms.Form):
+    object_id = forms.CharField(widget=forms.HiddenInput())
+
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super(AppRemoveAccess, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = super(AppRemoveAccess, self).clean()
+        object_id = cleaned_data.get('object_id')
+
+        app_consent = UserConsent.objects.get(id=object_id)
+
+        if app_consent.user_id != self.user.id:
+            raise forms.ValidationError(_('Unable to remove access'))

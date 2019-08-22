@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-02 13:10-0400\n"
+"POT-Creation-Date: 2019-08-19 12:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,90 +18,95 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: core/forms.py:133 core/forms.py:137
+#: core/forms.py:140 core/forms.py:144
 msgid "No user is associated with this email address."
 msgstr "Aucun utilisateur n'est associé à cette adresse e-mail."
 
-#: core/forms.py:141
+#: core/forms.py:148
 msgid "Please provide a valid email address."
 msgstr "Veuillez fournir une adresse e-mail valide."
 
-#: core/forms.py:150
+#: core/forms.py:157
 msgid "Your email address is not allowed."
 msgstr "Votre adresse e-mail n'est pas autorisée."
 
-#: core/forms.py:155
+#: core/forms.py:162
 msgid "This email is already registered."
 msgstr "Cet e-mail est déjà enregistré."
 
-#: core/forms.py:162 core/forms.py:296
+#: core/forms.py:169 core/forms.py:306
 msgid "The two password fields didn't match."
 msgstr "Ces deux champs réservés au mot de passe ne sont pas identiques."
 
-#: core/forms.py:164
+#: core/forms.py:171
 msgid "This email is already in use."
 msgstr "La présente adresse courriel est actuellement utilisée."
 
-#: core/forms.py:282 core/forms.py:286
+#: core/forms.py:291 core/forms.py:295
 msgid "Token"
 msgstr "Jeton"
 
-#: core/forms.py:295
+#: core/forms.py:305
 msgid "The password is invalid."
 msgstr "Le mot de passe est invalide"
 
-#: core/forms.py:348 core/templatetags/Pleio_templatetags.py:16
+#: core/forms.py:358 core/forms.py:365 core/forms.py:372
+#: core/templatetags/Pleio_templatetags.py:16
 msgid "Please select one of the questions"
 msgstr "Veuillez choisir une question dans la liste."
 
-#: core/forms.py:349 core/templatetags/Pleio_templatetags.py:17
+#: core/forms.py:359 core/templatetags/Pleio_templatetags.py:17
 msgid "What is your favourite board game?"
 msgstr "Quel est votre jeu de société préféré?"
 
-#: core/forms.py:350 core/templatetags/Pleio_templatetags.py:18
+#: core/forms.py:360 core/templatetags/Pleio_templatetags.py:18
 msgid "Who is your favourite fictional character?"
 msgstr "Qui est votre personnage fictif préféré?"
 
-#: core/forms.py:351 core/templatetags/Pleio_templatetags.py:19
+#: core/forms.py:361 core/templatetags/Pleio_templatetags.py:19
 msgid "What is your least favourite chore?"
 msgstr "Quelle tâche aimez-vous le moins?"
 
-#: core/forms.py:352 core/templatetags/Pleio_templatetags.py:20
+#: core/forms.py:366 core/templatetags/Pleio_templatetags.py:20
 msgid "What type of music do you dislike most?"
 msgstr "Quel type de musique vous déplaît le plus?"
 
-#: core/forms.py:353 core/templatetags/Pleio_templatetags.py:21
+#: core/forms.py:367 core/templatetags/Pleio_templatetags.py:21
 msgid "What was your favourite TV show when you were a child?"
 msgstr ""
 "Quelle était votre émission de télévision préférée lorsque vous étiez enfant?"
 
-#: core/forms.py:354 core/templatetags/Pleio_templatetags.py:22
+#: core/forms.py:368 core/templatetags/Pleio_templatetags.py:22
 msgid "Who was your best friend in kindergarten?"
 msgstr "Qui était votre meilleur ami à la maternelle?"
 
-#: core/forms.py:356 core/templatetags/Pleio_templatetags.py:23
+#: core/forms.py:374 core/templatetags/Pleio_templatetags.py:23
 msgid "If you won the lottery, what would be your first big purchase?"
 msgstr "Si vous gagniez la loterie, quel serait votre premier gros achat?"
 
-#: core/forms.py:358 core/templatetags/Pleio_templatetags.py:24
+#: core/forms.py:376 core/templatetags/Pleio_templatetags.py:24
 msgid "What is the first movie you saw in theatres?"
 msgstr "Quel est le premier film que vous avez vu en salle de cinéma?"
 
-#: core/forms.py:359 core/templatetags/Pleio_templatetags.py:25
+#: core/forms.py:377 core/templatetags/Pleio_templatetags.py:25
 msgid "What was your first cell phone?"
 msgstr "Quel était votre premier téléphone cellulaire?"
 
-#: core/forms.py:360 core/templatetags/Pleio_templatetags.py:26
+#: core/forms.py:378 core/templatetags/Pleio_templatetags.py:26
 msgid "What movie do you know the most quotes from?"
 msgstr "De quel film connaissez-vous le plus de citations?"
 
-#: core/forms.py:379
+#: core/forms.py:397
 msgid "The same question can not be used more than once"
 msgstr "Une même question ne peut pas être utilisée plus d’une fois."
 
-#: core/forms.py:410
+#: core/forms.py:428
 msgid "One or more of your answers do not match the registered answers."
 msgstr "Au moins une de vos réponses diffère des réponses sauvegardées."
+
+#: core/forms.py:447
+msgid "Unable to remove access"
+msgstr ""
 
 #: core/login_session_helpers.py:9
 msgid "Chrome"
@@ -197,14 +202,14 @@ msgid "Page not found"
 msgstr "Page non trouvée"
 
 #: core/templates/404.html:13 core/templates/locked_out.html:23
-#: core/templates/login.html:135 core/templates/login.html:158
-#: core/templates/password_reset.html:48
-#: core/templates/password_reset_complete.html:25
-#: core/templates/password_reset_done.html:31
-#: core/templates/password_reset_questions.html:45
-#: core/templates/password_reset_questions.html:53
+#: core/templates/login.html:134 core/templates/login.html:157
 #: core/templates/register.html:97 core/templates/register_activate.html:18
 #: core/templates/register_complete.html:19
+#: core/templates/registration/password_reset.html:48
+#: core/templates/registration/password_reset_complete.html:25
+#: core/templates/registration/password_reset_done.html:31
+#: core/templates/registration/password_reset_questions.html:45
+#: core/templates/registration/password_reset_questions.html:53
 msgid "Return to sign in"
 msgstr "Retournez à la connexion"
 
@@ -253,76 +258,86 @@ msgstr "Vous n’avez pas encore de codes de sauvegarde."
 msgid "Generate tokens"
 msgstr "Générer des jetons"
 
-#: core/templates/base.html:47 core/templates/base_account.html:36
-msgid "Back to the homepage"
-msgstr "Retour à la page d’accueil"
+#: core/templates/base.html:31 core/templates/base_account.html:38
+#, fuzzy, python-format
+#| msgid "%(time)s ago"
+msgid " %(title)s "
+msgstr "%(time)s précédentes"
 
-#: core/templates/base.html:72 core/templates/base_account.html:138
+#: core/templates/base.html:56 core/templates/base_account.html:132
 msgid "Help / Contact Us"
 msgstr "Aide / Contactez-nous"
 
-#: core/templates/base.html:76 core/templates/base_account.html:142
+#: core/templates/base.html:60 core/templates/base_account.html:136
+#: core/templates/oidc_provider/authorize.html:30
 msgid "Terms and Conditions"
 msgstr "Conditions D'Utilisation"
 
-#: core/templates/base.html:77 core/templates/base_account.html:143
+#: core/templates/base.html:61 core/templates/base_account.html:137
+#: core/templates/oidc_provider/authorize.html:32
 #: core/templates/register.html:79
 msgid "Opens in a new tab"
 msgstr "Ouvre dans un nouvel onglet"
 
-#: core/templates/base_account.html:52 core/templates/emails/register.html:15
+#: core/templates/base_account.html:49 core/templates/emails/register.html:15
 #: core/templates/emails/register.html:27
 msgid "Welcome"
 msgstr "Bienvenue"
 
-#: core/templates/base_account.html:55
+#: core/templates/base_account.html:52
 msgid "Your custom avatar"
 msgstr "Votre avatar personnalisé"
 
-#: core/templates/base_account.html:71 core/templates/profile.html:10
+#: core/templates/base_account.html:68 core/templates/profile.html:10
 msgid "Profile"
 msgstr "Profil"
 
-#: core/templates/base_account.html:72 core/templates/profile.html:17
+#: core/templates/base_account.html:69 core/templates/profile.html:17
 msgid "Your details"
 msgstr "Vos détails"
 
-#: core/templates/base_account.html:84 core/templates/security_pages.html:8
+#: core/templates/base_account.html:81 core/templates/security_pages.html:8
 #: core/templates/security_pages.html:22
 msgid "Security"
 msgstr "Sécurité"
 
-#: core/templates/base_account.html:85 core/templates/login.html:54
+#: core/templates/base_account.html:82 core/templates/login.html:53
 #: core/templates/register.html:57
 msgid "Password"
 msgstr "Mot de passe"
 
-#: core/templates/base_account.html:85
-#: core/templates/password_reset_questions.html:7
-#: core/templates/password_reset_questions.html:13
+#: core/templates/base_account.html:82
+#: core/templates/registration/password_reset_questions.html:7
+#: core/templates/registration/password_reset_questions.html:13
 #: core/templates/security_pages/security_questions.html:6
 #: core/templates/security_pages_questions.html:10
 msgid "Security questions"
 msgstr "Questions de sécurité"
 
-#: core/templates/base_account.html:85
+#: core/templates/base_account.html:82
 msgid "Sessions"
 msgstr "Séances"
 
-#: core/templates/base_account.html:85
+#: core/templates/base_account.html:82
 #: core/templates/security_pages/two_factor_authorization.html:4
 msgid "Two-factor authentication"
 msgstr "Authentification à deux facteurs"
 
-#: core/templates/base_account.html:95
+#: core/templates/base_account.html:82
+#: core/templates/security_pages/authorized_apps.html:4
+#: core/templates/security_pages/authorized_apps.html:8
+msgid "Authorized applications"
+msgstr "Applications autorisées"
+
+#: core/templates/base_account.html:92
 msgid "Tools"
 msgstr "Outils"
 
-#: core/templates/base_account.html:96
+#: core/templates/base_account.html:93
 msgid "Access your various collaboration tools here:"
 msgstr "Accédez à vos différents outils de collaboration ici:"
 
-#: core/templates/base_account.html:107
+#: core/templates/base_account.html:104
 #: core/templates/security_pages/user_sessions.html:39
 #: core/templates/session_list.html:42
 msgid "Logout"
@@ -444,25 +459,30 @@ msgstr "l semble que vous ayez entré le mauvais mot de passe à "
 msgid ""
 " times, and you are now locked out of your account. Don’t worry, your "
 "account will be unlocked after "
-msgstr " reprises et que vous ne pouvez plus accéder à votre compte. Ne vous inquiétez pas, votre compte sera déverrouillé après "
+msgstr ""
+" reprises et que vous ne pouvez plus accéder à votre compte. Ne vous "
+"inquiétez pas, votre compte sera déverrouillé après "
 
 #: core/templates/locked_out.html:19
 msgid " minutes and you can try logging in again."
 msgstr " minutes et vous pourrez ensuite essayer de vous connecter à nouveau."
 
 #: core/templates/locked_out.html:20
-msgid "For assistance please contact our <a href='https://gccollab.ca/help/"
+msgid ""
+"For assistance please contact our <a href='https://gccollab.ca/help/"
 "knowledgebase' alt='help desk'>help desk</a> and we will help you regain "
 "access to your account."
-msgstr "Pour obtenir de l'aide, veuillez communiquez avec notre "
-"<a href='https://gccollab.ca/help/knowledgebase' alt='help desk'>bureau d'aide</a> et nous vous aiderons à accéder à nouveau à votre compte."
+msgstr ""
+"Pour obtenir de l'aide, veuillez communiquez avec notre <a href='https://"
+"gccollab.ca/help/knowledgebase' alt='help desk'>bureau d'aide</a> et nous "
+"vous aiderons à accéder à nouveau à votre compte."
 
 #: core/templates/login.html:8 core/templates/login.html:20
-#: core/templates/login.html:109
+#: core/templates/login.html:108
 msgid "Sign in"
 msgstr "Connectez-vous"
 
-#: core/templates/login.html:20 core/templates/login.html:109
+#: core/templates/login.html:20 core/templates/login.html:108
 msgid "with your account"
 msgstr "à votre compte"
 
@@ -497,57 +517,51 @@ msgid " minutes."
 msgstr " minutes."
 
 #: core/templates/login.html:39
-msgid "If you forgot your password, don’t worry! You can reset your password by "
-msgstr "Si vous avez oublié votre mot de passe, ne vous inquiétez pas! Vous pouvez "
+msgid ""
+"If you forgot your password, don’t worry! You can reset your password by "
+msgstr ""
+"Si vous avez oublié votre mot de passe, ne vous inquiétez pas! Vous pouvez "
 "le réinitialiser en "
 
 #: core/templates/login.html:39
 msgid "clicking here"
 msgstr "cliquant ici"
 
-#: core/templates/login.html:40
-
-msgid "If you don’t have access to the email: "
-msgstr "Si vous n’avez pas accès à l’adresse de courriel: "
-
-#: core/templates/login.html:40
-msgid " , contact our <a href='https://gccollab.ca/help/knowledgebase' alt='help "
-"desk'>help desk</a> and we’ll help you regain access to your account."
-msgstr " veuillez communiquer avec notre <a href='https://gccollab.ca/help/"
-"knowledgebase' alt='help desk'>bureau d’aide</a>, et nous vous aiderons à "
-"accéder à votre compte de nouveau."
-
-#: core/templates/login.html:49 core/templates/password_reset.html:37
+#: core/templates/login.html:48
+#: core/templates/registration/password_reset.html:37
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1640
 msgid "Email address"
 msgstr "Courriel"
 
-#: core/templates/login.html:58 core/templates/password_reset_confirm.html:35
-#: core/templates/password_reset_confirm.html:46
-#: core/templates/register.html:61 core/templates/register.html:70
+#: core/templates/login.html:57 core/templates/register.html:61
+#: core/templates/register.html:70
+#: core/templates/registration/password_reset_confirm.html:35
+#: core/templates/registration/password_reset_confirm.html:46
 msgid "Show password"
 msgstr "Montrer le mot de passe"
 
-#: core/templates/login.html:60 core/templates/password_reset.html:6
-#: core/templates/password_reset.html:15
-#: core/templates/password_reset_done.html:12
+#: core/templates/login.html:59
+#: core/templates/registration/password_reset.html:6
+#: core/templates/registration/password_reset.html:15
+#: core/templates/registration/password_reset_done.html:12
 msgid "Forgot password"
 msgstr "Mot de passe perdu"
 
-#: core/templates/login.html:71 core/templates/login.html:129
-#: core/templates/login.html:157
+#: core/templates/login.html:70 core/templates/login.html:128
+#: core/templates/login.html:156
 msgid "Login"
 msgstr "Ouvrir une session"
 
-#: core/templates/login.html:73
+#: core/templates/login.html:72
 msgid "Don't have an account?"
 msgstr "Vous n’avez pas de compte?"
 
-#: core/templates/login.html:73 core/templates/register.html:8
-#: core/templates/register.html:20 core/templates/register.html:95
+#: core/templates/login.html:72 core/templates/register.html:8
+#: core/templates/register.html:95
 msgid "Register"
 msgstr "S'inscrire"
 
-#: core/templates/login.html:78 core/templates/register.html:25
+#: core/templates/login.html:77 core/templates/register.html:25
 msgid ""
 "Open to all Canadian public servants (federal, provincial, territorial and "
 "municipal), academics and students, as well as to all Canadians by "
@@ -557,7 +571,7 @@ msgstr ""
 "territoriaux et municipaux), universitaires et étudiants, ainsi qu'à tous "
 "les Canadiens et à toutes les Canadiennes, par invitation."
 
-#: core/templates/login.html:81 core/templates/register.html:102
+#: core/templates/login.html:80 core/templates/register.html:102
 msgid ""
 "Existing members can invite their stakeholders and partners to create an "
 "account through GCcollab."
@@ -565,36 +579,36 @@ msgstr ""
 "Les membres existants peuvent inviter leurs intervenants et partenaires à se "
 "créer un compte à partir de GCcollab."
 
-#: core/templates/login.html:91
+#: core/templates/login.html:90
 msgid "Secure your account"
 msgstr "Protéger votre compte"
 
-#: core/templates/login.html:92
+#: core/templates/login.html:91
 #: core/templates/security_pages/two_factor_authorization.html:35
 msgid "Enable two-factor authentication"
 msgstr "Activer l’authentification à deux facteurs"
 
-#: core/templates/login.html:117
+#: core/templates/login.html:116
 #, fuzzy
 #| msgid "Two-factor authentication"
 msgid "Two factor authentication"
 msgstr "Authentification à deux facteurs"
 
-#: core/templates/login.html:118
+#: core/templates/login.html:117
 msgid "Fill in a code from your code generator."
 msgstr "Inscrivez un code de votre générateur de codes."
 
-#: core/templates/login.html:132
+#: core/templates/login.html:131
 msgid "Use backup token"
 msgstr "Utiliser un jeton de sauvegarde"
 
-#: core/templates/login.html:146
+#: core/templates/login.html:145
 #, fuzzy
 #| msgid "Backup tokens"
 msgid "Backup token"
 msgstr "Jetons de sauvegarde"
 
-#: core/templates/login.html:147
+#: core/templates/login.html:146
 msgid ""
 "Use this form for entering backup tokens for logging in.\n"
 "         These tokens have been generated for you to print and keep safe. "
@@ -606,139 +620,24 @@ msgstr ""
 "les conserver dans un endroit sécuritaire Veuillez entrer l’un de ces jetons "
 "de sauvegarde pour vous connecter à votre compte."
 
-#: core/templates/oidc_provider/authorize.html:5
-#: core/templates/oidc_provider/authorize.html:12
-#: core/templates/oidc_provider/authorize.html:27
+#: core/templates/oidc_provider/authorize.html:6
+#: core/templates/oidc_provider/authorize.html:13
+#: core/templates/oidc_provider/authorize.html:38
+#: env/lib/python3.6/site-packages/oauth2_provider/templates/oauth2_provider/authorize.html:8
 msgid "Authorize"
 msgstr "Autoriser"
 
-#: core/templates/oidc_provider/authorize.html:14
+#: core/templates/oidc_provider/authorize.html:15
 msgid "would like to access the following account information:"
 msgstr "souhaite accéder aux informations de compte suivantes :"
 
-#: core/templates/oidc_provider/authorize.html:26
+#: core/templates/oidc_provider/authorize.html:37
 msgid "Decline"
 msgstr "Refuser"
 
 #: core/templates/oidc_provider/error.html:5
 msgid "Error"
 msgstr "Erreur"
-
-#: core/templates/password_reset.html:22
-msgid "Please enter the email address for your account."
-msgstr "Veuillez entrer l’adresse de courriel utilisée pour votre compte."
-
-#: core/templates/password_reset.html:43
-#: core/templates/password_reset_complete.html:12
-#: core/templates/password_reset_confirm.html:6
-#: core/templates/password_reset_confirm.html:15
-#: core/templates/security_pages/change_password.html:8
-msgid "Reset password"
-msgstr "Réinitialiser le mot de passe"
-
-#: core/templates/password_reset.html:46
-msgid ""
-"We need this information to find your account. If you no longer have access "
-"to this email, you can answer security questions to get back into your "
-"account."
-msgstr ""
-"Nous avons besoin de cette information pour trouver votre compte. Si vous "
-"n’avez plus accès à ce courriel, vous pouvez utiliser vos questions de "
-"sécurité ou communiquer avec le bureau d’aide pour réinitialiser votre mot "
-"de passe et votre courriel après avoir envoyé l’adresse de courriel de votre "
-"compte."
-
-#: core/templates/password_reset_complete.html:6
-#: core/templates/password_reset_complete.html:19
-msgid "Password reset"
-msgstr "Mot de passe réinitialisé"
-
-#: core/templates/password_reset_complete.html:20
-msgid "You can now login with your new password."
-msgstr "Vous pouvez maintenant vous connecter avec votre nouveau mot de passe."
-
-#: core/templates/password_reset_confirm.html:31
-#: core/templates/security_pages/change_password.html:33
-msgid "New password"
-msgstr "Nouveau mot de passe"
-
-#: core/templates/password_reset_confirm.html:37
-msgid ""
-"Your password must be at least 8 characters in length, with 1 uppercase "
-"letter, one lowercase letter, a specical character"
-msgstr ""
-"Votre mot de passe doit contenir au moins huit caractères, dont une lettre "
-"majuscule, une lettre minuscule et un caractère spécial"
-
-#: core/templates/password_reset_confirm.html:42
-#: core/templates/register.html:66
-#: core/templates/security_pages/change_password.html:43
-msgid "Confirm password"
-msgstr "Confirmez le mot de passe"
-
-#: core/templates/password_reset_confirm.html:52
-#: core/templates/security_pages/change_password.html:55
-msgid "Confirm"
-msgstr "Confirmer"
-
-#: core/templates/password_reset_confirm.html:59
-msgid ""
-"Your password reset link has expired. Request a new password reset to "
-"receive a new link by email."
-msgstr ""
-"Votre lien de réinitialisation du mot de passe a expiré. Demander une "
-"nouvelle réinitialisation de mot de passe pour recevoir un nouveau lien par "
-"courriel."
-
-#: core/templates/password_reset_confirm.html:62
-msgid "Reset my password"
-msgstr "Réinitialiser mon mot de passe"
-
-#: core/templates/password_reset_done.html:6
-#: core/templates/password_reset_done.html:20
-msgid "Email sent"
-msgstr "Courriel envoyé"
-
-#: core/templates/password_reset_done.html:21
-msgid ""
-"You will receive an email with a link to set a new password in the next 20 "
-"minutes. Please check your junk folder."
-msgstr ""
-"Vous recevrez un courriel avec un lien vous permettant de définir un nouveau "
-"mot de passe dans les 20 prochaines minutes. Veuillez vérifier votre dossier "
-"de courriel indésirable."
-
-#: core/templates/password_reset_done.html:26
-msgid "Don't have access to the registered email address?"
-msgstr "Vous n’avez pas accès à l’adresse de courriel enregistrée?"
-
-#: core/templates/password_reset_done.html:27
-msgid "Use security questions to reset your password"
-msgstr ""
-"Utilisez les questions de sécurité pour réinitialiser votre mot de passe."
-
-#: core/templates/password_reset_questions.html:17
-msgid "Please enter the answers to the security questions you picked."
-msgstr ""
-"Veuillez entrer les réponses aux questions de sécurité que vous avez "
-"choisies."
-
-#: core/templates/password_reset_questions.html:40
-msgid "Submit"
-msgstr "Soumettre"
-
-#: core/templates/password_reset_questions.html:49
-msgid ""
-"Your account does not have any set security questions. You can submit a "
-"ticket to  help desk to reset your password."
-msgstr ""
-"Votre compte ne comporte pas de questions de sécurité préétablies. Vous "
-"pouvez envoyer un billet au bureau d’aide pour réinitialiser votre mot de "
-"passe."
-
-#: core/templates/password_reset_questions.html:55
-msgid "Contact help desk"
-msgstr "Communiquer avec le bureau d’aide"
 
 #: core/templates/profile.html:5 core/templates/profile.html:7
 msgid "Account Settings"
@@ -749,6 +648,7 @@ msgid "Name"
 msgstr "Nom"
 
 #: core/templates/profile.html:25 core/templates/register.html:52
+#: core/templatetags/oidc_clients_tags.py:28
 msgid "Email"
 msgstr "Courriel"
 
@@ -817,6 +717,12 @@ msgstr "Ne contient pas les mots du dictionnaire"
 msgid "Not contain personal data (like your Social Security number or address)"
 msgstr "Ne contient pas de données personnelles (comme votre adresse)"
 
+#: core/templates/register.html:66
+#: core/templates/registration/password_reset_confirm.html:42
+#: core/templates/security_pages/change_password.html:43
+msgid "Confirm password"
+msgstr "Confirmez le mot de passe"
+
 #: core/templates/register.html:79
 msgid "I agree with the "
 msgstr "J’accepte les"
@@ -853,11 +759,145 @@ msgstr ""
 "Ouvrez le lien dans le courriel de validation pour terminer votre "
 "inscription."
 
+#: core/templates/registration/password_reset.html:22
+msgid "Please enter the email address for your account."
+msgstr "Veuillez entrer l’adresse de courriel utilisée pour votre compte."
+
+#: core/templates/registration/password_reset.html:43
+#: core/templates/registration/password_reset_complete.html:12
+#: core/templates/registration/password_reset_confirm.html:6
+#: core/templates/registration/password_reset_confirm.html:15
+#: core/templates/security_pages/change_password.html:8
+msgid "Reset password"
+msgstr "Réinitialiser le mot de passe"
+
+#: core/templates/registration/password_reset.html:46
+msgid ""
+"We need this information to find your account. If you no longer have access "
+"to this email, you can answer security questions to get back into your "
+"account."
+msgstr ""
+"Nous avons besoin de cette information pour trouver votre compte. Si vous "
+"n’avez plus accès à ce courriel, vous pouvez utiliser vos questions de "
+"sécurité ou communiquer avec le bureau d’aide pour réinitialiser votre mot "
+"de passe et votre courriel après avoir envoyé l’adresse de courriel de votre "
+"compte."
+
+#: core/templates/registration/password_reset_complete.html:6
+#: core/templates/registration/password_reset_complete.html:19
+msgid "Password reset"
+msgstr "Mot de passe réinitialisé"
+
+#: core/templates/registration/password_reset_complete.html:20
+msgid "You can now login with your new password."
+msgstr "Vous pouvez maintenant vous connecter avec votre nouveau mot de passe."
+
+#: core/templates/registration/password_reset_confirm.html:31
+#: core/templates/security_pages/change_password.html:33
+msgid "New password"
+msgstr "Nouveau mot de passe"
+
+#: core/templates/registration/password_reset_confirm.html:37
+msgid ""
+"Your password must be at least 8 characters in length, with 1 uppercase "
+"letter, one lowercase letter, a specical character"
+msgstr ""
+"Votre mot de passe doit contenir au moins huit caractères, dont une lettre "
+"majuscule, une lettre minuscule et un caractère spécial"
+
+#: core/templates/registration/password_reset_confirm.html:52
+#: core/templates/security_pages/change_password.html:55
+msgid "Confirm"
+msgstr "Confirmer"
+
+#: core/templates/registration/password_reset_confirm.html:59
+msgid ""
+"Your password reset link has expired. Request a new password reset to "
+"receive a new link by email."
+msgstr ""
+"Votre lien de réinitialisation du mot de passe a expiré. Demander une "
+"nouvelle réinitialisation de mot de passe pour recevoir un nouveau lien par "
+"courriel."
+
+#: core/templates/registration/password_reset_confirm.html:62
+msgid "Reset my password"
+msgstr "Réinitialiser mon mot de passe"
+
+#: core/templates/registration/password_reset_done.html:6
+#: core/templates/registration/password_reset_done.html:20
+msgid "Email sent"
+msgstr "Courriel envoyé"
+
+#: core/templates/registration/password_reset_done.html:21
+msgid ""
+"You will receive an email with a link to set a new password in the next 20 "
+"minutes. Please check your junk folder."
+msgstr ""
+"Vous recevrez un courriel avec un lien vous permettant de définir un nouveau "
+"mot de passe dans les 20 prochaines minutes. Veuillez vérifier votre dossier "
+"de courriel indésirable."
+
+#: core/templates/registration/password_reset_done.html:26
+msgid "Don't have access to the registered email address?"
+msgstr "Vous n’avez pas accès à l’adresse de courriel enregistrée?"
+
+#: core/templates/registration/password_reset_done.html:27
+msgid "Use security questions to reset your password"
+msgstr ""
+"Utilisez les questions de sécurité pour réinitialiser votre mot de passe."
+
+#: core/templates/registration/password_reset_questions.html:17
+msgid "Please enter the answers to the security questions you picked."
+msgstr ""
+"Veuillez entrer les réponses aux questions de sécurité que vous avez "
+"choisies."
+
+#: core/templates/registration/password_reset_questions.html:40
+msgid "Submit"
+msgstr "Soumettre"
+
+#: core/templates/registration/password_reset_questions.html:49
+msgid ""
+"Your account does not have any set security questions. You can submit a "
+"ticket to  help desk to reset your password."
+msgstr ""
+"Votre compte ne comporte pas de questions de sécurité préétablies. Vous "
+"pouvez envoyer un billet au bureau d’aide pour réinitialiser votre mot de "
+"passe."
+
+#: core/templates/registration/password_reset_questions.html:55
+msgid "Contact help desk"
+msgstr "Communiquer avec le bureau d’aide"
+
 #: core/templates/security_pages.html:6
 #: core/templates/security_pages_questions.html:5
 #: core/templates/security_pages_questions.html:7
 msgid "Security settings"
 msgstr "Les paramètres de sécurité"
+
+#: core/templates/security_pages/authorized_apps.html:10
+msgid "These are the applications connected to you GCaccount."
+msgstr "Voici les applications qui sont liées à votre GCcompte"
+
+#: core/templates/security_pages/authorized_apps.html:33
+msgid "Has access to:"
+msgstr "Voici ce à quoi votre compte a accès :"
+
+#: core/templates/security_pages/authorized_apps.html:36
+msgid "Basic profile information"
+msgstr "Information de profil de base"
+
+#: core/templates/security_pages/authorized_apps.html:49
+msgid "Application URL:"
+msgstr "URL de l’application"
+
+#: core/templates/security_pages/authorized_apps.html:58
+msgid "Connected on:"
+msgstr "Branché le :"
+
+#: core/templates/security_pages/authorized_apps.html:67
+msgid "Disconnect"
+msgstr "Débrancher"
 
 #: core/templates/security_pages/change_password.html:22
 msgid "Current password"
@@ -1094,6 +1134,7 @@ msgid "Answer 3"
 msgstr "Réponse 3"
 
 #: core/templates/security_pages_questions.html:65
+#: env/lib/python3.6/site-packages/oauth2_provider/templates/oauth2_provider/application_confirm_delete.html:12
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -1205,17 +1246,1630 @@ msgid ""
 "                    security."
 msgstr ""
 
-#: core/views.py:206
+#: core/templatetags/oidc_clients_tags.py:26
+msgid "Display name"
+msgstr "Affichage du nom"
+
+#: core/templatetags/oidc_clients_tags.py:30
+msgid "Phone number"
+msgstr "Numéro de téléphone"
+
+#: core/templatetags/oidc_clients_tags.py:32
+msgid "Work address"
+msgstr "Adresse au travail"
+
+#: core/views.py:211
 #, fuzzy
 #| msgid "The password has been changed successfully."
 msgid "The Password has been changed successfully."
 msgstr "Le mot de passe a été modifié avec succès."
 
-#: core/views.py:250
+#: core/views.py:255
 msgid ""
 "Security questions set. Your security questions and answers have been "
 "successfully saved."
 msgstr "Questions de sécurité. Vos questions et réponses ont été sauvegardées."
+
+#: core/views.py:345
+msgid "Application access has been removed"
+msgstr "L'accès à l'application a été déconnecté"
+
+#: env/lib/python3.6/site-packages/django/contrib/messages/apps.py:7
+msgid "Messages"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/contrib/sitemaps/apps.py:7
+msgid "Site Maps"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/contrib/staticfiles/apps.py:9
+msgid "Static Files"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/contrib/syndication/apps.py:7
+#, fuzzy
+#| msgid "Location"
+msgid "Syndication"
+msgstr "Emplacement"
+
+#: env/lib/python3.6/site-packages/django/core/paginator.py:42
+msgid "That page number is not an integer"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/core/paginator.py:44
+msgid "That page number is less than 1"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/core/paginator.py:49
+msgid "That page contains no results"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/core/validators.py:31
+msgid "Enter a valid value."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/core/validators.py:102
+#: env/lib/python3.6/site-packages/django/forms/fields.py:657
+msgid "Enter a valid URL."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/core/validators.py:154
+msgid "Enter a valid integer."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/core/validators.py:165
+#, fuzzy
+#| msgid "Please provide a valid email address."
+msgid "Enter a valid email address."
+msgstr "Veuillez fournir une adresse e-mail valide."
+
+#. Translators: "letters" means latin letters: a-z and A-Z.
+#: env/lib/python3.6/site-packages/django/core/validators.py:239
+msgid ""
+"Enter a valid 'slug' consisting of letters, numbers, underscores or hyphens."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/core/validators.py:246
+msgid ""
+"Enter a valid 'slug' consisting of Unicode letters, numbers, underscores, or "
+"hyphens."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/core/validators.py:255
+#: env/lib/python3.6/site-packages/django/core/validators.py:275
+#, fuzzy
+#| msgid "Please provide a valid email address."
+msgid "Enter a valid IPv4 address."
+msgstr "Veuillez fournir une adresse e-mail valide."
+
+#: env/lib/python3.6/site-packages/django/core/validators.py:260
+#: env/lib/python3.6/site-packages/django/core/validators.py:276
+#, fuzzy
+#| msgid "Please provide a valid email address."
+msgid "Enter a valid IPv6 address."
+msgstr "Veuillez fournir une adresse e-mail valide."
+
+#: env/lib/python3.6/site-packages/django/core/validators.py:270
+#: env/lib/python3.6/site-packages/django/core/validators.py:274
+msgid "Enter a valid IPv4 or IPv6 address."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/core/validators.py:304
+msgid "Enter only digits separated by commas."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/core/validators.py:310
+#, python-format
+msgid "Ensure this value is %(limit_value)s (it is %(show_value)s)."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/core/validators.py:341
+#, python-format
+msgid "Ensure this value is less than or equal to %(limit_value)s."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/core/validators.py:350
+#, python-format
+msgid "Ensure this value is greater than or equal to %(limit_value)s."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/core/validators.py:360
+#, python-format
+msgid ""
+"Ensure this value has at least %(limit_value)d character (it has "
+"%(show_value)d)."
+msgid_plural ""
+"Ensure this value has at least %(limit_value)d characters (it has "
+"%(show_value)d)."
+msgstr[0] ""
+msgstr[1] ""
+
+#: env/lib/python3.6/site-packages/django/core/validators.py:375
+#, python-format
+msgid ""
+"Ensure this value has at most %(limit_value)d character (it has "
+"%(show_value)d)."
+msgid_plural ""
+"Ensure this value has at most %(limit_value)d characters (it has "
+"%(show_value)d)."
+msgstr[0] ""
+msgstr[1] ""
+
+#: env/lib/python3.6/site-packages/django/core/validators.py:394
+#: env/lib/python3.6/site-packages/django/forms/fields.py:289
+#: env/lib/python3.6/site-packages/django/forms/fields.py:324
+msgid "Enter a number."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/core/validators.py:396
+#, python-format
+msgid "Ensure that there are no more than %(max)s digit in total."
+msgid_plural "Ensure that there are no more than %(max)s digits in total."
+msgstr[0] ""
+msgstr[1] ""
+
+#: env/lib/python3.6/site-packages/django/core/validators.py:401
+#, python-format
+msgid "Ensure that there are no more than %(max)s decimal place."
+msgid_plural "Ensure that there are no more than %(max)s decimal places."
+msgstr[0] ""
+msgstr[1] ""
+
+#: env/lib/python3.6/site-packages/django/core/validators.py:406
+#, python-format
+msgid ""
+"Ensure that there are no more than %(max)s digit before the decimal point."
+msgid_plural ""
+"Ensure that there are no more than %(max)s digits before the decimal point."
+msgstr[0] ""
+msgstr[1] ""
+
+#: env/lib/python3.6/site-packages/django/core/validators.py:468
+#, python-format
+msgid ""
+"File extension '%(extension)s' is not allowed. Allowed extensions are: "
+"'%(allowed_extensions)s'."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/core/validators.py:520
+#, fuzzy
+#| msgid "Your email address is not allowed."
+msgid "Null characters are not allowed."
+msgstr "Votre adresse e-mail n'est pas autorisée."
+
+#: env/lib/python3.6/site-packages/django/db/models/base.py:1111
+#: env/lib/python3.6/site-packages/django/forms/models.py:752
+msgid "and"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/base.py:1113
+#, python-format
+msgid "%(model_name)s with this %(field_labels)s already exists."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:105
+#, python-format
+msgid "Value %(value)r is not a valid choice."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:106
+msgid "This field cannot be null."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:107
+msgid "This field cannot be blank."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:108
+#, python-format
+msgid "%(model_name)s with this %(field_label)s already exists."
+msgstr ""
+
+#. Translators: The 'lookup_type' is one of 'date', 'year' or 'month'.
+#. Eg: "Title must be unique for pub_date year"
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:112
+#, python-format
+msgid ""
+"%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:129
+#, python-format
+msgid "Field of type: %(field_type)s"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:898
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1766
+msgid "Integer"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:902
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1764
+#, python-format
+msgid "'%(value)s' value must be an integer."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:977
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1833
+msgid "Big (8 byte) integer"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:989
+#, python-format
+msgid "'%(value)s' value must be either True or False."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:990
+#, python-format
+msgid "'%(value)s' value must be either True, False, or None."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:992
+msgid "Boolean (Either True or False)"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1034
+#, python-format
+msgid "String (up to %(max_length)s)"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1098
+msgid "Comma-separated integers"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1147
+#, python-format
+msgid ""
+"'%(value)s' value has an invalid date format. It must be in YYYY-MM-DD "
+"format."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1149
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1292
+#, python-format
+msgid ""
+"'%(value)s' value has the correct format (YYYY-MM-DD) but it is an invalid "
+"date."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1152
+msgid "Date (without time)"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1290
+#, python-format
+msgid ""
+"'%(value)s' value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[."
+"uuuuuu]][TZ] format."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1294
+#, python-format
+msgid ""
+"'%(value)s' value has the correct format (YYYY-MM-DD HH:MM[:ss[.uuuuuu]]"
+"[TZ]) but it is an invalid date/time."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1298
+#, fuzzy
+#| msgid "I agree with the "
+msgid "Date (with time)"
+msgstr "J’accepte les"
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1446
+#, python-format
+msgid "'%(value)s' value must be a decimal number."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1448
+msgid "Decimal number"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1587
+#, python-format
+msgid ""
+"'%(value)s' value has an invalid format. It must be in [DD] [HH:[MM:]]ss[."
+"uuuuuu] format."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1590
+#, fuzzy
+#| msgid "Location"
+msgid "Duration"
+msgstr "Emplacement"
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1663
+msgid "File path"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1729
+#, python-format
+msgid "'%(value)s' value must be a float."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1731
+msgid "Floating point number"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1849
+#, fuzzy
+#| msgid "Email address"
+msgid "IPv4 address"
+msgstr "Courriel"
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1880
+#, fuzzy
+#| msgid "Email address"
+msgid "IP address"
+msgstr "Courriel"
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1960
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1961
+#, python-format
+msgid "'%(value)s' value must be either None, True or False."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1963
+msgid "Boolean (Either True, False or None)"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:1998
+msgid "Positive integer"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:2011
+msgid "Positive small integer"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:2025
+#, python-format
+msgid "Slug (up to %(max_length)s)"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:2057
+msgid "Small integer"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:2064
+msgid "Text"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:2092
+#, python-format
+msgid ""
+"'%(value)s' value has an invalid format. It must be in HH:MM[:ss[.uuuuuu]] "
+"format."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:2094
+#, python-format
+msgid ""
+"'%(value)s' value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is an "
+"invalid time."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:2097
+msgid "Time"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:2223
+msgid "URL"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:2245
+msgid "Raw binary data"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/__init__.py:2295
+#, python-format
+msgid "'%(value)s' is not a valid UUID."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/files.py:221
+msgid "File"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/files.py:360
+msgid "Image"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/related.py:778
+#, python-format
+msgid "%(model)s instance with %(field)s %(value)r does not exist."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/related.py:780
+msgid "Foreign Key (type determined by related field)"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/related.py:1001
+msgid "One-to-one relationship"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/related.py:1051
+#, python-format
+msgid "%(from)s-%(to)s relationship"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/related.py:1052
+#, python-format
+msgid "%(from)s-%(to)s relationships"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/db/models/fields/related.py:1094
+msgid "Many-to-many relationship"
+msgstr ""
+
+#. Translators: If found as last label character, these punctuation
+#. characters will prevent the default label_suffix to be appended to the label
+#: env/lib/python3.6/site-packages/django/forms/boundfield.py:146
+msgid ":?.!"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/fields.py:52
+#, fuzzy
+#| msgid "This email is already registered."
+msgid "This field is required."
+msgstr "Cet e-mail est déjà enregistré."
+
+#: env/lib/python3.6/site-packages/django/forms/fields.py:244
+msgid "Enter a whole number."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/fields.py:395
+#: env/lib/python3.6/site-packages/django/forms/fields.py:1126
+msgid "Enter a valid date."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/fields.py:419
+#: env/lib/python3.6/site-packages/django/forms/fields.py:1127
+msgid "Enter a valid time."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/fields.py:441
+msgid "Enter a valid date/time."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/fields.py:470
+msgid "Enter a valid duration."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/fields.py:471
+#, python-brace-format
+msgid "The number of days must be between {min_days} and {max_days}."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/fields.py:531
+msgid "No file was submitted. Check the encoding type on the form."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/fields.py:532
+msgid "No file was submitted."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/fields.py:533
+msgid "The submitted file is empty."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/fields.py:535
+#, python-format
+msgid "Ensure this filename has at most %(max)d character (it has %(length)d)."
+msgid_plural ""
+"Ensure this filename has at most %(max)d characters (it has %(length)d)."
+msgstr[0] ""
+msgstr[1] ""
+
+#: env/lib/python3.6/site-packages/django/forms/fields.py:538
+msgid "Please either submit a file or check the clear checkbox, not both."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/fields.py:599
+msgid ""
+"Upload a valid image. The file you uploaded was either not an image or a "
+"corrupted image."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/fields.py:761
+#: env/lib/python3.6/site-packages/django/forms/fields.py:851
+#: env/lib/python3.6/site-packages/django/forms/models.py:1272
+#, python-format
+msgid "Select a valid choice. %(value)s is not one of the available choices."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/fields.py:852
+#: env/lib/python3.6/site-packages/django/forms/fields.py:967
+#: env/lib/python3.6/site-packages/django/forms/models.py:1271
+msgid "Enter a list of values."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/fields.py:968
+msgid "Enter a complete value."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/fields.py:1185
+msgid "Enter a valid UUID."
+msgstr ""
+
+#. Translators: This is the default suffix added to form field labels
+#: env/lib/python3.6/site-packages/django/forms/forms.py:86
+msgid ":"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/forms.py:212
+#, python-format
+msgid "(Hidden field %(name)s) %(error)s"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/formsets.py:91
+msgid "ManagementForm data is missing or has been tampered with"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/formsets.py:338
+#, python-format
+msgid "Please submit %d or fewer forms."
+msgid_plural "Please submit %d or fewer forms."
+msgstr[0] ""
+msgstr[1] ""
+
+#: env/lib/python3.6/site-packages/django/forms/formsets.py:345
+#, python-format
+msgid "Please submit %d or more forms."
+msgid_plural "Please submit %d or more forms."
+msgstr[0] ""
+msgstr[1] ""
+
+#: env/lib/python3.6/site-packages/django/forms/formsets.py:371
+#: env/lib/python3.6/site-packages/django/forms/formsets.py:373
+msgid "Order"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/formsets.py:375
+#: env/lib/python3.6/site-packages/oauth2_provider/templates/oauth2_provider/application_confirm_delete.html:13
+#: env/lib/python3.6/site-packages/oauth2_provider/templates/oauth2_provider/application_detail.html:38
+#: env/lib/python3.6/site-packages/oauth2_provider/templates/oauth2_provider/authorized-token-delete.html:7
+msgid "Delete"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/models.py:747
+#, python-format
+msgid "Please correct the duplicate data for %(field)s."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/models.py:751
+#, python-format
+msgid "Please correct the duplicate data for %(field)s, which must be unique."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/models.py:757
+#, python-format
+msgid ""
+"Please correct the duplicate data for %(field_name)s which must be unique "
+"for the %(lookup)s in %(date_field)s."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/models.py:766
+msgid "Please correct the duplicate values below."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/models.py:1093
+msgid "The inline value did not match the parent instance."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/models.py:1160
+msgid "Select a valid choice. That choice is not one of the available choices."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/models.py:1274
+#, python-format
+msgid "\"%(pk)s\" is not a valid value."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/utils.py:162
+#, python-format
+msgid ""
+"%(datetime)s couldn't be interpreted in time zone %(current_timezone)s; it "
+"may be ambiguous or it may not exist."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/widgets.py:383
+msgid "Clear"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/widgets.py:384
+msgid "Currently"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/widgets.py:385
+msgid "Change"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/widgets.py:699
+#, fuzzy
+#| msgid "unknown"
+msgid "Unknown"
+msgstr "inconnu"
+
+#: env/lib/python3.6/site-packages/django/forms/widgets.py:700
+msgid "Yes"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/forms/widgets.py:701
+msgid "No"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/template/defaultfilters.py:788
+msgid "yes,no,maybe"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/template/defaultfilters.py:817
+#: env/lib/python3.6/site-packages/django/template/defaultfilters.py:834
+#, python-format
+msgid "%(size)d byte"
+msgid_plural "%(size)d bytes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: env/lib/python3.6/site-packages/django/template/defaultfilters.py:836
+#, python-format
+msgid "%s KB"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/template/defaultfilters.py:838
+#, python-format
+msgid "%s MB"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/template/defaultfilters.py:840
+#, python-format
+msgid "%s GB"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/template/defaultfilters.py:842
+#, python-format
+msgid "%s TB"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/template/defaultfilters.py:844
+#, python-format
+msgid "%s PB"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dateformat.py:62
+msgid "p.m."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dateformat.py:63
+msgid "a.m."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dateformat.py:68
+msgid "PM"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dateformat.py:69
+msgid "AM"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dateformat.py:150
+msgid "midnight"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dateformat.py:152
+msgid "noon"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:6
+msgid "Monday"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:6
+msgid "Tuesday"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:6
+msgid "Wednesday"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:6
+msgid "Thursday"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:6
+msgid "Friday"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:7
+msgid "Saturday"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:7
+msgid "Sunday"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:10
+msgid "Mon"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:10
+msgid "Tue"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:10
+msgid "Wed"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:10
+msgid "Thu"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:10
+msgid "Fri"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:11
+msgid "Sat"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:11
+msgid "Sun"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:14
+msgid "January"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:14
+msgid "February"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:14
+msgid "March"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:14
+msgid "April"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:14
+msgid "May"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:14
+msgid "June"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:15
+msgid "July"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:15
+msgid "August"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:15
+msgid "September"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:15
+msgid "October"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:15
+msgid "November"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:16
+msgid "December"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:19
+msgid "jan"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:19
+msgid "feb"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:19
+msgid "mar"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:19
+msgid "apr"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:19
+msgid "may"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:19
+msgid "jun"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:20
+msgid "jul"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:20
+msgid "aug"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:20
+msgid "sep"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:20
+msgid "oct"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:20
+msgid "nov"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:20
+msgid "dec"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:23
+msgctxt "abbrev. month"
+msgid "Jan."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:24
+msgctxt "abbrev. month"
+msgid "Feb."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:25
+msgctxt "abbrev. month"
+msgid "March"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:26
+msgctxt "abbrev. month"
+msgid "April"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:27
+msgctxt "abbrev. month"
+msgid "May"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:28
+msgctxt "abbrev. month"
+msgid "June"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:29
+msgctxt "abbrev. month"
+msgid "July"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:30
+msgctxt "abbrev. month"
+msgid "Aug."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:31
+msgctxt "abbrev. month"
+msgid "Sept."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:32
+msgctxt "abbrev. month"
+msgid "Oct."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:33
+msgctxt "abbrev. month"
+msgid "Nov."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:34
+msgctxt "abbrev. month"
+msgid "Dec."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:37
+msgctxt "alt. month"
+msgid "January"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:38
+msgctxt "alt. month"
+msgid "February"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:39
+msgctxt "alt. month"
+msgid "March"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:40
+msgctxt "alt. month"
+msgid "April"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:41
+msgctxt "alt. month"
+msgid "May"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:42
+msgctxt "alt. month"
+msgid "June"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:43
+msgctxt "alt. month"
+msgid "July"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:44
+msgctxt "alt. month"
+msgid "August"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:45
+msgctxt "alt. month"
+msgid "September"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:46
+msgctxt "alt. month"
+msgid "October"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:47
+msgctxt "alt. month"
+msgid "November"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/dates.py:48
+msgctxt "alt. month"
+msgid "December"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/ipv6.py:8
+#, fuzzy
+#| msgid "Please provide a valid email address."
+msgid "This is not a valid IPv6 address."
+msgstr "Veuillez fournir une adresse e-mail valide."
+
+#: env/lib/python3.6/site-packages/django/utils/text.py:70
+#, python-format
+msgctxt "String to return when truncating text"
+msgid "%(truncated_text)s..."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/text.py:237
+msgid "or"
+msgstr ""
+
+#. Translators: This string is used as a separator between list elements
+#: env/lib/python3.6/site-packages/django/utils/text.py:256
+#: env/lib/python3.6/site-packages/django/utils/timesince.py:83
+msgid ", "
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/utils/timesince.py:9
+#, python-format
+msgid "%d year"
+msgid_plural "%d years"
+msgstr[0] ""
+msgstr[1] ""
+
+#: env/lib/python3.6/site-packages/django/utils/timesince.py:10
+#, python-format
+msgid "%d month"
+msgid_plural "%d months"
+msgstr[0] ""
+msgstr[1] ""
+
+#: env/lib/python3.6/site-packages/django/utils/timesince.py:11
+#, python-format
+msgid "%d week"
+msgid_plural "%d weeks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: env/lib/python3.6/site-packages/django/utils/timesince.py:12
+#, python-format
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: env/lib/python3.6/site-packages/django/utils/timesince.py:13
+#, python-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: env/lib/python3.6/site-packages/django/utils/timesince.py:14
+#, fuzzy, python-format
+#| msgid " minutes."
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] " minutes."
+msgstr[1] " minutes."
+
+#: env/lib/python3.6/site-packages/django/utils/timesince.py:72
+#, fuzzy
+#| msgid " minutes."
+msgid "0 minutes"
+msgstr " minutes."
+
+#: env/lib/python3.6/site-packages/django/views/csrf.py:110
+msgid "Forbidden"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/csrf.py:111
+msgid "CSRF verification failed. Request aborted."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/csrf.py:115
+msgid ""
+"You are seeing this message because this HTTPS site requires a 'Referer "
+"header' to be sent by your Web browser, but none was sent. This header is "
+"required for security reasons, to ensure that your browser is not being "
+"hijacked by third parties."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/csrf.py:120
+msgid ""
+"If you have configured your browser to disable 'Referer' headers, please re-"
+"enable them, at least for this site, or for HTTPS connections, or for 'same-"
+"origin' requests."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/csrf.py:124
+msgid ""
+"If you are using the <meta name=\"referrer\" content=\"no-referrer\"> tag or "
+"including the 'Referrer-Policy: no-referrer' header, please remove them. The "
+"CSRF protection requires the 'Referer' header to do strict referer checking. "
+"If you're concerned about privacy, use alternatives like <a rel=\"noreferrer"
+"\" ...> for links to third-party sites."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/csrf.py:132
+msgid ""
+"You are seeing this message because this site requires a CSRF cookie when "
+"submitting forms. This cookie is required for security reasons, to ensure "
+"that your browser is not being hijacked by third parties."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/csrf.py:137
+msgid ""
+"If you have configured your browser to disable cookies, please re-enable "
+"them, at least for this site, or for 'same-origin' requests."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/csrf.py:142
+msgid "More information is available with DEBUG=True."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/generic/dates.py:41
+msgid "No year specified"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/generic/dates.py:61
+#: env/lib/python3.6/site-packages/django/views/generic/dates.py:111
+#: env/lib/python3.6/site-packages/django/views/generic/dates.py:208
+msgid "Date out of range"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/generic/dates.py:90
+msgid "No month specified"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/generic/dates.py:142
+msgid "No day specified"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/generic/dates.py:188
+msgid "No week specified"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/generic/dates.py:338
+#: env/lib/python3.6/site-packages/django/views/generic/dates.py:367
+#, python-format
+msgid "No %(verbose_name_plural)s available"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/generic/dates.py:585
+#, python-format
+msgid ""
+"Future %(verbose_name_plural)s not available because %(class_name)s."
+"allow_future is False."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/generic/dates.py:619
+#, python-format
+msgid "Invalid date string '%(datestr)s' given format '%(format)s'"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/generic/detail.py:54
+#, python-format
+msgid "No %(verbose_name)s found matching the query"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/generic/list.py:67
+msgid "Page is not 'last', nor can it be converted to an int."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/generic/list.py:72
+#, python-format
+msgid "Invalid page (%(page_number)s): %(message)s"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/generic/list.py:154
+#, python-format
+msgid "Empty list and '%(class_name)s.allow_empty' is False."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/static.py:40
+msgid "Directory indexes are not allowed here."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/static.py:42
+#, python-format
+msgid "\"%(path)s\" does not exist"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/static.py:80
+#, python-format
+msgid "Index of %(directory)s"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/templates/default_urlconf.html:6
+msgid "Django: the Web framework for perfectionists with deadlines."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/templates/default_urlconf.html:345
+#, python-format
+msgid ""
+"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/templates/default_urlconf.html:367
+msgid "The install worked successfully! Congratulations!"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/templates/default_urlconf.html:368
+#, python-format
+msgid ""
+"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
+"%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
+"\">DEBUG=True</a> is in your settings file and you have not configured any "
+"URLs."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/templates/default_urlconf.html:383
+msgid "Django Documentation"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/templates/default_urlconf.html:384
+msgid "Topics, references, &amp; how-to's"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/templates/default_urlconf.html:395
+msgid "Tutorial: A Polling App"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/templates/default_urlconf.html:396
+msgid "Get started with Django"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/templates/default_urlconf.html:407
+msgid "Django Community"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django/views/templates/default_urlconf.html:408
+msgid "Connect, get help, or contribute"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django_otp/forms.py:59
+#, fuzzy
+#| msgid "Please activate your account"
+msgid "Please enter your OTP token."
+msgstr "Veuillez activer votre compte"
+
+#: env/lib/python3.6/site-packages/django_otp/forms.py:60
+#, python-brace-format
+msgid "Error generating challenge: {0}"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django_otp/forms.py:61
+msgid "The selected OTP device is not interactive"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django_otp/forms.py:62
+#, python-brace-format
+msgid "OTP Challenge: {0}"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django_otp/forms.py:63
+msgid "Invalid token. Please make sure you have entered it correctly."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin14/login.html:18
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin15/login.html:17
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin16/login.html:33
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin17/login.html:33
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin18/login.html:35
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin19/login.html:36
+msgid "Please correct the error below."
+msgid_plural "Please correct the errors below."
+msgstr[0] ""
+msgstr[1] ""
+
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin14/login.html:34
+msgid "Username:"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin14/login.html:38
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin15/login.html:37
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin16/login.html:53
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin17/login.html:53
+#, fuzzy
+#| msgid "Password"
+msgid "Password:"
+msgstr "Mot de passe"
+
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin14/login.html:44
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin15/login.html:43
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin16/login.html:59
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin17/login.html:58
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin18/login.html:60
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin19/login.html:71
+#, fuzzy
+#| msgid "Device"
+msgid "OTP Device:"
+msgstr "Appareil"
+
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin14/login.html:49
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin15/login.html:48
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin16/login.html:64
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin17/login.html:63
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin18/login.html:65
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin19/login.html:76
+#, fuzzy
+#| msgid "Token"
+msgid "OTP Token:"
+msgstr "Jeton"
+
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin14/login.html:54
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin15/login.html:53
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin16/login.html:69
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin17/login.html:68
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin18/login.html:70
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin19/login.html:81
+msgid "Forgotten your password or username?"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin14/login.html:58
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin15/login.html:57
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin16/login.html:73
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin17/login.html:72
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin18/login.html:74
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin19/login.html:85
+msgid "Log in"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin14/login.html:60
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin15/login.html:59
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin16/login.html:75
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin17/login.html:74
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin18/login.html:76
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin19/login.html:87
+msgid "Get OTP Challenge"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin16/login.html:33
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin17/login.html:33
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin18/login.html:35
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin19/login.html:36
+msgid "Please correct the errors below."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/django_otp/templates/otp/admin19/login.html:52
+#, python-format
+msgid ""
+"You are authenticated as %(username)s, but are not authorized to access this "
+"page. Would you like to login to a different account?"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:313
+msgid "usage: "
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:821
+msgid ".__call__() not defined"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:1105
+#, python-format
+msgid "unknown parser %r (choices: %s)"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:1146
+#, python-format
+msgid "argument \"-\" with mode %r"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:1349
+#, python-format
+msgid "cannot merge actions - two groups are named %r"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:1387
+msgid "'required' is an invalid argument for positionals"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:1407
+#, python-format
+msgid "invalid option string %r: must start with a character %r"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:1428
+#, python-format
+msgid "dest= is required for options like %r"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:1445
+#, python-format
+msgid "invalid conflict_resolution value: %r"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:1463
+#, python-format
+msgid "conflicting option string(s): %s"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:1526
+msgid "mutually exclusive arguments must be optional"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:1596
+msgid "positional arguments"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:1597
+msgid "optional arguments"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:1615
+msgid "show this help message and exit"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:1621
+msgid "show program's version number and exit"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:1653
+msgid "cannot have multiple subparser arguments"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:1705
+#, python-format
+msgid "unrecognized arguments: %s"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:1802
+#, python-format
+msgid "not allowed with argument %s"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:1848
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:1862
+#, python-format
+msgid "ignored explicit argument %r"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:1952
+msgid "too few arguments"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:1959
+#, python-format
+msgid "argument %s is required"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:1973
+#, python-format
+msgid "one of the arguments %s is required"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:2019
+msgid "expected one argument"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:2020
+msgid "expected at most one argument"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:2021
+msgid "expected at least one argument"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:2023
+#, python-format
+msgid "expected %s argument(s)"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:2080
+#, python-format
+msgid "ambiguous option: %s could match %s"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:2142
+#, python-format
+msgid "unexpected option string: %s"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:2243
+#, python-format
+msgid "%r is not callable"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:2259
+#, python-format
+msgid "invalid %s value: %r"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:2269
+#, python-format
+msgid "invalid choice: %r (choose from %s)"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/gunicorn/argparse_compat.py:2362
+#, python-format
+msgid "%s: error: %s\n"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/ipware/apps.py:10
+msgid "ipware app"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/oauth2_provider/models.py:41
+msgid "Confidential"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/oauth2_provider/models.py:42
+msgid "Public"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/oauth2_provider/models.py:50
+#, fuzzy
+#| msgid "Authorize"
+msgid "Authorization code"
+msgstr "Autoriser"
+
+#: env/lib/python3.6/site-packages/oauth2_provider/models.py:51
+msgid "Implicit"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/oauth2_provider/models.py:52
+#, fuzzy
+#| msgid "Request for a new password"
+msgid "Resource owner password-based"
+msgstr "Demande d’un nouveau mot de passe"
+
+#: env/lib/python3.6/site-packages/oauth2_provider/models.py:53
+msgid "Client credentials"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/oauth2_provider/models.py:67
+msgid "Allowed URIs list, space separated"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/oauth2_provider/models.py:143
+#, python-brace-format
+msgid "Unauthorized redirect scheme: {scheme}"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/oauth2_provider/models.py:148
+#, python-brace-format
+msgid "redirect_uris cannot be empty with grant_type {grant_type}"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/oauth2_provider/oauth2_validators.py:166
+#, fuzzy
+#| msgid "The password is invalid."
+msgid "The access token is invalid."
+msgstr "Le mot de passe est invalide"
+
+#: env/lib/python3.6/site-packages/oauth2_provider/oauth2_validators.py:171
+msgid "The access token has expired."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/oauth2_provider/oauth2_validators.py:176
+msgid "The access token is valid but does not have enough scope."
+msgstr ""
+
+#: env/lib/python3.6/site-packages/oauth2_provider/templates/oauth2_provider/application_confirm_delete.html:6
+msgid "Are you sure to delete the application"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/oauth2_provider/templates/oauth2_provider/application_detail.html:10
+msgid "Client id"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/oauth2_provider/templates/oauth2_provider/application_detail.html:15
+msgid "Client secret"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/oauth2_provider/templates/oauth2_provider/application_detail.html:20
+msgid "Client type"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/oauth2_provider/templates/oauth2_provider/application_detail.html:25
+msgid "Authorization Grant Type"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/oauth2_provider/templates/oauth2_provider/application_detail.html:30
+msgid "Redirect Uris"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/oauth2_provider/templates/oauth2_provider/application_detail.html:36
+#: env/lib/python3.6/site-packages/oauth2_provider/templates/oauth2_provider/application_form.html:35
+#, fuzzy
+#| msgid "Back"
+msgid "Go Back"
+msgstr "Retournez"
+
+#: env/lib/python3.6/site-packages/oauth2_provider/templates/oauth2_provider/application_detail.html:37
+msgid "Edit"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/oauth2_provider/templates/oauth2_provider/application_form.html:9
+msgid "Edit application"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/oauth2_provider/templates/oauth2_provider/application_list.html:6
+msgid "Your applications"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/oauth2_provider/templates/oauth2_provider/application_list.html:16
+msgid "No applications defined"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/oauth2_provider/templates/oauth2_provider/application_list.html:16
+#, fuzzy
+#| msgid "clicking here"
+msgid "Click here"
+msgstr "cliquant ici"
+
+#: env/lib/python3.6/site-packages/oauth2_provider/templates/oauth2_provider/application_list.html:16
+msgid "if you want to register a new one"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/oauth2_provider/templates/oauth2_provider/application_registration_form.html:5
+#, fuzzy
+#| msgid "Register account"
+msgid "Register a new application"
+msgstr "S'inscrir"
+
+#: env/lib/python3.6/site-packages/oauth2_provider/templates/oauth2_provider/authorize.html:17
+msgid "Application requires following permissions"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/oauth2_provider/templates/oauth2_provider/authorized-token-delete.html:6
+msgid "Are you sure you want to delete this token?"
+msgstr ""
+
+#: env/lib/python3.6/site-packages/oauth2_provider/templates/oauth2_provider/authorized-tokens.html:6
+#, fuzzy
+#| msgid "Token"
+msgid "Tokens"
+msgstr "Jeton"
+
+#: env/lib/python3.6/site-packages/oauth2_provider/templates/oauth2_provider/authorized-tokens.html:19
+msgid "There are no authorized tokens yet."
+msgstr ""
 
 #: pleio_account/oidc_provider_settings.py:22
 msgid "Basic profile"
@@ -1225,38 +2879,39 @@ msgstr "Profil de base"
 msgid "Access to your name"
 msgstr "Accès à votre nom"
 
-#: pleio_account/password_validation.py:17
-#, python-format
-msgid "Password must contain at least %(min_numbers)d digit."
-msgstr ""
-
-#: pleio_account/password_validation.py:19
-#, fuzzy, python-format
-#| msgid "Contain at least 1 lowercase and 1 uppercase letter"
-msgid ""
-"Password must contain at least %(min_lowercase_letters)d lowercase letter."
-msgstr "Contenir au moins 1 lettre minuscule et 1 majuscule"
-
-#: pleio_account/password_validation.py:21
-#, fuzzy, python-format
-#| msgid "Contain at least 1 lowercase and 1 uppercase letter"
-msgid ""
-"Password must contain at least %(min_uppercase_letters)d uppercase letter."
-msgstr "Contenir au moins 1 lettre minuscule et 1 majuscule"
-
-#: pleio_account/password_validation.py:23
-#, python-format
-msgid ""
-"Password must contain at least %(min_special_characters)d special character."
-msgstr ""
-
-#: pleio_account/settings.py:191
+#: pleio_account/settings.py:194
 msgid "English"
 msgstr "Anglais"
 
-#: pleio_account/settings.py:192
+#: pleio_account/settings.py:195
 msgid "French"
 msgstr "Français"
+
+#~ msgid "Back to the homepage"
+#~ msgstr "Retour à la page d’accueil"
+
+#~ msgid "If you don’t have access to the email: "
+#~ msgstr "Si vous n’avez pas accès à l’adresse de courriel: "
+
+#~ msgid ""
+#~ " , contact our <a href='https://gccollab.ca/help/knowledgebase' alt='help "
+#~ "desk'>help desk</a> and we’ll help you regain access to your account."
+#~ msgstr ""
+#~ " veuillez communiquer avec notre <a href='https://gccollab.ca/help/"
+#~ "knowledgebase' alt='help desk'>bureau d’aide</a>, et nous vous aiderons à "
+#~ "accéder à votre compte de nouveau."
+
+#, fuzzy
+#~| msgid "Contain at least 1 lowercase and 1 uppercase letter"
+#~ msgid ""
+#~ "Password must contain at least %(min_lowercase_letters)d lowercase letter."
+#~ msgstr "Contenir au moins 1 lettre minuscule et 1 majuscule"
+
+#, fuzzy
+#~| msgid "Contain at least 1 lowercase and 1 uppercase letter"
+#~ msgid ""
+#~ "Password must contain at least %(min_uppercase_letters)d uppercase letter."
+#~ msgstr "Contenir au moins 1 lettre minuscule et 1 majuscule"
 
 msgid "GCaccount"
 msgstr "GCcompte"
@@ -1352,14 +3007,8 @@ msgstr "GCcompte"
 #~ msgid "Active Sessions"
 #~ msgstr "Sessions actives"
 
-#~ msgid "Register account"
-#~ msgstr "S'inscrir"
-
 #~ msgid "Enable two factor authentication"
 #~ msgstr "Activez l’authentification à deux facteurs"
-
-#~ msgid "Back"
-#~ msgstr "Retournez"
 
 #~ msgid "of your account"
 #~ msgstr "dans votre compte"
