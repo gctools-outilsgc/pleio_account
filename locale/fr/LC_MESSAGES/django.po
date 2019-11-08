@@ -916,7 +916,7 @@ msgstr ""
 #: core/templates/security_pages/security_questions.html:13
 #: core/templates/security_pages_questions.html:14
 msgid "Set questions"
-msgstr "Questions prédéfinies"
+msgstr "Définir les questions"
 
 #: core/templates/security_pages/two_factor_authorization.html:13
 #: core/templates/tf_profile.html:12
