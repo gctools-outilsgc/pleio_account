@@ -14,6 +14,7 @@ from django.views.generic.edit import FormView
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
+from django.shortcuts import render, redirect
 from two_factor.forms import AuthenticationTokenForm, TOTPDeviceForm
 from emailvalidator.validator import is_email_valid
 from constance import config
@@ -51,7 +52,12 @@ class ResetPasswordRequestView(FormView):
         if self.validate_email_address(email):
             found_user = User.objects.filter(email__iexact=email)
             if found_user.exists():
+
                 for user in found_user:
+
+                    if user.is_active == False:
+                        return redirect('password_reset_not_active')
+
                     c = {
                         'domain': request.META['HTTP_HOST'],
                         'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
@@ -445,3 +451,6 @@ class AppRemoveAccess(forms.Form):
 
         if app_consent.user_id != self.user.id:
             raise forms.ValidationError(_('Unable to remove access'))
+
+class ResendValidation(forms.Form):
+    email = forms.CharField(widget=forms.HiddenInput())
