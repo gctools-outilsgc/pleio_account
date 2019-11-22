@@ -308,7 +308,7 @@ CONSTANCE_ADDITIONAL_FIELDS = {
     }]
 }
 CONSTANCE_CONFIG = {
-    'ELGG_URL': ('https://gccollab.ca', 'Elgg URL', str),
+    'ELGG_URL': ('https://gccollab.ca', 'Elgg URLs - add each URL on a new line', str),
 
     'FRESHDESK_URL': ('', 'Freshdesk URL', 'url'),
     'FRESHDESK_SECRET_KEY': ('', 'Freshdesk Secret Key', str),
