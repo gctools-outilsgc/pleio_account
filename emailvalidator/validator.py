@@ -33,17 +33,17 @@ def is_email_valid(email):
 
         elgg_urls =  config.ELGG_URL.splitlines()
 
-            for url in elgg_urls:
-                valid_user_request = requests.post(
-                    url + "/services/api/rest/json/",
-                    data={
-                        'method': 'pleio.invited',
-                        'email': email
-                    }
-                )
+        for url in elgg_urls:
+            valid_user_request = requests.post(
+                url + "/services/api/rest/json/",
+                data={
+                    'method': 'pleio.invited',
+                    'email': email
+                }
+            )
 
-                valid_user_json = json.loads(valid_user_request.text)
-                if str_to_bool(valid_user_json.get('result', False)):
-                    return True
+            valid_user_json = json.loads(valid_user_request.text)
+            if str_to_bool(valid_user_json.get('result', False)):
+                return True
 
     return False
