@@ -98,7 +98,7 @@ class ResetPasswordRequestView(FormView):
                             'user': email
                         }
                     )
-                    
+
                     valid_user_json = json.loads(valid_user_request.text)
                     valid_user_result = valid_user_json["result"] if 'result' in valid_user_json else []
                     valid_user = valid_user_result["valid"] if 'valid' in valid_user_result else False
