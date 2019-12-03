@@ -86,55 +86,59 @@ class ResetPasswordRequestView(FormView):
                 return self.form_valid(form)
 
             elif config.ELGG_URL:
-                # Verify user exists in Elgg
-                valid_user_request = requests.post(
-                    config.ELGG_URL
-                    + "/services/api/rest/json/",
-                    data={
-                        'method': 'pleio.userexists',
-                        'user': email
-                    }
-                )
-                valid_user_json = json.loads(valid_user_request.text)
-                valid_user_result = valid_user_json["result"] if 'result' in valid_user_json else []
-                valid_user = valid_user_result["valid"] if 'valid' in valid_user_result else False
-                name = valid_user_result["name"] if 'name' in valid_user_result else email
 
-                # If exists in Elgg, create local user
-                if valid_user is True:
-                    user = User.objects.create_user(
-                        name=name,
-                        email=email,
-                        accepted_terms=True,
-                        receives_newsletter=True
-                    )
-                    user.is_active = True
-                    user.save()
-                    c = {
-                        'domain': request.META['HTTP_HOST'],
-                        'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
-                        'user': user,
-                        'token': default_token_generator.make_token(user),
-                        'protocol': request.is_secure() and "https" or "http",
-                        'app': config
-                    }
-                    subject_template_name = 'emails/reset_password_subject.txt'
-                    email_template_name = 'emails/reset_password.txt'
-                    html_email_template_name = 'emails/reset_password.html'
-                    subject = loader.render_to_string(subject_template_name, c)
-                    subject = ''.join(subject.splitlines())
-                    email = loader.render_to_string(email_template_name, c)
-                    html_email = loader.render_to_string(html_email_template_name, c)
-                    send_mail(
-                        subject,
-                        email,
-                        config.EMAIL_FROM,
-                        [user.email],
-                        fail_silently=config.EMAIL_FAIL_SILENTLY,
-                        html_message=html_email
+                elgg_urls =  config.ELGG_URL.splitlines()
+
+                for url in elgg_urls:
+                    # Verify user exists in Elgg
+                    valid_user_request = requests.post(
+                        url + "/services/api/rest/json/",
+                        data={
+                            'method': 'pleio.userexists',
+                            'user': email
+                        }
                     )
 
-                    return self.form_valid(form)
+                    valid_user_json = json.loads(valid_user_request.text)
+                    valid_user_result = valid_user_json["result"] if 'result' in valid_user_json else []
+                    valid_user = valid_user_result["valid"] if 'valid' in valid_user_result else False
+                    name = valid_user_result["name"] if 'name' in valid_user_result else email
+
+                    # If exists in Elgg, create local user
+                    if valid_user is True:
+                        user = User.objects.create_user(
+                            name=name,
+                            email=email,
+                            accepted_terms=True,
+                            receives_newsletter=True
+                        )
+                        user.is_active = True
+                        user.save()
+                        c = {
+                            'domain': request.META['HTTP_HOST'],
+                            'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
+                            'user': user,
+                            'token': default_token_generator.make_token(user),
+                            'protocol': request.is_secure() and "https" or "http",
+                            'app': config
+                        }
+                        subject_template_name = 'emails/reset_password_subject.txt'
+                        email_template_name = 'emails/reset_password.txt'
+                        html_email_template_name = 'emails/reset_password.html'
+                        subject = loader.render_to_string(subject_template_name, c)
+                        subject = ''.join(subject.splitlines())
+                        email = loader.render_to_string(email_template_name, c)
+                        html_email = loader.render_to_string(html_email_template_name, c)
+                        send_mail(
+                            subject,
+                            email,
+                            config.EMAIL_FROM,
+                            [user.email],
+                            fail_silently=config.EMAIL_FAIL_SILENTLY,
+                            html_message=html_email
+                        )
+
+                        return self.form_valid(form)
 
                 else:
                     form.add_error(None, _("No user is associated with this email address."))
