@@ -61,7 +61,9 @@ class ElggLockout(AxesModelBackend):
             response_context = kwargs.get('response_context', {})
             response_context['error'] = error_msg
             raise PermissionDenied(error_msg)
-        
+
+        return
+
     def get_user(self, user_id):
         try:
             return User.objects.get(pk=user_id)
