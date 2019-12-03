@@ -106,9 +106,8 @@ MIDDLEWARE = [
 ]
 
 AUTHENTICATION_BACKENDS = [
-    'axes.backends.AxesModelBackend',
-    'django.contrib.auth.backends.ModelBackend',
-    'core.backends.ElggBackend'
+    'core.backends.ElggLockout',
+    'django.contrib.auth.backends.ModelBackend'
 ]
 
 ROOT_URLCONF = 'pleio_account.urls'
