@@ -53,6 +53,7 @@ class ElggLockout(AxesModelBackend):
                         user.is_active = True
                         user.is_admin = admin
                         user.save()
+                        break
 
         credentials = get_credentials(username=username, password=password, **kwargs)
 
