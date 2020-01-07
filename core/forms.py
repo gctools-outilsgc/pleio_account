@@ -14,7 +14,7 @@ from django.views.generic.edit import FormView
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from two_factor.forms import AuthenticationTokenForm, TOTPDeviceForm
 from emailvalidator.validator import is_email_valid
 from constance import config
@@ -55,7 +55,7 @@ class ResetPasswordRequestView(FormView):
 
                 for user in found_user:
 
-                    if user.is_active == False:
+                    if user.is_active is False:
                         return redirect('password_reset_not_active')
 
                     c = {

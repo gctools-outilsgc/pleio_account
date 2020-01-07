@@ -112,7 +112,7 @@ def not_active_profile(request):
             data = form.cleaned_data
 
             found_user = User.objects.filter(email__iexact=data['email'])
-            
+
             for user in found_user:
                 user.send_activation_token(request)
 
