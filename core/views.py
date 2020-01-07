@@ -13,7 +13,8 @@ from .forms import (
     ChangePasswordForm,
     ChooseSecurityQuestion,
     AnswerSecurityQuestions,
-    AppRemoveAccess
+    AppRemoveAccess,
+    ResendValidation
 )
 from .models import User, PreviousLogin, SecurityQuestions
 from django.urls import reverse
@@ -101,6 +102,23 @@ def register_activate(request, activation_token=None):
 
     return render(request, 'register_activate.html')
 
+def not_active_profile(request):
+    email = request.session['email']
+
+    if request.method == "POST":
+        form = ResendValidation(request.POST)
+
+        if form.is_valid():
+            data = form.cleaned_data
+
+            found_user = User.objects.filter(email__iexact=data['email'])
+
+            for user in found_user:
+                user.send_activation_token(request)
+
+            return render(request, 'registration/password_reset_not_active.html', { 'email': email, 'submit': True })
+    else:
+        return render(request, 'registration/password_reset_not_active.html', { 'email': email, 'submit': False })
 
 @login_required
 def profile(request):

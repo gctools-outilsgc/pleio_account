@@ -137,6 +137,11 @@ urlpatterns = [
         name='password_reset_questions'
     ),
     path(
+        'password_reset/notactive/',
+        views.not_active_profile,
+        name='password_reset_not_active'
+    ),
+    path(
         'reset/<uidb64>/<token>/',
         auth_views.PasswordResetConfirmView.as_view(),
         {
