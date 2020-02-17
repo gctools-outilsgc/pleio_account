@@ -269,7 +269,10 @@ class LabelledLoginForm(AuthenticationForm):
         max_length=254,
         widget=forms.TextInput(attrs={
             'id': 'id_auth-username',
-            'aria-labelledby': 'error_login'
+            'aria-labelledby': 'error_login',
+            'value': 'test@gcconnex.gc.ca',
+            'style': 'font-size:1.5em',
+            'disabled': 'true'
         })
     )
     password = forms.CharField(
