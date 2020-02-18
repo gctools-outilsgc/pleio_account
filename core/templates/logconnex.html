@@ -1,0 +1,25 @@
+{% extends "base.html" %} 
+{% load i18n %} 
+{% load Pleio_templatetags %} 
+{% block page_title %} Onbording merge account {% endblock %} 
+{% block content %}
+    {% if user.is_authenticated %}
+    GCCONNEX credential
+    Your email is: {{ user.email }}.<br/>
+    <p style="width:500px">Connected.Cupcake ipsum dolor sit amet muffin fruitcake. Gummies wafer icing cheesecake powder gummi bears cookie jelly. Cupcake topping chocolate cake toffee sesame snaps I love.
+    </p>
+          <div class="content">
+            <img class="left floated small circular ui image" src="http://via.placeholder.com/640x360">
+            <div class="header">
+            {{ user.username }}
+            </div>
+            <div class="meta">
+              JobTitle
+            </div>
+            <div class="description">
+                {{ user.email }}
+            </div>
+
+      <a class="btn btn-primary" href="/onboarding-logconnex.html">Start</a>
+    {% endif %} 
+    {% endblock %}

@@ -16,6 +16,8 @@ from core.class_views import (
     PleioSessionDeleteOtherView
 )
 from axes.decorators import axes_dispatch
+from core.forms import ContactForm1, ContactForm2
+from core.views import ContactWizard
 
 
 class DecoratedURLPattern(URLPattern):
@@ -170,7 +172,11 @@ urlpatterns = [
         'security_pages/remove_access',
         views.revoke_app_access,
         name='remove_access'
-    )
+    ),
+     path('onboarding.html', views.onboarding, name='onboarding'),
+     path('onboarding2.html', views.onboarding2, name='onboarding2'),
+     path('logconnex.html', views.logconnex, name='logconnex'),
+     path('contact/', ContactWizard.as_view([ContactForm1, ContactForm2])),
 ]
 
 if settings.DEBUG:

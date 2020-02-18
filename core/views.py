@@ -44,6 +44,7 @@ from django.utils.http import urlquote
 import time
 from datetime import datetime
 from oidc_provider.models import UserConsent
+from formtools.wizard.views import SessionWizardView
 
 def home(request):
     if request.user.is_authenticated:
@@ -395,3 +396,23 @@ def freshdesk_sso(request):
             'hash': generated_hash
         })
     )
+
+def onboarding(request):
+    form = RegisterForm()
+
+    return render(request, 'onboarding.html', {'form': form})
+
+def onboarding2(request):
+    form = RegisterForm()
+
+    return render(request, 'onboarding2.html', {'form': form})
+
+def logconnex(request):
+    form = RegisterForm()
+
+    return render(request, 'logconnex.html', {'form': form})
+
+class ContactWizard(SessionWizardView):
+    def done(self, form_list, **kwargs):
+        do_something_with_the_form_data(form_list)
+        return redirect('/page-to-redirect-to-when-done/')

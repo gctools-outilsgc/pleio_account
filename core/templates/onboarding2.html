@@ -1,0 +1,30 @@
+{% extends "base.html" %} 
+{% load i18n %} 
+{% load Pleio_templatetags %} 
+{% block page_title %} Onbording merge account {% endblock %} 
+{% block content %}
+    {% if user.is_authenticated %}
+        Hello, {{ user.username }}.<br/>
+        Your email is: {{ user.email }}.<br/>
+        {% if request.user.avatar %}
+        <img aria-hidden="true" src="/media/{{ request.user.avatar }}" class="account-menu__avatar" alt="{% trans "Your custom avatar" %}"/>
+       {% endif %}
+    {% else %}
+        <p>Not connected.Cupcake ipsum dolor sit amet muffin fruitcake. 
+Gummies wafer icing cheesecake powder gummi bears cookie jelly. Cupcake 
+topping chocolate cake toffee sesame snaps I love.
+        </p>
+        <form method="post" action="." class="ui form"></form>
+        <div class="field">
+            <label for="id_password1">{% trans "Password" %} <div class="mini circular ui icon button popup-html" data-position="right center" data-html="{% trans "Your password must:" %}<ul><li>{% trans "Be at least 8 characters in length" %}</li><li>{% trans "Contain at least 1 lowercase and 1 uppercase letter" %}</li><li>{% trans "Contain at least 1 special character (!@#$^&*)" %}</li><li>{% trans "Contain at least 1 number (0-9)" %}</li></ul>{% trans "Your password should:" %}<ul><li>{% trans "Be adequately complex and not contain simple patterns like <strong>abc123</strong>" %}</li><li>{% trans "Not contain words from the dictionary" %}</li><li>{% trans "Not contain personal data (like your Social Security number or address)" %}</li></ul>" style="padding: 3px;"><i class="question icon"></i></div></label>
+            <span id="error_password1">{{ form.errors.password1 }}</span>
+	    <div class="password_field">
+            {{ form.password1 }}
+	    </div>
+        </div>
+            <div class="next__buttons">
+                <button name="next" class="right floated ui button primary" type="submit">{% trans "Next" %}</button>
+                <a class="btn btn-primary" href="/onboarding2.html">NextStep</a>
+            </div>
+        </form>
+    {% endif %} {% endblock %}
