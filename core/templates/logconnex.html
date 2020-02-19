@@ -4,22 +4,36 @@
 {% block page_title %} Onbording merge account {% endblock %} 
 {% block content %}
     {% if user.is_authenticated %}
-    GCCONNEX credential
+    GCCONNEX credential<br/>
     Your email is: {{ user.email }}.<br/>
     <p style="width:500px">Connected.Cupcake ipsum dolor sit amet muffin fruitcake. Gummies wafer icing cheesecake powder gummi bears cookie jelly. Cupcake topping chocolate cake toffee sesame snaps I love.
     </p>
-          <div class="content">
-            <img class="left floated small circular ui image" src="http://via.placeholder.com/640x360">
-            <div class="header">
-            {{ user.username }}
-            </div>
-            <div class="meta">
-              JobTitle
-            </div>
-            <div class="description">
-                {{ user.email }}
+          <div class="content" style="width:500px">
+
+            <div class="ui grid">
+                <div class="two column row">
+                  <div class="column"><img class="left floated small circular ui image" src="http://via.placeholder.com/640x360"></div>
+                  <div class="column"><div class="header">
+                      {{ user.username }}
+                      </div>
+                      <div class="meta">
+                        JobTitle
+                      </div>
+                      <div class="description">
+                          {{ user.email }}
+                      </div></div>
+                </div>
+                <div class="two column row">
+                  <div class="left floated column"> <div class="field">
+                      <label>Password</label>
+                      <input type="password">
+                    </div></div>
+                  <div class="right floated column"> <a class="right floated ui button primary" href="/onboarding-logconnex.html">Start</a>
+                  </div>
+                </div>
+              </div>
             </div>
 
-      <a class="btn btn-primary" href="/onboarding-logconnex.html">Start</a>
+      
     {% endif %} 
     {% endblock %}
