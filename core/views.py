@@ -14,7 +14,8 @@ from .forms import (
     ChooseSecurityQuestion,
     AnswerSecurityQuestions,
     AppRemoveAccess,
-    ResendValidation
+    ResendValidation,
+    LabelledLoginForm
 )
 from .models import User, PreviousLogin, SecurityQuestions
 from django.urls import reverse
@@ -411,6 +412,11 @@ def logconnex(request):
     form = RegisterForm()
 
     return render(request, 'logconnex.html', {'form': form})
+
+def passconnex(request):
+    form = LabelledLoginForm()
+
+    return render(request, 'passconnex.html', {'form': form})
 
 class ContactWizard(SessionWizardView):
     def done(self, form_list, **kwargs):

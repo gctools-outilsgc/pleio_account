@@ -176,6 +176,7 @@ urlpatterns = [
      path('onboarding.html', views.onboarding, name='onboarding'),
      path('onboarding2.html', views.onboarding2, name='onboarding2'),
      path('logconnex.html', views.logconnex, name='logconnex'),
+     path('passconnex.html', views.passconnex, name='passconnex'),
      path('contact/', ContactWizard.as_view([ContactForm1, ContactForm2])),
 ]
 
