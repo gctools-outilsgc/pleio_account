@@ -18,7 +18,7 @@ from core.class_views import (
 from axes.decorators import axes_dispatch
 
 from rest_framework import routers
-router = routers.DefaultRouter()
+router = routers.SimpleRouter()
 
 router.register('users/all', api_views.all_users, 'all_users')
 
