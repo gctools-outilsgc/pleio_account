@@ -20,7 +20,7 @@ from axes.decorators import axes_dispatch
 from rest_framework import routers
 router = routers.DefaultRouter()
 
-router.register('api/users/all', api_views.all, 'all')
+router.register('users/all', api_views.all_users, 'all_users')
 
 class DecoratedURLPattern(URLPattern):
     def resolve(self, *args, **kwargs):
@@ -115,7 +115,7 @@ urlpatterns = [
         name='revoke-token'
     ),
     path('api/users/me', api_views.me, name='me'),
-    path('', include(router.urls)),
+    path('api/', include(router.urls)),
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
     path('i18n/', include('django.conf.urls.i18n')),

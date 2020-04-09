@@ -7,7 +7,7 @@ from rest_framework import viewsets, permissions
 from api.serializers import UserSerializer, AllUserSerializer
 from core.models import User
 
-class all(viewsets.ReadOnlyModelViewSet):
+class all_users(viewsets.ReadOnlyModelViewSet):
     queryset = User.objects.filter(is_active=True)
     permission_classes = [permissions.AllowAny]
     serializer_class = AllUserSerializer
