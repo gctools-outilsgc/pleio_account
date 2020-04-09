@@ -9,7 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('guid', 'username', 'name', 'email', 'isAdmin')
 
-class AllOfUs(serializers.ModelSerializer):
+class AllUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'name', 'email']
