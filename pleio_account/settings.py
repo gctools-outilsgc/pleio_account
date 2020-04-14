@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'api',
     'oauth2_provider',
     'rest_framework',
+     'rest_framework.authtoken',
     'webpack_loader',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -76,6 +77,7 @@ INSTALLED_APPS = [
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+        'rest_framework.authentication.TokenAuthentication',
     ),
     'DEFAULT_THROTTLE_CLASSES': (
         'rest_framework.throttling.AnonRateThrottle',

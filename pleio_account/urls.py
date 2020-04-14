@@ -17,6 +17,7 @@ from core.class_views import (
 )
 from axes.decorators import axes_dispatch
 
+from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework import routers
 router = routers.SimpleRouter()
 
@@ -116,6 +117,7 @@ urlpatterns = [
     ),
     path('api/users/me', api_views.me, name='me'),
     path('api/', include(router.urls)),
+     path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
     path('i18n/', include('django.conf.urls.i18n')),

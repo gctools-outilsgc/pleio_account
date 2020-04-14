@@ -5,11 +5,12 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import viewsets, permissions
 from api.serializers import UserSerializer, AllUserSerializer
+from api.permissions import IsAdminPermission
 from core.models import User
 
 class all_users(viewsets.ReadOnlyModelViewSet):
     queryset = User.objects.filter(is_active=True)
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated, IsAdminPermission]
     serializer_class = AllUserSerializer
 
 @api_view(['GET'])
