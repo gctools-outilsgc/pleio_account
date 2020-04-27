@@ -156,7 +156,7 @@ class User(AbstractBaseUser):
             mq_newuser('user.new', json.dumps({
                'name': self.name,
                'email': self.email,
-               'id': self.id
+               'gcID': self.id
             }))
             return self
 
@@ -271,7 +271,7 @@ class UserAdmin(UserAdmin):
             mq_newuser('user.new', json.dumps({
                'name': obj.name,
                'email': obj.email,
-               'id': obj.id
+               'gcID': obj.id
             }))
         obj.save()
 
