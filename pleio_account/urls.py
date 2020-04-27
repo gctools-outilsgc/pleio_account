@@ -9,6 +9,7 @@ from oauth2_provider import views as oauth2_views
 from two_factor.urls import urlpatterns as tf_urls
 
 from api import views as api_views
+from api.urls import urlpatterns as api_urls
 from core import views, forms
 from core.class_views import (
     PleioLoginView,
@@ -59,6 +60,7 @@ def decorated_includes(func, includes):
 
 
 urlpatterns = [
+    path('', include('frontend.urls')),
     path('register/', views.register, name='register'),
     path(
         'register/complete/',
@@ -115,9 +117,9 @@ urlpatterns = [
         oauth2_views.RevokeTokenView.as_view(),
         name='revoke-token'
     ),
-    path('api/users/me', api_views.me, name='me'),
     path('api/', include(router.urls)),
-     path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
+    path('', include(api_urls)),
+    path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
     path('i18n/', include('django.conf.urls.i18n')),

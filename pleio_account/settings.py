@@ -71,12 +71,14 @@ INSTALLED_APPS = [
     'oidc_provider',
     'axes',
     'corsheaders',
+    'frontend',
     'debug_toolbar'
 ]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+        'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     ),
     'DEFAULT_THROTTLE_CLASSES': (

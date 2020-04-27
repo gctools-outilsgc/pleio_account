@@ -23,7 +23,7 @@ RUN npm install -g npm
 ## Install and update NPM packages
 RUN npm install && \
     npm update && \
-    npm run build
+    npm run dev
 
 RUN mv /app/docker/start.sh /start.sh
 RUN chmod +x /start.sh

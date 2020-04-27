@@ -25,6 +25,7 @@ services:
       - ./api:/app/api
       - ./core:/app/core
       - ./emailvalidator:/app/emailvalidator
+      - ./frontend:/app/frontend
       - ./locale:/app/locale
   redis:
     image: redis
