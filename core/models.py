@@ -262,6 +262,16 @@ class UserAdmin(UserAdmin):
         }),
     )
 
+    def save_model(self,request, obj, form, change):
+        if form.instance.is_active == True :
+            # valid_user is the routing followed by name, email and id
+            service_mesh_message('user.new', json.dumps({
+                'name': obj.name,
+                'email': obj.email,
+                'gcID': obj.id
+            }))
+        obj.save()
+
 
 class PreviousLogin(models.Model):
     user = models.ForeignKey(

@@ -252,11 +252,6 @@ LOGGING = {
     },
 }
 
-# RabbitMq settings
-MQ_USER = ""
-MQ_PASSWORD = ""
-MQ_CONNECTION = ""
-
 # You can introspect any apps tokens
 OIDC_INTROSPECTION_VALIDATE_AUDIENCE_SCOPE = False
 
