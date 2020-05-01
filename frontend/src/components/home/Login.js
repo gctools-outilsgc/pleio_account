@@ -31,12 +31,20 @@ export class Login extends Component {
 
     render() {
         if (this.props.isAuthenticated) {
-            return <Redirect to="/" />;
+            if (this.props.location.state) {
+                return <Redirect to={`${this.props.location.state.next}${this.props.location.state.querystring}`} />;
+            } else {
+                return <Redirect to="/" />;
+            }
+        }
+        if (this.props.location.state) {
+            console.log(this.props.location.state.next);
+            console.log(this.props.location.state.querystring);
         }
         const { username, password } = this.state;
         return (
             <div>
-                <Card className="col-md-6 m-auto">
+                <Card className="col-md-4 m-auto">
                     <CardBody>
                         <h1>
                             <CardTitle>Sign in</CardTitle>

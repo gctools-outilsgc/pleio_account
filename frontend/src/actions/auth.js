@@ -42,7 +42,7 @@ export const login = (username, password) => dispatch => {
 
     const body = JSON.stringify({ username, password });
 
-    axios.post('/api/auth/login', body, config)
+    axios.post('/auth/login', body, config)
         .then(res => {
             dispatch({
                 type: LOGIN_SUCCESS,
@@ -98,21 +98,31 @@ export const logout = () => (dispatch, getState) => {
 
 // Setup config token - helper function
 export const tokenConfig = getState => {
-    // Get token from the state
-
-    const token = getState().auth.token;
+    // Get token from cookie
+    const csrftoken = getCookie('csrftoken');
 
     // Headers
     const config = {
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken
         },
     };
 
-    // if token add to headers
-    if (token) {
-        config.headers['Authorization'] = `Token ${token}`;
-    }
-
     return config;
+}
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
 }

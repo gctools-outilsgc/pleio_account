@@ -17,7 +17,7 @@ export class Header extends Component {
         const authLinks = (
             <Nav className="ml-auto">
                 <NavItem className="mr-3">
-                    {user ? `Welcome ${user.username}` : ""}
+                    {user ? `Welcome ${user.name}` : ""}
                 </NavItem>
                 <NavItem>
                     <Button onClick={this.props.logout} size="sm">logout</Button>
