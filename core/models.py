@@ -19,7 +19,11 @@ from .login_session_helpers import (
     get_device,
     get_lat_lon
 )
+<<<<<<< HEAD
 from .service_mesh import service_mesh_message
+=======
+# from .valid_new_user import mq_newuser
+>>>>>>> origin/master
 
 
 class Manager(BaseUserManager):
@@ -121,7 +125,8 @@ class User(AbstractBaseUser):
             'user': self,
             'activation_token': signing.dumps(obj=self.email),
             'protocol': 'https' if request.is_secure() else 'http',
-            'domain': current_site.domain
+            'domain': current_site.domain,
+            'app': config
         }
         self.email_user(
             render_to_string('emails/register_subject.txt', template_context),
@@ -151,11 +156,19 @@ class User(AbstractBaseUser):
             self.is_active = True
             self.save()
             # valid_user is the routing followed by name, email and id
+<<<<<<< HEAD
             service_mesh_message('user.new', json.dumps({
                 'name': self.name,
                 'email': self.email,
                 'gcID': self.id
             }))
+=======
+            # mq_newuser('user.new', json.dumps({
+            #    'name': self.name,
+            #    'email': self.email,
+            #    'id': self.id
+            # }))
+>>>>>>> origin/master
             return self
 
         except (signing.BadSignature, User.DoesNotExist):
@@ -211,7 +224,8 @@ class User(AbstractBaseUser):
             'country': get_country(session.ip),
             'user_agent': session.user_agent,
             'protocol': 'https' if request.is_secure() else 'http',
-            'domain': current_site.domain
+            'domain': current_site.domain,
+            'app': config
         }
 
         self.email_user(

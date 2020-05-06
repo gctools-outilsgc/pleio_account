@@ -32,13 +32,10 @@
               <div class="account-menu-container ui sticky">
                 <input type="checkbox" id="show_menu" />
                 <div class="account__top-bar">
-                    {% comment 'removing for now' %}
-                    <a class="navigation__logo" title="{% trans "Back to the homepage" %}" href="https://www.pleio.nl/">{% include_asset "images/logo.svg" %}</a>
-                    {% endcomment %}
                     <a href="{% url 'profile' %}" style="color:black;">
                         <img alt ="" src="{{ MEDIA_URL }}{{ app.APP_LOGO }}" class="ui top aligned mini image header-logo">
                         <span class="ui huge header">
-                            {{ app.APP_TITLE }}
+                                {% blocktrans with title=app.APP_TITLE|translate %} {{ title }} {% endblocktrans %}
                         </span>
                     </a>
 
@@ -82,7 +79,7 @@
                             <i aria-hidden="true">{% include_asset "icons/security.svg" %}</i>
                             <div>
                                 <div class="title">{% trans "Security" %}</div>
-				                        <div>{% trans "Password" %}, {% trans "Security questions" %}, {% trans "Sessions" %}, {% trans "Two-factor authentication" %}</div>
+				                        <div>{% trans "Password" %}, {% trans "Security questions" %}, {% trans "Sessions" %}, {% trans "Two-factor authentication" %}, {% trans "Authorized applications" %}</div>
                             </div>
                         </a>
                     </li>
@@ -113,9 +110,6 @@
             </div>
 
             <div class="account-right" id="account-content">
-                {% if request.COOKIES.partner_site_url %}
-                    <a href={{ request.COOKIES.partner_site_url }} class="button ___white ___outline account__close">{{ request.COOKIES.partner_site_name }}</a>
-                {% endif %}
                 <main id="account-main">
                     <div class="page-heading ui sticky">
                         <h1 class="ui large header">{% block page_header %}{% endblock %}</h1>

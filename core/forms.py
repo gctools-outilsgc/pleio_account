@@ -14,10 +14,12 @@ from django.views.generic.edit import FormView
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
+from django.shortcuts import redirect
 from two_factor.forms import AuthenticationTokenForm, TOTPDeviceForm
 from emailvalidator.validator import is_email_valid
 from constance import config
 from axes.utils import reset
+from oidc_provider.models import UserConsent
 
 from .models import User
 from .helpers import verify_captcha_response
@@ -50,13 +52,19 @@ class ResetPasswordRequestView(FormView):
         if self.validate_email_address(email):
             found_user = User.objects.filter(email__iexact=email)
             if found_user.exists():
+
                 for user in found_user:
+
+                    if user.is_active is False:
+                        return redirect('password_reset_not_active')
+
                     c = {
                         'domain': request.META['HTTP_HOST'],
-                        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                        'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
                         'user': user,
                         'token': default_token_generator.make_token(user),
-                        'protocol': request.is_secure() and "https" or "http"
+                        'protocol': request.is_secure() and "https" or "http",
+                        'app': config
                     }
 
                     subject_template_name = 'emails/reset_password_subject.txt'
@@ -84,54 +92,59 @@ class ResetPasswordRequestView(FormView):
                 return self.form_valid(form)
 
             elif config.ELGG_URL:
-                # Verify user exists in Elgg
-                valid_user_request = requests.post(
-                    config.ELGG_URL
-                    + "/services/api/rest/json/",
-                    data={
-                        'method': 'pleio.userexists',
-                        'user': email
-                    }
-                )
-                valid_user_json = json.loads(valid_user_request.text)
-                valid_user_result = valid_user_json["result"] if 'result' in valid_user_json else []
-                valid_user = valid_user_result["valid"] if 'valid' in valid_user_result else False
-                name = valid_user_result["name"] if 'name' in valid_user_result else email
 
-                # If exists in Elgg, create local user
-                if valid_user is True:
-                    user = User.objects.create_user(
-                        name=name,
-                        email=email,
-                        accepted_terms=True,
-                        receives_newsletter=True
-                    )
-                    user.is_active = True
-                    user.save()
-                    c = {
-                        'domain': request.META['HTTP_HOST'],
-                        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                        'user': user,
-                        'token': default_token_generator.make_token(user),
-                        'protocol': request.is_secure() and "https" or "http"
-                    }
-                    subject_template_name = 'emails/reset_password_subject.txt'
-                    email_template_name = 'emails/reset_password.txt'
-                    html_email_template_name = 'emails/reset_password.html'
-                    subject = loader.render_to_string(subject_template_name, c)
-                    subject = ''.join(subject.splitlines())
-                    email = loader.render_to_string(email_template_name, c)
-                    html_email = loader.render_to_string(html_email_template_name, c)
-                    send_mail(
-                        subject,
-                        email,
-                        config.EMAIL_FROM,
-                        [user.email],
-                        fail_silently=config.EMAIL_FAIL_SILENTLY,
-                        html_message=html_email
+                elgg_urls =  config.ELGG_URL.splitlines()
+
+                for url in elgg_urls:
+                    # Verify user exists in Elgg
+                    valid_user_request = requests.post(
+                        url + "/services/api/rest/json/",
+                        data={
+                            'method': 'pleio.userexists',
+                            'user': email
+                        }
                     )
 
-                    return self.form_valid(form)
+                    valid_user_json = json.loads(valid_user_request.text)
+                    valid_user_result = valid_user_json["result"] if 'result' in valid_user_json else []
+                    valid_user = valid_user_result["valid"] if 'valid' in valid_user_result else False
+                    name = valid_user_result["name"] if 'name' in valid_user_result else email
+
+                    # If exists in Elgg, create local user
+                    if valid_user is True:
+                        user = User.objects.create_user(
+                            name=name,
+                            email=email,
+                            accepted_terms=True,
+                            receives_newsletter=True
+                        )
+                        user.is_active = True
+                        user.save()
+                        c = {
+                            'domain': request.META['HTTP_HOST'],
+                            'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
+                            'user': user,
+                            'token': default_token_generator.make_token(user),
+                            'protocol': request.is_secure() and "https" or "http",
+                            'app': config
+                        }
+                        subject_template_name = 'emails/reset_password_subject.txt'
+                        email_template_name = 'emails/reset_password.txt'
+                        html_email_template_name = 'emails/reset_password.html'
+                        subject = loader.render_to_string(subject_template_name, c)
+                        subject = ''.join(subject.splitlines())
+                        email = loader.render_to_string(email_template_name, c)
+                        html_email = loader.render_to_string(html_email_template_name, c)
+                        send_mail(
+                            subject,
+                            email,
+                            config.EMAIL_FROM,
+                            [user.email],
+                            fail_silently=config.EMAIL_FAIL_SILENTLY,
+                            html_message=html_email
+                        )
+
+                        return self.form_valid(form)
 
                 else:
                     form.add_error(None, _("No user is associated with this email address."))
@@ -200,7 +213,7 @@ class RegisterForm(forms.Form):
 
     def clean_email(self):
         # Get the emails
-        email = self.cleaned_data.get('email')
+        email = self.cleaned_data.get('email').lower()
 
         try:
             User.objects.get(email=email)
@@ -246,6 +259,8 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('name', 'email', 'receives_newsletter',)
+    def clean_email(self):
+        return self.cleaned_data.get('email').lower()
 
 
 class LabelledLoginForm(AuthenticationForm):
@@ -263,7 +278,7 @@ class LabelledLoginForm(AuthenticationForm):
         widget=forms.PasswordInput(attrs={'autocomplete': 'off'})
     )
     def clean(self):
-        username = self.cleaned_data.get('username')
+        username = self.cleaned_data.get('username').lower()
         password = self.cleaned_data.get('password')
 
         credentials={
@@ -293,6 +308,7 @@ class PleioTOTPDeviceForm(TOTPDeviceForm):
 class ChangePasswordForm(forms.Form):
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
+        self.request = kwargs.pop('request', None)
         super(ChangePasswordForm, self).__init__(*args, **kwargs)
 
     error_messages = {
@@ -321,7 +337,7 @@ class ChangePasswordForm(forms.Form):
 
     def clean_old_password(self):
         old_password = self.cleaned_data.get("old_password")
-        user = authenticate(username=self.user.email, password=old_password)
+        user = authenticate(self.request, username=self.user.email, password=old_password)
 
         if user is None:
             raise forms.ValidationError(
@@ -422,3 +438,23 @@ class AnswerSecurityQuestions(forms.Form):
                     'One or more of your answers do not match'
                     ' the registered answers.'
                 ))
+
+
+class AppRemoveAccess(forms.Form):
+    object_id = forms.CharField(widget=forms.HiddenInput())
+
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super(AppRemoveAccess, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = super(AppRemoveAccess, self).clean()
+        object_id = cleaned_data.get('object_id')
+
+        app_consent = UserConsent.objects.get(id=object_id)
+
+        if app_consent.user_id != self.user.id:
+            raise forms.ValidationError(_('Unable to remove access'))
+
+class ResendValidation(forms.Form):
+    email = forms.CharField(widget=forms.HiddenInput())

@@ -17,6 +17,11 @@ from core.class_views import (
 )
 from axes.decorators import axes_dispatch
 
+from rest_framework.authtoken.views import obtain_auth_token
+from rest_framework import routers
+router = routers.SimpleRouter()
+
+router.register('users/all', api_views.all_users, 'all_users')
 
 class DecoratedURLPattern(URLPattern):
     def resolve(self, *args, **kwargs):
@@ -111,6 +116,8 @@ urlpatterns = [
         name='revoke-token'
     ),
     path('api/users/me', api_views.me, name='me'),
+    path('api/', include(router.urls)),
+     path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
     path('i18n/', include('django.conf.urls.i18n')),
@@ -137,6 +144,11 @@ urlpatterns = [
         name='password_reset_questions'
     ),
     path(
+        'password_reset/notactive/',
+        views.not_active_profile,
+        name='password_reset_not_active'
+    ),
+    path(
         'reset/<uidb64>/<token>/',
         auth_views.PasswordResetConfirmView.as_view(),
         {
@@ -161,6 +173,11 @@ urlpatterns = [
       xframe_options_exempt,
       include('oidc_provider.urls', namespace='oidc_provider')
     )),
+    path(
+        'security_pages/remove_access',
+        views.revoke_app_access,
+        name='remove_access'
+    )
 ]
 
 if settings.DEBUG:

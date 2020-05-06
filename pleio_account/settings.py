@@ -17,15 +17,15 @@ import dj_database_url
 from django.utils.translation import ugettext_lazy as _
 from datetime import timedelta
 import logging
+from core.helpers import str_to_bool
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Set debugging to log everthing to console.
 INTERNAL_IPS = '127.0.0.1'
-
 try:
-    DEBUG = os.environ['DEBUG']
+    DEBUG =  str_to_bool(os.environ['DEBUG'])
 except KeyError:
     DEBUG = False
 
@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'api',
     'oauth2_provider',
     'rest_framework',
+     'rest_framework.authtoken',
     'webpack_loader',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -76,6 +77,7 @@ INSTALLED_APPS = [
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+        'rest_framework.authentication.TokenAuthentication',
     ),
     'DEFAULT_THROTTLE_CLASSES': (
         'rest_framework.throttling.AnonRateThrottle',
@@ -84,7 +86,10 @@ REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
         'anon': '10/minute',
         'user': '100/minute'
-    }
+    },
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
 }
 
 MIDDLEWARE = [
@@ -106,9 +111,8 @@ MIDDLEWARE = [
 ]
 
 AUTHENTICATION_BACKENDS = [
-    'axes.backends.AxesModelBackend',
-    'django.contrib.auth.backends.ModelBackend',
-    'core.backends.ElggBackend'
+    'core.backends.ElggLockout',
+    'django.contrib.auth.backends.ModelBackend'
 ]
 
 ROOT_URLCONF = 'pleio_account.urls'
@@ -231,6 +235,7 @@ OIDC_USERINFO = 'pleio_account.oidc_provider_settings.userinfo'
 OIDC_EXTRA_SCOPE_CLAIMS = (
     'pleio_account.oidc_provider_settings.CustomScopeClaims'
 )
+OIDC_IDTOKEN_INCLUDE_CLAIMS = True
 
 EMAIL_BACKEND = "core.backends.SiteConfigEmailBackend"
 
@@ -305,7 +310,7 @@ CONSTANCE_ADDITIONAL_FIELDS = {
     }]
 }
 CONSTANCE_CONFIG = {
-    'ELGG_URL': ('https://gccollab.ca', 'Elgg URL', str),
+    'ELGG_URL': ('https://gccollab.ca', 'Elgg URLs - add each URL on a new line', str),
 
     'FRESHDESK_URL': ('', 'Freshdesk URL', 'url'),
     'FRESHDESK_SECRET_KEY': ('', 'Freshdesk Secret Key', str),

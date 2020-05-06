@@ -12,7 +12,9 @@ from .forms import (
     PleioTOTPDeviceForm,
     ChangePasswordForm,
     ChooseSecurityQuestion,
-    AnswerSecurityQuestions
+    AnswerSecurityQuestions,
+    AppRemoveAccess,
+    ResendValidation
 )
 from .models import User, PreviousLogin, SecurityQuestions
 from django.urls import reverse
@@ -39,8 +41,9 @@ from two_factor.views.profile import DisableView
 from django.http import Http404, HttpResponseRedirect
 from django.views.decorators.cache import never_cache
 from django.utils.http import urlquote
+import time
 from datetime import datetime
-
+from oidc_provider.models import UserConsent
 
 def home(request):
     if request.user.is_authenticated:
@@ -99,6 +102,23 @@ def register_activate(request, activation_token=None):
 
     return render(request, 'register_activate.html')
 
+def not_active_profile(request):
+    email = request.session['email']
+
+    if request.method == "POST":
+        form = ResendValidation(request.POST)
+
+        if form.is_valid():
+            data = form.cleaned_data
+
+            found_user = User.objects.filter(email__iexact=data['email'])
+
+            for user in found_user:
+                user.send_activation_token(request)
+
+            return render(request, 'registration/password_reset_not_active.html', { 'email': email, 'submit': True })
+    else:
+        return render(request, 'registration/password_reset_not_active.html', { 'email': email, 'submit': False })
 
 @login_required
 def profile(request):
@@ -106,7 +126,7 @@ def profile(request):
         form = UserProfileForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             user = form.save()
-
+            form = UserProfileForm(instance=request.user)
     else:
         form = UserProfileForm(instance=request.user)
 
@@ -192,13 +212,14 @@ def security_pages(request, page_action=None):
         'pass_reset_form': change_password_form(request, page_action),
         'security_questions': security_question(request),
         '2FA': two_factor_form(request, page_action),
-        'user_session_form': user_sessions_form(request)
+        'user_session_form': user_sessions_form(request),
+        'authorized_apps': authorized_apps(request)
     })
 
 def change_password_form(request, page_action):
     if page_action == 'change-password':
         user = request.user
-        form = ChangePasswordForm(request.POST, user=user)
+        form = ChangePasswordForm(request.POST, user=user, request=request)
         if form.is_valid():
             data = form.cleaned_data
             new_password2 = data['new_password2']
@@ -317,6 +338,34 @@ def user_sessions_form(request):
 
     return user_sessions['object_list']
 
+def authorized_apps(request):
+    user_email = request.user.email
+    authorized_apps = UserConsent.objects.filter(user__email=user_email)
+    apps = []
+    #Remove expired access apps from list
+    for app in authorized_apps:
+        if app.expires_at > datetime.now(app.expires_at.tzinfo):
+            apps.append(app)
+    return apps
+
+def revoke_app_access(request):
+    if request.method == "POST":
+        form = AppRemoveAccess(request.user, request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+
+            #Grab consent object
+            app_consent = UserConsent.objects.get(id=data['object_id'])
+            #Set new expiration time. Now - 12 hours to be safe
+            app_consent.expires_at = (datetime.fromtimestamp(time.time() - 43200))
+            app_consent.save()
+
+            messages.success(request, (_("Application access has been removed")))
+
+            return redirect('security_pages')
+
+    return redirect('security_pages')
+
 
 @never_cache
 @login_required
@@ -327,19 +376,19 @@ def freshdesk_sso(request):
 
     name = request.user.name
     email = request.user.email
-    dt = int(datetime.utcnow().strftime("%s")) - 148
+    dt = int(time.time())
 
     data = '{0}{1}{2}{3}'.format(name, config.FRESHDESK_SECRET_KEY, email, dt)
     generated_hash = hmac.new(
-        config.FRESHDESK_SECRET_KEY,
-        data,
+        config.FRESHDESK_SECRET_KEY.encode(),
+        data.encode(),
         hashlib.md5
     ).hexdigest()
 
     return HttpResponseRedirect(
         config.FRESHDESK_URL
         + 'login/sso/?'
-        + urllib.urlencode({
+        + urllib.parse.urlencode({
             'name': name,
             'email': email,
             'timestamp': str(dt),

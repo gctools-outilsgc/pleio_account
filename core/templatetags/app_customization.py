@@ -1,6 +1,7 @@
 from django import template
 from django.conf import settings
 from constance import config
+from django.utils.translation import ugettext
 
 register = template.Library()
 
@@ -15,3 +16,10 @@ def show_customizations_bg_image():
             'T': 'background-repeat: repeat;',
             'C': 'background-repeat: no-repeat; background-size: cover;'
     }[config.APP_BACKGROUND_OPTIONS]
+
+@register.filter(name='translate')
+def translate(text):
+    try:
+        return ugettext(text)
+    except:
+        return text
