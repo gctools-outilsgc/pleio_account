@@ -19,12 +19,8 @@ from .login_session_helpers import (
     get_device,
     get_lat_lon
 )
-<<<<<<< HEAD
-from .service_mesh import service_mesh_message
-=======
-# from .valid_new_user import mq_newuser
->>>>>>> origin/master
 
+from .service_mesh import service_mesh_message
 
 class Manager(BaseUserManager):
     def create_user(self, email, name, password=None, accepted_terms=False,
@@ -156,19 +152,12 @@ class User(AbstractBaseUser):
             self.is_active = True
             self.save()
             # valid_user is the routing followed by name, email and id
-<<<<<<< HEAD
             service_mesh_message('user.new', json.dumps({
                 'name': self.name,
                 'email': self.email,
                 'gcID': self.id
             }))
-=======
-            # mq_newuser('user.new', json.dumps({
-            #    'name': self.name,
-            #    'email': self.email,
-            #    'id': self.id
-            # }))
->>>>>>> origin/master
+
             return self
 
         except (signing.BadSignature, User.DoesNotExist):
