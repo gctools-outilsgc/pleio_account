@@ -24,6 +24,8 @@ from oidc_provider.models import UserConsent
 from .models import User
 from .helpers import verify_captcha_response
 
+from .service_mesh import service_mesh_message
+
 
 class PasswordResetRequestForm(forms.Form):
     email = forms.CharField(label=("Email address"), max_length=254)
@@ -114,12 +116,17 @@ class ResetPasswordRequestView(FormView):
                     if valid_user is True:
                         user = User.objects.create_user(
                             name=name,
-                            email=email,
+                            email=email.lower(),
                             accepted_terms=True,
                             receives_newsletter=True
                         )
                         user.is_active = True
                         user.save()
+                        service_mesh_message('user.new', json.dumps({
+                            'name': user.name,
+                            'email': user.email,
+                            'gcID': user.id
+                        }))
                         c = {
                             'domain': request.META['HTTP_HOST'],
                             'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
