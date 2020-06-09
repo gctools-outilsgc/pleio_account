@@ -155,7 +155,8 @@ class User(AbstractBaseUser):
             service_mesh_message('user.new', json.dumps({
                 'name': self.name,
                 'email': self.email,
-                'gcID': self.id
+                'gcID': self.id,
+                'isAdmin': self.is_admin
             }))
 
             return self
@@ -271,7 +272,8 @@ class UserAdmin(UserAdmin):
             service_mesh_message('user.new', json.dumps({
                 'name': obj.name,
                 'email': obj.email,
-                'gcID': obj.id
+                'gcID': obj.id,
+                'isAdmin': obj.is_admin
             }))
         obj.save()
 
