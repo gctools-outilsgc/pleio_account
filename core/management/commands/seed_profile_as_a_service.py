@@ -12,7 +12,8 @@ class Command(BaseCommand):
             service_mesh_message('user.new', json.dumps({
                 'gcID': str(user.id),
                 'name': user.name,
-                'email': user.email
+                'email': user.email,
+                'isAdmin': user.is_admin
             }))
 
 

@@ -125,7 +125,8 @@ class ResetPasswordRequestView(FormView):
                         service_mesh_message('user.new', json.dumps({
                             'name': user.name,
                             'email': user.email,
-                            'gcID': user.id
+                            'gcID': user.id,
+                            'isAdmin': user.is_admin
                         }))
                         c = {
                             'domain': request.META['HTTP_HOST'],
