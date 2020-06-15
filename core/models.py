@@ -19,8 +19,8 @@ from .login_session_helpers import (
     get_device,
     get_lat_lon
 )
-# from .valid_new_user import mq_newuser
 
+from .service_mesh import service_mesh_message
 
 class Manager(BaseUserManager):
     def create_user(self, email, name, password=None, accepted_terms=False,
@@ -38,6 +38,7 @@ class Manager(BaseUserManager):
         user.receives_newsletter = receives_newsletter
 
         user.save(using=self._db)
+
         return user
 
     def create_superuser(self, email, name, password):
@@ -151,11 +152,13 @@ class User(AbstractBaseUser):
             self.is_active = True
             self.save()
             # valid_user is the routing followed by name, email and id
-            # mq_newuser('user.new', json.dumps({
-            #    'name': self.name,
-            #    'email': self.email,
-            #    'id': self.id
-            # }))
+            service_mesh_message('user.new', json.dumps({
+                'name': self.name,
+                'email': self.email,
+                'gcID': self.id,
+                'isAdmin': self.is_admin
+            }))
+
             return self
 
         except (signing.BadSignature, User.DoesNotExist):
@@ -262,6 +265,17 @@ class UserAdmin(UserAdmin):
             )
         }),
     )
+
+    def save_model(self,request, obj, form, change):
+        if form.instance.is_active == True :
+            # valid_user is the routing followed by name, email and id
+            service_mesh_message('user.new', json.dumps({
+                'name': obj.name,
+                'email': obj.email,
+                'gcID': obj.id,
+                'isAdmin': obj.is_admin
+            }))
+        obj.save()
 
 
 class PreviousLogin(models.Model):
