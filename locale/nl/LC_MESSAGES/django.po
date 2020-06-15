@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-07 15:40+0000\n"
+"POT-Creation-Date: 2020-06-15 15:39+0000\n"
 "PO-Revision-Date: 2017-12-15 16:48+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -18,92 +18,92 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.4\n"
 
-#: core/forms.py:146 core/forms.py:150
+#: core/forms.py:150 core/forms.py:154
 msgid "No user is associated with this email address."
 msgstr "Aan dit e-mailadres is geen gebruiker gekoppeld."
 
-#: core/forms.py:154
+#: core/forms.py:158
 msgid "Please provide a valid email address."
 msgstr "Geef alstublieft een geldig email adres."
 
-#: core/forms.py:163
+#: core/forms.py:167
 msgid "Your email address is not allowed."
 msgstr "Dit e-mailadres is niet geldig."
 
-#: core/forms.py:168
+#: core/forms.py:172
 msgid "This email is already registered."
 msgstr "Deze e-mail is al geregistreerd."
 
-#: core/forms.py:175 core/forms.py:312
+#: core/forms.py:179 core/forms.py:316
 msgid "The two password fields didn't match."
 msgstr "De twee wachtwoorden komen niet overeen."
 
-#: core/forms.py:177
+#: core/forms.py:181
 msgid "This email is already in use."
 msgstr "Deze email is al in gebruik."
 
-#: core/forms.py:297 core/forms.py:301
+#: core/forms.py:301 core/forms.py:305
 msgid "Token"
 msgstr "Token"
 
-#: core/forms.py:311
+#: core/forms.py:315
 msgid "The password is invalid."
 msgstr "Het wachtwoord is ongeldig."
 
-#: core/forms.py:364 core/forms.py:371 core/forms.py:378
+#: core/forms.py:368 core/forms.py:375 core/forms.py:382
 #: core/templatetags/Pleio_templatetags.py:16
 msgid "Please select one of the questions"
 msgstr ""
 
-#: core/forms.py:365 core/templatetags/Pleio_templatetags.py:17
+#: core/forms.py:369 core/templatetags/Pleio_templatetags.py:17
 msgid "What is your favourite board game?"
 msgstr ""
 
-#: core/forms.py:366 core/templatetags/Pleio_templatetags.py:18
+#: core/forms.py:370 core/templatetags/Pleio_templatetags.py:18
 msgid "Who is your favourite fictional character?"
 msgstr ""
 
-#: core/forms.py:367 core/templatetags/Pleio_templatetags.py:19
+#: core/forms.py:371 core/templatetags/Pleio_templatetags.py:19
 msgid "What is your least favourite chore?"
 msgstr ""
 
-#: core/forms.py:372 core/templatetags/Pleio_templatetags.py:20
+#: core/forms.py:376 core/templatetags/Pleio_templatetags.py:20
 msgid "What type of music do you dislike most?"
 msgstr ""
 
-#: core/forms.py:373 core/templatetags/Pleio_templatetags.py:21
+#: core/forms.py:377 core/templatetags/Pleio_templatetags.py:21
 msgid "What was your favourite TV show when you were a child?"
 msgstr ""
 
-#: core/forms.py:374 core/templatetags/Pleio_templatetags.py:22
+#: core/forms.py:378 core/templatetags/Pleio_templatetags.py:22
 msgid "Who was your best friend in kindergarten?"
 msgstr ""
 
-#: core/forms.py:380 core/templatetags/Pleio_templatetags.py:23
+#: core/forms.py:384 core/templatetags/Pleio_templatetags.py:23
 msgid "If you won the lottery, what would be your first big purchase?"
 msgstr ""
 
-#: core/forms.py:382 core/templatetags/Pleio_templatetags.py:24
+#: core/forms.py:386 core/templatetags/Pleio_templatetags.py:24
 msgid "What is the first movie you saw in theatres?"
 msgstr ""
 
-#: core/forms.py:383 core/templatetags/Pleio_templatetags.py:25
+#: core/forms.py:387 core/templatetags/Pleio_templatetags.py:25
 msgid "What was your first cell phone?"
 msgstr ""
 
-#: core/forms.py:384 core/templatetags/Pleio_templatetags.py:26
+#: core/forms.py:388 core/templatetags/Pleio_templatetags.py:26
 msgid "What movie do you know the most quotes from?"
 msgstr ""
 
-#: core/forms.py:403
+#: core/forms.py:407
 msgid "The same question can not be used more than once"
 msgstr ""
 
-#: core/forms.py:434
+#: core/forms.py:438
 msgid "One or more of your answers do not match the registered answers."
 msgstr ""
 
-#: core/forms.py:453
+#: core/forms.py:457
 msgid "Unable to remove access"
 msgstr ""
 
@@ -649,11 +649,11 @@ msgstr "E-mail"
 msgid "Government"
 msgstr "Overheid"
 
-#: core/templates/profile.html:33 core/templates/register.html:85
-msgid "Receive Suspicious Sign In Emails"
-msgstr "Ontvang verdachte e-mails met inloggen"
+#: core/templates/profile.html:34
+msgid "I wish to be informed of any suspicious login attempts to my account"
+msgstr ""
 
-#: core/templates/profile.html:38
+#: core/templates/profile.html:40
 msgid "Save"
 msgstr "Opslaan"
 
@@ -729,6 +729,10 @@ msgstr "Ik ga akkoord met de "
 #: core/templates/register.html:79
 msgid " terms and conditions"
 msgstr ""
+
+#: core/templates/register.html:85
+msgid "Receive Suspicious Sign In Emails"
+msgstr "Ontvang verdachte e-mails met inloggen"
 
 #: core/templates/register_activate.html:6
 #: core/templates/register_activate.html:10
@@ -2908,21 +2912,40 @@ msgstr "Token"
 msgid "There are no authorized tokens yet."
 msgstr ""
 
-#: pleio_account/oidc_provider_settings.py:22
+#: pleio_account/oidc_provider_settings.py:110
+#, fuzzy
+#| msgid "Profile"
+msgid "Profile Modification"
+msgstr "Profiel"
+
+#: pleio_account/oidc_provider_settings.py:111
+msgid "Ability to view and modify your profile information"
+msgstr ""
+
+#: pleio_account/oidc_provider_settings.py:127
 #, fuzzy
 #| msgid "Back to Profile"
 msgid "Basic profile"
 msgstr "Terug naar profiel"
 
-#: pleio_account/oidc_provider_settings.py:23
-msgid "Access to your name"
+#: pleio_account/oidc_provider_settings.py:128
+msgid "Access to your name, email, avatar, and address"
 msgstr ""
 
-#: pleio_account/settings.py:194
+#: pleio_account/oidc_provider_settings.py:132
+msgid "Detailed User profile"
+msgstr ""
+
+#: pleio_account/oidc_provider_settings.py:133
+msgid ""
+"Access to your name, email, avatar, address, and organization information"
+msgstr ""
+
+#: pleio_account/settings.py:198
 msgid "English"
 msgstr "Engels"
 
-#: pleio_account/settings.py:195
+#: pleio_account/settings.py:199
 msgid "French"
 msgstr "Frans"
 
@@ -2996,11 +3019,6 @@ msgstr "Frans"
 #~ msgstr ""
 #~ "\n"
 #~ "U heeft slechts één backupcode over "
-
-#, fuzzy
-#~| msgid "Profile"
-#~ msgid "Profile picture"
-#~ msgstr "Profiel"
 
 #, fuzzy
 #~| msgid "Your profile"

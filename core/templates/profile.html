@@ -7,12 +7,12 @@
 {% block page_header %}{% trans "Account Settings" %}{% endblock %}
 
 {% block content %}
-    <h2 class="ui header">{% trans "Profile" %}</h2>
+<h2 class="ui header">{% trans "Profile" %}</h2>
 
-    <form enctype="multipart/form-data" method="post" action="." class="ui form">
-        <div class="account__cards ui cards">
-            <div class="card ___nopadding ui card">
-		<div class="content">
+<form enctype="multipart/form-data" method="post" action="." class="ui form">
+    <div class="account__cards ui cards">
+        <div class="card ___nopadding ui card">
+            <div class="content">
                 {% csrf_token %}
                 <h3 class="card__title ___addpadding-side header">{% trans "Your details" %}</h3>
                 <fieldset class="___addpadding-side">
@@ -30,18 +30,20 @@
                     <div class="field ui checkbox">
                         {{ form.errors.receives_newsletter }}
                         {{ form.receives_newsletter }}
-                        <label for="id_receives_newsletter">{% trans "Receive Suspicious Sign In Emails" %}</label>
+                        <label
+                            for="id_receives_newsletter">{% trans "I wish to be informed of any suspicious login attempts to my account" %}</label>
                     </div>
                 </fieldset>
-		</div>
-                <div class="card__action ___addpadding-side extra content">
-                    <button name="update" class="button ___clear ui button right floated primary" type="submit">{% trans "Save" %}</button>
-                </div>
-
             </div>
+            <div class="card__action ___addpadding-side extra content">
+                <button name="update" class="button ___clear ui button right floated primary"
+                    type="submit">{% trans "Save" %}</button>
+            </div>
+
         </div>
+    </div>
 
 
-    </form>
+</form>
 
 {% endblock %}

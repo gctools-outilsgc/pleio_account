@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-07 15:40+0000\n"
+"POT-Creation-Date: 2020-06-15 15:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,93 +18,93 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: core/forms.py:146 core/forms.py:150
+#: core/forms.py:150 core/forms.py:154
 msgid "No user is associated with this email address."
 msgstr "Aucun utilisateur n'est associé à cette adresse e-mail."
 
-#: core/forms.py:154
+#: core/forms.py:158
 msgid "Please provide a valid email address."
 msgstr "Veuillez fournir une adresse e-mail valide."
 
-#: core/forms.py:163
+#: core/forms.py:167
 msgid "Your email address is not allowed."
 msgstr "Votre adresse e-mail n'est pas autorisée."
 
-#: core/forms.py:168
+#: core/forms.py:172
 msgid "This email is already registered."
 msgstr "Cet e-mail est déjà enregistré."
 
-#: core/forms.py:175 core/forms.py:312
+#: core/forms.py:179 core/forms.py:316
 msgid "The two password fields didn't match."
 msgstr "Ces deux champs réservés au mot de passe ne sont pas identiques."
 
-#: core/forms.py:177
+#: core/forms.py:181
 msgid "This email is already in use."
 msgstr "La présente adresse courriel est actuellement utilisée."
 
-#: core/forms.py:297 core/forms.py:301
+#: core/forms.py:301 core/forms.py:305
 msgid "Token"
 msgstr "Jeton"
 
-#: core/forms.py:311
+#: core/forms.py:315
 msgid "The password is invalid."
 msgstr "Le mot de passe est invalide"
 
-#: core/forms.py:364 core/forms.py:371 core/forms.py:378
+#: core/forms.py:368 core/forms.py:375 core/forms.py:382
 #: core/templatetags/Pleio_templatetags.py:16
 msgid "Please select one of the questions"
 msgstr "Veuillez choisir une question dans la liste."
 
-#: core/forms.py:365 core/templatetags/Pleio_templatetags.py:17
+#: core/forms.py:369 core/templatetags/Pleio_templatetags.py:17
 msgid "What is your favourite board game?"
 msgstr "Quel est votre jeu de société préféré?"
 
-#: core/forms.py:366 core/templatetags/Pleio_templatetags.py:18
+#: core/forms.py:370 core/templatetags/Pleio_templatetags.py:18
 msgid "Who is your favourite fictional character?"
 msgstr "Qui est votre personnage fictif préféré?"
 
-#: core/forms.py:367 core/templatetags/Pleio_templatetags.py:19
+#: core/forms.py:371 core/templatetags/Pleio_templatetags.py:19
 msgid "What is your least favourite chore?"
 msgstr "Quelle tâche aimez-vous le moins?"
 
-#: core/forms.py:372 core/templatetags/Pleio_templatetags.py:20
+#: core/forms.py:376 core/templatetags/Pleio_templatetags.py:20
 msgid "What type of music do you dislike most?"
 msgstr "Quel type de musique vous déplaît le plus?"
 
-#: core/forms.py:373 core/templatetags/Pleio_templatetags.py:21
+#: core/forms.py:377 core/templatetags/Pleio_templatetags.py:21
 msgid "What was your favourite TV show when you were a child?"
 msgstr ""
 "Quelle était votre émission de télévision préférée lorsque vous étiez enfant?"
 
-#: core/forms.py:374 core/templatetags/Pleio_templatetags.py:22
+#: core/forms.py:378 core/templatetags/Pleio_templatetags.py:22
 msgid "Who was your best friend in kindergarten?"
 msgstr "Qui était votre meilleur ami à la maternelle?"
 
-#: core/forms.py:380 core/templatetags/Pleio_templatetags.py:23
+#: core/forms.py:384 core/templatetags/Pleio_templatetags.py:23
 msgid "If you won the lottery, what would be your first big purchase?"
 msgstr "Si vous gagniez la loterie, quel serait votre premier gros achat?"
 
-#: core/forms.py:382 core/templatetags/Pleio_templatetags.py:24
+#: core/forms.py:386 core/templatetags/Pleio_templatetags.py:24
 msgid "What is the first movie you saw in theatres?"
 msgstr "Quel est le premier film que vous avez vu en salle de cinéma?"
 
-#: core/forms.py:383 core/templatetags/Pleio_templatetags.py:25
+#: core/forms.py:387 core/templatetags/Pleio_templatetags.py:25
 msgid "What was your first cell phone?"
 msgstr "Quel était votre premier téléphone cellulaire?"
 
-#: core/forms.py:384 core/templatetags/Pleio_templatetags.py:26
+#: core/forms.py:388 core/templatetags/Pleio_templatetags.py:26
 msgid "What movie do you know the most quotes from?"
 msgstr "De quel film connaissez-vous le plus de citations?"
 
-#: core/forms.py:403
+#: core/forms.py:407
 msgid "The same question can not be used more than once"
 msgstr "Une même question ne peut pas être utilisée plus d’une fois."
 
-#: core/forms.py:434
+#: core/forms.py:438
 msgid "One or more of your answers do not match the registered answers."
 msgstr "Au moins une de vos réponses diffère des réponses sauvegardées."
 
-#: core/forms.py:453
+#: core/forms.py:457
 msgid "Unable to remove access"
 msgstr ""
 
@@ -658,11 +658,12 @@ msgstr "Courriel"
 msgid "Government"
 msgstr "Gouvernement"
 
-#: core/templates/profile.html:33 core/templates/register.html:85
-msgid "Receive Suspicious Sign In Emails"
-msgstr "Recevoir des e-mails de connexion suspects"
+#: core/templates/profile.html:34
+msgid "I wish to be informed of any suspicious login attempts to my account"
+msgstr ""
+"Je souhaite être informé(e) de toute tentative suspecte d’accès à mon compte"
 
-#: core/templates/profile.html:38
+#: core/templates/profile.html:40
 msgid "Save"
 msgstr "Sauvegarder"
 
@@ -732,6 +733,10 @@ msgstr "J’accepte les"
 #: core/templates/register.html:79
 msgid " terms and conditions"
 msgstr " conditions d'utilisation"
+
+#: core/templates/register.html:85
+msgid "Receive Suspicious Sign In Emails"
+msgstr "Recevoir des e-mails de connexion suspects"
 
 #: core/templates/register_activate.html:6
 #: core/templates/register_activate.html:10
@@ -873,16 +878,22 @@ msgstr "Le courriel de vérification a été envoyé"
 msgid ""
 "Please check your email inbox and click the verification link to continue "
 "using your account."
-msgstr "Vérifiez vos courriels, puis cliquez sur le lien de validation envoyé pour continuer à utiliser votre compte."
+msgstr ""
+"Vérifiez vos courriels, puis cliquez sur le lien de validation envoyé pour "
+"continuer à utiliser votre compte."
 
 #: core/templates/registration/password_reset_not_active.html:31
 msgid ""
 "If you can't find the email in your inbox, please check your junk folder."
-msgstr "Si vous ne trouvez pas le courriel dans votre boîte de réception, vérifiez vos courriers indésirables."
+msgstr ""
+"Si vous ne trouvez pas le courriel dans votre boîte de réception, vérifiez "
+"vos courriers indésirables."
 
 #: core/templates/registration/password_reset_not_active.html:32
 msgid "Still no email? Contact our help desk"
-msgstr "Vous n’avez toujours pas reçu de courriel? Communiquez avec le Bureau de services "
+msgstr ""
+"Vous n’avez toujours pas reçu de courriel? Communiquez avec le Bureau de "
+"services "
 
 #: core/templates/registration/password_reset_not_active.html:32
 msgid " to access your account."
@@ -2913,21 +2924,43 @@ msgstr "Jeton"
 msgid "There are no authorized tokens yet."
 msgstr ""
 
-#: pleio_account/oidc_provider_settings.py:22
+#: pleio_account/oidc_provider_settings.py:110
+#, fuzzy
+#| msgid "Profile picture"
+msgid "Profile Modification"
+msgstr "Photo de profil"
+
+#: pleio_account/oidc_provider_settings.py:111
+msgid "Ability to view and modify your profile information"
+msgstr ""
+
+#: pleio_account/oidc_provider_settings.py:127
 msgid "Basic profile"
 msgstr "Profil de base"
 
-#: pleio_account/oidc_provider_settings.py:23
-msgid "Access to your name"
-msgstr "Accès à votre nom"
+#: pleio_account/oidc_provider_settings.py:128
+msgid "Access to your name, email, avatar, and address"
+msgstr ""
 
-#: pleio_account/settings.py:194
+#: pleio_account/oidc_provider_settings.py:132
+msgid "Detailed User profile"
+msgstr ""
+
+#: pleio_account/oidc_provider_settings.py:133
+msgid ""
+"Access to your name, email, avatar, address, and organization information"
+msgstr ""
+
+#: pleio_account/settings.py:198
 msgid "English"
 msgstr "Anglais"
 
-#: pleio_account/settings.py:195
+#: pleio_account/settings.py:199
 msgid "French"
 msgstr "Français"
+
+#~ msgid "Access to your name"
+#~ msgstr "Accès à votre nom"
 
 #~ msgid "Back to the homepage"
 #~ msgstr "Retour à la page d’accueil"
@@ -2997,9 +3030,6 @@ msgstr "Français"
 
 #~ msgid "to create a account"
 #~ msgstr "pour créer un compte"
-
-#~ msgid "Profile picture"
-#~ msgstr "Photo de profil"
 
 #, fuzzy
 #~| msgid "Your custom avatar"
