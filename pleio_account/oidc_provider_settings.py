@@ -34,6 +34,8 @@ def queryprofile(retry, user):
             email,
             mobilePhone,
             officePhone,
+            titleEn,
+            titleFr,
             address{
                 streetAddress,
                 city,
@@ -97,6 +99,21 @@ def claimsfromprofiles(retry, claims, user):
 
     return profileclaims
 
+def titleclaims(retry, claims, user):
+    response = queryprofile(retry, user)
+
+    if response is None:
+        return claims
+
+    try:
+        titleclaims = claims
+        titleclaims['titleEn'] = checkvalue(response['data']['profiles'][0].get('titleEn'))
+        titleclaims['titleFr'] = checkvalue(response['data']['profiles'][0].get('titleFr'))
+    except Exception:
+        return claims
+
+    return titleclaims
+    
 
 def checkvalue(stringvalue):
     if stringvalue is not None:
@@ -139,3 +156,19 @@ class CustomScopeClaims(ScopeClaims):
         }
 
         return dic
+
+    info_titles = (
+        _('Bilingual titles'),
+        _('Access to your English and French title'),
+    )
+
+    def scope_titles(self):
+        dic = {
+            'titleEn': '',
+            'titleFr': '',
+        }
+
+        if config.GRAPHQL_TRIGGER:
+            return titleclaims(3, dic, self.user)
+        else:
+            return dic
