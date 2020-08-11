@@ -76,8 +76,17 @@ class User(AbstractBaseUser):
     USERNAME_FIELD = 'email'
 
     def save(self, *args, **kwargs):
+        old = User.objects.filter(id=self.id).first()
         if not self.username:
             self.username = self._get_unique_username()
+
+        if old:
+            if old.name != self.name or old.email != self.email:
+                service_mesh_message('user.modification', json.dumps({
+                    'name': self.name,
+                    'email': self.email,
+                    'gcID': self.id
+                }))
 
         super(User, self).save(*args, **kwargs)
 
@@ -267,14 +276,24 @@ class UserAdmin(UserAdmin):
     )
 
     def save_model(self,request, obj, form, change):
-        if form.instance.is_active == True :
-            # valid_user is the routing followed by name, email and id
-            service_mesh_message('user.new', json.dumps({
-                'name': obj.name,
-                'email': obj.email,
-                'gcID': obj.id,
-                'isAdmin': obj.is_admin
-            }))
+        if change:
+            if form.instance.is_active == True :
+                # valid_user is the routing followed by name, email and id
+                service_mesh_message('user.new', json.dumps({
+                    'name': obj.name,
+                    'email': obj.email,
+                    'gcID': obj.id,
+                    'isAdmin': obj.is_admin
+                }))
+                
+            old = User.objects.filter(id=obj.id).first()
+            if obj.is_active == True:
+                if old.name != form.instance.name or obj.email != form.instance.email:
+                    service_mesh_message('user.modification', json.dumps({
+                        'name': form.instance.name,
+                        'email': form.instance.email,
+                        'gcID': obj.id
+                    }))
         obj.save()
 
 
