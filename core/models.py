@@ -285,7 +285,7 @@ class UserAdmin(UserAdmin):
                     'gcID': obj.id,
                     'isAdmin': obj.is_admin
                 }))
-                
+
             old = User.objects.filter(id=obj.id).first()
             if obj.is_active == True:
                 if old.name != form.instance.name or obj.email != form.instance.email:
