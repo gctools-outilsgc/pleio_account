@@ -6,8 +6,10 @@ import Users from './Users';
 import Alerts from './core/Alerts';
 import PrivateRoute from './core/PrivateRoute';
 import Header from './core/Header';
+import NoMatch from './core/NoMatch';
 import Login from './home/Login';
 import Register from './home/Register';
+import Activate from './home/Activate';
 
 import LoggedIN from './settings/LoggedIN';
 import OtherPath from './settings/OtherPath';
@@ -42,8 +44,10 @@ class App extends Component {
                                 <PrivateRoute exact path="/" component={Users} />
                                 <PrivateRoute exact path="/loggedin" component={LoggedIN} />
                                 <PrivateRoute exact path="/otherpath" component={OtherPath} />
-                                <Route exact path="/register" component={Register} />
-                                <Route exact path="/login" component={Login} />
+                                <Route exact path="/register/activate/:activation_token" component={Activate} />
+                                <Route path="/register" component={Register} />
+                                <Route path="/login" component={Login} />
+                                <Route component={NoMatch} />
                             </Switch>
                         </Fragment>
                     </Router>

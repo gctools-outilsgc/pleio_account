@@ -16,12 +16,14 @@ export class Alerts extends Component {
             if (error.msg.non_field_errors) {
                 alert.error(error.msg.non_field_errors.join());
             }
+            if (error.msg.email) alert.error(error.msg.email);
         }
 
         if (message !== prevProps.message) {
             // if (message.userDeleted) alert.success(message.userDeleted)     <- uses key created in reducer
             // if (message.userAdded) alert.success(message.userAdded)     <- uses key created in reducer
             if (message.passwordNotMatch) alert.error(message.passwordNotMatch);
+            if (message.accountActivated) alert.error(message.accountActivated);
         }
     }
 

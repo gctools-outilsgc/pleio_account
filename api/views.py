@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.authentication import SessionAuthentication
 from rest_framework import generics, viewsets, permissions
-from api.serializers import UserSerializer, RegisterSerializer, LoginSerializer, LoginTestSerializer, AllUserSerializer
+from api.serializers import UserSerializer, RegisterSerializer, LoginSerializer, LoginTestSerializer, AllUserSerializer, ActivateUserSerializer
 from api.permissions import IsAdminPermission
 from core.models import User
 from rest_framework.authtoken.models import Token
@@ -30,10 +30,8 @@ class RegisterAPI(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
-        token, _ = Token.objects.create(user=user)
         return Response({
             "user": UserSerializer(user, context=self.get_serializer_context()).data,
-            "token": token.key
         })
 
 # Login API
@@ -91,4 +89,24 @@ class Login(APIView):
         login(request, user)
         return Response({
             "user": UserSerializer(user).data
+        })
+
+# Activate User API
+class ActivateUserAPI(APIView):
+
+    permission_classes = (permissions.AllowAny,)
+    authentication_classes = (SessionAuthentication,)
+
+    def get_serializer_context(self):
+        context = super(ActivateUserAPI, self).get_serializer_context()
+        context.update({"request": self.request})
+        return context
+
+    def post(self, request):
+        serializer = ActivateUserSerializer(data=request.data, context={'request':request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        login(request, user,  backend='django.contrib.auth.backends.ModelBackend')
+        return Response({
+            "user": UserSerializer(user).data,
         })

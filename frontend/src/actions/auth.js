@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { returnErrors } from './messages';
+import { returnErrors, createMessage } from './messages';
 
 import {
     USER_LOADED,
@@ -9,7 +9,10 @@ import {
     LOGIN_FAIL,
     LOGOUT_SUCCESS,
     REGISTER_SUCCESS,
-    REGISTER_FAIL
+    REGISTER_CONFIRM,
+    REGISTER_FAIL,
+    ACTIVATE_USER,
+    ACTIVATE_FAIL
 } from './types';
 
 // Check token & load user
@@ -71,6 +74,7 @@ export const register = ({ name, email, password }) => dispatch => {
 
     axios.post('/api/auth/register', body, config)
         .then(res => {
+            // dispatch(createMessage(err.response.data, err.response.status));
             dispatch({
                 type: REGISTER_SUCCESS,
                 payload: res.data
@@ -79,6 +83,42 @@ export const register = ({ name, email, password }) => dispatch => {
             dispatch(returnErrors(err.response.data, err.response.status));
             dispatch({
                 type: REGISTER_FAIL
+            });
+        })
+}
+
+// REGISTER CONFIRM
+export const registerConfirm = () => (dispatch) => {
+    dispatch({
+        type: REGISTER_CONFIRM,
+        payload: null
+    });
+}
+
+// ACTIVATE_USER
+export const activateUser = ({ activation_token }) => dispatch => {
+    // Headers
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    };
+
+    // REQUEST body
+
+    const body = JSON.stringify({ activation_token });
+
+    axios.post('/api/auth/activate', body, config)
+        .then(res => {
+            dispatch(createMessage({ accountActivated: "Account activated" }));
+            dispatch({
+                type: ACTIVATE_USER,
+                payload: res.data
+            });
+        }).catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status));
+            dispatch({
+                type: ACTIVATE_FAIL
             });
         })
 }

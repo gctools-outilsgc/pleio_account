@@ -5,6 +5,9 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     REGISTER_SUCCESS,
+    REGISTER_CONFIRM,
+    ACTIVATE_USER,
+    ACTIVATE_FAIL,
     REGISTER_FAIL,
     LOGOUT_SUCCESS
 } from '../actions/types';
@@ -30,7 +33,24 @@ export default function (state = initialState, action) {
                 user: action.payload
             }
         case LOGIN_SUCCESS:
+            return {
+                ...state,
+                ...action.payload,
+                isAuthenticated: true,
+                isLoading: false
+            }
         case REGISTER_SUCCESS:
+            return {
+                ...state,
+                ...action.payload,
+                isLoading: false
+            }
+        case REGISTER_CONFIRM:
+            return {
+                ...state,
+                user: null
+            }
+        case ACTIVATE_USER:
             return {
                 ...state,
                 ...action.payload,
@@ -40,10 +60,10 @@ export default function (state = initialState, action) {
         case LOGIN_FAIL:
         case AUTH_ERROR:
         case LOGOUT_SUCCESS:
+        case ACTIVATE_FAIL:
         case REGISTER_FAIL:
             return {
                 ...state,
-                token: null,
                 user: null,
                 isAuthenticated: false,
                 isLoading: false
