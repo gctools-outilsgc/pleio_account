@@ -10,7 +10,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title> {{ app.APP_TITLE }} - {% block page_title %}{% endblock %}</title>
+        <title> {% blocktrans with title=app.APP_TITLE|translate %} {{ title }} {% endblocktrans %} - {% block page_title %}{% endblock %}</title>
         <meta name="viewport" content="width=device-width,height=device-height,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
         <meta property="og:title" content="{{ app.APP_TITLE }}">
         <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ MEDIA_URL }}{{ app.APP_LOGO }}">

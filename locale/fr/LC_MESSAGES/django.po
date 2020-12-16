@@ -272,7 +272,7 @@ msgstr "Aide / Contactez-nous"
 #: core/templates/base.html:60 core/templates/base_account.html:136
 #: core/templates/oidc_provider/authorize.html:30
 msgid "Terms and Conditions"
-msgstr "Conditions D'Utilisation"
+msgstr "Avis"
 
 #: core/templates/base.html:61 core/templates/base_account.html:137
 #: core/templates/oidc_provider/authorize.html:32
@@ -732,7 +732,7 @@ msgstr "J’accepte les"
 
 #: core/templates/register.html:79
 msgid " terms and conditions"
-msgstr " conditions d'utilisation"
+msgstr " avis"
 
 #: core/templates/register.html:85
 msgid "Receive Suspicious Sign In Emails"
@@ -1094,7 +1094,7 @@ msgid ""
 "                        account. Enable two-factor authentication for "
 "enhanced account\n"
 "                        security."
-msgstr ""
+msgstr "L'authentification à deux facteurs n'est pas activée pour votre compte. Activez l'authentification à deux facteurs pour augmenter la sécurité de votre compte."
 
 #: core/templates/security_pages/two_factor_authorization.html:160
 #: core/templates/tf_profile.html:50
@@ -2965,6 +2965,9 @@ msgstr "Français"
 #~ msgid "Back to the homepage"
 #~ msgstr "Retour à la page d’accueil"
 
+msgid "Skip to main content"
+msgstr "Passer au contenu principal"
+
 #~ msgid "If you don’t have access to the email: "
 #~ msgstr "Si vous n’avez pas accès à l’adresse de courriel: "
 
@@ -2988,8 +2991,8 @@ msgstr "Français"
 #~ "Password must contain at least %(min_uppercase_letters)d uppercase letter."
 #~ msgstr "Contenir au moins 1 lettre minuscule et 1 majuscule"
 
-#~ msgid "GCaccount"
-#~ msgstr "GCcompte"
+msgid "GCaccount"
+msgstr "GCcompte"
 
 #, fuzzy
 #~| msgid "Email sent"
