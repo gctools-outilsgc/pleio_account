@@ -1312,9 +1312,7 @@ msgid "Work address"
 msgstr "Adresse au travail"
 
 #: core/views.py:229
-#, fuzzy
-#| msgid "The password has been changed successfully."
-msgid "The Password has been changed successfully."
+msgid "The password has been changed successfully."
 msgstr "Le mot de passe a été modifié avec succès."
 
 #: core/views.py:273
