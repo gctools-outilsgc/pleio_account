@@ -29,7 +29,7 @@
 
     {% if 2FA.state == 'setup' %}
 
-        <form method="post" action="/securitypages/2fa-setupnext/" class="ui form">
+        <form method="post" action="/securitypages-pagesdesecurite/2fa-setupnext/" class="ui form">
             <div class="account__cards ui card">
                   <div class="content">
           		      <h3 class="card__title ___addpadding-side header">{% trans "Enable two-factor authentication" %}</h3>
@@ -100,7 +100,7 @@
 
     {% if 2FA.state == 'disable' %}
 
-        <form method="post" action="/securitypages/2fa-disableconfirm/" class="ui form">
+        <form method="post" action="/securitypages-pagesdesecurite/2fa-disableconfirm/" class="ui form">
           <div class="account__cards ui card">
               <div class=" ___nopadding content">
                     {% csrf_token %}
@@ -154,7 +154,7 @@
                 </div>
               </div>
               <div class="extra content">
-                <form method="post" action="/securitypages/2fa-setup/">
+                <form method="post" action="/securitypages-pagesdesecurite/2fa-setup/">
                     <div class="card__action ___addpadding-side">
                         {% csrf_token %}
                         <button name="2fa-setup" type="submit" class="ui button right floated primary">{% trans "Enable" %}</button>

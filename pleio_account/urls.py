@@ -5,6 +5,7 @@ from django.views.decorators.clickjacking import xframe_options_exempt
 from django.urls import path, URLPattern, URLResolver
 from django.contrib import admin
 from django.views.i18n import JavaScriptCatalog
+from django.views.generic import RedirectView
 from oauth2_provider import views as oauth2_views
 from two_factor.urls import urlpatterns as tf_urls
 
@@ -59,36 +60,36 @@ def decorated_includes(func, includes):
 
 
 urlpatterns = [
-    path('register/', views.register, name='register'),
+    path('register-sinscrire/', views.register, name='register'),
     path(
-        'register/complete/',
+        'register-sinscrire/complete/',
         views.register_complete,
         name='register_complete'
     ),
     path(
-        'register/activate/<activation_token>/',
+        'register-sinscrire/activate/<activation_token>/',
         views.register_activate,
         name='register_activate'
     ),
     path('termsofuse/', views.terms_of_use, name='terms_of_use'),
     path(
-        'securitypages/<page_action>/',
+        'securitypages-pagesdesecurite/<page_action>/',
         views.security_pages,
         name='security_pages'
     ),
-    path('securitypages/', views.security_pages, name='security_pages'),
+    path('securitypages-pagesdesecurite/', views.security_pages, name='security_pages'),
     path(
-        'security-questions/',
+        'securityquestions-questionsdesecurite/',
         views.set_security_question,
         name='set-questions'
     ),
     path(
-        'login/',
-        axes_dispatch(PleioLoginView.as_view()),
+        'login-ouverturedesession/',
+        axes_dispatch(PleioLoginView.as_view(redirect_authenticated_user=True)),
         name='login'
     ),
     path('logout/', views.logout, name='logout'),
-    path('profile/', views.profile, name='profile'),
+    path('profile-profil/', views.profile, name='profile'),
     path(
         'accept_previous_logins/<acceptation_token>/',
         views.accept_previous_login,
