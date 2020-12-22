@@ -33,7 +33,7 @@ class PasswordResetRequestForm(forms.Form):
 
 class ResetPasswordRequestView(FormView):
     template_name = "registration/password_reset.html"
-    success_url = '/password_reset/done/'
+    success_url = '/password_reset-reinitialiser_le_mot_de_passe/done-fait/'
     form_class = PasswordResetRequestForm
 
     @staticmethod

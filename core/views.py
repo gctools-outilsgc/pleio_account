@@ -85,7 +85,6 @@ def register(request):
 
     return render(request, 'register.html', {'form': form})
 
-
 def register_complete(request):
     return render(request, 'register_complete.html')
 
@@ -193,8 +192,8 @@ def security_questions(request):
         if form.is_valid():
             del request.session['email']
             del request.session['picks']
-            return redirect(request.scheme + '://' + request.META['HTTP_HOST'] + '/reset/' +
-                (urlsafe_base64_encode(force_bytes(user.pk))).decode('utf-8') + '/' +
+            return redirect(request.scheme + '://' + request.META['HTTP_HOST'] + '/reset-reinitialiser/' +
+                urlsafe_base64_encode(force_bytes(user.pk)) + '/' +
                 default_token_generator.make_token(user)
              )
 
@@ -277,7 +276,7 @@ def set_security_question(request):
 
 def two_factor_form(request, page_action):
     two_factor_authorization =  {}
-    if page_action == '2fa-setup':
+    if page_action == '2fa_setup-a2f_configuration':
         key = random_hex(20).decode('ascii')
         rawkey = unhexlify(key.encode('ascii'))
         b32key = b32encode(rawkey).decode('utf-8')
@@ -291,7 +290,7 @@ def two_factor_form(request, page_action):
         })
         two_factor_authorization['state'] = 'setup'
 
-    elif page_action == '2fa-setupnext':
+    elif page_action == '2fa_setupnext-a2f_configurationsuivante':
         key = request.session.get('tf_key')
         form = PleioTOTPDeviceForm(data=request.POST, key=key, user=request.user)
         if form.is_valid():
@@ -304,22 +303,22 @@ def two_factor_form(request, page_action):
             two_factor_authorization['QR_URL'] = reverse('two_factor:qr')
             two_factor_authorization['state'] = 'setup'
 
-    elif page_action == '2fa-disable':
+    elif page_action == '2fa_disable-a2f_desactiver':
         two_factor_authorization = DisableView.as_view(template_name='security_pages.html')(request).context_data
         two_factor_authorization['state'] = 'disable'
 
-    elif page_action == '2fa-disableconfirm':
+    elif page_action == '2fa_disableconfirm-a2f_désactiverconfirmer':
         two_factor_authorization = DisableView.as_view(template_name='security_pages.html')(request)
         two_factor_authorization['state'] = 'default'
         two_factor_authorization['show_state'] = 'true'
 
-    elif page_action == '2fa-showcodes':
+    elif page_action == '2fa_showcodes-a2f_afficherlescodes':
         two_factor_authorization = PleioBackupTokensView.as_view(template_name='backup_tokens.html')(request).context_data
         two_factor_authorization['default_device'] = 'true'
         two_factor_authorization['state'] = 'codes'
         two_factor_authorization['show_state'] = 'true'
 
-    elif page_action == '2fa-generatecodes':
+    elif page_action == '2fa-generatecodes-a2f_genererdescodes':
         two_factor_authorization = PleioBackupTokensView.as_view(template_name='security_pages.html')(request).context_data
         two_factor_authorization['default_device'] = 'true'
         two_factor_authorization['show_state'] = 'true'
