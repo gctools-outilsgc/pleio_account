@@ -5,7 +5,6 @@ from django.views.decorators.clickjacking import xframe_options_exempt
 from django.urls import path, URLPattern, URLResolver
 from django.contrib import admin
 from django.views.i18n import JavaScriptCatalog
-from django.views.generic import RedirectView
 from oauth2_provider import views as oauth2_views
 from two_factor.urls import urlpatterns as tf_urls
 
