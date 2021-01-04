@@ -211,7 +211,7 @@
                                 <!-- Header -->
                                 <tr>
                                     <td class="header" style="color:#ffffff; font-family:Arial,sans-serif; font-size:26px; line-height:30px; text-align:left; padding:15px 50px; font-weight:bold" bgcolor="{{ app.APP_BRAND_COLOR }}">
-                                        <span class="link-white" style="color:#ffffff; text-decoration:none">{{ app.APP_TITLE }}</span>
+                                        <span class="link-white" style="color:#ffffff; text-decoration:none">{% blocktrans with title=app.APP_TITLE|translate %} {{ title }} {% endblocktrans %}</span>
                                     </td>
                                 </tr>
                                 <!-- END Header -->
@@ -266,7 +266,7 @@
                                                                 <img align="center" alt="" src="{{ protocol }}://{{ domain }}{{ MEDIA_URL }}{{ app.APP_LOGO }}" width="84"
                                                                     style="max-width:30px; padding-bottom: 0; display: inline !important; vertical-align: top;"
                                                                     class="img-m-center">
-                                                                    {{ app.APP_TITLE }}
+                                                                    {% blocktrans with title=app.APP_TITLE|translate %} {{ title }} {% endblocktrans %}
                                                             </a>
                                                         </td>
                                                     </tr>

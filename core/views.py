@@ -226,7 +226,7 @@ def change_password_form(request, page_action):
             user.set_password(data['new_password2'])
             user.save()
             update_session_auth_hash(request, user)
-            messages.success(request, _('The Password has been changed successfully.'))
+            messages.success(request, _('The password has been changed successfully.'))
     else:
         form = ChangePasswordForm()
 
