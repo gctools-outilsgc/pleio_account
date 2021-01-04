@@ -58,7 +58,7 @@
                 <ul class="account-menu__list">
 
                     <li>
-                        {% if request.path == '/profile/' %}
+                        {% if request.path == '/profile-profil/' %}
                             <a href="{% url 'profile' %}" class="account-menu__list current">
                         {% else %}
                             <a href="{% url 'profile' %}">
@@ -71,7 +71,7 @@
                         </a>
                     </li>
                     <li>
-                        {% if request.path >= '/securitypages/' %}
+                        {% if request.path >= '/securitypages-pagessurlasecurite/' %}
                             <a href="{% url 'security_pages' %}" class="account-menu__list current">
                         {% else %}
                             <a href="{% url 'security_pages' %}">

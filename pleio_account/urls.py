@@ -13,7 +13,8 @@ from core import views, forms
 from core.class_views import (
     PleioLoginView,
     PleioSessionDeleteView,
-    PleioSessionDeleteOtherView
+    PleioSessionDeleteOtherView,
+    i18nPasswordResetConfirmView
 )
 from axes.decorators import axes_dispatch
 
@@ -59,36 +60,36 @@ def decorated_includes(func, includes):
 
 
 urlpatterns = [
-    path('register/', views.register, name='register'),
+    path('register-sinscrire/', views.register, name='register'),
     path(
-        'register/complete/',
+        'register-sinscrire/complete-termine/',
         views.register_complete,
         name='register_complete'
     ),
     path(
-        'register/activate/<activation_token>/',
+        'register-sinscrire/activate-activer/<activation_token>/',
         views.register_activate,
         name='register_activate'
     ),
     path('termsofuse/', views.terms_of_use, name='terms_of_use'),
     path(
-        'securitypages/<page_action>/',
+        'securitypages-pagessurlasecurite/<page_action>/',
         views.security_pages,
         name='security_pages'
     ),
-    path('securitypages/', views.security_pages, name='security_pages'),
+    path('securitypages-pagessurlasecurite/', views.security_pages, name='security_pages'),
     path(
-        'security-questions/',
+        'securityquestions-questionsdesecurite/',
         views.set_security_question,
         name='set-questions'
     ),
     path(
-        'login/',
-        axes_dispatch(PleioLoginView.as_view()),
+        'login-ouverturedesession/',
+        axes_dispatch(PleioLoginView.as_view(redirect_authenticated_user=True)),
         name='login'
     ),
     path('logout/', views.logout, name='logout'),
-    path('profile/', views.profile, name='profile'),
+    path('profile-profil/', views.profile, name='profile'),
     path(
         'accept_previous_logins/<acceptation_token>/',
         views.accept_previous_login,
@@ -126,12 +127,12 @@ urlpatterns = [
     # Overriding some of the built-in contrib.auth views to use our templates
     # instead.
     path(
-        'password_reset/',
+        'password_reset-reinitialiser_le_mot_de_passe/',
         forms.ResetPasswordRequestView.as_view(),
         name='password_reset'
     ),
     path(
-        'password_reset/done/',
+        'password_reset-reinitialiser_le_mot_de_passe/done-fait/',
         auth_views.PasswordResetDoneView.as_view(),
         {
             'template_name': 'registration/password_reset_done.html'
@@ -139,25 +140,22 @@ urlpatterns = [
         name='password_reset_done'
     ),
     path(
-        'password_reset/questions/',
+        'password_reset-reinitialiser_le_mot_de_passe/questions/',
         views.security_questions,
         name='password_reset_questions'
     ),
     path(
-        'password_reset/notactive/',
+        'password_reset-reinitialiser_le_mot_de_passe/notactive-pasactif/',
         views.not_active_profile,
         name='password_reset_not_active'
     ),
     path(
-        'reset/<uidb64>/<token>/',
-        auth_views.PasswordResetConfirmView.as_view(),
-        {
-            'template_name': 'registration/password_reset_confirm.html'
-        },
+        'reset-reinitialiser/<uidb64>/<token>/',
+        view=i18nPasswordResetConfirmView.as_view(),
         name='password_reset_confirm'
     ),
     path(
-        'reset/done/',
+        'reset-reinitialiser/done-fait/',
         auth_views.PasswordResetCompleteView.as_view(),
         {
             'template_name': 'registration/password_reset_complete.html'

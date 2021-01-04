@@ -21,7 +21,7 @@
                 </p>
             </div>
             <div class="card__action ___addpadding-side extra content">
-                <a href="{% url 'security_pages' page_action='2fa-showcodes' %}" class="button ___clear ui button right floated primary">{% trans "Show codes" %}</a>
+                <a href="{% url 'security_pages' page_action='2fa_showcodes-a2f_afficherlescodes' %}" class="button ___clear ui button right floated primary">{% trans "Show codes" %}</a>
             </div>
         </div>
         {% endif %}
@@ -29,7 +29,7 @@
 
     {% if 2FA.state == 'setup' %}
 
-        <form method="post" action="/securitypages/2fa-setupnext/" class="ui form">
+        <form method="post" action="/securitypages-pagessurlasecurite/2fa_setupnext-a2f_configurationsuivante/" class="ui form">
             <div class="account__cards ui card">
                   <div class="content">
           		      <h3 class="card__title ___addpadding-side header">{% trans "Enable two-factor authentication" %}</h3>
@@ -64,7 +64,7 @@
     {% endif %}
 
     {% if 2FA.state == 'codes' %}
-    <form method="post" class="ui form" action="." "page_action=2fa-generatecodes">{% csrf_token %}{{ form }}
+    <form method="post" class="ui form" action="." "page_action=2fa_generatecodes-a2f_genererdescodes">{% csrf_token %}{{ form }}
         <div class="account__cards ui card">
             <div class="___nopadding content">
               <h3 class="card__title ___addpadding-side header">{% trans "Backup tokens" %}</h3>
@@ -100,7 +100,7 @@
 
     {% if 2FA.state == 'disable' %}
 
-        <form method="post" action="/securitypages/2fa-disableconfirm/" class="ui form">
+        <form method="post" action="/securitypages-pagessurlasecurite/2fa_disableconfirm-a2f_desactiverconfirmer/" class="ui form">
           <div class="account__cards ui card">
               <div class=" ___nopadding content">
                     {% csrf_token %}
@@ -139,7 +139,7 @@
                 </div>
               </div>
                 <div class="card__action ___addpadding-side extra content">
-                    <a href="{% url 'security_pages' page_action='2fa-disable' %}" class="button ___clear ui button negative right floated">{% trans "Disable" %}</a>
+                    <a href="{% url 'security_pages' page_action='2fa_disable-a2f_desactiver' %}" class="button ___clear ui button negative right floated">{% trans "Disable" %}</a>
                 </div>
             {% else %}
             <div class="___nopadding content">
@@ -152,7 +152,7 @@
                 </div>
               </div>
               <div class="extra content">
-                <form method="post" action="/securitypages/2fa-setup/">
+                <form method="post" action="/securitypages-pagessurlasecurite/2fa_setup-a2f_configuration/">
                     <div class="card__action ___addpadding-side">
                         {% csrf_token %}
                         <button name="2fa-setup" type="submit" class="ui button right floated primary">{% trans "Enable" %}</button>
