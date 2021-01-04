@@ -307,7 +307,7 @@ def two_factor_form(request, page_action):
         two_factor_authorization = DisableView.as_view(template_name='security_pages.html')(request).context_data
         two_factor_authorization['state'] = 'disable'
 
-    elif page_action == '2fa_disableconfirm-a2f_désactiverconfirmer':
+    elif page_action == '2fa_disableconfirm-a2f_desactiverconfirmer':
         two_factor_authorization = DisableView.as_view(template_name='security_pages.html')(request)
         two_factor_authorization['state'] = 'default'
         two_factor_authorization['show_state'] = 'true'
@@ -318,7 +318,7 @@ def two_factor_form(request, page_action):
         two_factor_authorization['state'] = 'codes'
         two_factor_authorization['show_state'] = 'true'
 
-    elif page_action == '2fa-generatecodes-a2f_genererdescodes':
+    elif page_action == '2fa_generatecodes-a2f_genererdescodes':
         two_factor_authorization = PleioBackupTokensView.as_view(template_name='security_pages.html')(request).context_data
         two_factor_authorization['default_device'] = 'true'
         two_factor_authorization['show_state'] = 'true'
